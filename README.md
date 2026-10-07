@@ -24,7 +24,7 @@ New phrases need an audio clip in `const AUD=` (ask Claude to generate one).
 
 ## Publishing
 
-The site is published with GitHub Pages. Every push to `main` updates the live app within a minute or two.
+The site is published with GitHub Pages at **https://feli.yasso.se** (the `CNAME` file sets the domain). Every push to `main` updates the live app within a minute or two.
 
 ## Accounts (Supabase)
 
