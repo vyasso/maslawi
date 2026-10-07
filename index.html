@@ -307,7 +307,7 @@ const SUPABASE_URL="https://buxdpufszmtyacrwyokm.supabase.co";
 const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1eGRwdWZzem10eWFjcnd5b2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEzNzY5NDYsImV4cCI6MjEwNjk1Mjk0Nn0.pFmUuJUtxlEfJyrLBBWQ-S4l0ij-mou6jJ2iUDz-Kvw";
 const CLOUD=!!(SUPABASE_URL&&SUPABASE_ANON_KEY);
 const SKEY="maslawi-session-v1";
-let SES=null, syncState="idle", lastSync=null, syncTimer=null;
+let SES=null, syncState="idle", lastSync=null, syncTimer=null, syncErr="";
 try{SES=JSON.parse(localStorage.getItem(SKEY)||"null");}catch(e){}
 
 /* ================= CONTENT — draft Maslawi; every phrase needs checking by a native speaker ================= */
@@ -947,7 +947,7 @@ async function pullAndMerge(){
     const rows=await api("/rest/v1/progress?select=data&user_id=eq."+SES.user.id);
     if(rows&&rows[0]&&rows[0].data){ S=mergeState(S,rows[0].data); try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){} }
     await pushNow();
-  }catch(e){ syncState="error"; refreshSync(); }
+  }catch(e){ syncState="error"; syncErr=e.message||""; refreshSync(); }
   await loadReviewer();
   render();
 }
@@ -956,13 +956,13 @@ async function pushNow(){
   syncState="syncing"; refreshSync();
   try{
     await api("/rest/v1/progress",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify({user_id:SES.user.id,data:S,updated_at:new Date().toISOString()})});
-    syncState="ok"; lastSync=new Date();
-  }catch(e){ syncState="error"; }
+    syncState="ok"; lastSync=new Date(); syncErr="";
+  }catch(e){ syncState="error"; syncErr=e.message||""; }
   refreshSync();
 }
 function queueSync(){ if(!CLOUD||!SES) return; clearTimeout(syncTimer); syncTimer=setTimeout(pushNow,1500); }
 document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden"&&syncTimer){ clearTimeout(syncTimer); pushNow(); } else if(document.visibilityState==="visible"&&SES) pullAndMerge(); });
-function syncText(){ return syncState==="syncing"?"Saving…":syncState==="error"?"Couldn't save. Check your internet.":lastSync?"Saved to your account "+lastSync.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"}):"Progress saves to your account"; }
+function syncText(){ return syncState==="syncing"?"Saving…":syncState==="error"?("Couldn't save"+(syncErr&&!/fetch|network/i.test(syncErr)?": "+syncErr:". Check your internet.")):lastSync?"Saved to your account "+lastSync.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"}):"Progress saves to your account"; }
 function refreshSync(){ const e=document.getElementById("synctxt"); if(e) e.textContent=syncText(); }
 
 function accountCard(){
