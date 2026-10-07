@@ -52,6 +52,13 @@ create policy "reviewers add checks"    on public.phrase_checks for insert with 
 create policy "reviewers change checks" on public.phrase_checks for update using (public.is_reviewer()) with check (public.is_reviewer());
 create policy "reviewers remove checks" on public.phrase_checks for delete using (public.is_reviewer());
 
+-- Newer Supabase projects don't give the app access to new tables automatically.
+grant usage on schema public to anon, authenticated;
+grant select, insert, update on public.progress to authenticated;
+grant select on public.reviewers to authenticated;
+grant select, insert, update, delete on public.phrase_checks to authenticated;
+grant execute on function public.is_reviewer() to authenticated;
+
 -- Add yourself (and your Mosul speaker) as reviewers. Replace the email, then run.
 -- To add more people later, run this line again with their email.
 insert into public.reviewers (email) values ('YOUR-EMAIL@example.com') on conflict do nothing;
