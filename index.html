@@ -731,10 +731,50 @@ function renderQuests(el){
   el.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{const q=QUESTS.find(x=>x.id===b.dataset.q);S.q.claimed[q.id]=true;S.gems+=q.gems;save();sWin();confetti();refreshTop();render();});
 }
 function renderLeague(el){
-  const rows=LEAGUE.map(([n,x,c])=>({n,x,c})).concat([{n:"You",x:S.weekXp,c:"#1CB0B5",me:true}]).sort((a,b)=>b.x-a.x);
-  const d=new Date(), left=7-((d.getDay()+6)%7);
-  el.innerHTML=`<div class="league-hero">${TABS[3][2].replace('viewBox','style="width:80px;height:80px" viewBox')}<h1 class="screen" style="margin-top:4px">Tigris League</h1><p class="sub" style="margin:0">Top 3 move up to the Nineveh League · ${left} day${left>1?"s":""} left</p></div>
-  <div class="card" style="padding:6px">${rows.map((r,i)=>`${i===3?'<div class="zone up">▲ Promotion zone</div>':""}${i===rows.length-2?'<div class="zone down">▼ Demotion zone</div>':""}<div class="lrow ${r.me?"me":""}"><span class="rank" style="color:${i<3?"var(--good)":i>=rows.length-2?"var(--bad)":"var(--muted)"}">${i+1}</span><span class="av" style="background:${r.c}">${r.n[0]}</span><span class="nm">${esc(r.n)}</span><span class="px">${r.x} XP</span></div>`).join("")}</div>`;
+  const d=new Date(), left=7-((d.getDay()+6)%7), leftTxt=`${left} day${left>1?"s":""} left`;
+  const hero=sub=>`<div class="league-hero">${TABS[3][2].replace('viewBox','style="width:80px;height:80px" viewBox')}<h1 class="screen" style="margin-top:4px">Tigris League</h1><p class="sub" style="margin:0">${sub}</p></div>`;
+  const row=(r,i)=>`<div class="lrow ${r.me?"me":""}"><span class="rank" style="color:${i<3?"var(--gold-deep)":"var(--muted)"}">${i<3?["🥇","🥈","🥉"][i]:i+1}</span><span class="av" style="background:${r.c}">${esc((r.n||"?")[0].toUpperCase())}</span><span class="nm">${esc(r.n)}${r.me?" (you)":""}</span><span class="px">${r.x} XP</span></div>`;
+  if(!CLOUD){ /* offline preview: sample learners */
+    const rows=LEAGUE.map(([n,x,c])=>({n,x,c})).concat([{n:"You",x:S.weekXp,c:"#1CB0B5",me:true}]).sort((a,b)=>b.x-a.x);
+    el.innerHTML=hero("Sample league · "+leftTxt)+`<div class="card" style="padding:6px">${rows.map(row).join("")}</div>`; return;
+  }
+  if(!SES){
+    el.innerHTML=hero("Compete with other learners every week")+`<div class="card stack" style="text-align:center"><b style="font-size:18px">Join the league</b><p class="sub" style="margin:0">Create a free account to earn a place on this week's leaderboard. Everyone starts from zero each Monday.</p><button class="btn wide" id="lg-join">Create account</button><button class="btn ghost wide blue" id="lg-in">I already have an account</button></div>`;
+    $("#lg-join").onclick=()=>authSheet("up"); $("#lg-in").onclick=()=>authSheet("in"); return;
+  }
+  if(S.leagueHidden){
+    el.innerHTML=hero("You've left the league")+`<div class="card stack" style="text-align:center"><p class="sub" style="margin:0">Other learners can't see your name or XP. You can join again any time.</p><button class="btn wide" id="lg-rejoin">Join the league</button></div>`;
+    $("#lg-rejoin").onclick=()=>{S.leagueHidden=false;save();pushNow().then(()=>{LG.at=0;render();});}; return;
+  }
+  const draw=()=>{
+    if(tab!=="league") return;
+    const me=SES.user.id, cols=["#FF9A3C","#A86CF0","#1CA0F0","#58CC02","#FF4B4B","#1CB0B5","#E35B9C","#D9761C"];
+    let rows=(LG.rows||[]).filter(r=>r.user_id!==me).map(r=>({n:r.name||"Learner",x:r.week_xp||0,c:cols[parseInt(r.user_id.replace(/[^0-9a-f]/gi,"").slice(0,6)||"0",16)%cols.length]}));
+    rows.push({n:userName()||"You",x:S.weekXp||0,c:"#1CB0B5",me:true}); rows.sort((a,b)=>b.x-a.x);
+    const body=LG.state==="loading"&&!LG.rows?`<p class="sub" style="text-align:center;padding:20px">Loading this week's league…</p>`:
+      LG.state==="error"?`<p class="sub" style="text-align:center;padding:16px">Couldn't load the league${LG.err?": "+esc(LG.err):"."}</p>`:
+      rows.map(row).join("");
+    el.innerHTML=hero(`${rows.length} learner${rows.length>1?"s":""} this week · ${leftTxt}`)+`<div class="card" style="padding:6px">${body}</div>`+
+      (rows.length<4?`<div class="card stack" style="margin-top:12px"><b>Invite friends and family</b><p class="sub" style="margin:0">Send them <b>feli.yasso.se</b> and race each other this week.</p></div>`:"")+
+      `<p class="sub" style="text-align:center;margin-top:12px;font-size:14px">Only first names and XP are shown.</p>`;
+  };
+  draw();
+  if(Date.now()-LG.at>30000||!LG.rows) loadLeague().then(draw);
+}
+const LG={rows:null,at:0,state:"idle",err:""};
+async function loadLeague(){
+  if(!CLOUD||!SES) return;
+  LG.state="loading";
+  try{ if(!(await freshToken())) return;
+    await pushLeague();
+    LG.rows=await api("/rest/v1/league?select=user_id,name,week_xp&week=eq."+S.week+"&order=week_xp.desc&limit=100");
+    LG.state="ok"; LG.at=Date.now();
+  }catch(e){ LG.state="error"; LG.err=e.message||""; }
+}
+async function pushLeague(){
+  if(!CLOUD||!SES) return;
+  if(S.leagueHidden){ try{ await api("/rest/v1/league?user_id=eq."+SES.user.id,{method:"DELETE"}); }catch(e){} return; }
+  await api("/rest/v1/league",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify({user_id:SES.user.id,name:(userName()||"Learner").slice(0,40),week:S.week,week_xp:Math.min(S.weekXp||0,100000),updated_at:new Date().toISOString()})});
 }
 function renderProfile(el){
   const nDone=Object.keys(S.done).length;
@@ -755,12 +795,13 @@ function renderProfile(el){
   <h2 class="sec">Achievements</h2>
   <div class="card" style="padding-block:4px">${ach.map(a=>{const v=Math.min(a.v,a.g);return `<div class="ach"><span class="medal" style="background:${v>=a.g?a.c:"var(--lock)"};color:${v>=a.g?"#fff":"var(--lock-ink)"}">${v>=a.g?"<b>★</b>DONE":"<b>"+Math.round(v/a.g*100)+"%</b>"}</span><div class="q-body"><h3>${a.n}</h3><p>${a.d}</p><div class="pbar"><i style="width:${v/a.g*100}%"></i><span>${v} / ${a.g}</span></div></div></div>`;}).join("")}</div>
   <h2 class="sec">Settings</h2>
-  <div class="card stack"><div class="setting"><span>Sounds and auto-play voice</span><button class="switch" id="snd" role="switch" aria-checked="${S.sound}" aria-label="Sounds"></button></div><div class="setting"><span>Show Arabic letters<small style="display:block;color:var(--muted);font-weight:600">For learners who can read Arabic</small></span><button class="switch" id="arb" role="switch" aria-checked="${S.arabic}" aria-label="Show Arabic letters"></button></div></div>
+  <div class="card stack"><div class="setting"><span>Sounds and auto-play voice</span><button class="switch" id="snd" role="switch" aria-checked="${S.sound}" aria-label="Sounds"></button></div><div class="setting"><span>Show Arabic letters<small style="display:block;color:var(--muted);font-weight:600">For learners who can read Arabic</small></span><button class="switch" id="arb" role="switch" aria-checked="${S.arabic}" aria-label="Show Arabic letters"></button></div>${CLOUD&&SES?`<div class="setting"><span>Show me in the league<small style="display:block;color:var(--muted);font-weight:600">Others see your first name and weekly XP</small></span><button class="switch" id="lgs" role="switch" aria-checked="${!S.leagueHidden}" aria-label="Show me in the league"></button></div>`:""}</div>
   ${reviewCard()}
   <button class="btn ghost wide" id="reset">Reset progress</button></div>`;
   wireAccount();
   $("#snd").onclick=()=>{S.sound=!S.sound;save();render();sTap();};
   $("#arb").onclick=()=>{S.arabic=!S.arabic;save();render();sTap();};
+  const lgs=$("#lgs"); if(lgs) lgs.onclick=()=>{S.leagueHidden=!S.leagueHidden;save();LG.at=0;pushLeague().catch(()=>{});render();sTap();};
   const rv=$("#open-review"); if(rv) rv.onclick=openReview;
   let armed=false; $("#reset").onclick=e=>{ if(!armed){armed=true;e.target.textContent="Tap again to reset";return;} const c=S.checked,s=S.sound,a=S.arabic; S=fresh(); S.checked=c; S.sound=s; S.arabic=a; S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}}; S.week=weekId(); save(); setTab("learn"); };
 }
@@ -925,7 +966,7 @@ async function signIn(email,password){
 }
 async function signOut(){
   try{ await pushNow(); await api("/auth/v1/logout",{method:"POST"}); }catch(e){}
-  SES=null; storeSes(); syncState="idle"; IS_REVIEWER=false; CHECKS={}; render();
+  SES=null; storeSes(); syncState="idle"; IS_REVIEWER=false; CHECKS={}; LG.rows=null; LG.at=0; render();
 }
 
 /* combine device progress and cloud progress without losing either */
@@ -937,7 +978,7 @@ function mergeState(a,b){
   if(later){ r.streak=later.streak; r.lastDay=later.lastDay; } else r.streak=Math.max(a.streak||0,b.streak||0);
   r.days=[...new Set([...(a.days||[]),...(b.days||[])])].sort().slice(-14);
   if(a.week===b.week) r.weekXp=Math.max(a.weekXp||0,b.weekXp||0);
-  r.sound=a.sound; r.arabic=a.arabic;
+  r.sound=a.sound; r.arabic=a.arabic; r.leagueHidden=!!(a.leagueHidden||b.leagueHidden);
   return r;
 }
 async function pullAndMerge(){
@@ -957,6 +998,7 @@ async function pushNow(){
   try{
     await api("/rest/v1/progress",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify({user_id:SES.user.id,data:S,updated_at:new Date().toISOString()})});
     syncState="ok"; lastSync=new Date(); syncErr="";
+    try{ await pushLeague(); }catch(e){}
   }catch(e){ syncState="error"; syncErr=e.message||""; }
   refreshSync();
 }

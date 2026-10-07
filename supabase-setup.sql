@@ -62,3 +62,26 @@ grant execute on function public.is_reviewer() to authenticated;
 -- Add yourself (and your Mosul speaker) as reviewers. Replace the email, then run.
 -- To add more people later, run this line again with their email.
 insert into public.reviewers (email) values ('YOUR-EMAIL@example.com') on conflict do nothing;
+
+-- ============ League (weekly leaderboard) ============
+-- Each learner has one row: first name + XP for the current week.
+-- Signed-in learners can see everyone's row, but only change their own.
+
+create table if not exists public.league (
+  user_id    uuid primary key references auth.users (id) on delete cascade,
+  name       text not null default 'Learner' check (char_length(name) <= 40),
+  week       date not null,
+  week_xp    integer not null default 0 check (week_xp between 0 and 100000),
+  updated_at timestamptz not null default now()
+);
+create index if not exists league_week_xp on public.league (week, week_xp desc);
+alter table public.league enable row level security;
+drop policy if exists "signed-in see league" on public.league;
+drop policy if exists "add own league row"   on public.league;
+drop policy if exists "change own league row" on public.league;
+drop policy if exists "remove own league row" on public.league;
+create policy "signed-in see league"  on public.league for select to authenticated using (true);
+create policy "add own league row"    on public.league for insert to authenticated with check (auth.uid() = user_id);
+create policy "change own league row" on public.league for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
+create policy "remove own league row" on public.league for delete to authenticated using (auth.uid() = user_id);
+grant select, insert, update, delete on public.league to authenticated;
