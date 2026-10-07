@@ -264,6 +264,16 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .fld input{font:inherit;font-weight:700;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 14px}
 .fld input:focus{outline:none;border-color:var(--blue)}
 .ferr{margin:0;color:var(--bad);font-size:15px}
+.rchips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.rchip{flex:none;border:2px solid var(--line);background:var(--surface);border-radius:99px;padding:6px 12px;font-weight:800;font-size:14px;color:var(--muted)}
+.rchip[aria-pressed="true"]{border-color:var(--primary);background:var(--primary-soft);color:var(--primary)}
+.rv{display:flex;flex-direction:column;gap:10px;padding:14px}
+.rv-top{display:flex;gap:12px;align-items:center}
+.rv-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rbtn{border:2px solid var(--line);border-bottom-width:4px;background:var(--surface);border-radius:12px;padding:8px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:6px;color:var(--muted)}
+.rbtn svg{width:18px;height:18px}
+.rbtn.ok[aria-pressed="true"]{border-color:#A5ED6E;background:var(--good-bg);color:var(--good)}
+.rbtn.fix[aria-pressed="true"]{border-color:#FFB2B2;background:var(--bad-bg);color:var(--bad)}
 canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
 @media (prefers-reduced-motion: reduce){ .start,.combo{animation:none} *{transition:none!important;animation:none!important} }
 </style>
@@ -287,13 +297,14 @@ canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
 <nav class="tabs" aria-label="Sections"><div class="tabs-in" id="tabs"></div></nav>
 <div class="overlay" id="lesson" hidden></div>
 <div class="sheet-bg" id="sheet" hidden></div>
+<div class="overlay" id="review" hidden></div>
 
 <script>
 /* ================= ACCOUNTS CONFIG =================
    Paste your Supabase project's URL and anon (public) key here.
    Leave them empty and the app runs without accounts, saving progress on this device only. */
-const SUPABASE_URL="";
-const SUPABASE_ANON_KEY="";
+const SUPABASE_URL="https://buxdpufszmtyacrwyokm.supabase.co";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1eGRwdWZzem10eWFjcnd5b2ttIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEzNzY5NDYsImV4cCI6MjEwNjk1Mjk0Nn0.pFmUuJUtxlEfJyrLBBWQ-S4l0ij-mou6jJ2iUDz-Kvw";
 const CLOUD=!!(SUPABASE_URL&&SUPABASE_ANON_KEY);
 const SKEY="maslawi-session-v1";
 let SES=null, syncState="idle", lastSync=null, syncTimer=null;
@@ -679,7 +690,7 @@ function renderLearn(el){
     });
     h+=`${mascot(ui===1?"wow":"happy","path-mascot")}</div></section>`;
   });
-  h+=`<p class="proto">Prototype: every phrase is written in English letters. Turn on Arabic letters in Profile if you want them. Each phrase is a draft for a native speaker to check. League members are sample names.</p>`;
+  if(canReview()) h+=`<p class="proto">Prototype: every phrase is written in English letters. Turn on Arabic letters in Profile if you want them. Each phrase is a draft for a native speaker to check. League members are sample names.</p>`;
   el.innerHTML=h;
   el.querySelectorAll(".path-mascot").forEach((m,i)=>{m.style[i%2?"left":"right"]="0";});
   el.querySelectorAll(".node[data-l]").forEach(b=>b.onclick=()=>{const i=+b.dataset.l; if(lessonOpen(i)){sTap();startLesson(i);} });
@@ -726,7 +737,7 @@ function renderLeague(el){
   <div class="card" style="padding:6px">${rows.map((r,i)=>`${i===3?'<div class="zone up">▲ Promotion zone</div>':""}${i===rows.length-2?'<div class="zone down">▼ Demotion zone</div>':""}<div class="lrow ${r.me?"me":""}"><span class="rank" style="color:${i<3?"var(--good)":i>=rows.length-2?"var(--bad)":"var(--muted)"}">${i+1}</span><span class="av" style="background:${r.c}">${r.n[0]}</span><span class="nm">${esc(r.n)}</span><span class="px">${r.x} XP</span></div>`).join("")}</div>`;
 }
 function renderProfile(el){
-  const nDone=Object.keys(S.done).length, words=Object.keys(W), nChk=words.filter(k=>S.checked[k]).length;
+  const nDone=Object.keys(S.done).length;
   const ach=[
     {n:"Wildfire",d:"Reach a 3-day streak",v:S.streak,g:3,c:"var(--flame)"},
     {n:"Sage",d:"Earn 100 XP",v:S.xp,g:100,c:"var(--good-btn)"},
@@ -745,14 +756,12 @@ function renderProfile(el){
   <div class="card" style="padding-block:4px">${ach.map(a=>{const v=Math.min(a.v,a.g);return `<div class="ach"><span class="medal" style="background:${v>=a.g?a.c:"var(--lock)"};color:${v>=a.g?"#fff":"var(--lock-ink)"}">${v>=a.g?"<b>★</b>DONE":"<b>"+Math.round(v/a.g*100)+"%</b>"}</span><div class="q-body"><h3>${a.n}</h3><p>${a.d}</p><div class="pbar"><i style="width:${v/a.g*100}%"></i><span>${v} / ${a.g}</span></div></div></div>`;}).join("")}</div>
   <h2 class="sec">Settings</h2>
   <div class="card stack"><div class="setting"><span>Sounds and auto-play voice</span><button class="switch" id="snd" role="switch" aria-checked="${S.sound}" aria-label="Sounds"></button></div><div class="setting"><span>Show Arabic letters<small style="display:block;color:var(--muted);font-weight:600">For learners who can read Arabic</small></span><button class="switch" id="arb" role="switch" aria-checked="${S.arabic}" aria-label="Show Arabic letters"></button></div></div>
-  <h2 class="sec">Content check · ${nChk}/${words.length}</h2>
-  <p class="sub" style="margin:0">For you and your Maslawi speaker: confirm each phrase once it's checked as real Mosul usage.</p>
-  <div class="card" style="padding-block:4px">${words.map(k=>`<div class="review-row"><div class="w"><span class="say">${esc(W[k].tr)}</span>${arSm(k,true)}<small>${esc(W[k].en)}</small></div>${lbtn(k)}<button class="chk" data-k="${k}" aria-pressed="${!!S.checked[k]}">${S.checked[k]?"Confirmed":"Confirm"}</button></div>`).join("")}</div>
+  ${reviewCard()}
   <button class="btn ghost wide" id="reset">Reset progress</button></div>`;
   wireAccount();
   $("#snd").onclick=()=>{S.sound=!S.sound;save();render();sTap();};
   $("#arb").onclick=()=>{S.arabic=!S.arabic;save();render();sTap();};
-  el.querySelectorAll(".chk").forEach(b=>b.onclick=()=>{S.checked[b.dataset.k]=!S.checked[b.dataset.k];save();render();});
+  const rv=$("#open-review"); if(rv) rv.onclick=openReview;
   let armed=false; $("#reset").onclick=e=>{ if(!armed){armed=true;e.target.textContent="Tap again to reset";return;} const c=S.checked,s=S.sound,a=S.arabic; S=fresh(); S.checked=c; S.sound=s; S.arabic=a; S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}}; S.week=weekId(); save(); setTab("learn"); };
 }
 function render(){ refreshTop(); const el=$("#screen"); ({learn:renderLearn,words:renderWords,quests:renderQuests,league:renderLeague,profile:renderProfile})[tab](el); }
@@ -916,7 +925,7 @@ async function signIn(email,password){
 }
 async function signOut(){
   try{ await pushNow(); await api("/auth/v1/logout",{method:"POST"}); }catch(e){}
-  SES=null; storeSes(); syncState="idle"; render();
+  SES=null; storeSes(); syncState="idle"; IS_REVIEWER=false; CHECKS={}; render();
 }
 
 /* combine device progress and cloud progress without losing either */
@@ -939,6 +948,7 @@ async function pullAndMerge(){
     if(rows&&rows[0]&&rows[0].data){ S=mergeState(S,rows[0].data); try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){} }
     await pushNow();
   }catch(e){ syncState="error"; refreshSync(); }
+  await loadReviewer();
   render();
 }
 async function pushNow(){
@@ -997,6 +1007,64 @@ function authSheet(mode){
     }
   };
   function showErr(m){ err.textContent=m; err.hidden=false; }
+}
+
+/* ================= CONTENT CHECK (shared between reviewers) =================
+   Cloud mode: only accounts listed in the Supabase "reviewers" table see it, and
+   everyone on that list shares one set of checks. Local mode: saved on this device. */
+let IS_REVIEWER=false, CHECKS={}, revFilter="todo", revKeep=new Set();
+const canReview=()=>!CLOUD||IS_REVIEWER;
+try{ const old=S.checked||{}; if(!S.reviews){ S.reviews={}; Object.keys(old).forEach(k=>{if(old[k])S.reviews[k]={status:"ok",note:""};}); } }catch(e){}
+async function loadReviewer(){
+  if(!CLOUD||!SES){ IS_REVIEWER=false; return; }
+  try{ if(!(await freshToken())) return;
+    const r=await api("/rest/v1/reviewers?select=email"); IS_REVIEWER=!!(r&&r.length);
+    if(IS_REVIEWER){ const rows=await api("/rest/v1/phrase_checks?select=phrase,status,note,checked_by"); CHECKS={}; (rows||[]).forEach(x=>CHECKS[x.phrase]=x); }
+  }catch(e){ IS_REVIEWER=false; }
+}
+const checksMap=()=>CLOUD?CHECKS:(S.reviews||(S.reviews={}));
+function reviewCounts(){ const m=checksMap(), ks=Object.keys(W); const ok=ks.filter(k=>m[k]&&m[k].status==="ok").length, fix=ks.filter(k=>m[k]&&m[k].status==="fix").length; return {all:ks.length,ok,fix,todo:ks.length-ok-fix}; }
+function reviewCard(){
+  if(!canReview()) return "";
+  const c=reviewCounts();
+  return `<h2 class="sec">Content check</h2><div class="card stack"><div class="pbar"><i style="width:${c.ok/c.all*100}%;background:var(--good-btn)"></i><span>${c.ok} correct · ${c.fix} need a fix · ${c.todo} to check</span></div><p class="sub" style="margin:0">${CLOUD?"Shared with everyone on your reviewers list.":"Saved on this device."}</p><button class="btn wide" id="open-review">Check phrases</button></div>`;
+}
+async function saveCheck(k,status,note){
+  const m=checksMap(), by=CLOUD&&SES?(SES.user.email||""):"";
+  if(status===null){ delete m[k]; } else m[k]={phrase:k,status,note:note||"",checked_by:by};
+  if(!CLOUD){ save(); return true; }
+  try{ await freshToken();
+    if(status===null) await api("/rest/v1/phrase_checks?phrase=eq."+encodeURIComponent(k),{method:"DELETE"});
+    else await api("/rest/v1/phrase_checks",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify({phrase:k,status,note:note||"",checked_by:by,updated_at:new Date().toISOString()})});
+    return true;
+  }catch(e){ toast("Couldn't save. Check your internet."); return false; }
+}
+function openReview(){ revKeep.clear(); $("#review").hidden=false; document.body.style.overflow="hidden"; drawReview(); }
+function closeReview(){ $("#review").hidden=true; $("#review").innerHTML=""; document.body.style.overflow=""; render(); }
+function drawReview(){
+  const m=checksMap(), c=reviewCounts();
+  const keys=Object.keys(W).filter(k=>{const st=m[k]&&m[k].status; return revKeep.has(k)||revFilter==="all"||(revFilter==="todo"&&!st)||st===revFilter;});
+  const chip=(f,label,n)=>`<button class="rchip" data-f="${f}" aria-pressed="${revFilter===f}">${label} <b>${n}</b></button>`;
+  $("#review").innerHTML=`<div class="l-in"><div class="l-head"><button class="x" id="rv-x" aria-label="Close">${I.x}</button><h2 class="sec" style="margin:0;flex:1">Content check</h2><button class="btn ghost blue" id="rv-copy" style="padding:8px 12px" ${c.fix?"":"disabled"}>Copy fixes</button></div>
+  <div class="rchips">${chip("todo","To check",c.todo)}${chip("fix","Needs fix",c.fix)}${chip("ok","Correct",c.ok)}${chip("all","All",c.all)}</div>
+  <div class="l-body" style="gap:10px">${keys.length?keys.map(k=>{const r=m[k]||{},w=W[k];return `<div class="card rv" data-k="${k}"><div class="rv-top">${lbtn(k)}<div style="min-width:0;flex:1"><span class="say" style="font-size:19px">${esc(w.tr)}</span><span class="arsm">${w.ar}</span><small style="display:block;color:var(--muted);font-weight:600">${esc(w.en)}</small></div></div>
+    <div class="rv-btns"><button class="rbtn ok" data-s="ok" aria-pressed="${r.status==="ok"}">${I.ok}Correct</button><button class="rbtn fix" data-s="fix" aria-pressed="${r.status==="fix"}">Needs fix</button></div>
+    ${r.status==="fix"?`<label class="fld" style="font-size:14px">How do people in Mosul say it?<input class="rv-note" value="${esc(r.note||"")}" placeholder="e.g. the right spelling, word or meaning" maxlength="300"></label>`:""}
+    ${r.checked_by?`<small style="color:var(--muted);font-weight:600">Checked by ${esc(r.checked_by)}</small>`:""}</div>`;}).join(""):`<div class="end" style="flex:none;padding-block:40px">${mascot("happy")}<p class="sub">Nothing here.</p></div>`}</div></div>`;
+  $("#rv-x").onclick=closeReview;
+  document.querySelectorAll(".rchip").forEach(b=>b.onclick=()=>{revFilter=b.dataset.f;revKeep.clear();drawReview();});
+  document.querySelectorAll(".rv").forEach(card=>{
+    const k=card.dataset.k;
+    card.querySelectorAll(".rbtn").forEach(b=>b.onclick=async()=>{const cur=m[k]&&m[k].status, st=b.dataset.s===cur?null:b.dataset.s; revKeep.add(k); await saveCheck(k,st,st==="fix"?((m[k]&&m[k].note)||""):""); sTap(); const y=$("#review .l-body").scrollTop; drawReview(); $("#review .l-body").scrollTop=y; if(st==="fix"){const inp=document.querySelector(`.rv[data-k="${k}"] .rv-note`); if(inp) inp.focus();}});
+    const inp=card.querySelector(".rv-note");
+    if(inp) inp.onchange=async()=>{ if(await saveCheck(k,"fix",inp.value.trim())) toast("Saved"); };
+  });
+  $("#rv-copy").onclick=()=>{
+    const txt=Object.keys(W).filter(k=>m[k]&&m[k].status==="fix").map(k=>`- ${W[k].tr} (${W[k].en}): ${(m[k].note||"no note").trim()}`).join("\n");
+    const done=()=>toast("Copied. Paste it to Claude to apply the fixes.");
+    try{ navigator.clipboard.writeText("Maslawi fixes:\n"+txt).then(done,()=>sheet(`<h2 class="sec" style="margin:0">Fixes to send</h2><textarea class="type-in" readonly style="min-height:240px">${esc("Maslawi fixes:\n"+txt)}</textarea><button class="btn wide" data-close>Done</button>`)); }
+    catch(e){ sheet(`<textarea class="type-in" readonly style="min-height:240px">${esc(txt)}</textarea><button class="btn wide" data-close>Done</button>`); }
+  };
 }
 
 /* offline + install support when served from a website */
