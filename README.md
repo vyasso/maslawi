@@ -19,6 +19,8 @@ Open `index.html` and search for:
 - `const W=` – every phrase: English-letter spelling (`tr`), Arabic (`ar`), meaning (`en`) and an optional `note`
 - `const UNITS=` – unit titles, guidebook tips and Mosul facts
 - `const LESSONS=` – the exercises in each lesson
+- `const CONVOS=` – the conversation at the end of each unit
+- `TO_F` / `SELF_F` – which phrases change when talking to a woman, or when a woman talks about herself
 
 New phrases need an audio clip in `const AUD=` (ask Claude to generate one).
 
