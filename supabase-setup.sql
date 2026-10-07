@@ -17,3 +17,41 @@ drop policy if exists "update own progress" on public.progress;
 create policy "read own progress"   on public.progress for select using (auth.uid() = user_id);
 create policy "insert own progress" on public.progress for insert with check (auth.uid() = user_id);
 create policy "update own progress" on public.progress for update using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+-- ============ Content check (reviewers only) ============
+-- Only people whose email is in "reviewers" can see and change phrase checks.
+-- Everyone on the list shares the same checks.
+
+create table if not exists public.reviewers (
+  email text primary key
+);
+alter table public.reviewers enable row level security;
+drop policy if exists "see own reviewer row" on public.reviewers;
+create policy "see own reviewer row" on public.reviewers
+  for select using (lower(email) = lower(auth.jwt() ->> 'email'));
+
+create or replace function public.is_reviewer() returns boolean
+  language sql stable security definer set search_path = public as $$
+  select exists (select 1 from public.reviewers where lower(email) = lower(auth.jwt() ->> 'email'))
+$$;
+
+create table if not exists public.phrase_checks (
+  phrase     text primary key,
+  status     text not null check (status in ('ok', 'fix')),
+  note       text not null default '',
+  checked_by text,
+  updated_at timestamptz not null default now()
+);
+alter table public.phrase_checks enable row level security;
+drop policy if exists "reviewers read checks"   on public.phrase_checks;
+drop policy if exists "reviewers add checks"    on public.phrase_checks;
+drop policy if exists "reviewers change checks" on public.phrase_checks;
+drop policy if exists "reviewers remove checks" on public.phrase_checks;
+create policy "reviewers read checks"   on public.phrase_checks for select using (public.is_reviewer());
+create policy "reviewers add checks"    on public.phrase_checks for insert with check (public.is_reviewer());
+create policy "reviewers change checks" on public.phrase_checks for update using (public.is_reviewer()) with check (public.is_reviewer());
+create policy "reviewers remove checks" on public.phrase_checks for delete using (public.is_reviewer());
+
+-- Add yourself (and your Mosul speaker) as reviewers. Replace the email, then run.
+-- To add more people later, run this line again with their email.
+insert into public.reviewers (email) values ('YOUR-EMAIL@example.com') on conflict do nothing;

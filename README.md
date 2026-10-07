@@ -32,10 +32,21 @@ The site is published with GitHub Pages at **https://feli.yasso.se** (the `CNAME
 2. In the SQL Editor, run `supabase-setup.sql`.
 3. In Project Settings → API, copy the Project URL and the `anon` public key.
 4. Paste them into `SUPABASE_URL` and `SUPABASE_ANON_KEY` near the top of the script in `index.html`, then push.
-5. Optional while testing: Authentication → Sign In / Providers → Email → turn off "Confirm email".
+5. In Authentication → URL Configuration, set **Site URL** to `https://feli.yasso.se`, so confirmation emails link back to the app.
+6. Optional while testing: Authentication → Sign In / Providers → Email → turn off "Confirm email".
 
 The anon key is meant to be public. Row level security in `supabase-setup.sql` keeps each user's progress private.
 
 ## Audio
 
 Clips were generated with the open-source Piper voice `ar_JO-kareem-medium` (a Jordanian Arabic voice). Check its dataset licence before publishing the app commercially.
+
+## Content check
+
+Only accounts whose email is in the `reviewers` table see **Profile → Content check**. Reviewers mark each phrase as *Correct* or *Needs fix* and can write how people in Mosul really say it. Everyone on the list shares the same checks. **Copy fixes** copies all the fixes as a list you can paste to Claude.
+
+Add a reviewer in Supabase → SQL Editor:
+
+```sql
+insert into public.reviewers (email) values ('their@email.com');
+```
