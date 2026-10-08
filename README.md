@@ -2,7 +2,7 @@
 
 A Duolingo-style app for learning the Mosul (Maslawi) dialect of Iraqi Arabic. Phrases are written in simple English letters, every phrase has audio, and learners can make an account so their progress follows them between devices.
 
-17 units, 51 levels (including 17 conversations) and 210 phrases. Learners can pick a light or dark theme (or follow their device) in Settings, practise with listening, flashcards and mistake review, buy streak freezes with gems, and see their weekly XP on their profile.
+17 units, 51 levels (including 17 conversations) and 210 phrases. The mascot is Istikan, a Maslawi tea glass. Learners do daily quests on the Learn page, look up any word in English or Maslawi ("hi" finds *merhaba*), practise with listening, flashcards, mistake review and "freshen up", spend gems by tapping the gem counter, pick a light or dark theme in Settings, and see their weekly XP on their profile.
 
 Made by A. Yasso.
 
@@ -23,6 +23,7 @@ Open `index.html` and search for:
 - `const LESSONS=` – the exercises in each lesson
 - `const CONVOS=` – the conversation at the end of each unit
 - `TO_F` / `SELF_F` – which phrases change when talking to a woman, or when a woman talks about herself
+- `const SYN=` – other English words and spellings that should find a phrase in search (most likely first)
 
 New phrases need an audio clip in `const AUD=` (ask Claude to generate one).
 
@@ -47,7 +48,7 @@ Clips were generated with the open-source Piper voice `ar_JO-kareem-medium` (a J
 
 ## Content check
 
-Only accounts whose email is in the `reviewers` table see **Profile → Content check**. Reviewers mark each phrase as *Correct* or *Needs fix* and can write how people in Mosul really say it. Everyone on the list shares the same checks. **Copy fixes** copies all the fixes as a list you can paste to Claude.
+Only accounts whose email is in the `reviewers` table see **Settings (the gear) → Reviewer tools → Content check**. Reviewers mark each phrase as *Correct* or *Needs fix* and can write how people in Mosul really say it. Everyone on the list shares the same checks. **Copy fixes** copies all the fixes as a list you can paste to Claude.
 
 Add a reviewer in Supabase → SQL Editor:
 
