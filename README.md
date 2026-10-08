@@ -1,8 +1,12 @@
 # Maslawi
 
-A Duolingo-style app for learning the Mosul (Maslawi) dialect of Iraqi Arabic. Phrases are written in simple English letters, every phrase has audio, and learners can make an account so their progress follows them between devices.
+A Duolingo-style app for learning the Mosul (Maslawi) dialect of Iraqi Arabic, in English or Swedish. Phrases are written in simple English letters, every phrase has audio, and learners can make an account so their progress follows them between devices.
 
-17 units, 51 levels (including 17 conversations) and 210 phrases. The mascot is Istikan, a Maslawi tea glass. Learners do daily quests on the Learn page, look up any word in English or Maslawi ("hi" finds *merhaba*), practise with listening, flashcards, mistake review and "freshen up", spend gems by tapping the gem counter, pick a light or dark theme in Settings, and see their weekly XP on their profile.
+24 units, 72 levels (including 24 conversations) and 306 phrases, from greetings to *At the doctor*, *At work*, *Moods*, *Compliments*, *Wedding*, *Christmas & Easter* and *Sayings*. The mascot is Istikan, a Maslawi tea glass. Learners do daily quests on the Learn page, look up any word in English, Swedish or Maslawi ("hi" and "hej" both find *merhaba*), practise with listening, flashcards, mistake review and "freshen up", spend gems by tapping the gem counter, pick a light or dark theme in Settings, and see their weekly XP on their profile.
+
+The Words page also has a **sound guide** (kh, gh, q, the deep h, ayn and more, each with words you can play) and an optional **Arabic letters** track: 8 short lessons that teach the 28 letters of the alphabet plus چ, ة, ء and ال, their shapes and how to read simple words.
+
+The app speaks the phone's language: Swedish on a Swedish phone, English everywhere else. Learners can switch on the welcome screen or in Settings.
 
 Made by A. Yasso.
 
@@ -24,8 +28,13 @@ Open `index.html` and search for:
 - `const CONVOS=` – the conversation at the end of each unit
 - `TO_F` / `SELF_F` – which phrases change when talking to a woman, or when a woman talks about herself
 - `const SYN=` – other English words and spellings that should find a phrase in search (most likely first)
+- `const SV_W=` / `SV_N=` – the Swedish meaning and note for each phrase
+- `const SV_TXT=` – Swedish for unit titles, tips, facts, conversation titles and build sentences (keyed by the English text)
+- `const SV_ACC=` / `SV_SYN=` – extra Swedish answers to accept when typing, and Swedish search words
+- `const GUIDE=` – the sound guide
+- `const LT=` / `LT_GROUPS=` – the Arabic letters and how they are grouped into lessons
 
-New phrases need an audio clip in `const AUD=` (ask Claude to generate one).
+New phrases need an audio clip in `const AUD=` (ask Claude to generate one). Letter names use the keys `L_alif`, `L_ba` and so on.
 
 ## Publishing
 
