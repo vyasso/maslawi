@@ -76,7 +76,6 @@ button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 
 /* top bar */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding-block:12px;border-bottom:2px solid var(--line)}
-.course{display:flex;align-items:center;gap:6px;border:2px solid var(--line);border-radius:12px;padding:2px 10px;font-family:var(--arabic);font-size:18px;font-weight:800;color:var(--primary)}
 .stats{display:flex;gap:16px;font-weight:900;font-variant-numeric:tabular-nums}
 .stat{display:flex;align-items:center;gap:5px}
 .stat svg{width:24px;height:24px}
@@ -108,7 +107,6 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .tr{color:var(--primary);font-weight:800}
 .note{font-size:14px;color:var(--muted);margin-top:6px;font-weight:600}
 .quest{display:flex;gap:14px;align-items:center}
-.quest svg{width:48px;height:48px;flex:none}
 .quest .q-body{flex:1;min-width:0}
 .quest h3{margin:0 0 6px;font-size:17px}
 .pbar{position:relative;height:18px;border-radius:99px;background:var(--line);overflow:hidden}
@@ -129,7 +127,7 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .sbox{border:2px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;gap:10px;align-items:center}
 .sbox svg{width:26px;height:26px;flex:none}
 .sbox b{display:block;font-size:20px;font-variant-numeric:tabular-nums;line-height:1.1}
-.sbox span{font-size:13px;color:var(--muted)}
+.sbox .sb-l{font-size:13px;color:var(--muted)}
 .ach{display:flex;gap:14px;align-items:center;padding-block:12px;border-bottom:2px solid var(--line)}
 .ach:last-child{border-bottom:0}
 .ach .medal{width:56px;height:62px;border-radius:12px;display:grid;place-items:center;color:#fff;flex:none;font-weight:900;font-size:13px;text-align:center;line-height:1}
@@ -217,11 +215,11 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .end .mascot{width:150px;height:150px}
 .endstats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:420px}
 .es{border:2px solid;border-radius:16px;overflow:hidden}
-.es span{display:block;color:#fff;font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:4px}
+.es>span{display:block;color:#fff;font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:4px}
 .es b{display:flex;align-items:center;justify-content:center;gap:4px;padding:12px 4px;font-size:20px;font-variant-numeric:tabular-nums;background:var(--surface)}
-.es.y{border-color:var(--gold)} .es.y span{background:var(--gold)} .es.y b{color:var(--gold-deep)}
-.es.g{border-color:var(--good-btn)} .es.g span{background:var(--good-btn)} .es.g b{color:var(--good)}
-.es.b{border-color:var(--blue)} .es.b span{background:var(--blue)} .es.b b{color:var(--blue)}
+.es.y{border-color:var(--gold)} .es.y>span{background:var(--gold)} .es.y b{color:var(--gold-deep)}
+.es.g{border-color:var(--good-btn)} .es.g>span{background:var(--good-btn)} .es.g b{color:var(--good)}
+.es.b{border-color:var(--blue)} .es.b>span{background:var(--blue)} .es.b b{color:var(--blue)}
 .bigflame{width:140px;height:140px;color:var(--flame)}
 .streaknum{font-family:var(--display);font-size:80px;line-height:1;color:var(--flame);font-weight:800;font-variant-numeric:tabular-nums}
 .week{display:flex;gap:6px;justify-content:center;border:2px solid var(--line);border-radius:16px;padding:12px}
@@ -464,11 +462,6 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .wr-sp svg{width:22px;height:22px}
 .wr.ping .wr-sp{animation:ping .5s}
 @keyframes ping{40%{transform:scale(1.35)}}
-.sbars{display:inline-flex;align-items:flex-end;gap:2px;height:18px;flex:none}
-.sbars i{width:5px;border-radius:2px;background:var(--line)}
-.sbars i:nth-child(1){height:6px}.sbars i:nth-child(2){height:10px}.sbars i:nth-child(3){height:14px}.sbars i:nth-child(4){height:18px}
-.sbars i.on{background:var(--gold)}
-.sbars.s1 i.on{background:var(--bad-btn)}
 .wl-empty,.wl-more{margin:18px 0 0;text-align:center}
 
 /* listening + flashcards */
@@ -618,6 +611,118 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 /* progress-bar numbers stay readable over the gold fill in the night theme */
 :root[data-theme="dark"] .pbar span{text-shadow:0 1px 2px rgba(0,0,0,.7),0 0 2px rgba(0,0,0,.6)}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .pbar span{text-shadow:0 1px 2px rgba(0,0,0,.7),0 0 2px rgba(0,0,0,.6)} }
+/* ================= POLISH: brand, top-bar sheets, today card, words, profile ================= */
+:root{ --warn:#9A6200; --warn-bg:#FFF1CF; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --m-steam:#5A5F99; --m-edge:#8E97D6; --warn:#FFC857; --warn-bg:#3A2F14 } }
+:root[data-theme="dark"]{ --m-steam:#5A5F99; --m-edge:#8E97D6; --warn:#FFC857; --warn-bg:#3A2F14 }
+
+/* brand + stats in the top bar */
+.top{gap:8px}
+.brand{display:flex;align-items:center;gap:9px;border:0;background:none;padding:2px 4px 2px 0;border-radius:12px;min-width:0}
+.brand .logo{width:34px;height:34px;flex:none;display:block;filter:drop-shadow(0 3px 0 var(--primary-deep))}
+.brand b{font-family:var(--display);font-size:23px;font-weight:800;line-height:1;color:var(--ink);letter-spacing:-.01em}
+.stats{gap:2px;align-items:center}
+.top .stat{border:0;background:none;padding:6px 7px;border-radius:12px;font-size:16px;font-weight:900;line-height:1}
+.top .stat:active{background:var(--primary-soft);transform:scale(.94)}
+@media (hover:hover){ .top .stat:hover,.brand:hover{background:var(--primary-soft)} }
+.gear{margin-left:2px}
+@media (max-width:374px){ .brand b{display:none} .stats{gap:0} .top .stat{padding:6px 4px;gap:3px} .top .stat svg{width:22px;height:22px} .gear{padding:2px} }
+
+/* four tabs */
+.tabs-in{grid-template-columns:repeat(4,1fr)}
+.tab-ind{width:calc((100% - 16px) / 4)}
+.tab{font-size:12px}
+
+/* bottom sheets: a grab handle and a shared header */
+.sheet::before{content:"";align-self:center;width:44px;height:5px;border-radius:99px;background:var(--line);margin:-8px 0 0;flex:none}
+.sh-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.sh-head h2.sec{margin:0}
+.sh-head .sub{margin:2px 0 0}
+.sh-m{width:76px;height:76px;flex:none;margin:-10px -4px -10px 0}
+.sh-btns{display:flex;flex-direction:column;gap:12px}
+.gembal{flex:none;display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:99px;background:var(--sel-bg);color:var(--gem);font-weight:900;font-size:18px;font-variant-numeric:tabular-nums}
+.gembal svg{width:22px;height:22px}
+.ss-top{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:4px}
+.ss-flame{color:var(--flame);display:grid}
+.ss-flame svg{width:72px;height:72px}
+.ss-flame.off{filter:grayscale(1);opacity:.45}
+.ss-top b{display:block;font-family:var(--display);font-size:54px;line-height:.9;color:var(--flame);font-variant-numeric:tabular-nums}
+.ss-top span{font-weight:800;color:var(--muted)}
+.hs-top{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.hs-top h2.sec{margin:4px 0 0}
+.hs-top .sub{margin:0;max-width:36ch}
+.hs-row{display:flex;gap:6px;color:var(--lock-deep)}
+.hs-row span{display:grid}
+.hs-row span.on{color:var(--heart)}
+.hs-row svg{width:40px;height:40px}
+
+/* today card on Learn: goal ring, daily quests, mistakes */
+.hello{background:var(--surface);border:2px solid var(--line);border-bottom-width:4px;border-radius:20px;padding:14px 14px 12px;gap:0}
+.hello .revbtn{margin-top:12px;padding:12px 0 0;border:0;border-top:2px solid var(--line);border-radius:0;background:none}
+.hello .revbtn:active{transform:none;border-bottom-width:0}
+.qrow{display:flex;align-items:center;gap:10px;width:100%;margin-top:12px;padding:12px 0 0;border:0;border-top:2px solid var(--line);background:none;text-align:start;color:var(--ink)}
+.qr-t{flex:1;min-width:0}
+.qr-t b{display:block;font-size:16px}
+.qr-t small{display:block;color:var(--muted);font-weight:700;font-size:14px}
+.qrow.can-claim .qr-t small{color:var(--gold-deep)}
+.qr-ics{display:flex;gap:6px;flex:none}
+.qr-go{color:var(--lock-ink);display:grid;flex:none}
+.qr-go svg{width:20px;height:20px}
+.qi{position:relative;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--qc,var(--primary));flex:none}
+.qi .qring{position:absolute;inset:0;width:100%;height:100%}
+.qic{display:grid}
+.qic svg{width:17px;height:17px}
+.qi-claim{background:var(--gold);color:#fff;box-shadow:0 3px 0 var(--gold-deep);animation:qpulse 1.6s ease-in-out infinite}
+.qi-claim svg{width:20px;height:20px}
+.qi-ok{background:var(--good-bg);color:var(--good)}
+.qi-ok svg{width:18px;height:18px}
+@keyframes qpulse{50%{transform:scale(1.1)}}
+/* quests sheet */
+.quest{gap:12px}
+.quest .qbadge{width:46px;height:46px;border-radius:14px;flex:none;display:grid;place-items:center;color:var(--qc);background:color-mix(in srgb,var(--qc) 15%,transparent)}
+.quest .qbadge svg{width:26px;height:26px}
+.quest .qrew{flex:none;display:flex;align-items:center;gap:3px;color:var(--gem);font-variant-numeric:tabular-nums;min-width:44px;justify-content:flex-end}
+.quest .qrew svg{width:20px;height:20px}
+.quest .qrew.got{color:var(--good)}
+.quest .qrew.got svg{width:24px;height:24px}
+.btn.qclaim{flex:none;padding:10px 14px;font-size:14px}
+
+/* lesson: the mascot coaches you on new phrases */
+.coach{display:flex;align-items:flex-end;gap:6px;margin-top:auto}
+.coach .mascot{width:88px;height:88px}
+.coach .bubble{margin-bottom:26px}
+.coach .bubble b{display:block;font-family:var(--display);font-size:19px;font-weight:700;line-height:1.2}
+.coach .m-arm{transform-box:fill-box;transform-origin:14% 90%;animation:wave 2.8s ease-in-out infinite}
+.pm-btn .m-arm{transform-origin:14% 90%}
+
+.goalhit.qdone{color:var(--gem)}
+
+/* words: practice tiles, tags instead of signal bars, search */
+.t-teal{background:var(--teal);--tdeep:var(--teal-deep)}
+.ptile.t-done,.ptile.t-done:disabled{background:var(--good-bg);color:var(--good);box-shadow:0 5px 0 var(--good-line);cursor:default}
+.ptile.t-done .pt-ic{background:var(--surface)}
+.wr{padding:10px 12px 10px 10px}
+.wr-sp{width:42px;height:42px;border-radius:12px;background:var(--sel-bg);color:var(--blue)}
+.wr-sp svg{width:22px;height:22px}
+.fresh{flex:none;border-radius:99px;padding:4px 10px;font-size:12px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;line-height:1.2;white-space:nowrap}
+.fresh.f1{background:var(--bad-bg);color:var(--bad)}
+.fresh.f2{background:var(--warn-bg);color:var(--warn)}
+.fresh.fu{background:var(--lock);color:var(--muted)}
+.wr-later .say{color:var(--muted)}
+.wfilter{display:flex;gap:8px;margin-top:12px}
+.wg-h b{font-size:16px}
+.wl-none{display:flex;align-items:center;gap:12px;margin-top:16px;padding:14px;border:2px dashed var(--line);border-radius:18px}
+.wl-m{width:76px;height:76px;flex:none}
+.wl-none p{margin:0}
+.wl-none b{display:block}
+.wl-none span{display:block;color:var(--muted);font-weight:600}
+
+/* profile: coloured stat tiles */
+.sbox{padding:10px 12px;gap:10px}
+.sbox .sb-ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex:none;background:color-mix(in srgb,currentColor 14%,transparent)}
+.sbox .sb-ic svg{width:22px;height:22px}
+.sbox .sb-l{display:block;font-size:13px;color:var(--muted);line-height:1.2}
+.pf-av .mascot,.pf-m{width:78px;height:78px}
 canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
 @media (prefers-reduced-motion: reduce){ .start,.combo{animation:none} *{transition:none!important;animation:none!important} }
 </style>
@@ -628,11 +733,11 @@ canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
 
 <div class="app">
   <header class="top">
-    <span class="course" title="Course: Mosul Arabic">Maslawi</span>
+    <button class="brand" id="brand" aria-label="Maslawi: go to Learn"></button>
     <div class="stats">
-      <span class="stat c-flame" id="st-streak" title="Day streak"></span>
-      <span class="stat c-gem" title="Gems"></span>
-      <span class="stat c-heart" title="Hearts"></span>
+      <button class="stat c-flame" id="st-streak"></button>
+      <button class="stat c-gem" id="st-gems"></button>
+      <button class="stat c-heart" id="st-hearts"></button>
       <button class="gear" id="gear" aria-label="Settings"></button>
     </div>
   </header>
@@ -1325,7 +1430,7 @@ const dayNum=ds=>{ const [y,m,d]=String(ds).split("-").map(Number); return Math.
     else S.streak=0;
   }
   if(!S.joined) S.joined=Date.now();
-  if(!S.q||S.q.day!==today()) S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}};
+  if(!S.q||S.q.day!==today()){ if(S.q) S.hearts=5; S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}}; }
   if(S.week!==weekId()){S.week=weekId();S.weekXp=0;}
   save();
 })();
@@ -1531,11 +1636,56 @@ const LANDMARKS={
 const UNIT_LM=["hadba","talk","tea","house","souq","palms","door","heart","clock","gender","plate","bridge","weather","rug","cat","alarm","phone"];
 function landmarkSvg(ui){ const f=LANDMARKS[UNIT_LM[ui%UNIT_LM.length]]; return `<svg class="lm" viewBox="0 0 160 140" aria-hidden="true">${f()}</svg>`; }
 
-/* mascot: Istikan, a tea glass. mood: happy | wow | sad | wave */
+/* mascot: Istikan, a Maslawi tea glass (gold rim, waisted glass) on a lapis saucer.
+   mood: happy | wave | wow | cheer | sad | think */
+const M_GLASS="M28 18H92C92 42 89 60 79.5 76C76 82 85 86 85 94C85 101 80 105 73 105H47C40 105 35 101 35 94C35 86 44 82 40.5 76C31 60 28 42 28 18Z";
+const M_TEA="M31.2 30C31.4 46 34 61 42.4 76.5C45.6 82 38 86.5 38 93.5C38 97.4 41.2 99.4 46.6 99.4H73.4C78.8 99.4 82 97.4 82 93.5C82 86.5 74.4 82 77.6 76.5C86 61 88.6 46 88.8 30Z";
+const M_INK="#3A1A10";
+function mFace(mood,bare){
+  const INK=M_INK, look=mood==="sad"?[0,2.2]:mood==="think"?[-2,-2.6]:[1.6,.8], big=mood==="wow";
+  const eye=cx=>mood==="cheer"
+    ? `<path d="M${cx-7} 52q7-9 14 0" stroke="${INK}" stroke-width="3.6" fill="none" stroke-linecap="round"/>`
+    : `<ellipse cx="${cx}" cy="50" rx="${big?10:9}" ry="${big?11.5:10.4}" fill="#fff"/><circle cx="${cx+look[0]}" cy="${51+look[1]}" r="${big?4.6:5.4}" fill="${INK}"/><circle cx="${cx+look[0]+2}" cy="${48.6+look[1]}" r="1.9" fill="#fff"/><circle cx="${cx+look[0]-1.6}" cy="${53.4+look[1]}" r=".9" fill="#fff" opacity=".8"/>`;
+  const brows={sad:"M38 37.5l9-3.5M82 37.5l-9-3.5",wow:"M39 33q7-4.5 13-1M81 33q-7-4.5-13-1",think:"M39 37q7-2 12-.5M69 34.5q6-3.5 12 0"}[mood]||"M40 36.5q6-3.4 12-.8M80 36.5q-6-3.4-12-.8";
+  const smile=`<path d="M50.5 62.5q9.5 1.6 19 0q-1.4 10-9.5 10t-9.5-10z" fill="${INK}"/><path d="M54.6 69.6q5.4-3.6 10.8 0q-2.4 2.6-5.4 2.6t-5.4-2.6z" fill="#FF7B8F"/>`;
+  const mouth={
+    cheer:`<path d="M48.5 61q11.5 2 23 0q-1.4 13-11.5 13t-11.5-13z" fill="${INK}"/><path d="M53.4 70.4q6.6-4.4 13.2 0q-2.8 3.4-6.6 3.4t-6.6-3.4z" fill="#FF7B8F"/>`,
+    wow:`<ellipse cx="60" cy="67" rx="5.6" ry="6.6" fill="${INK}"/><ellipse cx="60" cy="70.2" rx="3.4" ry="2.4" fill="#FF7B8F"/>`,
+    sad:`<path d="M52.5 69.5q7.5-6 15 0" stroke="${INK}" stroke-width="3.4" fill="none" stroke-linecap="round"/>`,
+    think:`<path d="M51.5 67.2q4.5 1.6 9.5-1" stroke="${INK}" stroke-width="3.4" fill="none" stroke-linecap="round"/>`,
+  }[mood]||smile;
+  const cheeks=mood==="sad"||bare?"":`<ellipse cx="39.6" cy="63" rx="5" ry="3.2" fill="#FF8FA3" opacity=".8"/><ellipse cx="80.4" cy="63" rx="5" ry="3.2" fill="#FF8FA3" opacity=".8"/>`;
+  return `${cheeks}<g class="m-eyes">${eye(47)}${eye(73)}</g>${bare?"":`<path d="${brows}" stroke="${INK}" stroke-width="3.2" fill="none" stroke-linecap="round"/>`}${mouth}`;
+}
+function mGlass(face){ /* the glass, tea, gold rim and highlights around a face */
+  return `<path d="${M_GLASS}" fill="#EEF2FF"/><path d="${M_TEA}" fill="#DE5A1F"/>
+<path d="M88.8 30C88.6 46 86 61 77.6 76.5C79.6 63 82.2 49 82.4 30Z" fill="#B23A10" opacity=".5"/><path d="M82 93.5C82 97.4 78.8 99.4 73.4 99.4H68.5C73.5 98.6 76.6 96.4 76.8 92.4C77 88 74.6 84.6 75.4 80.6C78.6 84.2 82 88 82 93.5Z" fill="#B23A10" opacity=".5"/>
+<ellipse cx="60" cy="30" rx="28.8" ry="3.8" fill="#F28C44"/><ellipse cx="60" cy="29.4" rx="24" ry="2.2" fill="#F7A764" opacity=".8"/>
+<path d="M42.2 80.2Q60 83.6 77.8 80.2" stroke="#FFBA19" stroke-width="2.4" fill="none" stroke-linecap="round"/>${face}
+<path d="M34.2 25C34.4 38 36 50 40.5 61" stroke="#fff" stroke-opacity=".55" stroke-width="3.6" fill="none" stroke-linecap="round"/><circle cx="43" cy="66.5" r="1.9" fill="#fff" opacity=".45"/><path d="M41 89q-1.4 4 .8 7.6" stroke="#fff" stroke-opacity=".5" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+<path d="${M_GLASS}" fill="none" stroke="var(--m-edge,#C3CBEC)" stroke-width="2"/>
+<rect x="26.6" y="15" width="66.8" height="5.4" rx="2.7" fill="#FFBA19"/><rect x="29" y="15.6" width="62" height="1.6" rx=".8" fill="#FFE08A"/>`;
+}
 function mascot(mood="happy",cls="mascot"){
-  const mouth=mood==="sad"?'<path d="M42 66q6-5 12 0" stroke="#3C3C3C" stroke-width="3" fill="none" stroke-linecap="round"/>':mood==="wow"?'<ellipse cx="48" cy="66" rx="6" ry="7" fill="#3C3C3C"/><ellipse cx="48" cy="69" rx="3.5" ry="3" fill="#FF7A7A"/>':'<path d="M40 62q8 9 16 0" stroke="#3C3C3C" stroke-width="3" fill="#3C3C3C" stroke-linecap="round"/>';
-  const arms=mood==="wave"?'<path d="M27 62q-9 3-11 12" stroke="#C9541E" stroke-width="5" fill="none" stroke-linecap="round"/><g class="m-arm"><path d="M70 58q10-4 13-16" stroke="#C9541E" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="83.5" cy="40" r="4.5" fill="#C9541E"/></g>':"";
-  return `<svg class="${cls}" viewBox="0 0 96 96" aria-hidden="true"><ellipse cx="48" cy="90" rx="26" ry="4" fill="var(--line)"/>${arms}<path d="M22 16h52l-5 22c-1 6 4 8 4 15 0 10-7 33-23 33S27 63 27 53c0-7 5-9 4-15z" fill="#FFB259"/><path d="M27 40c-2 4-4 7-4 13 0 10 7 33 25 33s25-23 25-33c0-6-2-9-4-13z" fill="#C9541E"/><path d="M23 16h50l-1.5 6h-47z" fill="#E8E8E8"/><g class="m-eyes"><ellipse cx="38" cy="52" rx="6.5" ry="7.5" fill="#fff"/><ellipse cx="58" cy="52" rx="6.5" ry="7.5" fill="#fff"/><circle cx="39" cy="53.5" r="3.6" fill="#3C3C3C"/><circle cx="59" cy="53.5" r="3.6" fill="#3C3C3C"/><circle cx="40.3" cy="52" r="1.2" fill="#fff"/><circle cx="60.3" cy="52" r="1.2" fill="#fff"/></g>${mood==="wave"?'<ellipse cx="31" cy="62" rx="4.5" ry="2.6" fill="#FF8FA3" opacity=".8"/><ellipse cx="65" cy="62" rx="4.5" ry="2.6" fill="#FF8FA3" opacity=".8"/>':""}${mouth}<path d="M32 30q4 4 0 9" stroke="#fff" stroke-opacity=".5" stroke-width="3" fill="none" stroke-linecap="round"/><path class="m-steam" d="M40 10q3-4 0-8M56 10q3-4 0-8" stroke="var(--lock-ink)" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`;
+  const ARM="#C24614";
+  const arm=(d,hx,hy,c)=>`<g${c?` class="${c}"`:""}><path d="${d}" stroke="${ARM}" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="${hx}" cy="${hy}" r="5.6" fill="${ARM}"/><circle cx="${hx-1.6}" cy="${hy-1.8}" r="1.6" fill="#fff" opacity=".35"/></g>`;
+  const down=arm("M37 67q-9 4-12 13",24.5,81), downR=arm("M83 67q9 4 12 13",95.5,81);
+  const back={happy:down+downR, wave:down, think:down,
+    cheer:arm("M36 64q-12-6-15-20",20.5,42)+arm("M84 64q12-6 15-20",99.5,42),
+    wow:arm("M37 65q-12-1-15-10",21.5,54)+arm("M83 65q12-1 15-10",98.5,54),
+    sad:arm("M38 70q-5 7-5 15",33,86)+arm("M82 70q5 7 5 15",87,86)}[mood]||down+downR;
+  const front=mood==="wave"?arm("M83 64q12-5 15-21",98.5,41.5,"m-arm"):mood==="think"?arm("M83 69q1 10-11 8.5",70.5,77.5):"";
+  const steam=mood==="sad"
+    ? `<path class="m-steam" d="M60 12q-3-3 0-6" stroke="var(--m-steam,#B9C1E4)" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>`
+    : `<g class="m-steam" stroke="var(--m-steam,#B9C1E4)" fill="none" stroke-linecap="round"><path d="M52 13c-4-3 3-5.5 0-8.6c-1.6-1.6 0-3 .6-3.6" stroke-width="3.2"/><path d="M67 13c-3.6-2.6 2.6-4.8 0-7.4" stroke-width="2.8" opacity=".85"/></g>`;
+  const sparks=mood==="cheer"||mood==="wow"?`<g fill="#FFBA19"><path d="M12 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/><path d="M107 18l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/><circle cx="104" cy="70" r="2.4"/><circle cx="15" cy="74" r="2"/></g>`:"";
+  return `<svg class="${cls}" viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="60" cy="114.5" rx="40" ry="3.6" fill="var(--line)"/>
+<ellipse cx="60" cy="108" rx="44" ry="8.6" fill="#2A40C4"/><ellipse cx="60" cy="105.6" rx="44" ry="8.6" fill="#3D57F0"/><ellipse cx="60" cy="105.6" rx="38.5" ry="6.4" fill="none" stroke="#FFBA19" stroke-width="1.6" stroke-dasharray="1.6 4.2" stroke-linecap="round"/><ellipse cx="60" cy="105" rx="19" ry="3.6" fill="#2A40C4" opacity=".55"/>
+${back}${mGlass(mFace(mood))}${front}${steam}${sparks}</svg>`;
+}
+/* the brand mark: the glass on a lapis tile */
+function logoMark(cls="logo"){
+  return `<svg class="${cls}" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="17" fill="#3D57F0"/><ellipse cx="32" cy="53.2" rx="16.5" ry="3.3" fill="#2A40C4"/><g transform="translate(5.6 6) scale(.44)">${mGlass(mFace("happy",true)).replace('var(--m-edge,#C3CBEC)','#C3CBEC')}</g></svg>`;
 }
 
 /* ================= LEARN: a walk through Mosul ================= */
@@ -1552,16 +1702,37 @@ function mascotLines(){ const f=isF(); return [
   {k:"shwayyashwayya",t:"Shwayya shwayya",e:"One small step at a time."},
 ]; }
 const greet=()=>{ const h=new Date().getHours(); return h>=4&&h<12?"Sabah il-kheir":"Masa il-kheir"; };
+const CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
+/* daily quests live at the top of Learn (no separate tab) */
+function questInfo(q){ const goal=typeof q.goal==="function"?q.goal():q.goal, title=typeof q.title==="function"?q.title():q.title, v=Math.min(q.get(),goal); return {q,goal,title,v,done:v>=goal,claimed:!!S.q.claimed[q.id]}; }
+const qLook=id=>({xp:["var(--gold)",I.bolt],les:["var(--blue)",BOOK_IC],combo:["var(--pink)",I.target]})[id]||["var(--primary)",I.star];
+function qRing(frac,col){ const R=15.5, C=+(2*Math.PI*R).toFixed(1); return `<svg class="qring" viewBox="0 0 38 38" aria-hidden="true"><circle cx="19" cy="19" r="${R}" fill="none" stroke="var(--line)" stroke-width="4"/><circle cx="19" cy="19" r="${R}" fill="none" stroke="${col}" stroke-width="4" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-Math.max(.04,frac))).toFixed(1)}" transform="rotate(-90 19 19)"/></svg>`; }
+function questIcon(x){
+  if(x.claimed) return `<span class="qi qi-ok">${I.ok}</span>`;
+  if(x.done) return `<span class="qi qi-claim">${I.gem}</span>`;
+  const [col,ic]=qLook(x.q.id); return `<span class="qi" style="--qc:${col}">${qRing(x.v/x.goal,col)}<span class="qic">${ic}</span></span>`;
+}
 function todayCard(){
   const g=S.goal||20, x=S.q.xp||0, p=Math.min(x/g,1), nm=mistakeKeys().length, name=(CLOUD&&SES&&userName())||"";
-  const R=21, C=+(2*Math.PI*R).toFixed(1);
+  const R=21, C=+(2*Math.PI*R).toFixed(1), qs=QUESTS.map(questInfo);
+  const claim=qs.filter(q=>q.done&&!q.claimed).length, doneN=qs.filter(q=>q.done).length;
+  const qtxt=claim?`${claim} reward${claim>1?"s":""} to claim!`:doneN===qs.length?"All done. New quests tomorrow":`${doneN} of ${qs.length} done today`;
   return `<div class="hello">
     <div class="hello-row">
       <div class="gring${p>=1?" full":""}" role="img" aria-label="${Math.min(x,g)} of ${g} XP today"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="${R}" class="gr-bg"/><circle cx="26" cy="26" r="${R}" class="gr-fg" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-p)).toFixed(1)}" transform="rotate(-90 26 26)"/></svg><span>${p>=1?I.ok:I.bolt}</span></div>
       <div class="hello-t"><b>${greet()}${name?", "+esc(name):""}!</b><span>${p>=1?"You reached today's goal. Mashallah!":`${g-x} XP to reach today's goal`}</span></div>
     </div>
+    <button class="qrow${claim?" can-claim":""}" id="qrow" aria-label="Daily quests: ${qtxt}"><span class="qr-t"><b>Daily quests</b><small>${qtxt}</small></span><span class="qr-ics" aria-hidden="true">${qs.map(questIcon).join("")}</span><span class="qr-go" aria-hidden="true">${CHEV}</span></button>
     ${nm?`<button class="revbtn" id="rev-go"><span class="revic">${I.target}</span><span class="revtx"><b>Review your mistakes</b><small>${nm} word${nm>1?"s":""} to practise again</small></span><span class="revgo">Go</span></button>`:""}
   </div>`;
+}
+function questsSheet(){
+  const left=24-new Date().getHours(), qs=QUESTS.map(questInfo), all=qs.every(q=>q.claimed);
+  sheet(`<div class="sh-head"><div><h2 class="sec">Daily quests</h2><p class="sub">${all?"All done. Mashallah!":"Finish a quest to win gems."} New quests in ${left} hour${left===1?"":"s"}.</p></div>${mascot(all?"cheer":"happy","sh-m")}</div>
+  <div class="stack">${qs.map(x=>{ const [col,ic]=qLook(x.q.id); return `<div class="card quest"><span class="qbadge" style="--qc:${col}">${ic}</span><div class="q-body"><h3>${esc(x.title)}</h3><div class="pbar"><i style="width:${x.v/x.goal*100}%"></i><span>${x.v} / ${x.goal}</span></div></div>${x.done&&!x.claimed?`<button class="btn gold qclaim" data-q="${x.q.id}">Claim</button>`:`<span class="qrew${x.claimed?" got":""}" aria-label="${x.claimed?"Claimed":x.q.gems+" gems"}">${x.claimed?I.ok:I.gem+`<b>${x.q.gems}</b>`}</span>`}</div>`; }).join("")}</div>
+  <div class="sh-btns"><button class="btn ghost wide blue" id="qs-shop">Gem shop</button><button class="btn wide" data-close>Done</button></div>`);
+  document.querySelectorAll("#sheet .qclaim").forEach(b=>b.onclick=()=>{ const q=QUESTS.find(x=>x.id===b.dataset.q); if(!q||S.q.claimed[q.id]) return; S.q.claimed[q.id]=true; S.gems+=q.gems; save(); sWin(); confetti(); refreshTop(); render(); questsSheet(); toast(`+${q.gems} gems`); });
+  $("#qs-shop").onclick=()=>{ sTap(); shopSheet(); };
 }
 function ringSvg(frac){ const R=44, C=+(2*Math.PI*R).toFixed(1), f=Math.max(.06,Math.min(1,frac)); return `<svg class="pring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="${R}" class="pr-bg"/><circle cx="50" cy="50" r="${R}" class="pr-fg" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-f)).toFixed(1)}" transform="rotate(-90 50 50)"/></svg>`; }
 const TRAIL={top:76,step:122,amp:70,half:110,afterTalk:44};
@@ -1611,6 +1782,7 @@ function renderLearn(el){
   el.querySelectorAll(".node[data-c]").forEach(b=>b.onclick=ev=>{ev.stopPropagation(); const u=+b.dataset.u; if(chestReady(u)&&!S.chests[b.dataset.c]) openChest(b.dataset.c,u); else { sTap(); chestPop(b,u); } });
   el.querySelectorAll(".ub-g").forEach(b=>b.onclick=()=>guidebook(+b.dataset.g));
   const rg=$("#rev-go"); if(rg) rg.onclick=()=>{sTap();startReview();};
+  const qr=$("#qrow"); if(qr) qr.onclick=()=>{sTap();questsSheet();};
   const pb=$("#pm-btn"); if(pb) pb.onclick=()=>{ MLI++; const ln=mascotLines()[MLI%mascotLines().length]; speak(ln.k,true); const say=$("#pm-say"); say.innerHTML=`<b>${esc(ln.t)}</b><span>${esc(ln.e)}</span>`; pb.classList.remove("jig"); void pb.offsetWidth; pb.classList.add("jig"); };
   watchJump();
 }
@@ -1659,12 +1831,238 @@ function watchJump(){
   JUMP_OBS.observe(c);
 }
 
+/* ---- search: other English words and spellings that should find a phrase (most likely first) ---- */
+const SYN={
+  salam:"peace be upon you, greeting, hello, hi, salaam, salam, salam alaikum, assalamu alaikum, as salamu alaykum",
+  wsalam:"reply to salam, hello back, peace, wa alaikum salam, walaikum salam, alaikum salam",
+  marhaba:"hi, hey, hello, hiya, howdy, yo, greeting, marhaba, marhaban, mirhaba",
+  shlonak:"how are you, how r u, how's it going, what's up, sup, how do you do, shlonek, shlonich, shlon",
+  zen:"good, fine, ok, okay, well, alright, great, zein, zain, zeen",
+  hamd:"thank god, praise god, alhamdulillah, hamdulillah, hamdullah, i'm fine, i'm well, good",
+  ashismak:"what's your name, what is your name, your name, name, shismak, shesmak, esh ismak",
+  ismi:"my name is, i am called, i'm called, call me, name, esmi",
+  minen:"where are you from, where from, from where, which country, origin, minen, mnen",
+  anamin:"i'm from mosul, i am from, from mosul, mosul, mosil, mawsil, mosel, hometown",
+  tsharrafna:"nice to meet you, pleased to meet you, glad to meet you, honoured, honored, pleasure, tsharafna, tasharafna",
+  sharaf:"the pleasure is mine, likewise, nice to meet you too, honour, honor, pleasure",
+  ash:"what, shinu, shu, sho, esh, eish",
+  wen:"where, wein, wen, wain, wayn",
+  lesh:"why, how come, what for, leish, lesh, laish",
+  minu:"who, mino, manu, meno",
+  besh:"how much, price, cost, how much is it, beish, bish, bekam, bikam, cham",
+  qeltu:"i said, said, say, told, qiltu, giltu, gilit, kilt",
+  rehtu:"i went, went, go, gone, rihtu, rihit, ruhtu",
+  jitu:"i came, came, come, arrived, i'm here, jeetu, jitu, jit",
+  akaltu:"i ate, ate, eat, eaten, akalt, akalit",
+  khubuz:"bread, loaf, flatbread, naan, khubz, khobz, khubiz",
+  chay:"tea, chai, chay, shai, cuppa",
+  may:"water, drink, mai, may, maay, mayy",
+  kubba:"kubba, kibbeh, kubbeh, kibbe, mosul kubba, food, dish, kubba mosul",
+  tayyib:"tasty, delicious, yummy, yum, good food, shahi, shahiyy, tayyib, tayeb",
+  shukran:"thank you, thanks, thx, ty, cheers, merci, shukran, shokran, shukrun",
+  tidallal:"you're welcome, welcome, no problem, my pleasure, anything for you, tidallal, tdallal",
+  tislam:"bless your hand, thanks for the food, thank you, thanks, tislam, tislam idak",
+  tfaddal:"here you go, have some tea, help yourself, please, go ahead, tfaddal, tafaddal, tfadal",
+  baba:"dad, father, daddy, papa, pa, baba",
+  mama:"mum, mom, mother, mommy, mummy, ma, mama",
+  akhuya:"brother, my brother, bro, akhi, akhoya, akhuy",
+  ukhti:"sister, my sister, sis, okhti, ukht",
+  jiddi:"grandpa, grandfather, granddad, grandad, jiddo, jeddo, jidu, jaddi, jiddi",
+  bibi:"grandma, grandmother, granny, gran, nana, teta, nan, nanny, bibi",
+  ammi:"uncle, dad's brother, father's brother, paternal uncle, amo, ammo, ammu, ammi",
+  khali:"uncle, mum's brother, mom's brother, mother's brother, maternal uncle, khalo, khalu, khali",
+  hadha:"this is my brother, this is, introduce, hatha, haza, hada",
+  minuhadha:"who is this, who's this, who is that, who's that, minu hatha",
+  wahid:"one, 1, wahed, wahid, wahad",
+  thnen:"two, 2, ithnein, thnein, thnen, tnen, itnen",
+  tlatha:"three, 3, thalatha, tlatha, tlata",
+  arba:"four, 4, arbaa, arba3a, arba",
+  khamsa:"five, 5, khamsa, khamse",
+  sitta:"six, 6, sitta, sitte, sita",
+  saba:"seven, 7, sabaa, sab3a, saba",
+  thmanya:"eight, 8, thamanya, thmanya, tmanya, thmaniya",
+  tisa:"nine, 9, tisaa, tis3a, tisa",
+  ashra:"ten, 10, ashra, ashara, 3ashra",
+  beshhadha:"how much is this, how much, price, cost, beish hatha, bish hatha",
+  ghali:"expensive, pricey, costly, too much, dear, ghali, ghaali",
+  rkhis:"cheap, inexpensive, bargain, low price, rkhees, rakhis, rkhis, rikhis",
+  ashraalaf:"ten thousand, 10000, 10,000, 10k, dinars, money, price, ashra alaf",
+  ee:"yes, yeah, yep, yup, sure, ok, okay, ee, aa, aah",
+  la:"no, nope, nah, not, la, laa",
+  yalla:"let's go, lets go, come on, hurry up, go, quick, yalla, yallah",
+  inshallah:"hopefully, god willing, maybe, hope so, insha allah, inshallah, inshalla",
+  nruh:"shall we go to the market, let's go to the market, go to the market, market, shopping, souq, nrooh, nruh",
+  maku:"no problem, no worries, never mind, it's fine, don't worry, no prob, maku mushkila, mako mushkila",
+  alaraasi:"gladly, with pleasure, of course, sure, happily, on my head, ala rasi, ala raasi",
+  mashallah:"wow, amazing, wonderful, great, impressive, beautiful, mashallah, masha allah, mashalla",
+  khalas:"done, enough, finished, that's it, stop, over, khalas, khalaas",
+  asif:"sorry, i'm sorry, apologise, apologize, excuse me, my bad, pardon, asif, aasif, asef",
+  tsaadni:"can you help me, help me, help, please help, assist, tsaadni, tsa3idni, tsaedni",
+  sabahkher:"good morning, morning, gm, sabah al khair, sabah il kheir, sabah el kheir, sabah alkhair",
+  sabahnur:"good morning reply, morning, sabah al noor, sabah il noor, sabah el nour, sabah alnoor",
+  ahlan:"welcome, hello, hi, greetings, ahlan, ahlan wa sahlan, ahla",
+  baytak:"make yourself at home, feel at home, welcome, home, house, il beit beitak, beitak",
+  shlonahil:"how's the family, how is your family, family, how are your folks, shlon il ahil",
+  kullhum:"they're all well, everyone is fine, they are fine, all good, family is fine, kullhum zeinin",
+  masalama:"goodbye, bye, bye bye, see you, farewell, later, cya, ma salama, maa salama, ma3 salama, masalama",
+  tisbah:"good night, goodnight, night, sleep well, nighty night, tisbah ala kheir",
+  ashoofak:"see you later, see you, later, catch you later, bye, ashoofak baadein, ashufak",
+  ana:"i, me, myself, ana",
+  habibi:"my dear, dear, darling, buddy, mate, friend, love, habibi, habibe, habiby",
+  habibti:"my dear, dear, darling, sweetheart, love, habibti, habibty",
+  hayati:"my love, my life, love, darling, sweetheart, hayati, hayaati",
+  ishtaqtulak:"i missed you, missed you, miss you, i miss you, ishtaqtilak, eshtaqtlak",
+  farhan:"happy, glad, pleased, joyful, cheerful, farhan, farhaan",
+  taaban:"tired, exhausted, sleepy, worn out, taaban, ta3ban, taban",
+  juaan:"hungry, starving, jooaan, jouan, ju3an, juaan, jo3an",
+  zaalan:"upset, sad, angry, mad, annoyed, zaalan, za3lan, zalan",
+  shbik:"what's wrong, what's the matter, are you ok, what happened, shbeek, shbik, shbeech",
+  anataaban:"i'm tired, i am tired, tired, exhausted, ana taaban",
+  hessa:"now, right now, at the moment, currently, hessa, hissa, hesse, hassa",
+  ilyom:"today, il yom, il yoom, alyom, elyoum, yom",
+  bachir:"tomorrow, bachir, bacher, bukra, baachir",
+  ilbarha:"yesterday, il barha, al barha, barha, imbarih, ams",
+  subuh:"morning, in the morning, dawn, subh, is subuh, sobh",
+  leil:"night, evening, at night, il leil, layl, lail, lel",
+  baadein:"later, afterwards, after, then, baadein, ba3dein, badain, baden",
+  hessajay:"i'm coming now, coming, on my way, omw, be right there, hessa jay",
+  wenint:"where are you, where r u, where are you now, wein inta, wenta",
+  nshoofak:"see you tomorrow, see you, tomorrow, bye, nshoofak bachir",
+  khamsaalaf:"five thousand, 5000, 5,000, 5k, dinars, money, price, khamsa alaf",
+  intajuaan:"are you hungry, hungry, inta jooaan",
+  timman:"rice, timman, teman, tumman",
+  marqa:"stew, sauce, soup, curry, marqa, marga",
+  laban:"yogurt drink, yoghurt drink, yogurt, yoghurt, ayran, buttermilk, drink, laban",
+  dolma:"dolma, stuffed vegetables, stuffed vine leaves, stuffed grape leaves, yaprak, dolmeh",
+  kabab:"kebab, kabab, kebob, kabob, grill, bbq, barbecue, meat",
+  tashreeb:"tashreeb, bread soaked in stew, bread soup, tashrib, thareed, tharid",
+  aku:"there is, is there, there are, are there, have, aku",
+  akutimman:"is there rice, there is rice, rice, aku timman",
+  bilafya:"enjoy your meal, bon appetit, enjoy, bil afya, bil 3afya, bel afia, bilafya",
+  allahyaafeek:"thank you, thanks, reply to bil afya, god keep you, allah yaafeek, allah ya3afik",
+  kafi:"enough, that's enough, sufficient, stop, kaafi, kafi",
+  shbaatu:"i'm full, full, stuffed, no more, shbaatu, shbe3t, shbaat",
+  atshaan:"thirsty, atshaan, atshan, 3atshan",
+  issooq:"market, the market, souq, souk, suq, bazaar, shop, shopping, is sooq, sooq",
+  jami:"mosque, masjid, jami, jaami, jamee, jamea",
+  madrasa:"school, madrasa, madrassa, madrasah, class",
+  mustashfa:"hospital, clinic, doctor, mustashfa, mustashfaa",
+  sayyara:"car, automobile, vehicle, taxi, sayyara, sayara, siyara",
+  jisir:"bridge, the bridge, jisr, jisir, jesr",
+  weinissooq:"where is the market, where's the market, market, directions, wein is sooq",
+  lissooq:"to the market, going to the market, market, lis sooq",
+  yamin:"right, right side, turn right, yamin, yameen",
+  yisar:"left, left side, turn left, yisar, yasar, shmal",
+  dughri:"straight ahead, straight, forward, straight on, dughri, doghri",
+  qareeb:"near, close, nearby, close by, qareeb, qarib, gareeb, greeb",
+  baeed:"far, far away, distant, baeed, ba3eed, baeid, beeid",
+  har:"hot, heat, warm, boiling, har, haar",
+  bard:"cold, chilly, freezing, cool, bard, barid",
+  matar:"rain, raining, rainy, matar, mutar",
+  shamis:"sun, sunny, sunshine, shams, shamis, shames",
+  shlonjaw:"how's the weather, how is the weather, weather, forecast, shlon il jaw",
+  ilyomhar:"it's hot today, hot today, hot, weather, il yom har",
+  issabit:"saturday, sat, sabt, is sabit",
+  ilahad:"sunday, sun, ahad, il ahad",
+  ilithnein:"monday, mon, ithnein, itnein, il ithnein",
+  itthalatha:"tuesday, tue, tues, thalatha, it thalatha",
+  ilarbaa:"wednesday, wed, arbaa, arba3a, il arbaa",
+  ilkhamees:"thursday, thu, thurs, khamees, khamis, il khamees",
+  iljumaa:"friday, fri, jumaa, juma, jum3a, il jumaa",
+  ahmar:"red, ahmar, ahmer",
+  azraq:"blue, azraq, azrak, azrag",
+  akhdar:"green, akhdar, akhder, akhzar",
+  asfar:"yellow, asfar, asfer",
+  abyad:"white, abyad, abiadh, abyadh, abyedh",
+  aswad:"black, aswad, aswed",
+  ashlawn:"what colour, what color, which colour, which color, colour, color, ash lawn",
+  hilu:"nice, pretty, beautiful, lovely, cute, sweet, good, hilu, helu, hilo, hilw",
+  kullish:"very, really, so, extremely, kullish, kulish, kilish",
+  kullishhilu:"very nice, very pretty, so beautiful, really nice, gorgeous, kullish hilu",
+  ahibb:"i like, i love, like, love, ahibb, ahib, ahebb",
+  ahibbazraq:"i like blue, blue, favourite colour, favorite color, ahibb il azraq",
+  bazzoona:"cat, kitty, kitten, pussycat, bazzoona, bazzona, bazoona, bazzuna",
+  kalb:"dog, doggy, puppy, kalb, chalb, chelb",
+  teyr:"bird, birdie, teyr, tair, teer, tayr",
+  hsaan:"horse, pony, hsaan, hisan, husan, hsan",
+  dijaaja:"chicken, hen, dijaaja, dijaja, dejaja, djaja",
+  samak:"fish, samak, simach, semech",
+  baqara:"cow, cattle, baqara, bagara, baqra",
+  hmaar:"donkey, hmaar, himar, hmar",
+  ghanam:"sheep, lamb, flock, ghanam, ghnam",
+  andi:"i have, i've got, have, got, andi, indi, 3indi",
+  andibazzoona:"i have a cat, cat, pet, andi bazzoona",
+  ashhadha:"what's this, what is this, what's that, what is that, ash hadha",
+  aqoom:"i get up, get up, wake up, stand up, aqoom, agoom",
+  aakul:"i eat, eat, eating, food, aakul, akul, akil",
+  ashrab:"i drink, drink, drinking, ashrab, ashrub",
+  arooh:"i go, go, going, leave, arooh, aruh",
+  ashtughul:"i work, work, working, job, ashtughul, ashtughil, ashtaghil",
+  adrus:"i study, study, studying, learn, school, adrus, adris",
+  anaam:"i sleep, sleep, sleeping, bed, anaam, anam",
+  ahki:"i speak, speak, talk, say, ahki, ahchi",
+  kullyom:"every day, everyday, daily, each day, kull yom",
+  ahkimaslawi:"i speak a little maslawi, i speak a little, a little, speak maslawi, arabic",
+  adruskullyom:"i study every day, study every day, study daily",
+  tihki:"do you speak maslawi, do you speak, speak, arabic, tihki, tihchi",
+  madri:"i don't know, don't know, dunno, no idea, not sure, ma adri, madri, madry",
+  yaani:"i mean, like, um, so, you know, well, yaani, yani, ya3ni",
+  bass:"just, only, but, enough, bass, bas",
+  shwayyashwayya:"take it easy, slowly, slow down, little by little, step by step, relax, shwaya shwaya, shway shway",
+  ajeeb:"amazing, strange, weird, odd, incredible, wow, ajeeb, ajib, 3ajeeb",
+  wallah:"really, i swear, seriously, for real, honestly, wallah, wallahi, walla",
+  sahh:"right, correct, true, that's right, exactly, sahh, sah, saheeh",
+  ghalat:"wrong, incorrect, mistake, error, false, ghalat, ghalad, ghlat",
+  latkhaaf:"don't worry, don't be afraid, no worries, relax, la tkhaaf, la tkhaf, la tekhaf",
+  mashghool:"busy, occupied, mashghool, mashghul",
+  anamashghool:"i'm busy, i am busy, busy, ana mashghool",
+  zenhamd:"fine thank god, fine thanks, i'm fine, good thanks, all good, zein il hamdu lillah",
+};
+/* the women's forms are found by the same words as the men's */
+[TO_F,SELF_F].forEach(m=>Object.entries(m).forEach(([a,b])=>{ if(W[b]&&SYN[a]&&!SYN[b]) SYN[b]=SYN[a]; }));
+Object.assign(SYN,{
+  shlonik:SYN.shlonak+", shlonik, shlonich", tisbahin:SYN.tisbah+", tisbahin", tislamin:SYN.tislam+", tislamin", tfaddali:SYN.tfaddal+", tfaddali",
+  allahyaafeeki:SYN.allahyaafeek+", allah yaafeeki", aasfa:SYN.asif+", aasfa, asfa", farhana:SYN.farhan+", farhana", taabana:SYN.taaban+", taabana",
+});
+
+const fold=s=>String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[’‘`´]/g,"'").replace(/[^a-z0-9' ]+/g," ").replace(/\s+/g," ").trim();
+const arFold=s=>String(s||"").replace(/[ً-ْٰـ]/g,"").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/[^ء-ي ]+/g," ").replace(/\s+/g," ").trim();
+/* a forgiving "skeleton": no vowels or doubled letters, chat numbers mapped, q = g. merhaba/marhaba -> mrhb */
+const skel=s=>fold(s).replace(/[\s']/g,"").replace(/3|2/g,"").replace(/7/g,"h").replace(/5/g,"kh").replace(/6/g,"t").replace(/9/g,"s").replace(/q/g,"g").replace(/(.)\1+/g,"$1").replace(/[aeiou]/g,"");
+let SIDX=null;
+function searchIndex(){
+  if(SIDX) return SIDX;
+  const order={}; let n=0; UNITS.forEach((u,ui)=>unitWords(ui).forEach(k=>{ if(!(k in order)) order[k]=n++; }));
+  SIDX=Object.keys(W).map(k=>{ const tr=fold(W[k].tr); return {k, order:k in order?order[k]:999, tr, en:fold(W[k].en), enp:fold(plainEn(k)), syn:String(SYN[k]||"").split(/\s*,\s*/).map(fold).filter(Boolean), sk:[tr,...tr.split(" ")].map(skel).filter(x=>x.length>=3), ar:arFold(W[k].ar)}; });
+  return SIDX;
+}
+function searchWords(q){
+  const ix=searchIndex();
+  if(/[؀-ۿ]/.test(q)){ const a=arFold(q); if(!a) return []; return ix.filter(x=>x.ar.includes(a)).map(x=>({k:x.k,s:x.ar===a?100:x.ar.startsWith(a)?80:50,o:x.order})).sort((a,b)=>b.s-a.s||a.o-b.o).map(x=>x.k); }
+  const f=fold(q); if(!f) return [];
+  const sq=skel(q), words=f.split(" ");
+  const score=x=>{
+    let s=0;
+    const short=f.length<3;
+    const field=(t,base,part)=>{ if(!t) return; const v=t===f?base:(" "+t+" ").includes(" "+f+" ")?base-20:!part?0:t.startsWith(f)?base-30:(" "+t).includes(" "+f)?base-40:0; if(v>s) s=v; };
+    field(x.tr,100,true); field(x.en,100,!short); if(x.enp!==x.en) field(x.enp,96,!short);
+    x.syn.forEach((t,i)=>field(t,98-Math.min(i,10)*.6,!short));
+    if(s<42&&words.length>1){ const all=" "+[x.tr,x.en,...x.syn].join(" "); if(words.every(w=>all.includes(" "+w))) s=42; }
+    if(s<38&&sq.length>=3&&x.sk.some(t=>t.startsWith(sq)||(t.length>=4&&sq.startsWith(t)))) s=38;
+    if(s<20&&f.length>=3&&x.tr.includes(f)) s=20;
+    return s;
+  };
+  let res=ix.map(x=>({k:x.k,s:score(x),o:x.order})).filter(x=>x.s>0);
+  const best=Math.max(0,...res.map(x=>x.s)); if(best>=60) res=res.filter(x=>x.s>=40);
+  res=res.sort((a,b)=>b.s-a.s||a.o-b.o).map(x=>x.k);
+  if(!res.length&&words.length>1) res=[...new Set(words.filter(w=>w.length>1).flatMap(w=>searchWords(w)))];
+  return res;
+}
+
 /* ================= WORDS: practice hub + your word collection ================= */
 const TURTLE='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 15.5c0-4.1 3.4-7.5 7.5-7.5S19 11.4 19 15.5z"/><path d="M19 13.5h1.8a1.7 1.7 0 0 0 0-3.4H19.5" stroke="currentColor" stroke-width="1.8" fill="none"/><rect x="5.5" y="15.5" width="3" height="3.5" rx="1.2"/><rect x="14" y="15.5" width="3" height="3.5" rx="1.2"/><path d="M8 11.5h7M9.5 9v6.5M13.5 9v6.5" stroke="#fff" stroke-opacity=".45" stroke-width="1.3"/></svg>';
 function seen(k){ if(!k||!W[k]) return; S.seen=S.seen||{}; S.seen[k]=Date.now(); }
 function wordStrength(k){ if(S.mist&&S.mist[k]) return 1; const t=S.seen&&S.seen[k]; if(!t) return 2; const d=(Date.now()-t)/864e5; return d<2?4:d<6?3:d<14?2:1; }
-const STRENGTH_TXT=["","Needs practice","Getting rusty","Good","Fresh"];
-function sbars(k){ const s=wordStrength(k); return `<span class="sbars s${s}" role="img" aria-label="${STRENGTH_TXT[s]}">${[1,2,3,4].map(i=>`<i${i<=s?' class="on"':""}></i>`).join("")}</span>`; }
 function unitWords(ui){ return [...new Set(LESSONS.filter(l=>l.unit===ui).flatMap(l=>l.ex.filter(e=>e.t==="intro").map(e=>e.w)))]; }
 function byWeakness(keys){ return shuffle(keys).sort((a,b)=>wordStrength(a)-wordStrength(b)); }
 function practiceTile(id,title,sub,cls,icon,off){ return `<button class="ptile ${cls}" id="${id}" ${off?"disabled":""}><span class="pt-ic">${icon}</span><b>${title}</b><small>${sub}</small></button>`; }
@@ -1674,41 +2072,67 @@ const PICONS={
   flash:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="3" width="13" height="16" rx="2.5" opacity=".45" transform="rotate(10 13 11)"/><rect x="4" y="5" width="13" height="16" rx="2.5"/></svg>',
   mix:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h3c5 0 7 10 12 10h3M3 17h3c2 0 3.5-1.6 4.6-3.6M14 9.6C15 8 16.4 7 18 7h3M18 4l3 3-3 3M18 14l3 3-3 3"/></svg>',
 };
+PICONS.fresh='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg>';
+PICONS.ok='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+/* a word shows a tag only when it needs you: "Practise" (a mistake or long ago) or "Rusty" (a week or two ago) */
+function freshTag(k){ const s=wordStrength(k); return s===1?`<span class="fresh f1">Practise</span>`:s===2?`<span class="fresh f2">Rusty</span>`:""; }
+let WFILTER="all", UNIT_OF=null;
+function unitOf(k){ if(!UNIT_OF){ UNIT_OF={}; UNITS.forEach((u,ui)=>unitWords(ui).forEach(w=>{ if(!(w in UNIT_OF)) UNIT_OF[w]=ui; })); } return k in UNIT_OF?UNIT_OF[k]:-1; }
+function wordRow(k,later){ const u=later?unitOf(k):-1; return `<button class="wr${later?" wr-later":""}" data-k="${k}" aria-label="${esc(W[k].tr)}: ${esc(W[k].en)}. Tap to listen"><span class="wr-sp">${SPK}</span><span class="wr-t"><span class="say">${esc(W[k].tr)}</span>${arSm(k)}<small>${esc(W[k].en)}</small></span>${later?`<span class="fresh fu">${u>=0?"Unit "+(u+1):"Soon"}</span>`:freshTag(k)}</button>`; }
 function renderWords(el){
   const learned=learnedWords(), total=Object.keys(W).length, nm=mistakeKeys().length, ok=learned.length>=4;
   const weak=learned.filter(k=>wordStrength(k)<=2).length;
+  if(!weak&&WFILTER==="weak") WFILTER="all";
   const ids=learned.length?learned:Object.keys(W), wotd=ids[Math.floor(Date.now()/864e5)%ids.length];
-  let h=`<section class="whero">${mascot("happy","wh-m")}<div class="wh-t"><b class="wh-n">${learned.length}</b><span>${learned.length===1?"word":"words"} learned</span><div class="pbar"><i style="width:${(learned.length/total*100).toFixed(1)}%"></i><span>${learned.length} of ${total}</span></div><small>${!learned.length?"Finish a lesson to start your collection.":weak?`${weak} could use some practice`:"All your words are fresh"}</small></div></section>
+  const first=nm?practiceTile("p-mist","Fix mistakes",`${nm} word${nm>1?"s":""} to fix`,"t-red",PICONS.mist)
+    :weak&&ok?practiceTile("p-fresh","Freshen up",`${weak} word${weak>1?"s":""} getting rusty`,"t-teal",PICONS.fresh)
+    :practiceTile("p-none",ok?"All fresh":"Fix mistakes",ok?"No mistakes to fix":"Nothing to fix yet","t-done",PICONS.ok,true);
+  let h=`<section class="whero">${mascot(learned.length?"happy":"wave","wh-m")}<div class="wh-t"><b class="wh-n">${learned.length}</b><span>${learned.length===1?"word":"words"} learned</span><div class="pbar"><i style="width:${(learned.length/total*100).toFixed(1)}%"></i><span>${learned.length} of ${total}</span></div><small>${!learned.length?"Finish a lesson to start your collection.":weak?`${weak} could use some practice`:"All your words are fresh"}</small></div></section>
   <h2 class="sec">Practise</h2>
   <div class="pgrid">
-    ${practiceTile("p-mist","Fix mistakes",nm?`${nm} word${nm>1?"s":""} to fix`:"Nothing to fix","t-red",PICONS.mist,!nm)}
+    ${first}
     ${practiceTile("p-listen","Listening","Hear it, pick the meaning","t-purple",PICONS.listen,!ok)}
     ${practiceTile("p-flash","Flashcards","Flip and test yourself","t-orange",PICONS.flash,!ok)}
     ${practiceTile("p-mix","Quick mix","A bit of everything","t-blue",PICONS.mix,!ok)}
   </div>
   ${ok?"":`<p class="sub" style="margin:10px 0 0">Practice opens after your first lesson.</p>`}
   <h2 class="sec">Word of the day</h2>
-  <div class="wotd-wrap"><button class="wotd" id="wotd" aria-label="Word of the day. Tap to flip"><span class="wotd-in"><span class="wf wf-front"><span class="say">${esc(W[wotd].tr)}</span>${arSm(wotd)}<small>Tap to see what it means</small></span><span class="wf wf-back"><span class="wf-en">${esc(W[wotd].en)}</span>${W[wotd].note?`<small>${esc(W[wotd].note)}</small>`:""}</span></span></button>${lbtn(wotd)}</div>`;
-  if(learned.length) h+=`<div class="wc-head"><h2 class="sec">Your words</h2><span class="wc-key"><span class="sbars s4" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span>how fresh each word is</span></div>
-  <label class="wsearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="wq" type="search" placeholder="Search your words" autocomplete="off" aria-label="Search your words"></label>
-  <div id="wlist">${wordList("")}</div>`;
+  <div class="wotd-wrap"><button class="wotd" id="wotd" aria-label="Word of the day. Tap to flip"><span class="wotd-in"><span class="wf wf-front"><span class="say">${esc(W[wotd].tr)}</span>${arSm(wotd)}<small>Tap to see what it means</small></span><span class="wf wf-back"><span class="wf-en">${esc(W[wotd].en)}</span>${W[wotd].note?`<small>${esc(W[wotd].note)}</small>`:""}</span></span></button>${lbtn(wotd)}</div>
+  <h2 class="sec">${learned.length?"Your words":"Look up a word"}</h2>
+  <label class="wsearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="wq" type="search" placeholder="Search: hi, thanks, chai…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Search words in English or Maslawi"></label>
+  ${learned.length&&weak?`<div class="wfilter" role="group" aria-label="Show"><button class="rchip" data-f="all" aria-pressed="${WFILTER!=="weak"}">All words</button><button class="rchip" data-f="weak" aria-pressed="${WFILTER==="weak"}">To practise · ${weak}</button></div>`:""}
+  <div id="wlist" aria-live="polite">${wordList("")}</div>`;
   el.innerHTML=h;
   const go=(id,f)=>{ const b=$(id); if(b) b.onclick=()=>{sTap();f();}; };
-  go("#p-mist",startReview); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice);
+  go("#p-mist",startReview); go("#p-fresh",startFreshen); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice);
   const wc=$("#wotd"); if(wc) wc.onclick=()=>{ wc.classList.toggle("flipped"); sTap(); };
-  const q=$("#wq"); if(q) q.oninput=()=>{ $("#wlist").innerHTML=wordList(q.value); };
+  const q=$("#wq"); q.oninput=()=>{ $("#wlist").innerHTML=wordList(q.value); const f=document.querySelector(".wfilter"); if(f) f.hidden=!!q.value.trim(); };
+  el.querySelectorAll(".wfilter .rchip").forEach(b=>b.onclick=()=>{ WFILTER=b.dataset.f; sTap(); el.querySelectorAll(".wfilter .rchip").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); $("#wlist").innerHTML=wordList(q.value); });
 }
 function wordList(q){
-  const learned=new Set(learnedWords()), qq=norm(q||"");
-  let out="", found=0;
+  const learned=new Set(learnedWords()), qq=String(q||"").trim();
+  if(qq){
+    const hits=searchWords(qq), mine=hits.filter(k=>learned.has(k)), later=hits.filter(k=>!learned.has(k));
+    if(!hits.length) return `<div class="wl-none">${mascot("think","wl-m")}<p><b>No words match “${esc(qq)}”</b><span>Try another spelling, or an English word like “thanks”.</span></p></div>`;
+    return (mine.length?`<div class="wg"><div class="wg-h"><b>Your words</b><span>${mine.length}</span></div>${mine.slice(0,40).map(k=>wordRow(k)).join("")}</div>`:"")
+      +(later.length?`<div class="wg"><div class="wg-h"><b>Coming up later</b><span>${later.length}</span></div>${later.slice(0,12).map(k=>wordRow(k,true)).join("")}</div>`:"");
+  }
+  const weakOnly=WFILTER==="weak"; let out="", found=0;
   UNITS.forEach((u,ui)=>{
-    const all=unitWords(ui), mine=all.filter(k=>learned.has(k)&&(!qq||norm(W[k].tr).includes(qq)||norm(W[k].en).includes(qq)));
+    const all=unitWords(ui), mine=all.filter(k=>learned.has(k)&&(!weakOnly||wordStrength(k)<=2));
     if(!mine.length) return; found+=mine.length;
-    out+=`<div class="wg"><div class="wg-h"><span class="wg-dot" style="background:${u.color}"></span><b>${esc(u.title)}</b><span>${all.filter(k=>learned.has(k)).length} of ${all.length}</span></div>${mine.map(k=>`<button class="wr" data-k="${k}"><span class="wr-t"><span class="say">${esc(W[k].tr)}</span>${arSm(k)}<small>${esc(W[k].en)}</small></span>${sbars(k)}<span class="wr-sp">${SPK}</span></button>`).join("")}</div>`;
+    out+=`<div class="wg"><div class="wg-h"><span class="wg-dot" style="background:${u.color}"></span><b>${esc(u.title)}</b><span>${all.filter(k=>learned.has(k)).length} of ${all.length}</span></div>${mine.map(k=>wordRow(k)).join("")}</div>`;
   });
-  if(!found) return `<p class="sub wl-empty">${qq?`No words match “${esc(q)}”.`:"Your words show up here as you learn them."}</p>`;
+  if(!found) return `<p class="sub wl-empty">${weakOnly?"Nothing to practise. All your words are fresh!":"Your words show up here as you learn them. You can still search for any word above."}</p>`;
   const left=Object.keys(W).length-learned.size;
-  return out+(qq||!left?"":`<p class="sub wl-more">${left} more words are waiting in the next lessons.</p>`);
+  return out+(weakOnly||!left?"":`<p class="sub wl-more">${left} more words are waiting in the next lessons.</p>`);
+}
+function startFreshen(){
+  const pool=learnedWords(); if(pool.length<4) return;
+  const weak=byWeakness(pool.filter(k=>wordStrength(k)<=2)).slice(0,6); if(!weak.length) return startPractice();
+  const ex=practiceSet(weak,6).map(({k,pool},j)=>({t:j%2?"mcqR":"mcq",w:k,pool}));
+  const mw=matchSet(shuffle(weak.length>=3?weak:pool)); if(mw.length>=3) ex.push({t:"match",ws:mw});
+  L={missed:0,i:-1,practice:true,mode:"fresh",ex,total:ex.length,k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()}; openOverlay(); step();
 }
 document.addEventListener("click",e=>{ const r=e.target.closest(".wr"); if(r){ speak(r.dataset.k); r.classList.remove("ping"); void r.offsetWidth; r.classList.add("ping"); } });
 
@@ -1848,7 +2272,7 @@ function renderProfile(el){
     {n:"Sharpshooter",d:"Get 10 in a row correct",v:S.bestCombo,g:10,c:"var(--bad-btn)"},
     {n:"Scholar",d:"Finish all "+LESSONS.length+" lessons",v:nDone,g:LESSONS.length,c:"var(--purple)"},
   ];
-  const stat=(ic,cls,v,l)=>`<div class="sbox"><span class="${cls}">${ic}</span><div><b>${v}</b><span>${l}</span></div></div>`;
+  const stat=(ic,cls,v,l)=>`<div class="sbox"><span class="sb-ic ${cls}">${ic}</span><div><b>${v}</b><span class="sb-l">${l}</span></div></div>`;
   el.innerHTML=`<section class="pf-head">
       <div class="pf-av${name?"":" guest"}">${name?esc(name[0].toUpperCase()):mascot("happy","pf-m")}</div>
       <div class="pf-t"><h1>${esc(name||"Learner")}</h1><span>Learning Mosul Arabic${joined?`, joined ${joined}`:""}</span></div>
@@ -1872,21 +2296,48 @@ function renderProfile(el){
   el.querySelectorAll(".wk-col").forEach(c=>{ const show=()=>{ tip.textContent=c.dataset.tip; tip.hidden=false; const pr=c.parentElement.getBoundingClientRect(), r=c.getBoundingClientRect(); tip.style.left=Math.max(0,Math.min(pr.width-tip.offsetWidth,r.left-pr.left+r.width/2-tip.offsetWidth/2))+"px"; }; c.onmouseenter=show; c.onfocus=show; c.onclick=show; c.onmouseleave=()=>{tip.hidden=true;}; c.onblur=()=>{tip.hidden=true;}; });
 }
 
-/* ================= GEM SHOP (on Quests) ================= */
-function shopHtml(){
+/* ================= TOP-BAR SHEETS: streak, gem shop, hearts ================= */
+function shopItems(){
   const f=S.freeze||0, canF=S.gems>=50&&f<2, canH=S.gems>=30&&S.hearts<5;
-  return `<h2 class="sec">Gem shop</h2><div class="stack">
+  return `<div class="stack">
     <div class="card shop-item"><span class="shop-ic ice">${SNOW}</span><div class="q-body"><h3>Streak freeze</h3><p>Keeps your streak safe if you miss a day. You have ${f} of 2.</p></div><button class="btn buy" id="buy-freeze" ${canF?"":"disabled"} aria-label="Buy a streak freeze for 50 gems">${I.gem}50</button></div>
     <div class="card shop-item"><span class="shop-ic hearts">${I.heart}</span><div class="q-body"><h3>Refill hearts</h3><p>${S.hearts>=5?"Your hearts are already full.":"Get all 5 hearts back right away."}</p></div><button class="btn buy" id="buy-hearts" ${canH?"":"disabled"} aria-label="Refill hearts for 30 gems">${I.gem}30</button></div>
   </div>`;
 }
-function wireShop(){
-  const bf=$("#buy-freeze"); if(bf) bf.onclick=()=>{ if(S.gems<50||(S.freeze||0)>=2) return; S.gems-=50; S.freeze=(S.freeze||0)+1; save(); sWin(); toast("Streak freeze equipped. Your streak is safe for a day."); render(); };
-  const bh=$("#buy-hearts"); if(bh) bh.onclick=()=>{ if(S.gems<30||S.hearts>=5) return; S.gems-=30; S.hearts=5; save(); sWin(); toast("Hearts refilled."); render(); };
+function wireShop(after){
+  const done=msg=>{ save(); sWin(); toast(msg); refreshTop(); render(); (after||shopSheet)(); };
+  const bf=$("#buy-freeze"); if(bf) bf.onclick=()=>{ if(S.gems<50||(S.freeze||0)>=2) return; S.gems-=50; S.freeze=(S.freeze||0)+1; done("Streak freeze equipped. Your streak is safe for a day."); };
+  const bh=$("#buy-hearts"); if(bh) bh.onclick=()=>{ if(S.gems<30||S.hearts>=5) return; S.gems-=30; S.hearts=5; done("Hearts refilled."); };
+}
+function shopSheet(){
+  sheet(`<div class="sh-head"><div><h2 class="sec">Gem shop</h2><p class="sub">Win gems from daily quests, chests and perfect lessons.</p></div><span class="gembal" aria-label="You have ${S.gems} gems">${I.gem}${S.gems}</span></div>
+  ${shopItems()}<button class="btn wide" data-close>Done</button>`);
+  wireShop();
+}
+function weekDots(){
+  const d=new Date(), mon=new Date(d); mon.setDate(d.getDate()-((d.getDay()+6)%7));
+  return ["Mo","Tu","We","Th","Fr","Sa","Su"].map((n,i)=>{ const x=new Date(mon); x.setDate(mon.getDate()+i); const ds=dstr(x); return `<div class="day ${(S.days||[]).includes(ds)?"on":""} ${ds===today()?"today":""}">${n}<i></i></div>`; }).join("");
+}
+function streakSheet(){
+  const on=S.lastDay===today(), f=S.freeze||0;
+  sheet(`<div class="ss-top"><span class="ss-flame${on?"":" off"}">${I.flame}</span><div><b class="ss-n">${S.streak}</b><span>day streak</span></div></div>
+  <div class="week">${weekDots()}</div>
+  <p class="sub" style="margin:0;text-align:center">${on?"You practised today. Come back tomorrow to keep it going!":S.streak?"Finish a lesson today to keep your streak.":"Finish a lesson today to start a streak."}</p>
+  <div class="card shop-item"><span class="shop-ic ice">${SNOW}</span><div class="q-body"><h3>Streak freezes: ${f} of 2</h3><p>A freeze saves your streak if you miss a day.</p></div>${f<2?`<button class="btn buy" id="buy-freeze" ${S.gems>=50?"":"disabled"} aria-label="Buy a streak freeze for 50 gems">${I.gem}50</button>`:""}</div>
+  <button class="btn wide" data-close>Got it</button>`);
+  wireShop(streakSheet);
+}
+function heartsSheet(){
+  const h=S.hearts, can=S.gems>=30, prac=learnedWords().length>=4;
+  sheet(`<div class="hs-top"><div class="hs-row" role="img" aria-label="${h} of 5 hearts">${[0,1,2,3,4].map(i=>`<span class="${i<h?"on":""}">${I.heart}</span>`).join("")}</div><h2 class="sec">${h>=5?"Your hearts are full":h?`You have ${h} heart${h>1?"s":""} left`:"You're out of hearts"}</h2><p class="sub">You lose a heart for each mistake in a lesson. Practice and conversations are free, and your hearts refill every day.</p></div>
+  ${h<5?`<button class="btn wide" id="hs-refill" ${can?"":"disabled"}>Refill for 30 gems</button>${prac?`<button class="btn ghost wide blue" id="hs-prac">Practise to earn a heart</button>`:""}`:""}
+  <button class="btn ${h<5?"ghost ":""}wide" data-close>${h<5?"Not now":"Got it"}</button>`);
+  const r=$("#hs-refill"); if(r) r.onclick=()=>{ if(S.gems<30) return; S.gems-=30; S.hearts=5; save(); sWin(); toast("Hearts refilled."); refreshTop(); render(); heartsSheet(); };
+  const p=$("#hs-prac"); if(p) p.onclick=()=>{ $("#sheet").hidden=true; startPractice(); };
 }
 
 /* ================= MOTION ================= */
-const TAB_ORDER=["learn","words","quests","league","profile"];
+const TAB_ORDER=["learn","words","league","profile"];
 function moveTabInd(){ const ind=$("#tab-ind"); if(ind) ind.style.transform=`translateX(${Math.max(0,TAB_ORDER.indexOf(tab))*100}%)`; }
 function playIn(el,cls){ if(!el) return; el.classList.remove("enter-r","enter-l","rise","ex-in"); void el.offsetWidth; el.classList.add(cls); }
 function countUp(root){ (root||document).querySelectorAll(".cnt").forEach(n=>{ const to=+n.dataset.to||0; if(reduced||to<=0){ n.textContent=to; return; } const t0=performance.now(), d=700; const tick=t=>{ const p=Math.min(1,(t-t0)/d), e=1-Math.pow(1-p,3); n.textContent=Math.round(to*e); if(p<1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }); }
@@ -1901,16 +2352,18 @@ function refreshTop(){
   st[0].innerHTML=`<span class="${S.lastDay===today()?"":"dim"}" style="display:flex">${I.flame}</span>${S.streak}`;
   st[1].innerHTML=I.gem+S.gems;
   st[2].innerHTML=I.heart+S.hearts;
+  st[0].setAttribute("aria-label",`${S.streak} day streak`); st[1].setAttribute("aria-label",`${S.gems} gems. Open the gem shop`); st[2].setAttribute("aria-label",`${S.hearts} hearts`);
 }
 const TABS=[
   ["learn","Learn",'<svg viewBox="0 0 28 28"><path d="M4 13 14 4l10 9v10a2 2 0 0 1-2 2h-5v-7h-6v7H6a2 2 0 0 1-2-2z" fill="#F7901E"/><path d="M11 25v-7h6v7" fill="#B4560B"/></svg>'],
   ["words","Words",'<svg viewBox="0 0 28 28"><rect x="5" y="3" width="18" height="22" rx="4" fill="#1E9BFF"/><rect x="9" y="8" width="10" height="3" rx="1.5" fill="#fff"/><rect x="9" y="14" width="7" height="3" rx="1.5" fill="#fff" opacity=".7"/></svg>'],
-  ["quests","Quests",'<svg viewBox="0 0 28 28"><path d="M6 4h16v9a8 8 0 0 1-16 0z" fill="#FFBA19"/><path d="M10 26h8l-1-5h-6z" fill="#D9960A"/><path d="M14 8l1.5 3 3.2.3-2.4 2.2.7 3.2L14 15l-3 1.7.7-3.2-2.4-2.2 3.2-.3z" fill="#fff"/></svg>'],
   ["league","League",'<svg viewBox="0 0 28 28"><path d="M14 2 24 6v8c0 6-4.5 10-10 12C8.5 24 4 20 4 14V6z" fill="#9A5BF5"/><path d="M14 7l2 4 4.4.5-3.2 3 .9 4.3L14 16.6l-4.1 2.2.9-4.3-3.2-3 4.4-.5z" fill="#fff"/></svg>'],
   ["profile","Profile",'<svg viewBox="0 0 28 28"><circle cx="14" cy="10" r="6" fill="#3D57F0"/><path d="M3 26c1.5-6 6-9 11-9s9.5 3 11 9z" fill="#3D57F0"/></svg>'],
 ];
 $("#tabs").innerHTML='<span class="tab-ind" id="tab-ind" aria-hidden="true"></span>'+TABS.map(([k,n,svg])=>`<button class="tab" data-tab="${k}">${svg}${n}</button>`).join("");
 $("#gear").innerHTML=GEAR; $("#gear").onclick=()=>{ sTap(); openSettings(); };
+$("#brand").innerHTML=logoMark()+"<b>Maslawi</b>"; $("#brand").onclick=()=>{ sTap(); if(tab!=="learn") setTab("learn"); else window.scrollTo({top:0,behavior:reduced?"auto":"smooth"}); };
+$("#st-streak").onclick=()=>{ sTap(); streakSheet(); }; $("#st-gems").onclick=()=>{ sTap(); shopSheet(); }; $("#st-hearts").onclick=()=>{ sTap(); heartsSheet(); };
 let tab="learn";
 function setTab(t){ const from=TAB_ORDER.indexOf(tab), to=TAB_ORDER.indexOf(t); tab=t; document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-current",String(b.dataset.tab===t))); moveTabInd(); render(); window.scrollTo(0,0); playIn($("#screen"),to>=from?"enter-r":"enter-l"); }
 document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{sTap();setTab(b.dataset.tab);});
@@ -1921,7 +2374,7 @@ function chestReady(u){return LESSONS.filter(l=>l.unit===u).every(l=>S.done[l.id
 function openChest(id,u){
   if(S.chests[id]||!chestReady(u)) return;
   S.chests[id]=true; S.gems+=20; save(); sWin(); confetti(); refreshTop(); render();
-  sheet(`<div style="text-align:center">${chestSvg("open").replace("<svg",'<svg style="width:120px;height:104px"')}<h2 class="sec" style="margin:6px 0">You found 20 gems!</h2><p class="sub" style="margin:0">Spend gems to refill hearts.</p></div><button class="btn wide" data-close>Continue</button>`);
+  sheet(`<div style="text-align:center">${chestSvg("open").replace("<svg",'<svg style="width:120px;height:104px"')}<h2 class="sec" style="margin:6px 0">You found 20 gems!</h2><p class="sub" style="margin:0">Spend them in the gem shop. Tap your gems at the top.</p></div><button class="btn wide" data-close>Continue</button>`);
 }
 function guidebook(u){
   const U=UNITS[u], ws=[...new Set(LESSONS.filter(l=>l.unit===u).flatMap(l=>l.ex.filter(e=>e.t==="intro").map(e=>e.w)))];
@@ -1936,17 +2389,9 @@ function sheet(html){ const s=$("#sheet"); s.innerHTML=`<div class="sheet" role=
 
 /* ================= OTHER TABS ================= */
 function learnedWords(){const s=new Set();LESSONS.forEach(l=>{if(S.done[l.id])l.ex.forEach(e=>{if(e.t==="intro")s.add(e.w);});});return [...s];}
-function renderQuests(el){
-  el.innerHTML=`<h1 class="screen">Daily quests</h1><p class="sub">New quests every day. Finish one to win gems.</p><div class="stack">${QUESTS.map(q=>{
-    const goal=typeof q.goal==="function"?q.goal():q.goal, title=typeof q.title==="function"?q.title():q.title;
-    const v=Math.min(q.get(),goal), done=v>=goal, claimed=S.q.claimed[q.id];
-    return `<div class="card quest"><span style="color:${done?"var(--gold)":"var(--lock-ink)"}">${I.target}</span><div class="q-body"><h3>${esc(title)}</h3><div class="pbar"><i style="width:${v/goal*100}%"></i><span>${v} / ${goal}</span></div></div>${done&&!claimed?`<button class="btn gold" data-q="${q.id}" style="padding:10px 12px">+${q.gems}</button>`:`<span style="color:var(--gem);display:flex;align-items:center;gap:2px;font-variant-numeric:tabular-nums;width:24px;height:24px">${claimed?I.ok:I.gem}</span>`}</div>`;}).join("")}</div>`;
-  el.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{const q=QUESTS.find(x=>x.id===b.dataset.q);S.q.claimed[q.id]=true;S.gems+=q.gems;save();sWin();confetti();refreshTop();render();});
-  el.insertAdjacentHTML("beforeend",shopHtml()); wireShop();
-}
 function renderLeague(el){
   const d=new Date(), left=7-((d.getDay()+6)%7), leftTxt=`${left} day${left>1?"s":""} left`;
-  const hero=sub=>`<div class="league-hero">${TABS[3][2].replace('viewBox','style="width:80px;height:80px" viewBox')}<h1 class="screen" style="margin-top:4px">Tigris League</h1><p class="sub" style="margin:0">${sub}</p></div>`;
+  const hero=sub=>`<div class="league-hero">${TABS.find(t=>t[0]==="league")[2].replace('viewBox','style="width:80px;height:80px" viewBox')}<h1 class="screen" style="margin-top:4px">Tigris League</h1><p class="sub" style="margin:0">${sub}</p></div>`;
   const row=(r,i)=>`<div class="lrow ${r.me?"me":""}"><span class="rank" style="color:${i<3?"var(--gold-deep)":"var(--muted)"}">${i<3?["🥇","🥈","🥉"][i]:i+1}</span><span class="av" style="background:${r.c}">${esc((r.n||"?")[0].toUpperCase())}</span><span class="nm">${esc(r.n)}${r.me?" (you)":""}</span><span class="px">${r.x} XP</span></div>`;
   if(!CLOUD){ /* offline preview: sample learners */
     const rows=LEAGUE.map(([n,x,c])=>({n,x,c})).concat([{n:"You",x:S.weekXp,c:"#1CB0B5",me:true}]).sort((a,b)=>b.x-a.x);
@@ -1990,7 +2435,7 @@ async function pushLeague(){
   if(S.leagueHidden){ try{ await api("/rest/v1/league?user_id=eq."+SES.user.id,{method:"DELETE"}); }catch(e){} return; }
   await api("/rest/v1/league",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify({user_id:SES.user.id,name:(userName()||"Learner").slice(0,40),week:S.week,week_xp:Math.min(S.weekXp||0,100000),updated_at:new Date().toISOString()})});
 }
-function render(){ refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,quests:renderQuests,league:renderLeague,profile:renderProfile})[tab](el); renderSettings(); }
+function render(){ refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
 
 /* ================= LESSON PLAYER ================= */
 let L=null;
@@ -2040,6 +2485,7 @@ function verdict(ok,detail,skipped){
   [].concat(L.key||[]).forEach(ok?hit:miss); L.key=null;
   if(ok){ L.right++; L.combo++; L.xp+= L.combo>=5?2:1; S.bestCombo=Math.max(S.bestCombo,L.combo); S.q.combo=Math.max(S.q.combo,L.combo); sGood(); }
   else { L.wrong++; L.combo=0; if(!skipped&&!L.practice) S.hearts=Math.max(0,S.hearts-1); sBad(); L.ex.push(L.ex[L.k]); }
+  const sm=$("#lesson .speaker .mascot"); if(sm) sm.outerHTML=mascot(ok?"cheer":"sad");
   hop("#lesson .speaker .mascot", ok?"hop":"nope");
   save();
   const nx=$("#next"); nx.focus(); nx.onclick=()=>{ if(S.hearts<=0&&!L.practice) return noHearts(); L.k++; step(); };
@@ -2060,7 +2506,7 @@ function skipAnswer(){ const e=L.ex[L.k]; if(e.t==="build") return esc(((isF()&&
 
 function exIntro(e){
   const w=W[e.w];
-  shell(`<span class="newtag">${I.star.replace('fill="#fff"','fill="currentColor" width="18" height="18"')}New phrase</span><div class="intro-card">${lbtn(e.w,true)}<div class="say">${esc(w.tr)}</div>${arSm(e.w)}<div class="en">${esc(w.en)}</div>${w.note?`<div class="note">${esc(w.note)}</div>`:""}</div>`,`<button class="btn wide" id="next">Continue</button>`);
+  shell(`<span class="newtag">${I.star.replace('fill="#fff"','fill="currentColor" width="18" height="18"')}New phrase</span><div class="intro-card">${lbtn(e.w,true)}<div class="say">${esc(w.tr)}</div>${arSm(e.w)}<div class="en">${esc(w.en)}</div>${w.note?`<div class="note">${esc(w.note)}</div>`:""}</div><div class="coach">${mascot("wave")}<div class="bubble"><b>${["Say it out loud!","Your turn: say it out loud.","Repeat it after me!","Say it a few times. It sticks!"][L.k%4]}</b></div></div>`,`<button class="btn wide" id="next">Continue</button>`);
   autoSay(e.w); seen(e.w); $("#next").focus(); $("#next").onclick=()=>{sTap();L.k++;step();};
 }
 function opts(list,fn){return list.map((o,i)=>`<button class="opt" data-i="${i}" aria-pressed="false">${fn(o)}</button>`).join("");}
@@ -2085,7 +2531,7 @@ function exReply(e){
 }
 function exType(e){
   const w=W[e.w];
-  shell(`<h2 class="q">Write this in English</h2><div class="speaker">${mascot()}<div class="bubble row">${lbtn(e.w)}<div><span class="say">${esc(w.tr)}</span>${arSm(e.w)}</div></div></div><label for="ans" class="sub" style="margin:0">Your answer</label><textarea id="ans" class="type-in" placeholder="Type in English" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>`,footCheck());
+  shell(`<h2 class="q">Write this in English</h2><div class="speaker">${mascot("think")}<div class="bubble row">${lbtn(e.w)}<div><span class="say">${esc(w.tr)}</span>${arSm(e.w)}</div></div></div><label for="ans" class="sub" style="margin:0">Your answer</label><textarea id="ans" class="type-in" placeholder="Type in English" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>`,footCheck());
   const t=$("#ans"); t.focus(); t.oninput=()=>{$("#check").disabled=!t.value.trim();};
   t.onkeydown=ev=>{if(ev.key==="Enter"){ev.preventDefault();if(t.value.trim())$("#check").click();}};
   L.key=e.w;
@@ -2175,19 +2621,20 @@ function finish(){
   if(L.practice) S.hearts=Math.min(5,S.hearts+1);
   else { S.done[LESSONS[L.i].id]=true; if(perfect) S.perfect++; S.gems+=perfect?5:2; }
   if(firstToday){ S.streak=(S.lastDay===yesterday()?S.streak:0)+1; S.lastDay=today(); S.days=[...new Set([...(S.days||[]),today()])].slice(-14); }
+  const newQ=QUESTS.map(questInfo).filter(x=>x.done&&!x.claimed&&!(S.q.told||{})[x.q.id]);
+  if(newQ.length) S.q.told=Object.assign({},S.q.told,Object.fromEntries(newQ.map(x=>[x.q.id,1])));
   save(); sWin(); confetti();
   const isChat=!L.practice&&LESSONS[L.i].chat, left=mistakeKeys().length;
-  const head=L.review?(left?"Review complete!":"All mistakes fixed!"):L.mode==="listen"?"Listening done!":L.mode==="flash"?`You knew ${L.right} of ${L.right+L.wrong}`:L.practice?"Practice complete!":isChat?"Conversation complete!":perfect?"Perfect lesson!":"Lesson complete!";
+  const head=L.review?(left?"Review complete!":"All mistakes fixed!"):L.mode==="listen"?"Listening done!":L.mode==="fresh"?"All freshened up!":L.mode==="flash"?`You knew ${L.right} of ${L.right+L.wrong}`:L.practice?"Practice complete!":isChat?"Conversation complete!":perfect?"Perfect lesson!":"Lesson complete!";
   const notes=[L.practice?"You won back a heart.":"", L.review&&left?`${left} word${left>1?"s":""} still to review.`:"", !L.review&&L.missed?`${L.missed} word${L.missed>1?"s":""} added to your review list.`:""].filter(Boolean);
-  $("#lesson").innerHTML=`<div class="l-in"><div class="end">${mascot("happy")}<h2>${head}</h2>${notes.map(t=>`<p class="sub" style="margin:0">${esc(t)}</p>`).join("")}${goalNow?`<p class="goalhit">${I.bolt.replace("<svg",'<svg width="20" height="20"')}Daily goal reached! +5 gems</p>`:""}
+  $("#lesson").innerHTML=`<div class="l-in"><div class="end">${mascot(perfect||acc>=80?"cheer":"happy")}<h2>${head}</h2>${notes.map(t=>`<p class="sub" style="margin:0">${esc(t)}</p>`).join("")}${goalNow?`<p class="goalhit">${I.bolt.replace("<svg",'<svg width="20" height="20"')}Daily goal reached! +5 gems</p>`:""}${newQ.length?`<p class="goalhit qdone">${I.gem.replace("<svg",'<svg width="20" height="20"')}Quest complete! Claim it on Learn.</p>`:""}
   <div class="endstats"><div class="es y"><span>Total XP</span><b>${I.bolt.replace("<svg",'<svg width="20" height="20"')}<span class="cnt" data-to="${gained}">0</span></b></div><div class="es g"><span>${acc>=90?"Amazing":acc>=70?"Good":"Accuracy"}</span><b><span class="cnt" data-to="${acc}">0</span>%</b></div><div class="es b"><span>Quick</span><b>${time}</b></div></div>
   <button class="btn wide" id="cont" style="max-width:420px">Continue</button></div></div>`;
   countUp($("#lesson")); $("#cont").focus(); $("#cont").onclick=()=>firstToday?streakScreen():closeLesson();
 }
 function streakScreen(){
   sWin();
-  const d=new Date(), mon=new Date(d); mon.setDate(d.getDate()-((d.getDay()+6)%7));
-  const days=["Mo","Tu","We","Th","Fr","Sa","Su"].map((n,i)=>{const x=new Date(mon);x.setDate(mon.getDate()+i);const ds=dstr(x);return `<div class="day ${(S.days||[]).includes(ds)?"on":""} ${ds===today()?"today":""}">${n}<i></i></div>`;}).join("");
+  const days=weekDots();
   $("#lesson").innerHTML=`<div class="l-in"><div class="end"><span class="bigflame">${I.flame.replace("<svg",'<svg width="140" height="140"')}</span><div class="streaknum">${S.streak}</div><h2 style="color:var(--flame)">day streak!</h2><div class="week">${days}</div><p class="sub" style="margin:0;max-width:32ch">Practice every day to keep your streak growing.</p><button class="btn wide" id="cont" style="max-width:420px;background:var(--flame);box-shadow:0 4px 0 var(--orange-deep)">I'm committed</button></div></div>`;
   $("#cont").focus(); $("#cont").onclick=closeLesson;
 }
@@ -2241,6 +2688,10 @@ function mergeState(a,b){
   r.mist=Object.assign({},b.mist||{},a.mist||{});
   r.seen=Object.assign({},b.seen||{}); Object.entries(a.seen||{}).forEach(([k,t])=>{ if(!r.seen[k]||t>r.seen[k]) r.seen[k]=t; });
   r.onboarded=!!(a.onboarded||b.onboarded);
+  const tq=[a,b].filter(x=>x.q&&x.q.day===today());
+  r.q=tq.length?Object.assign({},tq.map(x=>x.q).sort((x,y)=>(y.xp||0)-(x.xp||0))[0]):{day:today(),xp:0,lessons:0,combo:0,claimed:{}};
+  r.q.claimed=Object.assign({},...tq.map(x=>x.q.claimed||{}));
+  r.hearts=tq.length?Math.min(...tq.map(x=>x.hearts==null?5:x.hearts)):5;
   ["gender","goal","why"].forEach(k=>r[k]=a.onboarded?(a[k]||b[k]):(b[k]||a[k]));
   return r;
 }
@@ -2442,7 +2893,7 @@ function drawWelcome(){
   const choice=(key,list,fmt)=>`<div class="opts">${list.map(o=>`<button class="opt wopt" data-v="${o[0]}" aria-pressed="${String(WSEL[key])===String(o[0])}">${fmt(o)}</button>`).join("")}</div>`;
   let body="", foot="";
   if(WSTEP===0){
-    body=`<div class="end" style="gap:12px">${mascot("happy").replace('class="mascot"','class="mascot" style="width:150px;height:150px"')}<h2 style="color:var(--primary)">Ahlan wa sahlan!</h2><p class="sub" style="margin:0;max-width:34ch">Learn the Mosul dialect in a few minutes a day. Every phrase is written in English letters and has audio, so you don't need to read Arabic.</p></div>`;
+    body=`<div class="end" style="gap:12px">${mascot("wave").replace('class="mascot"','class="mascot" style="width:160px;height:160px"')}<h2 style="color:var(--primary)">Ahlan wa sahlan!</h2><p class="sub" style="margin:0;max-width:34ch">Learn the Mosul dialect in a few minutes a day. Every phrase is written in English letters and has audio, so you don't need to read Arabic.</p></div>`;
     foot=`<button class="btn wide" id="w-next">Get started</button>${CLOUD&&!SES?`<button class="btn ghost wide blue" id="w-have">I already have an account</button>`:""}`;
   } else if(WSTEP===1){
     body=`<h2 class="q">Why are you learning Maslawi?</h2>${choice("why",WHY,o=>`<span>${esc(o[1])}</span>`)}`;
@@ -2451,7 +2902,7 @@ function drawWelcome(){
     body=`<h2 class="q">How should people talk to you?</h2><p class="sub" style="margin:0">Some Arabic words change for men and women. “How are you?” is <b>shlonak?</b> to a man and <b>shlonik?</b> to a woman. We'll use the right ones for you.</p>${choice("gender",[["m","Like a man","They'll ask you: shlonak?"],["f","Like a woman","They'll ask you: shlonik?"]],o=>`<span>${o[1]}</span><span class="trs">${o[2]}</span>`)}`;
     foot=`<button class="btn wide" id="w-next" ${WSEL.gender?"":"disabled"}>Continue</button>`;
   } else if(WSTEP===3){
-    body=`<h2 class="q">Pick a daily goal</h2><p class="sub" style="margin:0">You can change it any time in Profile.</p>${choice("goal",GOALS,o=>`<span class="wrow"><span>${o[1]}</span><span class="trs">${o[2]}</span></span>`)}`;
+    body=`<h2 class="q">Pick a daily goal</h2><p class="sub" style="margin:0">You can change it any time in Settings.</p>${choice("goal",GOALS,o=>`<span class="wrow"><span>${o[1]}</span><span class="trs">${o[2]}</span></span>`)}`;
     foot=`<button class="btn wide" id="w-next">${n===4?(S.lessons?"Done":"Start my first lesson"):"Continue"}</button>`;
   } else {
     body=`<div class="end" style="gap:12px">${mascot("wow")}<h2 style="color:var(--primary)">Save your progress?</h2><p class="sub" style="margin:0;max-width:34ch">Create a free account to keep your streak on every device and join the weekly league.</p></div>`;
