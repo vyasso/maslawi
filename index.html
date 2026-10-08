@@ -570,8 +570,8 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .wlang button{border:0;background:none;padding:8px 14px;font:inherit;font-weight:800;color:var(--muted);min-width:44px;min-height:40px}
 .wlang button+button{border-left:2px solid var(--line)}
 .wlang button[aria-pressed="true"]{background:var(--primary-soft);color:var(--primary)}
-.guide-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}
-.guide-btn{display:flex;align-items:center;gap:12px;text-align:start;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-bottom-width:5px;border-radius:18px;padding:10px 12px;font:inherit}
+.guide-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.guide-btn{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-align:start;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-bottom-width:5px;border-radius:18px;padding:12px;font:inherit}
 .guide-btn:active{transform:translateY(3px);border-bottom-width:2px}
 .guide-btn>svg{width:18px;height:18px;flex:none;color:var(--muted)}
 .gb-ic{width:44px;height:44px;border-radius:13px;flex:none;display:grid;place-items:center;background:var(--purple);color:#fff;box-shadow:inset 0 -3px 0 var(--purple-deep)}
@@ -580,7 +580,7 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .gb-t{flex:1;min-width:0;display:flex;flex-direction:column}
 .gb-t b{font-size:17px;line-height:1.2}
 .gb-t small{color:var(--muted);font-weight:700;font-size:13px;line-height:1.25}
-.gb-new{flex:none;background:var(--gold);color:#5A4300;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:2px 8px}
+.gb-new{position:absolute;top:10px;right:10px;background:var(--gold);color:#5A4300;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:2px 8px}
 .g-intro{display:flex;align-items:center;gap:12px;margin-top:16px;background:var(--primary-soft);border-color:transparent}
 .g-m{width:72px;height:72px;flex:none}
 .g-intro p{margin:0;font-weight:600;line-height:1.45}
@@ -636,6 +636,59 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .lt-word{font-size:56px;direction:rtl}
 .lt-grid{grid-template-columns:1fr 1fr}
 .lt-o{display:block;width:100%;font-family:var(--arabic);font-size:40px;line-height:1.3;text-align:center}
+
+.gb-gr{background:var(--orange);box-shadow:inset 0 -3px 0 var(--orange-deep)}
+.gb-vb{background:var(--pink);box-shadow:inset 0 -3px 0 var(--pink-deep)}
+/* ================= GRAMMAR, VERB TABLES, JUMP TEST, DICTATION ================= */
+#grammar,#verbs{z-index:19;overflow-y:auto;overscroll-behavior:contain}
+#grammar.slide-in,#verbs.slide-in{animation:slideIn .32s cubic-bezier(.2,.85,.25,1)}
+#grammar.slide-out,#verbs.slide-out{animation:slideOut .26s cubic-bezier(.5,0,.75,0) forwards}
+.gr-list{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.gr-card{padding:0;scroll-margin-top:72px}
+.gr-card summary{list-style:none;display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer;border-radius:14px}
+.gr-card summary::-webkit-details-marker{display:none}
+.gr-n{width:32px;height:32px;border-radius:10px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center;font-weight:900;flex:none}
+.gr-card summary b{flex:1;min-width:0;font-size:17px;line-height:1.25}
+.gr-card summary svg{width:18px;height:18px;flex:none;color:var(--muted);transition:transform .2s}
+.gr-card[open] summary svg{transform:rotate(90deg)}
+.gr-body{padding:0 14px 14px;display:flex;flex-direction:column;gap:12px}
+.gr-body>p{margin:0;font-weight:600;line-height:1.5}
+.gr-pairs{display:flex;flex-direction:column;gap:8px}
+.gr-ph,.gr-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.gr-ph{font-size:12px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.gr-pair .g-ex{width:100%;min-width:0}
+.tb{display:flex;flex-direction:column;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.tb-cap{padding:8px 12px;font-size:13px;font-weight:900;color:var(--muted);border-bottom:2px solid var(--line)}
+.tb-row{display:flex;align-items:center;gap:10px;width:100%;padding:9px 12px;border:0;border-bottom:2px solid var(--line);background:var(--surface);color:var(--ink);text-align:start;font:inherit}
+.tb-row:last-child{border-bottom:0}
+.tb-row:active{background:var(--primary-soft)}
+.tb-l{width:88px;flex:none;display:flex;flex-direction:column;line-height:1.15}
+.tb-l b{font-size:15px;color:var(--primary)}
+.tb-l small{color:var(--muted);font-weight:700;font-size:12px}
+.tb-f{flex:1;min-width:0;font-size:18px;overflow-wrap:anywhere}
+.tb-ar{font-family:var(--arabic);font-size:20px;font-weight:700;direction:rtl}
+.tb-sp{color:var(--blue);display:grid;place-items:center;flex:none}
+.tb-sp svg{width:20px;height:20px}
+.tb-row.ping .tb-sp{animation:ping .5s}
+.vb-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.vb-tile{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:start;border:2px solid var(--line);border-bottom-width:5px;border-radius:16px;background:var(--surface);color:var(--ink);padding:12px;font:inherit}
+.vb-tile:active{transform:translateY(3px);border-bottom-width:2px}
+.vb-tile b{font-family:var(--display);font-size:19px;line-height:1.15}
+.vb-tile .say{color:var(--primary);font-size:15px}
+.vb-tile small{color:var(--muted);font-weight:700;font-size:12px}
+.vb-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ub-jump{position:relative;flex:none;border:2px solid var(--lock-deep);background:var(--surface);color:var(--primary);border-radius:12px;padding:7px 10px;font:inherit;font-size:12px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;box-shadow:0 3px 0 var(--lock-deep)}
+.ub-jump:active{transform:translateY(2px);box-shadow:0 1px 0 var(--lock-deep)}
+.p-wide{grid-column:1/-1;min-height:0;flex-direction:row;align-items:center;gap:12px}
+.p-wide .pt-ic{margin:0;flex:none}
+.p-wide b{margin-top:0}
+.pw-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pw-hard{flex:none;background:rgba(255,255,255,.22);border-radius:99px;padding:3px 10px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em}
+.ptile.p-wide:disabled .pw-hard{background:var(--surface)}
+.wlev{display:flex;flex-direction:column;gap:2px}
+.wlev small{color:var(--muted);font-weight:700;font-size:14px}
+.dict-hint{align-self:center;background:none;border:0;color:var(--blue);font:inherit;font-weight:800;padding:6px 10px}
+.dict-mean{margin:0;text-align:center;font-weight:800;color:var(--muted)}
 
 /* ================= PROFILE ================= */
 .pf-head{display:flex;align-items:center;gap:16px;margin-top:20px}
@@ -827,6 +880,8 @@ canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
 <div class="overlay" id="settings" role="dialog" aria-label="Settings" hidden></div>
 <div class="overlay" id="guide" role="dialog" aria-label="Sound guide" hidden></div>
 <div class="overlay" id="letters" role="dialog" aria-label="Arabic letters" hidden></div>
+<div class="overlay" id="grammar" role="dialog" aria-label="Grammar in a minute" hidden></div>
+<div class="overlay" id="verbs" role="dialog" aria-label="Verb tables" hidden></div>
 
 <script>
 /* ================= ACCOUNTS CONFIG =================
@@ -2468,11 +2523,12 @@ function unitPath(u,ui,cur,withMascot){
 function renderLearn(el){
   const cur=LESSONS.findIndex(l=>!S.done[l.id]);
   const mUnit=cur>=0?LESSONS[cur].unit:UNITS.length-1;
+  const lockedU=UNITS.map((u,ui)=>ui).filter(ui=>!LESSONS.some((l,i)=>l.unit===ui&&lessonOpen(i))), jumpU=lockedU.filter(ui=>ui===lockedU[0]||ui%6===0);
   let h=todayCard();
   UNITS.forEach((u,ui)=>{
     if(ui%6===0) h+=`<div class="sdiv"><div><span>${tt("Section","Del")} ${ui/6+1}</span><b>${esc(tx(SECTIONS[ui/6]||"More Maslawi"))}</b></div></div>`;
     const unitOpen=LESSONS.some((l,i)=>l.unit===ui&&lessonOpen(i)), unitDone=LESSONS.filter(l=>l.unit===ui).every(l=>S.done[l.id]);
-    h+=`<section class="usec" data-u="${ui}"><div class="ub ${u.cls}${unitOpen?"":" locked"}"><div class="ub-t"><small>${unitDone?`${I.check}${tt(`Unit ${ui+1} done`,`Enhet ${ui+1} klar`)}`:tt(`Unit ${ui+1}`,`Enhet ${ui+1}`)}</small><h2>${esc(u.title)}</h2></div><button class="ub-g" data-g="${ui}" aria-label="${tt(`Guidebook for unit ${ui+1}`,`Guide för enhet ${ui+1}`)}">${I.book}</button></div>${unitPath(u,ui,cur,ui===mUnit)}</section>`;
+    h+=`<section class="usec" data-u="${ui}"><div class="ub ${u.cls}${unitOpen?"":" locked"}"><div class="ub-t"><small>${unitDone?`${I.check}${tt(`Unit ${ui+1} done`,`Enhet ${ui+1} klar`)}`:tt(`Unit ${ui+1}`,`Enhet ${ui+1}`)}</small><h2>${esc(u.title)}</h2></div>${jumpU.includes(ui)?`<button class="ub-jump" data-j="${ui}">${tt("Jump here","Hoppa hit")}</button>`:""}<button class="ub-g" data-g="${ui}" aria-label="${tt(`Guidebook for unit ${ui+1}`,`Guide för enhet ${ui+1}`)}">${I.book}</button></div>${unitPath(u,ui,cur,ui===mUnit)}</section>`;
   });
   h+=`<div class="more">${mascot("happy","more-m")}<b>${tt("More of Mosul is on the way","Mer från Mosul är på väg")}</b><span>${tt("New units are added regularly. Keep your streak going in the meantime.","Nya enheter läggs till hela tiden. Håll din svit vid liv under tiden.")}</span></div>`;
   if(canReview()) h+=`<p class="proto">${tt("Reviewer note: every phrase is a draft for a native speaker to check in Settings.","Granskare: varje fras är ett utkast som någon som pratar maslawi ska kolla under Inställningar.")}</p>`;
@@ -2481,6 +2537,7 @@ function renderLearn(el){
   el.querySelectorAll(".node[data-l]").forEach(b=>b.onclick=ev=>{ev.stopPropagation(); sTap(); nodePop(b,+b.dataset.l);});
   el.querySelectorAll(".node[data-c]").forEach(b=>b.onclick=ev=>{ev.stopPropagation(); const u=+b.dataset.u; if(chestReady(u)&&!S.chests[b.dataset.c]) openChest(b.dataset.c,u); else { sTap(); chestPop(b,u); } });
   el.querySelectorAll(".ub-g").forEach(b=>b.onclick=()=>guidebook(+b.dataset.g));
+  el.querySelectorAll(".ub-jump").forEach(b=>b.onclick=()=>{ sTap(); jumpSheet(+b.dataset.j); });
   const rg=$("#rev-go"); if(rg) rg.onclick=()=>{sTap();startReview();};
   const qr=$("#qrow"); if(qr) qr.onclick=()=>{sTap();questsSheet();};
   const pb=$("#pm-btn"); if(pb) pb.onclick=()=>{ MLI++; const ln=mascotLines()[MLI%mascotLines().length]; speak(ln.k,true); const say=$("#pm-say"); say.innerHTML=`<b>${esc(ln.t)}</b><span>${esc(ln.e)}</span>`; pb.classList.remove("jig"); void pb.offsetWidth; pb.classList.add("jig"); };
@@ -2865,13 +2922,14 @@ function renderWords(el){
     :weak&&ok?practiceTile("p-fresh",tt("Freshen up","Fräscha upp"),tt(`${weak} word${weak>1?"s":""} getting rusty`,`${weak} ord börjar rosta`),"t-teal",PICONS.fresh)
     :practiceTile("p-none",ok?tt("All fresh","Allt fräscht"):tt("Fix mistakes","Rätta misstag"),ok?tt("No mistakes to fix","Inga misstag att rätta"):tt("Nothing to fix yet","Inget att rätta än"),"t-done",PICONS.ok,true);
   let h=`<section class="whero">${mascot(learned.length?"happy":"wave","wh-m")}<div class="wh-t"><b class="wh-n">${learned.length}</b><span>${tt(learned.length===1?"word learned":"words learned",learned.length===1?"inlärt ord":"inlärda ord")}</span><div class="pbar"><i style="width:${(learned.length/total*100).toFixed(1)}%"></i><span>${tt(`${learned.length} of ${total}`,`${learned.length} av ${total}`)}</span></div><small>${!learned.length?tt("Finish a lesson to start your collection.","Klara en lektion för att börja din samling."):weak?tt(`${weak} could use some practice`,`${weak} behöver övas`):tt("All your words are fresh","Alla dina ord är fräscha")}</small></div></section>
-  <div class="guide-row"><button class="guide-btn" id="open-guide"><span class="gb-ic" aria-hidden="true">${PICONS.ear}</span><span class="gb-t"><b>${tt("Sound guide","Ljudguide")}</b><small>${tt("How to say kh, gh, q and more","Så uttalar du kh, gh, q och mer")}</small></span>${S.guideSeen?"":`<span class="gb-new">${tt("New","Ny")}</span>`}${CHEV}</button><button class="guide-btn" id="open-letters"><span class="gb-ic gb-ar" aria-hidden="true">أب</span><span class="gb-t"><b>${tt("Arabic letters","Arabiska bokstäver")}</b><small>${ltCount()?tt(`${ltCount()} of ${LT_GROUPS.length} lessons done`,`${ltCount()} av ${LT_GROUPS.length} lektioner klara`):tt("Optional: learn to read","Valfritt: lär dig läsa")}</small></span>${CHEV}</button></div>
+  ${guideCards()}
   <h2 class="sec">${tt("Practise","Öva")}</h2>
   <div class="pgrid">
     ${first}
     ${practiceTile("p-listen",tt("Listening","Lyssna"),tt("Hear it, pick the meaning","Hör ordet, välj betydelsen"),"t-purple",PICONS.listen,!ok)}
     ${practiceTile("p-flash",tt("Flashcards","Ordkort"),tt("Flip and test yourself","Vänd och testa dig själv"),"t-orange",PICONS.flash,!ok)}
     ${practiceTile("p-mix",tt("Quick mix","Snabbmix"),tt("A bit of everything","Lite av varje"),"t-blue",PICONS.mix,!ok)}
+    <button class="ptile t-teal p-wide" id="p-dict" ${ok?"":"disabled"}><span class="pt-ic">${PICONS.pen}</span><span class="pw-t"><b>${tt("Write what you hear","Skriv det du hör")}</b><small>${tt("Hear a phrase and spell it. Optional and harder.","Hör en fras och skriv den. Valfri och svårare.")}</small></span><span class="pw-hard">${tt("Hard","Svår")}</span></button>
   </div>
   ${ok?"":`<p class="sub" style="margin:10px 0 0">${tt("Practice opens after your first lesson.","Övningarna öppnas efter din första lektion.")}</p>`}
   <h2 class="sec">${tt("Word of the day","Dagens ord")}</h2>
@@ -2882,7 +2940,7 @@ function renderWords(el){
   <div id="wlist" aria-live="polite">${wordList("")}</div>`;
   el.innerHTML=h;
   const go=(id,f)=>{ const b=$(id); if(b) b.onclick=()=>{sTap();f();}; };
-  go("#p-mist",startReview); go("#p-fresh",startFreshen); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters);
+  go("#p-mist",startReview); go("#p-fresh",startFreshen); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters); go("#open-grammar",()=>openGrammar()); go("#open-verbs",openVerbs); go("#p-dict",startDictation);
   const wc=$("#wotd"); if(wc) wc.onclick=()=>{ wc.classList.toggle("flipped"); sTap(); };
   const q=$("#wq"); q.oninput=()=>{ $("#wlist").innerHTML=wordList(q.value); const f=document.querySelector(".wfilter"); if(f) f.hidden=!!q.value.trim(); };
   el.querySelectorAll(".wfilter .rchip").forEach(b=>b.onclick=()=>{ WFILTER=b.dataset.f; sTap(); el.querySelectorAll(".wfilter .rchip").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); $("#wlist").innerHTML=wordList(q.value); });
@@ -3130,8 +3188,8 @@ const GUIDE=[
 const READ_EN=[["ee","a long ee, as in “see”","rkhis"],["oo","a long oo, as in “food”","issooq"],["aa","a long aa, as in “father”","baadein"],["il-","means “the”: is-sooq is “the market”","issooq"]];
 const READ_SV=[["j","som j i engelska ”jeans”","jiddi"],["y","som j i ”ja”","yalla"],["sh","som sh i engelska ”shop”, ungefär som sj","shukran"],["ch","som ch i engelska ”chips”","chay"],["w","som w i engelska ”water”","wen"],["z","ett surrande s, som z i engelska ”zoo”","zen"],["ee","ett långt i, som i ”vit”","rkhis"],["oo","ett långt o, som i ”bo”","issooq"],["aa","ett långt a, som i ”glas”","baadein"]];
 function panelOpen(id,draw){ const el=$(id); el._ret=document.activeElement; el.hidden=false; el.classList.remove("slide-out"); el.classList.add("slide-in"); document.body.style.overflow="hidden"; draw(); const b=el.querySelector(".set-head .x"); if(b) b.focus(); }
-function panelClose(id){ const el=$(id); if(el.hidden) return; el.classList.remove("slide-in"); el.classList.add("slide-out"); let done=false; const fin=()=>{ if(done) return; done=true; el.hidden=true; el.classList.remove("slide-out"); el.innerHTML=""; if($("#settings").hidden&&$("#guide").hidden&&$("#letters").hidden){ document.body.style.overflow=""; const r=el._ret; if(r&&document.contains(r)) r.focus({preventScroll:true}); } }; el.addEventListener("animationend",fin,{once:true}); setTimeout(fin,320); }
-function openGuide(){ if(!S.guideSeen){ S.guideSeen=true; save(); } document.querySelectorAll(".gb-new").forEach(x=>x.remove()); panelOpen("#guide",drawGuide); }
+function panelClose(id){ const el=$(id); if(el.hidden) return; el.classList.remove("slide-in"); el.classList.add("slide-out"); let done=false; const fin=()=>{ if(done) return; done=true; el.hidden=true; el.classList.remove("slide-out"); el.innerHTML=""; if(["#settings","#guide","#letters","#grammar","#verbs"].every(q=>$(q).hidden)){ document.body.style.overflow=""; const r=el._ret; if(r&&document.contains(r)) r.focus({preventScroll:true}); } }; el.addEventListener("animationend",fin,{once:true}); setTimeout(fin,320); }
+function openGuide(){ if(!S.guideSeen){ S.guideSeen=true; save(); } document.querySelectorAll('.gb-new[data-new="guide"]').forEach(x=>x.remove()); panelOpen("#guide",drawGuide); }
 const closeGuide=()=>panelClose("#guide");
 function drawGuide(){
   const el=$("#guide"); if(!el||el.hidden) return;
@@ -3255,7 +3313,187 @@ function exLWord(e){
   shell(`<h2 class="q">${tt("Read this word","Läs det här ordet")}</h2><div class="lt-q lt-word" lang="ar">${w.ar}</div><div class="opts">${opts(list,k=>`<span class="say">${esc(W[k].tr)}</span>`)}</div>`,footCheck());
   wireChoices((p,b)=>{ const ok=list[p]===e.w; b[p].classList.add(ok?"ok":"no"); b[list.indexOf(e.w)].classList.add("ok"); verdict(ok,esc(e.ans)); if(S.sound) speak(e.w,true); });
 }
-document.addEventListener("keydown",e=>{ if(e.key!=="Escape"||!$("#sheet").hidden||!$("#lesson").hidden) return; if(!$("#letters").hidden) closeLetters(); else if(!$("#guide").hidden) closeGuide(); });
+document.addEventListener("keydown",e=>{ if(e.key!=="Escape"||!$("#sheet").hidden||!$("#lesson").hidden) return; if(!$("#letters").hidden) closeLetters(); else if(!$("#guide").hidden) closeGuide(); else if(!$("#grammar").hidden) closeGrammar(); else if(!$("#verbs").hidden) closeVerbs(); });
+
+/* the 8 verb tables (audio lives in extra-audio.json, keys V_<verb>_<past|now>_<person>) */
+const PRON=[["ana", "I", "jag"], ["inta", "you (man)", "du (man)"], ["inti", "you (woman)", "du (kvinna)"], ["huwwa", "he", "han"], ["hiyya", "she", "hon"], ["nihna", "we", "vi"], ["intum", "you (all)", "ni"], ["humma", "they", "de"]];
+const VERBS=[
+  {"id": "qal", "en": "to say", "sv": "att säga", "past": [["qeltu", "قلتُ"], ["qelt", "قلت"], ["qelti", "قلتي"], ["qal", "قال"], ["qalat", "قالت"], ["qelna", "قلنا"], ["qeltum", "قلتم"], ["qalu", "قالوا"]], "now": [["aqool", "أقول"], ["tqool", "تقول"], ["tqooleen", "تقولين"], ["yqool", "يقول"], ["tqool", "تقول"], ["nqool", "نقول"], ["tqooloon", "تقولون"], ["yqooloon", "يقولون"]]},
+  {"id": "rah", "en": "to go", "sv": "att gå, åka", "past": [["rehtu", "رحتُ"], ["reht", "رحت"], ["rehti", "رحتي"], ["rah", "راح"], ["rahat", "راحت"], ["rehna", "رحنا"], ["rehtum", "رحتم"], ["rahu", "راحوا"]], "now": [["arooh", "أروح"], ["trooh", "تروح"], ["trooheen", "تروحين"], ["yrooh", "يروح"], ["trooh", "تروح"], ["nrooh", "نروح"], ["troohoon", "تروحون"], ["yroohoon", "يروحون"]]},
+  {"id": "ija", "en": "to come", "sv": "att komma", "past": [["jeetu", "جيتُ"], ["jeet", "جيت"], ["jeeti", "جيتي"], ["ija", "إجا"], ["ijat", "إجت"], ["jeena", "جينا"], ["jeetum", "جيتم"], ["ijaw", "إجوا"]], "now": [["aji", "أجي"], ["tiji", "تجي"], ["tijeen", "تجين"], ["yiji", "يجي"], ["tiji", "تجي"], ["niji", "نجي"], ["tijoon", "تجون"], ["yijoon", "يجون"]]},
+  {"id": "akal", "en": "to eat", "sv": "att äta", "past": [["akaltu", "أكلتُ"], ["akalt", "أكلت"], ["akalti", "أكلتي"], ["akal", "أكل"], ["aklat", "أكلت"], ["akalna", "أكلنا"], ["akaltum", "أكلتم"], ["aklu", "أكلوا"]], "now": [["aakul", "آكل"], ["taakul", "تاكل"], ["taakleen", "تاكلين"], ["yaakul", "ياكل"], ["taakul", "تاكل"], ["naakul", "ناكل"], ["taakloon", "تاكلون"], ["yaakloon", "ياكلون"]]},
+  {"id": "shirab", "en": "to drink", "sv": "att dricka", "past": [["shrabtu", "شربتُ"], ["shrabt", "شربت"], ["shrabti", "شربتي"], ["shirab", "شرب"], ["shirbat", "شربت"], ["shrabna", "شربنا"], ["shrabtum", "شربتم"], ["shirbu", "شربوا"]], "now": [["ashrab", "أشرب"], ["tishrab", "تشرب"], ["tishrabeen", "تشربين"], ["yishrab", "يشرب"], ["tishrab", "تشرب"], ["nishrab", "نشرب"], ["tishraboon", "تشربون"], ["yishraboon", "يشربون"]]},
+  {"id": "haka", "en": "to speak", "sv": "att prata", "past": [["hkeetu", "حكيتُ"], ["hkeet", "حكيت"], ["hkeeti", "حكيتي"], ["haka", "حكى"], ["hakat", "حكت"], ["hkeena", "حكينا"], ["hkeetum", "حكيتم"], ["hakaw", "حكوا"]], "now": [["ahki", "أحكي"], ["tihki", "تحكي"], ["tihkeen", "تحكين"], ["yihki", "يحكي"], ["tihki", "تحكي"], ["nihki", "نحكي"], ["tihkoon", "تحكون"], ["yihkoon", "يحكون"]]},
+  {"id": "shaf", "en": "to see", "sv": "att se", "past": [["sheftu", "شفتُ"], ["sheft", "شفت"], ["shefti", "شفتي"], ["shaf", "شاف"], ["shafat", "شافت"], ["shefna", "شفنا"], ["sheftum", "شفتم"], ["shafu", "شافوا"]], "now": [["ashoof", "أشوف"], ["tshoof", "تشوف"], ["tshoofeen", "تشوفين"], ["yshoof", "يشوف"], ["tshoof", "تشوف"], ["nshoof", "نشوف"], ["tshoofoon", "تشوفون"], ["yshoofoon", "يشوفون"]]},
+  {"id": "rad", "en": "to want", "sv": "att vilja", "past": [["redtu", "ردتُ"], ["redt", "ردت"], ["redti", "ردتي"], ["rad", "راد"], ["radat", "رادت"], ["redna", "ردنا"], ["redtum", "ردتم"], ["radu", "رادوا"]], "now": [["areed", "أريد"], ["treed", "تريد"], ["treedeen", "تريدين"], ["yreed", "يريد"], ["treed", "تريد"], ["nreed", "نريد"], ["treedoon", "تريدون"], ["yreedoon", "يريدون"]]}
+];
+const POSS=[["-i", "beiti", "بيتي", "my house", "mitt hus"], ["-ak", "beitak", "بيتك", "your house (man)", "ditt hus (man)"], ["-ik", "beitik", "بيتِك", "your house (woman)", "ditt hus (kvinna)"], ["-u", "beitu", "بيته", "his house", "hans hus"], ["-ha", "beitha", "بيتها", "her house", "hennes hus"], ["-na", "beitna", "بيتنا", "our house", "vårt hus"], ["-kum", "beitkum", "بيتكم", "your house (all)", "ert hus"], ["-hum", "beithum", "بيتهم", "their house", "deras hus"]];
+/* ================= GRAMMAR IN A MINUTE ================= */
+const GRAMMAR=[
+  {id:"q",en:"Question words",sv:"Frågeord",
+   p:["The question word usually comes first, just like in English: ash (what), wein (where), minu (who), leish (why), beish (how much) and shlon (how).",
+      "Frågeordet kommer oftast först, precis som på svenska: ash (vad), wein (var), minu (vem), leish (varför), beish (hur mycket) och shlon (hur)."],
+   ex:["ash","wen","minu","lesh","besh","shlonak"]},
+  {id:"her",en:"Talking to a woman",sv:"Prata med en kvinna",
+   p:["When you talk to a woman, “you” changes. The ending -ak becomes -ik, and many verbs and requests add -een or -i. Mosul says -ik where Baghdad says -ich.",
+      "När du pratar med en kvinna ändras ”du”. Ändelsen -ak blir -ik, och många verb och uppmaningar får -een eller -i. I Mosul säger man -ik där man i Bagdad säger -ich."],
+   head:[["To a man","Till en man"],["To a woman","Till en kvinna"]],
+   pairs:[["shlonak","shlonik"],["intazein","intizeina"],["tfaddal","tfaddali"],["latihzan","latihzaneen"]]},
+  {id:"fem",en:"-a for women",sv:"-a för kvinnor",
+   p:["Words that describe a woman, and many jobs, get -a at the end. A man says “ana taaban” (I'm tired), a woman says “ana taabana”.",
+      "Ord som beskriver en kvinna, och många yrken, får -a på slutet. En man säger ”ana taaban” (jag är trött), en kvinna säger ”ana taabana”."],
+   head:[["A man says","En man säger"],["A woman says","En kvinna säger"]],
+   pairs:[["anataaban","anataabana"],["anamabsoot","anamabsoota"],["anamuhandis","anamuhandisa"]]},
+  {id:"pos",en:"My, your, his: endings",sv:"Min, din, hans: ändelser",
+   p:["“My”, “your” and “his” are endings on the word, not words of their own. Here is beit (house):",
+      "”Min”, ”din” och ”hans” är ändelser på ordet, inte egna ord. Så här blir det med beit (hus):"],
+   table:"poss",ex:["ismi","rasi","baytak"]},
+  {id:"tu",en:"I did: the -tu ending",sv:"Jag gjorde: ändelsen -tu",
+   p:["When you say what you did, Mosul adds -tu: “qeltu” (I said), “rehtu” (I went). In Baghdad it's “gilit” and “rihit”. It's the best-known Mosul sound.",
+      "När du säger vad du gjorde lägger man i Mosul till -tu: ”qeltu” (jag sa), ”rehtu” (jag gick). I Bagdad säger man ”gilit” och ”rihit”. Det är det mest kända Mosul-ljudet."],
+   ex:["qeltu","rehtu","akaltu","jitu","khallastu"],verbs:true},
+  {id:"now",en:"Verbs right now: a-, t-, y-, n-",sv:"Verb i nutid: a-, t-, y-, n-",
+   p:["In the present, the start of the verb shows who does it: a- is I, t- is you or she, y- is he and n- is we. Talking to a woman adds -een: “tishrabeen”.",
+      "I nutid visar början på verbet vem som gör något: a- är jag, t- är du eller hon, y- är han och n- är vi. Till en kvinna läggs -een till: ”tishrabeen”."],
+   table:"now",ex:["aakul","ahki","tihki"],verbs:true},
+  {id:"not",en:"Not: ma, la and maku",sv:"Inte: ma, la och maku",
+   p:["“Ma” before a verb makes it “not”: “ma adri” (I don't know). “La” means no, and also “don't”: “la tkhaaf”. “Aku” means there is, and “maku” there isn't.",
+      "”Ma” före ett verb betyder ”inte”: ”ma adri” (jag vet inte). ”La” betyder nej, och också ”låt bli”: ”la tkhaaf”. ”Aku” betyder ”det finns” och ”maku” ”det finns inte”."],
+   ex:["madri","la","latkhaaf","aku","maku"]},
+  {id:"il",en:"The: il-",sv:"Bestämd form: il-",
+   p:["“Il-” in front of a word means “the”. Before some letters, like s, sh, t, d, r, z and n, the l turns into that letter: “is-sooq” (the market), not “il-sooq”.",
+      "”Il-” framför ett ord gör det bestämt, som -en och -et på svenska. Före vissa bokstäver, som s, sh, t, d, r, z och n, blir l samma bokstav: ”is-sooq” (marknaden), inte ”il-sooq”."],
+   ex:["ilyom","leil","issooq","subuh"]},
+];
+const grUnit=g=>{ const us=[...(g.ex||[]),...(g.pairs||[]).flat()].map(unitOf).filter(u=>u>=0); return us.length?Math.min(...us):-1; };
+const seenNew=id=>!!(S.seenNew&&S.seenNew[id]);
+function markNew(id){ if(seenNew(id)) return; S.seenNew=Object.assign({},S.seenNew,{[id]:true}); save(); document.querySelectorAll(`.gb-new[data-new="${id}"]`).forEach(x=>x.remove()); }
+
+/* extra audio (verb tables, grammar tables) loads the first time it's needed */
+let XA=null;
+function loadExtra(){ if(!XA) XA=fetch("extra-audio.json").then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); }).then(j=>{ Object.assign(AUD,j); }).catch(()=>{ XA=null; }); return XA; }
+function playX(k,btn){ if(btn){ btn.classList.remove("ping"); void btn.offsetWidth; btn.classList.add("ping"); } if(AUD[k]) return speak(k); (loadExtra()||Promise.resolve()).then(()=>speak(k)); }
+const tbRow=(lab,sub,form,ar,k)=>`<button class="tb-row" data-x="${k}" aria-label="${esc(form)}. ${tt("Tap to listen","Tryck för att lyssna")}"><span class="tb-l"><b>${lab}</b><small>${sub}</small></span><b class="say tb-f">${esc(form)}</b>${S.arabic?`<span class="tb-ar" lang="ar">${ar}</span>`:""}<span class="tb-sp" aria-hidden="true">${SPK}</span></button>`;
+function verbRows(v,tense){ return v[tense].map(([tr,ar],p)=>tbRow(PRON[p][0],tt(PRON[p][1],PRON[p][2]),tr,ar,`V_${v.id}_${tense}_${p}`)).join(""); }
+function wireX(root){ root.querySelectorAll("[data-x]").forEach(b=>b.onclick=()=>playX(b.dataset.x,b)); }
+
+function openGrammar(topic){ markNew("grammar"); loadExtra(); panelOpen("#grammar",drawGrammar);
+  if(topic){ const d=$("#gr-"+topic); if(d){ d.open=true; setTimeout(()=>d.scrollIntoView({block:"start",behavior:reduced?"auto":"smooth"}),reduced?0:340); } } }
+const closeGrammar=()=>panelClose("#grammar");
+function drawGrammar(){
+  const el=$("#grammar"); if(!el||el.hidden) return;
+  const chip=k=>`<button class="g-ex" data-k="${k}" aria-label="${tt("Listen to","Lyssna på")} ${esc(W[k].tr)}"><span class="g-sp">${SPK}</span><b class="say">${esc(W[k].tr)}</b><small>${esc(W[k].en)}</small></button>`;
+  const body=g=>{
+    let h=`<p>${esc(tt(g.p[0],g.p[1]))}</p>`;
+    if(g.pairs) h+=`<div class="gr-pairs"><div class="gr-ph"><span>${tt(...g.head[0])}</span><span>${tt(...g.head[1])}</span></div>${g.pairs.map(([a,b])=>`<div class="gr-pair">${chip(a)}${chip(b)}</div>`).join("")}</div>`;
+    if(g.table==="poss") h+=`<div class="tb">${POSS.map(([suf,tr,ar,en,sv])=>tbRow(suf,tt(en,sv),tr,ar,"G_"+tr)).join("")}</div>`;
+    if(g.table==="now"){ const v=VERBS.find(x=>x.id==="shirab"); h+=`<div class="tb"><div class="tb-cap">${tt("shirab: to drink","shirab: att dricka")}</div>${verbRows(v,"now")}</div>`; }
+    if(g.ex) h+=`<div class="g-exs">${g.ex.filter(k=>W[k]).map(chip).join("")}</div>`;
+    if(g.verbs) h+=`<button class="btn ghost wide blue gr-vb">${tt("See all the verb tables","Se alla verbtabeller")}</button>`;
+    return h;
+  };
+  el.innerHTML=`<div class="set-in">
+    <div class="set-head"><button class="x" id="gr-back" aria-label="${tt("Close","Stäng")}">${BACK}</button><h1>${tt("Grammar in a minute","Grammatik på en minut")}</h1></div>
+    <div class="g-intro card">${mascot("think","g-m")}<p>${tt("Short explanations of the patterns that keep coming back. Open one, read it in a minute, and tap any word to hear it.","Korta förklaringar av mönster som kommer tillbaka hela tiden. Öppna en, läs den på en minut och tryck på ett ord för att höra det.")}</p></div>
+    <div class="gr-list">${GRAMMAR.map((g,i)=>`<details class="card gr-card" id="gr-${g.id}"><summary><span class="gr-n">${i+1}</span><b>${esc(tt(g.en,g.sv))}</b>${CHEV}</summary><div class="gr-body">${body(g)}</div></details>`).join("")}</div>
+  </div>`;
+  $("#gr-back").onclick=()=>{ sTap(); closeGrammar(); };
+  el.querySelectorAll(".g-ex[data-k]").forEach(b=>b.onclick=()=>{ speak(b.dataset.k); b.classList.remove("ping"); void b.offsetWidth; b.classList.add("ping"); });
+  wireX(el);
+  el.querySelectorAll(".gr-vb").forEach(b=>b.onclick=()=>{ sTap(); closeGrammar(); setTimeout(openVerbs,reduced?0:260); });
+  el.querySelectorAll(".gr-card summary").forEach(s=>s.addEventListener("click",()=>sTap()));
+}
+
+/* ================= VERB TABLES ================= */
+let VB_T="past";
+function openVerbs(){ markNew("verbs"); loadExtra(); panelOpen("#verbs",drawVerbs); }
+const closeVerbs=()=>panelClose("#verbs");
+function drawVerbs(){
+  const el=$("#verbs"); if(!el||el.hidden) return;
+  el.innerHTML=`<div class="set-in">
+    <div class="set-head"><button class="x" id="vb-back" aria-label="${tt("Close","Stäng")}">${BACK}</button><h1>${tt("Verb tables","Verbtabeller")}</h1></div>
+    <div class="g-intro card">${mascot("happy","g-m")}<p>${tt("The 8 most useful verbs, in the past (I did) and the present (I do). Tap a verb to see it for everyone: I, you, he, she, we and they.","De 8 mest användbara verben i dåtid (jag gjorde) och nutid (jag gör). Tryck på ett verb för att se det för alla: jag, du, han, hon, vi och de.")}</p></div>
+    <div class="vb-grid">${VERBS.map((v,i)=>`<button class="vb-tile" data-v="${i}"><b>${esc(tt(v.en,v.sv))}</b><span class="say">${esc(v.past[0][0])} · ${esc(v.now[0][0])}</span><small>${tt("I did · I do","jag gjorde · jag gör")}</small></button>`).join("")}</div>
+    <button class="btn ghost wide blue" id="vb-gr" style="margin-top:16px">${tt("How verbs work: grammar in a minute","Så funkar verb: grammatik på en minut")}</button>
+  </div>`;
+  $("#vb-back").onclick=()=>{ sTap(); closeVerbs(); };
+  el.querySelectorAll(".vb-tile").forEach(b=>b.onclick=()=>{ sTap(); verbSheet(+b.dataset.v); });
+  $("#vb-gr").onclick=()=>{ sTap(); closeVerbs(); setTimeout(()=>openGrammar("now"),reduced?0:260); };
+}
+function verbSheet(i,tense){
+  VB_T=tense||VB_T; const v=VERBS[i];
+  sheet(`<div class="vb-head"><h2 class="sec" style="margin:0">${esc(tt(v.en,v.sv))}</h2><div class="seg vb-seg" role="group" aria-label="${tt("Tense","Tempus")}">${[["past",tt("Past","Dåtid")],["now",tt("Present","Nutid")]].map(([t,l])=>`<button data-t="${t}" aria-pressed="${t===VB_T}">${l}</button>`).join("")}</div></div>
+    <p class="sub" style="margin:0">${VB_T==="past"?tt("What someone did. Tap a row to hear it.","Det någon gjorde. Tryck på en rad för att höra den."):tt("What someone does. Tap a row to hear it.","Det någon gör. Tryck på en rad för att höra den.")}</p>
+    <div class="tb">${verbRows(v,VB_T)}</div>
+    <button class="btn wide" data-close>${tt("Got it","Uppfattat")}</button>`);
+  const sh=$("#sheet"); wireX(sh);
+  sh.querySelectorAll(".vb-seg button").forEach(b=>b.onclick=()=>{ if(b.dataset.t===VB_T) return; sTap(); verbSheet(i,b.dataset.t); const nb=sh.querySelector(`.vb-seg button[data-t="${VB_T}"]`); if(nb) nb.focus(); });
+}
+
+/* ================= TEST OUT: jump ahead to a later unit ================= */
+const FEM_KEYS=new Set([...Object.values(TO_F),...Object.values(SELF_F)]);
+const unitDoneU=ui=>LESSONS.filter(l=>l.unit===ui).every(l=>S.done[l.id]);
+let SCROLL_CUR=false;
+function jumpSheet(u){
+  sheet(`<div style="text-align:center">${mascot("wow")}<h2 class="sec" style="margin:4px 0">${tt(`Jump to unit ${u+1}?`,`Hoppa till enhet ${u+1}?`)}</h2><p class="sub" style="margin:0">${tt("Pass a short test on the units you skip, and they're done. You have 3 lives.","Klara ett kort test om enheterna du hoppar över, så räknas de som klara. Du har 3 liv.")}</p></div><button class="btn wide" id="jp-go">${tt("Start the test","Starta testet")}</button><button class="btn ghost wide" data-close>${tt("Not now","Inte nu")}</button>`);
+  $("#jp-go").onclick=()=>{ $("#sheet").hidden=true; $("#sheet").innerHTML=""; sTap(); startJump(u); };
+}
+function jumpDistractors(k,base){ const seenE=new Set([plainEn(k).toLowerCase()]), seenT=new Set([W[k].tr]);
+  return shuffle(base).filter(x=>{ if(x===k||x===PAIR[k]) return false; const e=plainEn(x).toLowerCase(), t=W[x].tr; if(seenE.has(e)||seenT.has(t)) return false; seenE.add(e); seenT.add(t); return true; }).slice(0,3); }
+function startJump(u,place){
+  const before=[...Array(u).keys()], todo=before.filter(ui=>!unitDoneU(ui));
+  const words=uis=>[...new Set(uis.flatMap(unitWords))].filter(k=>W[k]&&!FEM_KEYS.has(k));
+  let keys=words(todo.length?todo:before).filter(k=>W[k].tr.split(" ").length<=4); if(keys.length<6) keys=words(before);
+  const all=words(before), base=all.length>=10?all:Object.keys(W).filter(k=>!FEM_KEYS.has(k));
+  const types=["mcq","mcqR","listen"];
+  const ex=shuffle(keys).slice(0,12).map((k,i)=>({t:types[i%3],w:k,pool:jumpDistractors(k,base)}));
+  L={missed:0,i:-1,practice:true,mode:"jump",target:u,place:!!place,lives:3,ex,total:ex.length,k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()}; openOverlay(); step();
+}
+function unlockTo(u){
+  LESSONS.forEach(l=>{ if(l.unit<u) S.done[l.id]=true; });
+  S.seen=S.seen||{}; S.chests=S.chests||{};
+  for(let ui=0;ui<u;ui++){ unitWords(ui).forEach(k=>{ if(!S.seen[k]) S.seen[k]=Date.now(); }); S.chests["c"+ui]=true; }
+}
+function jumpFail(){
+  const u=L.target, place=L.place; sBad();
+  $("#lesson").innerHTML=`<div class="l-in"><div class="end">${mascot("sad")}<h2 style="color:var(--heart)">${tt("Not quite yet","Inte riktigt än")}</h2><p class="sub" style="margin:0;max-width:34ch">${tt("No problem. The lessons will teach you the rest, and you can take the test again any time.","Ingen fara. Lektionerna lär dig resten, och du kan göra testet igen när du vill.")}</p><button class="btn wide" id="jf-again" style="max-width:420px">${tt("Try again","Försök igen")}</button><button class="btn ghost wide" id="jf-back" style="max-width:420px">${tt("Back to the path","Tillbaka till vägen")}</button></div></div>`;
+  $("#jf-again").onclick=()=>{ sTap(); startJump(u,place); }; $("#jf-back").onclick=()=>{ SCROLL_CUR=true; closeLesson(); }; $("#jf-again").focus();
+}
+const LEVELS=[["new","I'm new to Maslawi","Start from the beginning","Jag är ny","Börja från början"],["some","I know some words","Take a test and skip ahead","Jag kan några ord","Gör ett test och hoppa fram"],["more","I can have a simple chat","Take a test and skip further","Jag kan prata lite","Gör ett test och hoppa längre"]];
+
+/* ================= DICTATION: hear it, write it ================= */
+function startDictation(){
+  const pool=learnedWords().filter(k=>{ const t=W[k].tr; return t.split(" ").length<=3&&t.length<=22&&!t.includes("/"); }); if(pool.length<4) return;
+  const ex=shuffle(byWeakness(pool).slice(0,14)).slice(0,8).map(k=>({t:"dict",w:k}));
+  L={missed:0,i:-1,practice:true,mode:"dict",ex,total:ex.length,k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()}; openOverlay(); step();
+}
+const dictLoose=s=>String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z]/g,"").replace(/ei|ey/g,"e").replace(/(.)\1+/g,"$1");
+function lev(a,b){ const d=Array.from({length:b.length+1},(_,j)=>j); for(let i=1;i<=a.length;i++){ let p=d[0]; d[0]=i; for(let j=1;j<=b.length;j++){ const t=d[j]; d[j]=Math.min(d[j]+1,d[j-1]+1,p+(a[i-1]===b[j-1]?0:1)); p=t; } } return d[b.length]; }
+function exDict(e){
+  const w=W[e.w]; L.key=null; e.ans=w.tr;
+  shell(`<h2 class="q">${tt("Write what you hear","Skriv det du hör")}</h2><div class="lis">${lbtn(e.w,true)}<button class="listen slow" data-say="${e.w}" data-rate=".6" aria-label="${tt("Play slowly","Spela långsamt")}">${TURTLE}</button></div><textarea id="ans" class="type-in" placeholder="${tt("Type it in English letters","Skriv med vanliga bokstäver")}" aria-label="${tt("What you hear, in English letters","Det du hör, med vanliga bokstäver")}" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea><button class="dict-hint" id="dhint" type="button">${tt("Show what it means","Visa vad det betyder")}</button>`,footCheck());
+  autoSay(e.w);
+  const t=$("#ans"); t.focus(); t.oninput=()=>{ $("#check").disabled=!t.value.trim(); };
+  t.onkeydown=ev=>{ if(ev.key==="Enter"){ ev.preventDefault(); if(t.value.trim()) $("#check").click(); } };
+  $("#dhint").onclick=()=>{ sTap(); $("#dhint").outerHTML=`<p class="dict-mean">${esc(w.en)}</p>`; };
+  $("#check").onclick=()=>{ t.disabled=true; const a=dictLoose(t.value), b=dictLoose(w.tr), same=a===b, near=!same&&lev(a,b)<=Math.max(1,Math.floor(b.length/8)), ok=same||near;
+    const exact=norm(t.value).replace(/ /g,"")===norm(w.tr).replace(/ /g,"");
+    verdict(ok, ok&&!exact?`${near?tt("Almost! ","Nästan! "):""}${tt("We spell it","Vi stavar det")} <b>${esc(w.tr)}</b> · ${esc(w.en)}`:`<b>${esc(w.tr)}</b> · ${esc(w.en)}`); };
+  wireSkip();
+}
+
+/* ================= WORDS PAGE: "Learn more" cards ================= */
+PICONS.pen='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>';
+PICONS.table='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 10h18M3 15h18M10 4v16"/></svg>';
+function guideCards(){
+  const card=(id,ic,cls,title,sub,newId)=>`<button class="guide-btn" id="${id}"><span class="gb-ic ${cls}" aria-hidden="true">${ic}</span><span class="gb-t"><b>${title}</b><small>${sub}</small></span>${newId?`<span class="gb-new" data-new="${newId}">${tt("New","Ny")}</span>`:""}</button>`;
+  return `<h2 class="sec">${tt("Learn more","Lär dig mer")}</h2><div class="guide-row">`
+    +card("open-guide",PICONS.ear,"",tt("Sound guide","Ljudguide"),tt("kh, gh, q and more","kh, gh, q och mer"),S.guideSeen?"":"guide")
+    +card("open-grammar",I.book,"gb-gr",tt("Grammar","Grammatik"),tt("In a minute","På en minut"),seenNew("grammar")?"":"grammar")
+    +card("open-verbs",PICONS.table,"gb-vb",tt("Verb tables","Verbtabeller"),tt("8 everyday verbs","8 vardagsverb"),seenNew("verbs")?"":"verbs")
+    +card("open-letters","أب","gb-ar",tt("Arabic letters","Arabiska bokstäver"),ltCount()?tt(`${ltCount()} of ${LT_GROUPS.length} lessons done`,`${ltCount()} av ${LT_GROUPS.length} lektioner klara`):tt("Optional: learn to read","Valfritt: lär dig läsa"),"")
+    +`</div>`;
+}
 
 /* ================= MOTION ================= */
 const TAB_ORDER=["learn","words","league","profile"];
@@ -3284,7 +3522,7 @@ const TABS=[
 function drawTabs(){
   $("#tabs").innerHTML='<span class="tab-ind" id="tab-ind" aria-hidden="true"></span>'+TABS.map(([k,n,svg,sv])=>`<button class="tab" data-tab="${k}" aria-current="${k===tab}">${svg}${tt(n,sv)}</button>`).join("");
   document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{sTap();setTab(b.dataset.tab);});
-  $("#tabs").parentElement.setAttribute("aria-label",tt("Sections","Avsnitt")); $("#gear").setAttribute("aria-label",tt("Settings","Inställningar")); $("#brand").setAttribute("aria-label",tt("Maslawi: go to Learn","Maslawi: till Lär dig")); [["#settings","Settings","Inställningar"],["#guide","Sound guide","Ljudguide"],["#letters","Arabic letters","Arabiska bokstäver"]].forEach(([q,e,v])=>{ const o=$(q); if(o) o.setAttribute("aria-label",tt(e,v)); });
+  $("#tabs").parentElement.setAttribute("aria-label",tt("Sections","Avsnitt")); $("#gear").setAttribute("aria-label",tt("Settings","Inställningar")); $("#brand").setAttribute("aria-label",tt("Maslawi: go to Learn","Maslawi: till Lär dig")); [["#settings","Settings","Inställningar"],["#guide","Sound guide","Ljudguide"],["#letters","Arabic letters","Arabiska bokstäver"],["#grammar","Grammar in a minute","Grammatik på en minut"],["#verbs","Verb tables","Verbtabeller"]].forEach(([q,e,v])=>{ const o=$(q); if(o) o.setAttribute("aria-label",tt(e,v)); });
   moveTabInd();
 }
 $("#gear").innerHTML=GEAR; $("#gear").onclick=()=>{ sTap(); openSettings(); };
@@ -3308,7 +3546,8 @@ function guidebook(u){
   <div class="card"><span class="eyebrow">${tt("Tip","Tips")}</span><p style="margin:4px 0 0;font-weight:600">${esc(U.tip)}</p></div>
   <div class="card"><span class="eyebrow">${tt("Key phrases","Viktiga fraser")}</span>${ws.map(k=>`<div class="review-row"><div class="w"><span class="say">${esc(W[k].tr)}</span>${arSm(k)}<small>${esc(W[k].en)}</small></div>${lbtn(k)}</div>`).join("")}</div>
   <div class="card"><span class="eyebrow">${tt("About Mosul","Om Mosul")}</span><h3 style="margin:4px 0 2px">${esc(U.fact.h)}</h3><p style="margin:0;font-weight:600">${esc(U.fact.p)}</p></div>
-  ${u===0?`<button class="btn ghost wide blue" id="gb-guide">${tt("Open the sound guide","Öppna ljudguiden")}</button>`:""}<button class="btn wide" data-close>${tt("Got it","Uppfattat")}</button>`);
+  ${GRAMMAR.filter(g=>grUnit(g)===u).map(g=>`<button class="btn ghost wide blue gb-gr" data-gr="${g.id}">${tt("Grammar","Grammatik")}: ${esc(tt(g.en,g.sv))}</button>`).join("")}${u===0?`<button class="btn ghost wide blue" id="gb-guide">${tt("Open the sound guide","Öppna ljudguiden")}</button>`:""}<button class="btn wide" data-close>${tt("Got it","Uppfattat")}</button>`);
+  document.querySelectorAll("#sheet .gb-gr").forEach(b=>b.onclick=()=>{ $("#sheet").hidden=true; $("#sheet").innerHTML=""; openGrammar(b.dataset.gr); });
   const gg=$("#gb-guide"); if(gg) gg.onclick=()=>{ $("#sheet").hidden=true; $("#sheet").innerHTML=""; openGuide(); };
 }
 function sheet(html){ const s=$("#sheet"); s.innerHTML=`<div class="sheet" role="dialog" aria-modal="true">${html}</div>`; s.hidden=false;
@@ -3367,7 +3606,7 @@ function render(){ refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="
 /* ================= LESSON PLAYER ================= */
 let L=null;
 function openOverlay(){ const o=$("#lesson"), was=o.hidden; o.hidden=false; document.body.style.overflow="hidden"; if(was) playIn(o,"rise"); }
-function closeLesson(){ $("#lesson").hidden=true; $("#lesson").innerHTML=""; const lt=$("#letters"), inLt=lt&&!lt.hidden; document.body.style.overflow=inLt?"hidden":""; L=null; render(); if(inLt){ drawLetters(); const b=lt.querySelector(".lt-go:not(:disabled)"); if(b) b.focus({preventScroll:true}); } }
+function closeLesson(){ $("#lesson").hidden=true; $("#lesson").innerHTML=""; const lt=$("#letters"), inLt=lt&&!lt.hidden; document.body.style.overflow=inLt?"hidden":""; L=null; render(); if(inLt){ drawLetters(); const b=lt.querySelector(".lt-go:not(:disabled)"); if(b) b.focus({preventScroll:true}); } if(SCROLL_CUR){ SCROLL_CUR=false; const c=$("#cur-node"); if(c&&tab==="learn") c.scrollIntoView({block:"center"}); } }
 function startLesson(i){ if(S.hearts<=0&&!LESSONS[i].chat) return noHearts(); L={missed:0,i,ex:LESSONS[i].ex.slice(),total:LESSONS[i].ex.length,k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()}; openOverlay(); step(); }
 function startPractice(){
   const pool=learnedWords(); if(pool.length<4) return;
@@ -3400,7 +3639,7 @@ function quitConfirm(){
 }
 function shell(body,foot){
   const pct=Math.round(L.k/L.ex.length*100);
-  $("#lesson").innerHTML=`<div class="l-in"><div class="l-head"><button class="x" id="quit" aria-label="${tt("Quit lesson","Avsluta lektionen")}">${I.x}</button><div class="bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${Math.max(L.pct==null?pct:L.pct,3)}%"></i></div><span class="stat c-heart">${I.heart}${S.hearts}</span>${L.combo>=3?`<span class="combo">${tt(`${L.combo} in a row!`,`${L.combo} i rad!`)}</span>`:""}</div><div class="l-body ex-in">${body}</div><div class="l-foot" id="foot">${foot}</div></div>`;
+  $("#lesson").innerHTML=`<div class="l-in"><div class="l-head"><button class="x" id="quit" aria-label="${tt("Quit lesson","Avsluta lektionen")}">${I.x}</button><div class="bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${Math.max(L.pct==null?pct:L.pct,3)}%"></i></div><span class="stat c-heart">${I.heart}${L.lives!=null?L.lives:S.hearts}</span>${L.combo>=3?`<span class="combo">${tt(`${L.combo} in a row!`,`${L.combo} i rad!`)}</span>`:""}</div><div class="l-body ex-in">${body}</div><div class="l-foot" id="foot">${foot}</div></div>`;
   $("#quit").onclick=quitConfirm;
   L.pct=pct; requestAnimationFrame(()=>requestAnimationFrame(()=>{ const b=$("#lesson .bar i"); if(b) b.style.width=Math.max(pct,3)+"%"; }));
 }
@@ -3409,13 +3648,13 @@ function verdict(ok,detail,skipped){
   const f=$("#foot"); f.className="l-foot "+(ok?"ok":"no");
   const praise=tt(["Nicely done!","Great job!","Excellent!","Ahsant!","Amazing!"],["Snyggt!","Bra jobbat!","Utmärkt!","Ahsant!","Grymt!"])[Math.random()*5|0];
   f.innerHTML=`<div class="fb"><span class="ic" style="color:${ok?"var(--good-btn)":"var(--bad-btn)"}">${ok?I.ok:I.x}</span><div><h3>${ok?praise:tt("Correct solution:","Rätt svar:")}</h3>${detail?`<p>${detail}</p>`:""}</div></div><button class="btn ${ok?"good":"bad"} wide" id="next">${ok?tt("Continue","Fortsätt"):tt("Got it","Uppfattat")}</button>`;
-  [].concat(L.key||[]).forEach(ok?hit:miss); L.key=null;
+  if(L.mode!=="jump") [].concat(L.key||[]).forEach(ok?hit:miss); L.key=null;
   if(ok){ L.right++; L.combo++; L.xp+= L.combo>=5?2:1; S.bestCombo=Math.max(S.bestCombo,L.combo); S.q.combo=Math.max(S.q.combo,L.combo); sGood(); }
-  else { L.wrong++; L.combo=0; if(!skipped&&!L.practice) S.hearts=Math.max(0,S.hearts-1); sBad(); L.ex.push(L.ex[L.k]); }
+  else { L.wrong++; L.combo=0; if(!skipped&&!L.practice) S.hearts=Math.max(0,S.hearts-1); sBad(); if(L.mode==="jump"){ L.lives--; const hc=$("#lesson .l-head .c-heart"); if(hc) hc.innerHTML=I.heart+L.lives; } else L.ex.push(L.ex[L.k]); }
   const sm=$("#lesson .speaker .mascot"); if(sm) sm.outerHTML=mascot(ok?"cheer":"sad");
   hop("#lesson .speaker .mascot", ok?"hop":"nope");
   save();
-  const nx=$("#next"); nx.focus(); nx.onclick=()=>{ if(S.hearts<=0&&!L.practice) return noHearts(); L.k++; step(); };
+  const nx=$("#next"); nx.focus(); nx.onclick=()=>{ if(L.mode==="jump"&&L.lives<=0) return jumpFail(); if(S.hearts<=0&&!L.practice) return noHearts(); L.k++; step(); };
 }
 function noHearts(){
   openOverlay();
@@ -3427,7 +3666,7 @@ function noHearts(){
   $("#prac").onclick=()=>{ if(learnedWords().length>=4){ startPractice(); } else { S.hearts=1; save(); closeLesson(); } };
   $("#back").onclick=closeLesson;
 }
-function step(){ if(L.k>=L.ex.length) return finish(); const e=L.ex[L.k]; ({intro:exIntro,mcq:exMcq,mcqR:exMcq,reply:exReply,match:exMatch,build:exBuild,type:exType,chat:exChat,listen:exListen,flash:exFlash,lintro:exLIntro,lpick:exLPick,lhear:exLHear,lword:exLWord})[e.t](e); }
+function step(){ if(L.k>=L.ex.length) return finish(); const e=L.ex[L.k]; ({intro:exIntro,mcq:exMcq,mcqR:exMcq,reply:exReply,match:exMatch,build:exBuild,type:exType,chat:exChat,listen:exListen,flash:exFlash,dict:exDict,lintro:exLIntro,lpick:exLPick,lhear:exLHear,lword:exLWord})[e.t](e); }
 function wireSkip(){ const s=$("#skip"); if(s) s.onclick=()=>{ document.querySelectorAll(".l-body button,.l-body textarea").forEach(b=>b.disabled=true); verdict(false,skipAnswer(),true); }; }
 function skipAnswer(){ const e=L.ex[L.k]; if(e.ans) return esc(e.ans); if(e.t==="build") return esc(((isF()&&e.fem)?e.fem.answer:e.answer).join(" ")); if(e.t==="reply") return esc(W[L.okK||e.ok].tr); if(e.t==="type") return esc(W[e.w].en); if(e.t==="mcqR") return esc(W[e.w].tr); return esc(W[e.w].en); }
 
@@ -3546,6 +3785,7 @@ function finish(){
   S.hist=S.hist||{}; S.hist[today()]=(S.hist[today()]||0)+gained; Object.keys(S.hist).sort().slice(0,-60).forEach(k=>delete S.hist[k]);
   const goalNow=before<goal&&S.q.xp>=goal&&!S.q.goalHit; if(goalNow){ S.q.goalHit=true; S.gems+=5; }
   if(L.mode==="letters") S.ltr=Object.assign({},S.ltr,{["g"+L.group]:true});
+  else if(L.mode==="jump"){ unlockTo(L.target); SCROLL_CUR=true; }
   else if(L.practice) S.hearts=Math.min(5,S.hearts+1);
   else { S.done[LESSONS[L.i].id]=true; if(perfect) S.perfect++; S.gems+=perfect?5:2; }
   if(firstToday){ S.streak=(S.lastDay===yesterday()?S.streak:0)+1; S.lastDay=today(); S.days=[...new Set([...(S.days||[]),today()])].slice(-14); }
@@ -3553,12 +3793,13 @@ function finish(){
   if(newQ.length) S.q.told=Object.assign({},S.q.told,Object.fromEntries(newQ.map(x=>[x.q.id,1])));
   save(); sWin(); confetti();
   const isChat=!L.practice&&LESSONS[L.i].chat, left=mistakeKeys().length;
-  const head=L.mode==="letters"?tt("Letters learned!","Bokstäverna klara!"):L.review?(left?tt("Review complete!","Repetitionen klar!"):tt("All mistakes fixed!","Alla misstag rättade!")):L.mode==="listen"?tt("Listening done!","Hörövningen klar!"):L.mode==="fresh"?tt("All freshened up!","Allt uppfräschat!"):L.mode==="flash"?tt(`You knew ${L.right} of ${L.right+L.wrong}`,`Du kunde ${L.right} av ${L.right+L.wrong}`):L.practice?tt("Practice complete!","Övningen klar!"):isChat?tt("Conversation complete!","Samtalet klart!"):perfect?tt("Perfect lesson!","Perfekt lektion!"):tt("Lesson complete!","Lektionen klar!");
-  const notes=[L.practice&&L.mode!=="letters"?tt("You won back a heart.","Du vann tillbaka ett hjärta."):"", L.review&&left?tt(`${left} word${left>1?"s":""} still to review.`,`${left} ord kvar att repetera.`):"", !L.review&&L.missed&&L.mode!=="letters"?tt(`${L.missed} word${L.missed>1?"s":""} added to your review list.`,`${L.missed} ord har lagts till i din repetitionslista.`):""].filter(Boolean);
+  const head=L.mode==="jump"?tt("You tested out!","Du klarade testet!"):L.mode==="dict"?tt("Great listening!","Bra lyssnat!"):L.mode==="letters"?tt("Letters learned!","Bokstäverna klara!"):L.review?(left?tt("Review complete!","Repetitionen klar!"):tt("All mistakes fixed!","Alla misstag rättade!")):L.mode==="listen"?tt("Listening done!","Hörövningen klar!"):L.mode==="fresh"?tt("All freshened up!","Allt uppfräschat!"):L.mode==="flash"?tt(`You knew ${L.right} of ${L.right+L.wrong}`,`Du kunde ${L.right} av ${L.right+L.wrong}`):L.practice?tt("Practice complete!","Övningen klar!"):isChat?tt("Conversation complete!","Samtalet klart!"):perfect?tt("Perfect lesson!","Perfekt lektion!"):tt("Lesson complete!","Lektionen klar!");
+  const notes=[L.mode==="jump"?tt(`You can start unit ${L.target+1} now.`,`Nu kan du börja med enhet ${L.target+1}.`):L.practice&&L.mode!=="letters"?tt("You won back a heart.","Du vann tillbaka ett hjärta."):"", L.review&&left?tt(`${left} word${left>1?"s":""} still to review.`,`${left} ord kvar att repetera.`):"", !L.review&&L.missed&&L.mode!=="letters"?tt(`${L.missed} word${L.missed>1?"s":""} added to your review list.`,`${L.missed} ord har lagts till i din repetitionslista.`):""].filter(Boolean);
   $("#lesson").innerHTML=`<div class="l-in"><div class="end">${mascot(perfect||acc>=80?"cheer":"happy")}<h2>${head}</h2>${notes.map(t=>`<p class="sub" style="margin:0">${esc(t)}</p>`).join("")}${goalNow?`<p class="goalhit">${I.bolt.replace("<svg",'<svg width="20" height="20"')}${tt("Daily goal reached! +5 gems","Dagens mål nått! +5 diamanter")}</p>`:""}${newQ.length?`<p class="goalhit qdone">${I.gem.replace("<svg",'<svg width="20" height="20"')}${tt("Quest complete! Claim it on Learn.","Uppdrag klart! Hämta belöningen under Lär dig.")}</p>`:""}
   <div class="endstats"><div class="es y"><span>${tt("Total XP","Totalt XP")}</span><b>${I.bolt.replace("<svg",'<svg width="20" height="20"')}<span class="cnt" data-to="${gained}">0</span></b></div><div class="es g"><span>${acc>=90?tt("Amazing","Grymt"):acc>=70?tt("Good","Bra"):tt("Accuracy","Träffsäkerhet")}</span><b><span class="cnt" data-to="${acc}">0</span>%</b></div><div class="es b"><span>${tt("Quick","Tid")}</span><b>${time}</b></div></div>
   <button class="btn wide" id="cont" style="max-width:420px">${tt("Continue","Fortsätt")}</button></div></div>`;
   countUp($("#lesson")); $("#cont").focus(); $("#cont").onclick=()=>firstToday?streakScreen():closeLesson();
+  if(L.mode==="jump"&&L.place&&L.target+6<UNITS.length){ const nx=L.target+6; $("#cont").insertAdjacentHTML("afterend",`<button class="btn ghost wide blue" id="jp-more" style="max-width:420px">${tt(`Keep going: jump to unit ${nx+1}`,`Fortsätt: hoppa till enhet ${nx+1}`)}</button>`); $("#jp-more").onclick=()=>{ sTap(); startJump(nx,true); }; }
 }
 function streakScreen(){
   sWin();
@@ -3615,7 +3856,7 @@ function mergeState(a,b){
   r.hist=Object.assign({},b.hist||{}); Object.entries(a.hist||{}).forEach(([k,v])=>{ if(!r.hist[k]||v>r.hist[k]) r.hist[k]=v; }); r.leagueHidden=!!(a.leagueHidden||b.leagueHidden);
   r.mist=Object.assign({},b.mist||{},a.mist||{});
   r.seen=Object.assign({},b.seen||{}); Object.entries(a.seen||{}).forEach(([k,t])=>{ if(!r.seen[k]||t>r.seen[k]) r.seen[k]=t; });
-  r.onboarded=!!(a.onboarded||b.onboarded); r.ltr=Object.assign({},b.ltr||{},a.ltr||{}); r.guideSeen=!!(a.guideSeen||b.guideSeen);
+  r.onboarded=!!(a.onboarded||b.onboarded); r.ltr=Object.assign({},b.ltr||{},a.ltr||{}); r.guideSeen=!!(a.guideSeen||b.guideSeen); r.seenNew=Object.assign({},b.seenNew||{},a.seenNew||{});
   const tq=[a,b].filter(x=>x.q&&x.q.day===today());
   r.q=tq.length?Object.assign({},tq.map(x=>x.q).sort((x,y)=>(y.xp||0)-(x.xp||0))[0]):{day:today(),xp:0,lessons:0,combo:0,claimed:{}};
   r.q.claimed=Object.assign({},...tq.map(x=>x.q.claimed||{}));
@@ -3809,37 +4050,41 @@ let WSTEP=0, WSEL={};
 const WHY=[["family","To talk with family","För att prata med familjen"],["partner","For my partner and their family","För min partner och deras familj"],["travel","To visit Mosul or Iraq","För att besöka Mosul eller Irak"],["roots","To connect with my roots","För att knyta an till mina rötter"],["fun","Just for fun","Bara för skojs skull"]];
 const GOALS=[[10,"Casual","5 min a day","Lugnt","5 min om dagen"],[20,"Regular","10 min a day","Lagom","10 min om dagen"],[30,"Serious","15 min a day","Seriöst","15 min om dagen"],[50,"Intense","20 min a day","Intensivt","20 min om dagen"]];
 const goalName=g=>{ const x=GOALS.find(x=>x[0]===g)||GOALS[1]; return tt(x[1],x[3]); };
-function welcomeSteps(){ return CLOUD&&!SES?5:4; }
-function openWelcome(){ WSTEP=0; WSEL={why:S.why,gender:S.gender,goal:S.goal||20}; $("#welcome").hidden=false; document.body.style.overflow="hidden"; drawWelcome(); }
+function wSteps(){ const s=["hi","why","gender","goal"]; if(!S.lessons&&!Object.keys(S.done||{}).length) s.push("level"); if(CLOUD&&!SES) s.push("acct"); return s; }
+function welcomeSteps(){ return wSteps().length; }
+function openWelcome(){ WSTEP=0; WSEL={why:S.why,gender:S.gender,goal:S.goal||20,level:"new"}; $("#welcome").hidden=false; document.body.style.overflow="hidden"; drawWelcome(); }
 function closeWelcome(){ $("#welcome").hidden=true; $("#welcome").innerHTML=""; document.body.style.overflow=""; }
 function finishWelcome(){
   S.why=WSEL.why||S.why; S.gender=WSEL.gender||S.gender||"m"; S.goal=WSEL.goal||20; S.onboarded=true; save();
-  closeWelcome(); render(); if(!S.lessons&&!Object.keys(S.done).length) startLesson(0);
+  closeWelcome(); render(); if(!S.lessons&&!Object.keys(S.done).length){ if(WSEL.level==="some") startJump(6,true); else if(WSEL.level==="more") startJump(12,true); else startLesson(0); }
 }
 function afterAuth(){ const w=$("#welcome"); if(w&&!w.hidden&&(S.onboarded||WSTEP>=4)){ if(S.onboarded) { closeWelcome(); render(); } else finishWelcome(); } }
 function drawWelcome(){
   const n=welcomeSteps(), dots=`<div class="wdots">${Array.from({length:n},(_,i)=>`<i class="${i<=WSTEP?"on":""}"></i>`).join("")}</div>`;
   const choice=(key,list,fmt)=>`<div class="opts">${list.map(o=>`<button class="opt wopt" data-v="${o[0]}" aria-pressed="${String(WSEL[key])===String(o[0])}">${fmt(o)}</button>`).join("")}</div>`;
   const cont=tt("Continue","Fortsätt");
-  let body="", foot="";
-  if(WSTEP===0){
+  let body="", foot=""; const st=wSteps()[WSTEP];
+  if(st==="hi"){
     body=`<div class="wlang" role="group" aria-label="Language / Språk">${[["en","English"],["sv","Svenska"]].map(([v,l])=>`<button data-lang="${v}" aria-pressed="${lang()===v}">${l}</button>`).join("")}</div><div class="end" style="gap:12px">${mascot("wave").replace('class="mascot"','class="mascot" style="width:160px;height:160px"')}<h2 style="color:var(--primary)">Ahlan wa sahlan!</h2><p class="sub" style="margin:0;max-width:34ch">${tt("Learn the Mosul dialect in a few minutes a day. Every phrase is written in English letters and has audio, so you don't need to read Arabic.","Lär dig Mosul-dialekten på några minuter om dagen. Alla fraser skrivs med vanliga bokstäver och har ljud, så du behöver inte kunna läsa arabiska.")}</p></div>`;
     foot=`<button class="btn wide" id="w-next">${tt("Get started","Kom igång")}</button>${CLOUD&&!SES?`<button class="btn ghost wide blue" id="w-have">${tt("I already have an account","Jag har redan ett konto")}</button>`:""}`;
-  } else if(WSTEP===1){
+  } else if(st==="why"){
     body=`<h2 class="q">${tt("Why are you learning Maslawi?","Varför vill du lära dig maslawi?")}</h2>${choice("why",WHY,o=>`<span>${esc(tt(o[1],o[2]))}</span>`)}`;
     foot=`<button class="btn wide" id="w-next" ${WSEL.why?"":"disabled"}>${cont}</button>`;
-  } else if(WSTEP===2){
+  } else if(st==="gender"){
     body=`<h2 class="q">${tt("How should people talk to you?","Hur ska folk prata med dig?")}</h2><p class="sub" style="margin:0">${tt("Some Arabic words change for men and women. “How are you?” is <b>shlonak?</b> to a man and <b>shlonik?</b> to a woman. We'll use the right ones for you.","Vissa arabiska ord ändras för män och kvinnor. ”Hur mår du?” är <b>shlonak?</b> till en man och <b>shlonik?</b> till en kvinna. Vi använder rätt ord för dig.")}</p>${choice("gender",[["m",tt("Like a man","Som till en man"),tt("They'll ask you: shlonak?","De frågar dig: shlonak?")],["f",tt("Like a woman","Som till en kvinna"),tt("They'll ask you: shlonik?","De frågar dig: shlonik?")]],o=>`<span>${o[1]}</span><span class="trs">${o[2]}</span>`)}`;
     foot=`<button class="btn wide" id="w-next" ${WSEL.gender?"":"disabled"}>${cont}</button>`;
-  } else if(WSTEP===3){
+  } else if(st==="goal"){
     body=`<h2 class="q">${tt("Pick a daily goal","Välj ett dagligt mål")}</h2><p class="sub" style="margin:0">${tt("You can change it any time in Settings.","Du kan ändra det när du vill under Inställningar.")}</p>${choice("goal",GOALS,o=>`<span class="wrow"><span>${tt(o[1],o[3])}</span><span class="trs">${tt(o[2],o[4])}</span></span>`)}`;
-    foot=`<button class="btn wide" id="w-next">${n===4?(S.lessons?tt("Done","Klar"):tt("Start my first lesson","Starta min första lektion")):cont}</button>`;
+    foot=`<button class="btn wide" id="w-next">${WSTEP===n-1?(S.lessons?tt("Done","Klar"):tt("Start my first lesson","Starta min första lektion")):cont}</button>`;
+  } else if(st==="level"){
+    body=`<h2 class="q">${tt("How much Maslawi do you know?","Hur mycket maslawi kan du?")}</h2><p class="sub" style="margin:0">${tt("If you already know some, a short test lets you skip what you know.","Kan du redan lite? Då kan du göra ett kort test och hoppa över det du kan.")}</p>${choice("level",LEVELS,o=>`<span class="wlev"><span>${tt(o[1],o[3])}</span><small>${tt(o[2],o[4])}</small></span>`)}`;
+    foot=`<button class="btn wide" id="w-next">${WSTEP===n-1?(WSEL.level==="new"?tt("Start my first lesson","Starta min första lektion"):tt("Start the test","Starta testet")):cont}</button>`;
   } else {
     body=`<div class="end" style="gap:12px">${mascot("wow")}<h2 style="color:var(--primary)">${tt("Save your progress?","Spara dina framsteg?")}</h2><p class="sub" style="margin:0;max-width:34ch">${tt("Create a free account to keep your streak on every device and join the weekly league.","Skapa ett gratis konto så har du din svit på alla enheter och kan vara med i veckans liga.")}</p></div>`;
     foot=`<button class="btn wide" id="w-acc">${tt("Create account","Skapa konto")}</button><button class="btn ghost wide" id="w-next">${tt("Maybe later","Kanske senare")}</button>`;
   }
   $("#welcome").innerHTML=`<div class="l-in"><div class="l-head">${WSTEP>0?`<button class="x" id="w-back" aria-label="${tt("Back","Tillbaka")}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>`:""}${dots}</div><div class="l-body">${body}</div><div class="l-foot wfoot">${foot}</div></div>`;
-  document.querySelectorAll("#welcome .wopt").forEach(b=>b.onclick=()=>{ const key=WSTEP===1?"why":WSTEP===2?"gender":"goal"; WSEL[key]=key==="goal"?+b.dataset.v:b.dataset.v; sTap(); drawWelcome(); });
+  document.querySelectorAll("#welcome .wopt").forEach(b=>b.onclick=()=>{ const key=wSteps()[WSTEP]; WSEL[key]=key==="goal"?+b.dataset.v:b.dataset.v; sTap(); drawWelcome(); });
   document.querySelectorAll("#welcome [data-lang]").forEach(b=>b.onclick=()=>{ S.lang=b.dataset.lang; save(); applyLang(); drawTabs(); render(); sTap(); drawWelcome(); });
   const nx=$("#w-next"); if(nx){ nx.onclick=()=>{ sTap(); if(WSTEP>=n-1) finishWelcome(); else { WSTEP++; drawWelcome(); } }; }
   const bk=$("#w-back"); if(bk) bk.onclick=()=>{ WSTEP--; drawWelcome(); };

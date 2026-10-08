@@ -4,7 +4,9 @@ A Duolingo-style app for learning the Mosul (Maslawi) dialect of Iraqi Arabic, i
 
 24 units, 72 levels (including 24 conversations) and 304 phrases, from greetings to *At the doctor*, *At work*, *Moods*, *Compliments*, *Wedding*, *Christmas & Easter* and *Sayings*. The mascot is Istikan, a Maslawi tea glass. Learners do daily quests on the Learn page, look up any word in English, Swedish or Maslawi ("hi" and "hej" both find *merhaba*), practise with listening, flashcards, mistake review and "freshen up", spend gems by tapping the gem counter, pick a light or dark theme in Settings, and see their weekly XP on their profile.
 
-The Words page also has a **sound guide** (kh, gh, q, the deep h, ayn and more, each with words you can play) and an optional **Arabic letters** track: 8 short lessons that teach the 28 letters of the alphabet plus چ, ة, ء and ال, their shapes and how to read simple words.
+The Words page also has a **sound guide** (kh, gh, q, the deep h, ayn and more, each with words you can play), **Grammar in a minute** (8 short topics, such as talking to a woman, "my/your" endings and the Mosul -tu ending), **verb tables** (8 everyday verbs in past and present for every person, with audio), an optional **Write what you hear** dictation practice, and an optional **Arabic letters** track: 8 short lessons that teach the 28 letters of the alphabet plus چ, ة, ء and ال, their shapes and how to read simple words.
+
+Learners who already know some Maslawi can **jump ahead**: the welcome screen asks how much they know, and locked units on the Learn page have a "Jump here" button. A short test with 3 lives unlocks everything before it.
 
 The app speaks the phone's language: Swedish on a Swedish phone, English everywhere else. Learners can switch on the welcome screen or in Settings.
 
@@ -15,6 +17,7 @@ Made by A. Yasso.
 | File | What it is |
 | --- | --- |
 | `index.html` | The whole app: lessons, words, audio, accounts |
+| `extra-audio.json` | Audio for the verb tables and grammar tables, loaded the first time they are opened |
 | `manifest.webmanifest`, `sw.js`, `icon-*.png` | Let people install it to their home screen and open it offline |
 | `supabase-setup.sql` | Creates the progress table for accounts (run once in Supabase) |
 
@@ -33,6 +36,8 @@ Open `index.html` and search for:
 - `const SV_ACC=` / `SV_SYN=` – extra Swedish answers to accept when typing, and Swedish search words
 - `const GUIDE=` – the sound guide
 - `const LT=` / `LT_GROUPS=` – the Arabic letters and how they are grouped into lessons
+- `const GRAMMAR=` – the Grammar in a minute topics
+- `const PRON=` / `VERBS=` – the persons and the verb tables (their audio is in `extra-audio.json`, keys `V_<verb>_<past|now>_<person>`)
 
 New phrases need an audio clip in `const AUD=` (ask Claude to generate one). Letter names use the keys `L_alif`, `L_ba` and so on.
 
