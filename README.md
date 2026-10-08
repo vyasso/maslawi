@@ -2,7 +2,7 @@
 
 A Duolingo-style app for learning the Mosul (Maslawi) dialect of Iraqi Arabic, in English or Swedish. Phrases are written in simple English letters, every phrase has audio, and learners can make an account so their progress follows them between devices.
 
-24 units, 72 levels (including 24 conversations) and 306 phrases, from greetings to *At the doctor*, *At work*, *Moods*, *Compliments*, *Wedding*, *Christmas & Easter* and *Sayings*. The mascot is Istikan, a Maslawi tea glass. Learners do daily quests on the Learn page, look up any word in English, Swedish or Maslawi ("hi" and "hej" both find *merhaba*), practise with listening, flashcards, mistake review and "freshen up", spend gems by tapping the gem counter, pick a light or dark theme in Settings, and see their weekly XP on their profile.
+24 units, 72 levels (including 24 conversations) and 304 phrases, from greetings to *At the doctor*, *At work*, *Moods*, *Compliments*, *Wedding*, *Christmas & Easter* and *Sayings*. The mascot is Istikan, a Maslawi tea glass. Learners do daily quests on the Learn page, look up any word in English, Swedish or Maslawi ("hi" and "hej" both find *merhaba*), practise with listening, flashcards, mistake review and "freshen up", spend gems by tapping the gem counter, pick a light or dark theme in Settings, and see their weekly XP on their profile.
 
 The Words page also has a **sound guide** (kh, gh, q, the deep h, ayn and more, each with words you can play) and an optional **Arabic letters** track: 8 short lessons that teach the 28 letters of the alphabet plus چ, ة, ء and ال, their shapes and how to read simple words.
 
