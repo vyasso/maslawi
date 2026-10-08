@@ -2,6 +2,8 @@
 
 A Duolingo-style app for learning the Mosul (Maslawi) dialect of Iraqi Arabic. Phrases are written in simple English letters, every phrase has audio, and learners can make an account so their progress follows them between devices.
 
+17 units, 51 levels (including 17 conversations) and 210 phrases. Learners can pick a light or dark theme (or follow their device) in Settings, practise with listening, flashcards and mistake review, buy streak freezes with gems, and see their weekly XP on their profile.
+
 Made by A. Yasso.
 
 ## Files
