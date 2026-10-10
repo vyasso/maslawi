@@ -2,7 +2,7 @@
 
 A Duolingo-style app for learning the Mosul (Maslawi) dialect of Iraqi Arabic, in English or Swedish. Phrases are written in simple English letters, every phrase has audio, and learners can make an account so their progress follows them between devices.
 
-24 units, 72 levels (including 24 conversations) and 304 phrases, from greetings to *At the doctor*, *At work*, *Moods*, *Compliments*, *Wedding*, *Christmas & Easter* and *Sayings*. The mascot is Istikan, a Maslawi tea glass. Learners do daily quests on the Learn page, look up any word in English, Swedish or Maslawi ("hi" and "hej" both find *merhaba*), practise with listening, flashcards, mistake review and "freshen up", spend gems by tapping the gem counter, pick a light or dark theme in Settings, and see their weekly XP on their profile.
+28 units, 85 levels (including 28 conversations) and 346 phrases: greetings first, then a *Build sentences* section (I, you, he, she · we, you, they · mine and yours · I eat, you drink), and later *At the doctor*, *At work*, *Moods*, *Compliments*, *Wedding*, *Christmas & Easter* and *Sayings*. The mascot is Istikan, a Maslawi tea glass. Learners do daily quests on the Learn page, look up any word in English, Swedish or Maslawi ("hi" and "hej" both find *merhaba*), practise with listening, flashcards, mistake review and "freshen up", spend gems by tapping the gem counter, pick a light or dark theme in Settings, and see their weekly XP on their profile.
 
 The Words page also has a **sound guide** (kh, gh, q, the deep h, ayn and more, each with words you can play), **Grammar in a minute** (8 short topics, such as talking to a woman, "my/your" endings and the Mosul -tu ending), **verb tables** (8 everyday verbs in past and present for every person, with audio), an optional **Write what you hear** dictation practice, and an optional **Arabic letters** track: 8 short lessons that teach the 28 letters of the alphabet plus چ, ة, ء and ال, their shapes and how to read simple words.
 
@@ -53,6 +53,14 @@ The site is published with GitHub Pages at **https://feli.yasso.se** (the `CNAME
 4. Paste them into `SUPABASE_URL` and `SUPABASE_ANON_KEY` near the top of the script in `index.html`, then push.
 5. In Authentication → URL Configuration, set **Site URL** to `https://feli.yasso.se`, so confirmation emails link back to the app.
 6. Optional while testing: Authentication → Sign In / Providers → Email → turn off "Confirm email".
+
+The weekly league also shows where each learner is in the course ("Unit 9 · Level 26"). If your `league` table was made before that, run this once in the SQL Editor:
+
+```sql
+alter table public.league add column if not exists level text check (char_length(level) <= 12);
+```
+
+Until then the league still works, it just shows the level for yourself only.
 
 The anon key is meant to be public. Row level security in `supabase-setup.sql` keeps each user's progress private.
 
