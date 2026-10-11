@@ -35,6 +35,6 @@ jobs:
         run: node send.mjs
         env:
           SUPABASE_URL: https://buxdpufszmtyacrwyokm.supabase.co
-          VAPID_PUBLIC_KEY: BOUOGOaqH2j0grqBNXNoaCN8o0GCIOrAT2uesIowDIl8KGr8EtcnEoIWhjyBzyyo_BhYvtnclPcIbIeePObtaGQ
+          VAPID_PUBLIC_KEY: BEL8qWPcxXOc6TuAHzmLBOHyP4JiEmG2rSkX2afOZRZp9nmok4dnz0q8i7FB5U35rj-TBXJga9eJOq7372f_nJA
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}

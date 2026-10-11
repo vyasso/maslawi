@@ -4345,7 +4345,7 @@ function streakScreen(){
 /* ================= STREAK REMINDER (push notifications) =================
    The learner switches it on; the phone gets a notification at the chosen hour if they
    haven't practised that day. The sending is done by reminders/send.mjs (a GitHub Action). */
-const VAPID_PUBLIC="BOUOGOaqH2j0grqBNXNoaCN8o0GCIOrAT2uesIowDIl8KGr8EtcnEoIWhjyBzyyo_BhYvtnclPcIbIeePObtaGQ";
+const VAPID_PUBLIC="BEL8qWPcxXOc6TuAHzmLBOHyP4JiEmG2rSkX2afOZRZp9nmok4dnz0q8i7FB5U35rj-TBXJga9eJOq7372f_nJA";
 const BELL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4S6 14 6 9z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>';
 const isIOS=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
 const isStandalone=()=>{ try{ return matchMedia("(display-mode: standalone)").matches||navigator.standalone===true; }catch(e){ return false; } };
