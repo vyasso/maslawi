@@ -6,6 +6,8 @@ A Duolingo-style app for learning the Mosul (Maslawi) dialect of Iraqi Arabic, i
 
 The Words page also has a **sound guide** (kh, gh, q, the deep h, ayn and more, each with words you can play), **Grammar in a minute** (8 short topics, such as talking to a woman, "my/your" endings and the Mosul -tu ending), **verb tables** (8 everyday verbs in past and present for every person, with audio), an optional **Write what you hear** dictation practice, and an optional **Arabic letters** track: 8 short lessons that teach the 28 letters of the alphabet plus چ, ة, ء and ال, their shapes and how to read simple words.
 
+Signed-in learners can **suggest phrases** they say in Mosul. Once a reviewer has approved them, they show up for everyone under Words, in a section called *From friends and family*.
+
 Learners who already know some Maslawi can **jump ahead**: the welcome screen asks how much they know, and locked units on the Learn page have a "Jump here" button. A short test with 3 lives unlocks everything before it.
 
 The app speaks the phone's language: Swedish on a Swedish phone, English everywhere else. Learners can switch on the welcome screen or in Settings.
@@ -19,7 +21,8 @@ Made by A. Yasso.
 | `index.html` | The whole app: lessons, words, audio, accounts |
 | `extra-audio.json` | Audio for the verb tables and grammar tables, loaded the first time they are opened |
 | `manifest.webmanifest`, `sw.js`, `icon-*.png` | Let people install it to their home screen and open it offline |
-| `supabase-setup.sql` | Creates the progress table for accounts (run once in Supabase) |
+| `og-image.png` | The picture shown when someone shares the link (1200×630) |
+| `supabase-setup.sql` | Creates the tables for accounts, the league, the content check and suggested phrases (run in Supabase; safe to run again) |
 
 ## Editing lessons
 
@@ -48,7 +51,7 @@ The site is published with GitHub Pages at **https://feli.yasso.se** (the `CNAME
 ## Accounts (Supabase)
 
 1. Create a free project at supabase.com.
-2. In the SQL Editor, run `supabase-setup.sql`.
+2. In the SQL Editor, run `supabase-setup.sql`. It only creates what's missing, so it's safe to run again after an update.
 3. In Project Settings → API, copy the Project URL and the `anon` public key.
 4. Paste them into `SUPABASE_URL` and `SUPABASE_ANON_KEY` near the top of the script in `index.html`, then push.
 5. In Authentication → URL Configuration, set **Site URL** to `https://feli.yasso.se`, so confirmation emails link back to the app.
@@ -78,3 +81,15 @@ Add a reviewer in Supabase → SQL Editor:
 ```sql
 insert into public.reviewers (email) values ('their@email.com');
 ```
+
+## Suggested phrases
+
+On the Words page, signed-in learners tap **Suggest a phrase** (under *From friends and family*, or when a search finds nothing) and send in the phrase, what it means, and optionally the Arabic and when people say it. Each suggestion waits until a reviewer looks at it in **Settings → Reviewer tools → Suggested phrases**. Reviewers also get a button on the Words page when something new is waiting. They can fix the spelling, meaning, Arabic or note, then **Approve** or **Don't add**.
+
+Approved phrases show up for everyone under Words, with the first name of the person who sent them in, and they turn up in search. They have no audio. **Copy approved** copies them as a list you can paste to Claude, who can add them to the lessons with audio.
+
+The `phrase_suggestions` table is part of `supabase-setup.sql`. If you set up Supabase before this feature, run the file again (it's safe to run more than once). Until the table exists, the feature stays hidden. Each learner can have at most 50 suggestions waiting.
+
+## Link preview
+
+The `og:` tags at the top of `index.html` and the picture `og-image.png` decide how a shared link looks on WhatsApp, Facebook, Messenger, iMessage and X: the picture, the title "Maslawi – lär dig Mosul-dialekten" and a short description. Facebook and Messenger remember a preview for a while. After changing the picture or text, paste the link into Facebook's [Sharing Debugger](https://developers.facebook.com/tools/debug/) and press **Scrape Again**.
