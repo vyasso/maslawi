@@ -939,6 +939,16 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .sr-tip{margin:0}
 #review{z-index:23}
 #review .l-head .btn.ghost{font-size:13px;letter-spacing:.03em}
+/* streak reminder */
+.remind-ask{display:flex;align-items:center;flex-wrap:wrap;gap:10px 12px;width:100%;max-width:420px;margin-top:4px;padding:12px 14px;border:2px solid var(--line);border-radius:18px;background:var(--surface);text-align:start}
+.ra-ic{width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;background:rgba(255,138,26,.16);color:var(--flame)}
+.ra-ic svg{width:22px;height:22px}
+.ra-t{flex:1 1 160px;min-width:0;display:flex;flex-direction:column}
+.ra-t small{color:var(--muted);font-weight:600;line-height:1.3}
+.ra-b{display:flex;align-items:center;justify-content:flex-end;gap:16px;flex:1 1 100%}
+.ra-b .btn{padding:9px 14px;font-size:14px}
+.ra-b .linkbtn{align-self:center;color:var(--muted)}
+.hs-steps{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:8px;font-weight:700;line-height:1.4}
 :root[data-theme="dark"] .cr-ic{color:var(--gold)}
 :root[data-theme="dark"] .sg-st.pending{color:var(--gold)}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .cr-ic,:root:not([data-theme="light"]) .sg-st.pending{color:var(--gold)} }
@@ -3514,6 +3524,7 @@ function renderSettings(){
         <div class="set-row"><span class="set-l"><b>${tt("People talk to me as","Folk pratar med mig som")}</b><small>${tt("Changes words like shlonak / shlonik","Ändrar ord som shlonak / shlonik")}</small></span>${seg("gseg",[["m",tt("Man","Man")],["f",tt("Woman","Kvinna")]],isF()?"f":"m",tt("People talk to me as","Folk pratar med mig som"))}</div>
         <div class="set-row"><span class="set-l"><b>${tt("Sounds and voice","Ljud och röst")}</b><small>${tt("Effects, spoken phrases and vibration","Effekter, upplästa fraser och vibration")}</small></span>${sw("snd",S.sound,tt("Sounds and voice","Ljud och röst"))}</div>
         <div class="set-row"><span class="set-l"><b>${tt("Show Arabic letters","Visa arabiska bokstäver")}</b><small>${tt("For learners who can read Arabic","För dig som kan läsa arabiska")}</small></span>${sw("arb",S.arabic,tt("Show Arabic letters","Visa arabiska bokstäver"))}</div>
+        ${CLOUD?`<div class="set-row"><span class="set-l"><b>${tt("Streak reminder","Påminnelse för sviten")}</b><small>${S.push?tt(`At ${pushHour()}:00 if you haven't practised that day`,`Kl. ${pushHour()} om du inte har övat den dagen`):tt("A notification in the evening if you haven't practised","En notis på kvällen om du inte har övat")}</small></span>${sw("psh",!!S.push,tt("Streak reminder","Påminnelse för sviten"))}</div>${S.push?`<div class="set-row"><span class="set-l"><b>${tt("Remind me at","Påminn mig kl.")}</b></span>${seg("pushseg",[[17,"17"],[18,"18"],[19,"19"],[20,"20"],[21,"21"]],pushHour(),tt("Reminder time","Tid för påminnelse"))}</div>`:""}`:""}
       </div>
       ${CLOUD?`<h2 class="set-h">${tt("Account","Konto")}</h2>${accountCard()}${SES?`<div class="set-card"><div class="set-row"><span class="set-l"><b>${tt("Show me in the league","Visa mig i ligan")}</b><small>${tt("Others see your first name, XP and how far you've got","Andra ser ditt förnamn, din XP och hur långt du har kommit")}</small></span>${sw("lgs",!S.leagueHidden,tt("Show me in the league","Visa mig i ligan"))}</div></div>`:""}`:""}
       ${canReview()?`<h2 class="set-h">${tt("Reviewer tools","Granskarverktyg")}</h2>${reviewCard().replace(/<h2 class="sec">[^<]*<\/h2>/,'')}${suggestCard()}`:""}
@@ -3529,11 +3540,13 @@ function renderSettings(){
   el.querySelectorAll("#gseg button").forEach(b=>b.onclick=()=>{ S.gender=b.dataset.v; save(); sTap(); renderSettings(); });
   $("#snd").onclick=()=>{ S.sound=!S.sound; save(); sTap(); renderSettings(); };
   $("#arb").onclick=()=>{ S.arabic=!S.arabic; save(); sTap(); renderSettings(); };
+  const psh=$("#psh"); if(psh) psh.onclick=async()=>{ sTap(); psh.disabled=true; if(S.push) await pushOff(); else await pushOn(); if(!$("#settings").hidden) renderSettings(); };
+  el.querySelectorAll("#pushseg button").forEach(b=>b.onclick=()=>{ S.pushHour=+b.dataset.v; save(); sTap(); pushTouch(true); renderSettings(); });
   const lgs=$("#lgs"); if(lgs) lgs.onclick=()=>{ S.leagueHidden=!S.leagueHidden; save(); LG.at=0; pushLeague().catch(()=>{}); sTap(); renderSettings(); };
   const rv=$("#open-review"); if(rv) rv.onclick=openReview;
   const sgo=$("#open-sg"); if(sgo) sgo.onclick=()=>{ sTap(); openSuggestReview(); };
   wireAccount();
-  let armed=false; $("#reset").onclick=e=>{ if(!armed){ armed=true; e.target.textContent=tt("Tap again","Tryck igen"); e.target.classList.add("armed"); return; } const keep={checked:S.checked,sound:S.sound,arabic:S.arabic,theme:S.theme,lang:S.lang,gender:S.gender,goal:S.goal,why:S.why,joined:S.joined}; S=Object.assign(fresh(),keep,{onboarded:true}); S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}}; S.week=weekId(); save(); toast(tt("Progress reset. Back to Unit 1.","Framstegen är nollställda. Tillbaka till enhet 1.")); closeSettings(); setTab("learn"); };
+  let armed=false; $("#reset").onclick=e=>{ if(!armed){ armed=true; e.target.textContent=tt("Tap again","Tryck igen"); e.target.classList.add("armed"); return; } const keep={checked:S.checked,push:S.push,pushHour:S.pushHour,pushAsked:S.pushAsked,sound:S.sound,arabic:S.arabic,theme:S.theme,lang:S.lang,gender:S.gender,goal:S.goal,why:S.why,joined:S.joined}; S=Object.assign(fresh(),keep,{onboarded:true}); S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}}; S.week=weekId(); save(); toast(tt("Progress reset. Back to Unit 1.","Framstegen är nollställda. Tillbaka till enhet 1.")); closeSettings(); setTab("learn"); };
   document.addEventListener("keydown",setEsc);
 }
 function setEsc(e){ if(e.key==="Escape"&&!$("#settings").hidden&&$("#sheet").hidden&&$("#review").hidden){ document.removeEventListener("keydown",setEsc); closeSettings(); } }
@@ -4311,7 +4324,7 @@ function finish(){
   if(firstToday){ S.streak=(S.lastDay===yesterday()?S.streak:0)+1; S.lastDay=today(); S.days=[...new Set([...(S.days||[]),today()])].slice(-14); }
   const newQ=QUESTS.map(questInfo).filter(x=>x.done&&!x.claimed&&!(S.q.told||{})[x.q.id]);
   if(newQ.length) S.q.told=Object.assign({},S.q.told,Object.fromEntries(newQ.map(x=>[x.q.id,1])));
-  save(); sWin(); confetti();
+  save(); if(firstToday) pushTouch(); sWin(); confetti();
   const isChat=!L.practice&&LESSONS[L.i].chat, left=mistakeKeys().length;
   const head=L.mode==="jump"?tt("You tested out!","Du klarade testet!"):L.mode==="dict"?tt("Great listening!","Bra lyssnat!"):L.mode==="letters"?tt("Letters learned!","Bokstäverna klara!"):L.review?(left?tt("Review complete!","Repetitionen klar!"):tt("All mistakes fixed!","Alla misstag rättade!")):L.mode==="listen"?tt("Listening done!","Hörövningen klar!"):L.mode==="fresh"?tt("All freshened up!","Allt uppfräschat!"):L.mode==="flash"?tt(`You knew ${L.right} of ${L.right+L.wrong}`,`Du kunde ${L.right} av ${L.right+L.wrong}`):L.practice?tt("Practice complete!","Övningen klar!"):isChat?tt("Conversation complete!","Samtalet klart!"):perfect?tt("Perfect lesson!","Perfekt lektion!"):tt("Lesson complete!","Lektionen klar!");
   const notes=[L.mode==="jump"?tt(`You can start unit ${L.target+1} now.`,`Nu kan du börja med enhet ${L.target+1}.`):L.practice&&L.mode!=="letters"?tt("You won back a heart.","Du vann tillbaka ett hjärta."):"", L.review&&left?tt(`${left} word${left>1?"s":""} still to review.`,`${left} ord kvar att repetera.`):"", !L.review&&L.missed&&L.mode!=="letters"?tt(`${L.missed} word${L.missed>1?"s":""} added to your review list.`,`${L.missed} ord har lagts till i din repetitionslista.`):""].filter(Boolean);
@@ -4324,9 +4337,72 @@ function finish(){
 function streakScreen(){
   sWin();
   const days=weekDots();
-  $("#lesson").innerHTML=`<div class="l-in"><div class="end"><span class="bigflame">${I.flame.replace("<svg",'<svg width="140" height="140"')}</span><div class="streaknum">${S.streak}</div><h2 style="color:var(--flame)">${tt("day streak!","dagar i rad!")}</h2><div class="week">${days}</div><p class="sub" style="margin:0;max-width:32ch">${tt("Practice every day to keep your streak growing.","Öva varje dag så att din svit växer.")}</p><button class="btn wide" id="cont" style="max-width:420px;background:var(--flame);box-shadow:0 4px 0 var(--orange-deep)">${tt("I'm committed","Jag kör på!")}</button></div></div>`;
+  $("#lesson").innerHTML=`<div class="l-in"><div class="end"><span class="bigflame">${I.flame.replace("<svg",'<svg width="140" height="140"')}</span><div class="streaknum">${S.streak}</div><h2 style="color:var(--flame)">${tt("day streak!","dagar i rad!")}</h2><div class="week">${days}</div><p class="sub" style="margin:0;max-width:32ch">${tt("Practice every day to keep your streak growing.","Öva varje dag så att din svit växer.")}</p><button class="btn wide" id="cont" style="max-width:420px;background:var(--flame);box-shadow:0 4px 0 var(--orange-deep)">${tt("I'm committed","Jag kör på!")}</button>${pushCanAsk()?`<div class="remind-ask" id="rm-ask"><span class="ra-ic" aria-hidden="true">${BELL}</span><span class="ra-t"><b>${tt("Want a reminder?","Vill du ha en påminnelse?")}</b><small>${tt(`A notification at ${pushHour()}:00 on days you haven't practised.`,`En notis kl. ${pushHour()} de dagar du inte har övat.`)}</small></span><span class="ra-b"><button class="btn ghost blue" id="rm-yes">${tt("Remind me","Påminn mig")}</button><button class="linkbtn" id="rm-no">${tt("Not now","Inte nu")}</button></span></div>`:""}</div></div>`;
   $("#cont").focus(); $("#cont").onclick=closeLesson;
+  const ry=$("#rm-yes"); if(ry){ ry.onclick=async()=>{ ry.disabled=true; S.pushAsked=true; save(); await pushOn(); const a=$("#rm-ask"); if(a) a.remove(); }; $("#rm-no").onclick=()=>{ S.pushAsked=true; save(); $("#rm-ask").remove(); $("#cont").focus(); }; }
 }
+
+/* ================= STREAK REMINDER (push notifications) =================
+   The learner switches it on; the phone gets a notification at the chosen hour if they
+   haven't practised that day. The sending is done by reminders/send.mjs (a GitHub Action). */
+const VAPID_PUBLIC="BOUOGOaqH2j0grqBNXNoaCN8o0GCIOrAT2uesIowDIl8KGr8EtcnEoIWhjyBzyyo_BhYvtnclPcIbIeePObtaGQ";
+const BELL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4S6 14 6 9z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>';
+const isIOS=()=>/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const isStandalone=()=>{ try{ return matchMedia("(display-mode: standalone)").matches||navigator.standalone===true; }catch(e){ return false; } };
+const pushOk=()=>CLOUD&&"serviceWorker" in navigator&&"PushManager" in window&&"Notification" in window;
+const pushHour=()=>S.pushHour||19;
+const tzName=()=>{ try{ return Intl.DateTimeFormat().resolvedOptions().timeZone||""; }catch(e){ return ""; } };
+const b64u=s=>{ const b=atob((s+"=".repeat((4-s.length%4)%4)).replace(/-/g,"+").replace(/_/g,"/")); return Uint8Array.from(b,c=>c.charCodeAt(0)); };
+const swReady=()=>Promise.race([navigator.serviceWorker.ready,new Promise((_,no)=>setTimeout(()=>no(new Error("no service worker")),8000))]);
+async function pushSave(sub){
+  const j=sub.toJSON();
+  await api("/rest/v1/rpc/save_push",{method:"POST",body:JSON.stringify({p_endpoint:j.endpoint,p_p256dh:j.keys.p256dh,p_auth:j.keys.auth,p_tz:tzName(),p_hour:pushHour(),p_lang:lang(),p_last_day:S.lastDay||null,p_streak:S.streak||0})},false);
+}
+function homeScreenSheet(){
+  sheet(`<div style="text-align:center">${mascot("think")}<h2 class="sec" style="margin:4px 0">${tt("Add Maslawi to your home screen first","Lägg till Maslawi på hemskärmen först")}</h2><p class="sub" style="margin:0">${tt("On iPhone, reminders only work when the app is opened from the home screen.","På iPhone fungerar påminnelser bara när appen öppnas från hemskärmen.")}</p></div>
+  <ol class="hs-steps"><li>${tt("In Safari, tap the Share button (the square with an arrow).","Tryck på Dela-knappen i Safari (fyrkanten med en pil).")}</li><li>${tt("Choose “Add to Home Screen”.","Välj ”Lägg till på hemskärmen”.")}</li><li>${tt("Open Maslawi from the home screen and switch the reminder on in Settings.","Öppna Maslawi från hemskärmen och slå på påminnelsen i Inställningar.")}</li></ol>
+  <p class="sub" style="margin:0;font-size:13px;text-align:center">${tt("Needs iOS 16.4 or later.","Kräver iOS 16.4 eller senare.")}</p><button class="btn wide" data-close>${tt("Got it","Jag fattar")}</button>`);
+}
+async function pushOn(){
+  if(isIOS()&&!isStandalone()){ homeScreenSheet(); return false; }
+  if(!pushOk()){ toast(tt("This browser can't show reminders.","Den här webbläsaren kan inte visa påminnelser.")); return false; }
+  let perm=Notification.permission;
+  if(perm==="default"){ try{ perm=await Notification.requestPermission(); }catch(e){ perm="denied"; } }
+  S.pushAsked=true; save();
+  if(perm!=="granted"){
+    sheet(`<div style="text-align:center">${mascot("sad")}<h2 class="sec" style="margin:4px 0">${tt("Notifications are off","Notiser är avstängda")}</h2><p class="sub" style="margin:0">${tt("Allow notifications for this site in your browser or phone settings, then try again.","Tillåt notiser för den här sidan i webbläsarens eller telefonens inställningar och försök igen.")}</p></div><button class="btn wide" data-close>${tt("OK","Okej")}</button>`);
+    return false;
+  }
+  try{
+    const reg=await swReady();
+    let sub=await reg.pushManager.getSubscription();
+    if(!sub) sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID_PUBLIC)});
+    await pushSave(sub);
+    S.push=true; save(); sWin();
+    toast(tt(`Done! If you haven't practised by ${pushHour()}:00, you'll get a reminder.`,`Klart! Har du inte övat till kl. ${pushHour()} får du en påminnelse.`));
+    return true;
+  }catch(e){ toast(tt("Couldn't switch reminders on. Try again.","Kunde inte slå på påminnelser. Försök igen.")); return false; }
+}
+async function pushOff(){
+  S.push=false; save();
+  try{ const reg=await swReady(), sub=await reg.pushManager.getSubscription();
+    if(sub){ await api("/rest/v1/rpc/delete_push",{method:"POST",body:JSON.stringify({p_endpoint:sub.endpoint})},false).catch(()=>{}); await sub.unsubscribe(); } }catch(e){}
+}
+/* tell the reminder service that you practised (and keep the time zone, hour and language up to date) */
+let pushT=null;
+function pushTouch(now){
+  if(!S.push||!pushOk()) return;
+  clearTimeout(pushT);
+  pushT=setTimeout(async()=>{
+    try{
+      const reg=await swReady(); let sub=await reg.pushManager.getSubscription();
+      if(!sub&&Notification.permission==="granted") sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID_PUBLIC)});
+      if(sub) await pushSave(sub); else { S.push=false; save(); }
+    }catch(e){}
+  },now?0:1200);
+}
+/* asked once, on the streak screen */
+const pushCanAsk=()=>CLOUD&&!S.push&&!S.pushAsked&&(pushOk()||isIOS())&&!(window.Notification&&Notification.permission==="denied");
 
 /* ================= ACCOUNTS & CLOUD SYNC (Supabase REST, no library) ================= */
 const storeSes=()=>{try{SES?localStorage.setItem(SKEY,JSON.stringify(SES)):localStorage.removeItem(SKEY);}catch(e){}};
@@ -4372,6 +4448,7 @@ function mergeState(a,b){
   r.days=[...new Set([...(a.days||[]),...(b.days||[])])].sort().slice(-14);
   if(a.week===b.week) r.weekXp=Math.max(a.weekXp||0,b.weekXp||0);
   r.sound=a.sound; r.arabic=a.arabic; r.theme=a.theme; r.lang=a.lang;
+  r.push=a.push; r.pushHour=a.pushHour; r.pushAsked=a.pushAsked; /* reminders belong to this phone */
   r.freeze=Math.max(a.freeze||0,b.freeze||0); r.joined=Math.min(a.joined||Date.now(),b.joined||Date.now());
   r.hist=Object.assign({},b.hist||{}); Object.entries(a.hist||{}).forEach(([k,v])=>{ if(!r.hist[k]||v>r.hist[k]) r.hist[k]=v; }); r.leagueHidden=!!(a.leagueHidden||b.leagueHidden);
   r.mist=Object.assign({},b.mist||{},a.mist||{});
@@ -4765,6 +4842,7 @@ if("serviceWorker" in navigator && location.protocol==="https:" && /(^|\.)yasso\
 }
 
 setTab("learn");
+pushTouch();
 if(FROZE) setTimeout(()=>toast(tt(`A streak freeze kept your ${S.streak}-day streak alive!`,`Ett svitskydd räddade din svit på ${S.streak} dagar!`)),600);
 (async()=>{
   const viaLink=CLOUD?await handleAuthRedirect():false;

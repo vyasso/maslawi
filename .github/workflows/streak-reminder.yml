@@ -1,0 +1,40 @@
+name: Streak reminders
+
+# Every hour: remind learners who switched reminders on and haven't practised today.
+# Needs two repository secrets (Settings → Secrets and variables → Actions):
+#   SUPABASE_SERVICE_KEY  – Supabase → Project Settings → API Keys → the secret (service_role) key
+#   VAPID_PRIVATE_KEY     – the private half of the push key pair (its public half is below and in index.html)
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: streak-reminders
+  cancel-in-progress: false
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: reminders
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install web-push
+        working-directory: reminders
+        run: npm install --no-audit --no-fund
+      - name: Send reminders
+        working-directory: reminders
+        run: node send.mjs
+        env:
+          SUPABASE_URL: https://buxdpufszmtyacrwyokm.supabase.co
+          VAPID_PUBLIC_KEY: BOUOGOaqH2j0grqBNXNoaCN8o0GCIOrAT2uesIowDIl8KGr8EtcnEoIWhjyBzyyo_BhYvtnclPcIbIeePObtaGQ
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}

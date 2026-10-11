@@ -22,7 +22,8 @@ Made by A. Yasso.
 | `extra-audio.json` | Audio for the verb tables and grammar tables, loaded the first time they are opened |
 | `manifest.webmanifest`, `sw.js`, `icon-*.png` | Let people install it to their home screen and open it offline |
 | `og-image.png` | The picture shown when someone shares the link (1200×630) |
-| `supabase-setup.sql` | Creates the tables for accounts, the league, the content check and suggested phrases (run in Supabase; safe to run again) |
+| `supabase-setup.sql` | Creates the tables for accounts, the league, the content check, suggested phrases and streak reminders (run in Supabase; safe to run again) |
+| `reminders/`, `.github/workflows/streak-reminder.yml` | Sends the evening streak reminders, once an hour |
 
 ## Editing lessons
 
@@ -93,3 +94,17 @@ The `phrase_suggestions` table is part of `supabase-setup.sql`. If you set up Su
 ## Link preview
 
 The `og:` tags at the top of `index.html` and the picture `og-image.png` decide how a shared link looks on WhatsApp, Facebook, Messenger, iMessage and X: the picture, the title "Maslawi – lär dig Mosul-dialekten" and a short description. Facebook and Messenger remember a preview for a while. After changing the picture or text, paste the link into Facebook's [Sharing Debugger](https://developers.facebook.com/tools/debug/) and press **Scrape Again**.
+
+## Streak reminders
+
+Learners switch on **Settings → Learning → Streak reminder** (the app also offers it once on the streak screen) and pick an hour between 17 and 21. On days they haven't practised by then, their phone gets a notification. It works in Chrome and Firefox on Android and computers. On iPhone (iOS 16.4 or later) it only works when Maslawi is opened from the home screen, and the app explains how to add it.
+
+How it works: the browser gives the app a private push address, which the app saves with `save_push()` together with the learner's time zone, chosen hour and the last day they practised. Once an hour, the GitHub Action `.github/workflows/streak-reminder.yml` runs `reminders/send.mjs`, which reminds everyone who is due. A learner gets at most one reminder a day, never after 22:59.
+
+Setup (once):
+
+1. Run `supabase-setup.sql` again in Supabase (it adds the `push_subscriptions` table).
+2. In GitHub → the repo → **Settings → Secrets and variables → Actions**, add two repository secrets:
+   - `SUPABASE_SERVICE_KEY`: Supabase → Project Settings → API Keys → the secret (`service_role`) key. Never put it in `index.html`.
+   - `VAPID_PRIVATE_KEY`: the private half of the push key pair. Its public half is `VAPID_PUBLIC` in `index.html` and `VAPID_PUBLIC_KEY` in the workflow. If you make a new pair, change all three, and everyone has to switch the reminder on again.
+3. Optional: in the **Actions** tab, open *Streak reminders* and press **Run workflow** to check that it says "… subscribed, … reminded".

@@ -142,3 +142,51 @@ create trigger limit_pending_suggestions before insert on public.phrase_suggesti
 revoke all on public.phrase_suggestions from anon;
 grant select (id, tr, ar, meaning, note, name, status, created_at) on public.phrase_suggestions to anon;
 grant select, insert, update, delete on public.phrase_suggestions to authenticated;
+
+-- ============ Streak reminders (push notifications) ============
+-- A learner who switches the reminder on gets one row per phone or browser. The app only
+-- reaches this table through the two functions below, keyed by the push address (which is
+-- long and secret). The hourly GitHub Action (reminders/send.mjs) reads it with the secret key.
+
+create table if not exists public.push_subscriptions (
+  id         bigint generated always as identity primary key,
+  endpoint   text not null unique check (char_length(endpoint) <= 800),
+  p256dh     text not null check (char_length(p256dh) <= 200),
+  auth       text not null check (char_length(auth) <= 100),
+  tz         text not null default 'Europe/Stockholm' check (char_length(tz) <= 60),
+  hour       int  not null default 19 check (hour between 0 and 23),
+  lang       text not null default 'sv' check (lang in ('sv', 'en')),
+  last_day   date,
+  streak     int  not null default 0 check (streak between 0 and 100000),
+  last_sent  date,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+alter table public.push_subscriptions enable row level security;
+revoke all on public.push_subscriptions from anon, authenticated;
+
+create or replace function public.save_push(p_endpoint text, p_p256dh text, p_auth text, p_tz text, p_hour int,
+                                            p_lang text, p_last_day date, p_streak int)
+  returns void language plpgsql security definer set search_path = public as $$
+begin
+  -- only real push services (Chrome/Android, Firefox, Apple, Microsoft)
+  if p_endpoint !~ '^https://(fcm\.googleapis\.com|updates\.push\.services\.mozilla\.com|web\.push\.apple\.com|[a-z0-9.-]+\.notify\.windows\.com)/' then
+    raise exception 'Not a push address' using errcode = 'check_violation';
+  end if;
+  insert into public.push_subscriptions as s (endpoint, p256dh, auth, tz, hour, lang, last_day, streak)
+  values (p_endpoint, p_p256dh, p_auth, coalesce(nullif(p_tz, ''), 'Europe/Stockholm'), coalesce(p_hour, 19),
+          coalesce(p_lang, 'sv'), p_last_day, greatest(coalesce(p_streak, 0), 0))
+  on conflict (endpoint) do update
+    set p256dh = excluded.p256dh, auth = excluded.auth, tz = excluded.tz, hour = excluded.hour, lang = excluded.lang,
+        last_day = excluded.last_day, streak = excluded.streak, updated_at = now();
+end $$;
+
+create or replace function public.delete_push(p_endpoint text)
+  returns void language sql security definer set search_path = public as $$
+  delete from public.push_subscriptions where endpoint = p_endpoint
+$$;
+
+revoke execute on function public.save_push(text, text, text, text, int, text, date, int) from public;
+revoke execute on function public.delete_push(text) from public;
+grant execute on function public.save_push(text, text, text, text, int, text, date, int) to anon, authenticated;
+grant execute on function public.delete_push(text) to anon, authenticated;

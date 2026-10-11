@@ -1,0 +1,9 @@
+{
+  "name": "maslawi-reminders",
+  "private": true,
+  "type": "module",
+  "description": "Sends the evening streak reminders. Run by .github/workflows/streak-reminder.yml.",
+  "dependencies": {
+    "web-push": "3.6.7"
+  }
+}
