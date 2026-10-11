@@ -265,6 +265,7 @@ grant execute on function public.delete_push(text) to anon, authenticated;
 -- Without the token, nothing happens and the GitHub schedule still runs the job.
 create extension if not exists pg_net with schema extensions;
 create extension if not exists pg_cron with schema pg_catalog;
+grant usage on schema cron to postgres;
 
 create or replace function public.kick_notifications() returns void
   language plpgsql security definer set search_path = public as $$
