@@ -1,6 +1,6 @@
 // Maslawi service worker: lets the app open offline and install to the home screen.
 // Network first, so every change you push shows up as soon as the user is online.
-const CACHE = "maslawi-v19";
+const CACHE = "maslawi-v20";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
@@ -14,7 +14,7 @@ self.addEventListener("push", e => {
   let d = {};
   try { d = e.data ? e.data.json() : {}; } catch (_) { d = { body: e.data ? e.data.text() : "" }; }
   e.waitUntil(self.registration.showNotification(d.title || "Maslawi", {
-    body: d.body || "", icon: "icon-192.png", tag: d.tag || "maslawi", renotify: false, data: { url: d.url || "./" }
+    body: d.body || "", lang: d.lang || "sv", dir: "ltr", icon: "icon-192.png", tag: d.tag || "maslawi", renotify: false, data: { url: d.url || "./" }
   }));
 });
 self.addEventListener("notificationclick", e => {

@@ -36,7 +36,7 @@ for (const row of rows) {
   try {
     await webpush.sendNotification(
       { endpoint: row.endpoint, keys: { p256dh: row.p256dh, auth: row.auth } },
-      JSON.stringify({ title: m.title, body: m.body, tag: "streak", url: "./" }),
+      JSON.stringify({ title: m.title, body: m.body, tag: "streak", url: "./", lang: row.lang === "en" ? "en" : "sv" }),
       { TTL: 4 * 3600, urgency: "normal" }
     );
     sent++;
@@ -64,7 +64,7 @@ if (watchers.length) {
     if (!a) continue;
     try {
       await webpush.sendNotification({ endpoint: row.endpoint, keys: { p256dh: row.p256dh, auth: row.auth } },
-        JSON.stringify({ title: a.title, body: a.body, tag: "review", url: "./" }), { TTL: 12 * 3600, urgency: "normal" });
+        JSON.stringify({ title: a.title, body: a.body, tag: "review", url: "./", lang: row.lang === "en" ? "en" : "sv" }), { TTL: 12 * 3600, urgency: "normal" });
       alerted++;
       await fetch(`${base}?id=eq.${row.id}`, { method: "PATCH", headers, body: JSON.stringify({ last_alert: a.latest }) });
     } catch (e) {
