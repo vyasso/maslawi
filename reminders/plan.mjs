@@ -55,14 +55,14 @@ export function alertDue(row, items, now = new Date()) {
   const en = row.lang === "en", who = x => x.name || (en ? "Someone" : "Någon");
   let title, body;
   if (q.length && s.length) {
-    title = en ? "New in Maslawi" : "Nytt i Maslawi";
+    title = en ? "New in the app" : "Nytt i appen";
     body = en ? `${q.length} question${q.length > 1 ? "s" : ""} and ${s.length} phrase suggestion${s.length > 1 ? "s" : ""} are waiting.`
               : `${q.length} ${q.length > 1 ? "frågor" : "fråga"} och ${s.length} fraseförslag väntar.`;
   } else if (q.length === 1) {
-    title = en ? "New question in Maslawi" : "Ny fråga i Maslawi";
+    title = en ? "New question" : "Ny fråga";
     body = cut(`${who(q[0])}: ${q[0].word ? q[0].word + " – " : ""}${q[0].question}`, 140);
   } else if (q.length) {
-    title = en ? `${q.length} new questions in Maslawi` : `${q.length} nya frågor i Maslawi`;
+    title = en ? `${q.length} new questions` : `${q.length} nya frågor`;
     body = en ? "Open the app to answer them." : "Öppna appen och svara.";
   } else if (s.length === 1) {
     title = en ? "New phrase suggestion" : "Nytt fraseförslag";

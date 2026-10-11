@@ -31,7 +31,7 @@ for (const row of rows) {
   const t = test ? { date: null } : isDue(row);
   if (!t) continue;
   const m = test
-    ? (row.lang === "en" ? { title: "Test from Maslawi", body: "This is what your streak reminder looks like." } : { title: "Test från Maslawi", body: "Så här ser din påminnelse för sviten ut." })
+    ? (row.lang === "en" ? { title: "Test", body: "This is what your streak reminder looks like." } : { title: "Testnotis", body: "Så här ser din påminnelse för sviten ut." })
     : message(row, t);
   try {
     await webpush.sendNotification(
