@@ -123,6 +123,28 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .lrow .nm b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lhead span:last-child{text-align:right}
 .lrow .nm small{color:var(--muted);font-weight:700;font-size:13px;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lg-seg{margin:14px auto 12px;width:max-content;max-width:100%}
+.lg-seg button{padding:8px 14px}
+.lrow[role="button"]{cursor:pointer}
+.lrow[role="button"]:active{transform:scale(.985)}
+.lrow[role="button"]:focus-visible{outline:3px solid var(--blue);outline-offset:-3px}
+.lp-mini{display:block;width:100%;max-width:170px;height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:5px}
+.lp-mini i{display:block;height:100%;background:var(--good-btn);border-radius:99px}
+.lp-head{display:flex;align-items:center;gap:14px}
+.lp-av{width:60px;height:60px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;font-weight:900;font-size:26px}
+.lp-ht{min-width:0}
+.lp-ht h2.sec{margin:0;overflow-wrap:anywhere}
+.lp-ht .sub{margin:2px 0 0}
+.lp-bar{height:24px}
+.lp-bar i{background:var(--good-btn)}
+.lp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lp-t{display:flex;flex-direction:column;gap:2px;padding:12px;border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;background:var(--surface)}
+.lp-ic{display:flex}
+.lp-ic svg{width:24px;height:24px}
+.c-star{color:var(--purple)}
+.lp-t b{font-family:var(--display);font-size:24px;line-height:1.1;font-variant-numeric:tabular-nums}
+.lp-t small{color:var(--muted);font-weight:700;line-height:1.25}
+.lp-ago{margin:0;text-align:center}
 .lhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:8px 12px 4px;white-space:nowrap;font-size:12px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 .lrow .px{font-variant-numeric:tabular-nums;color:var(--muted)}
 .zone{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;text-align:center;padding-block:6px}
@@ -1965,7 +1987,7 @@ const aMine=(k,sg)=>SELF_F[k]?(isF()?SELF_F[k]:k):TO_F[k]?(sg==="f"?TO_F[k]:k):k
 const PATH=[]; UNITS.forEach((u,ui)=>{ LESSONS.forEach((l,i)=>{if(l.unit===ui)PATH.push({k:"lesson",i,unit:ui});}); PATH.push({k:"chest",id:u.chest,unit:ui}); });
 
 /* sample league members — placeholders for the prototype */
-const LEAGUE=[["Zainab",142,"#FF9A3C","l30"],["Omar",118,"#A86CF0","l22"],["Noor",96,"#1CA0F0","cv9"],["Yusuf",81,"#58CC02","l14"],["Sara",64,"#FF4B4B","l9"],["Hamid",47,"#1CB0B5","l6"],["Layla",33,"#FFC800","l4"],["Karim",21,"#777F86","l2"],["Rana",9,"#D9761C","l1"]];
+const LEAGUE=[["Zainab",142,"#FF9A3C","l30",{xp:2140,streak:12,words:118,ago:0}],["Omar",118,"#A86CF0","l22",{xp:1460,streak:5,words:84,ago:0}],["Noor",96,"#1CA0F0","cv9",{xp:990,streak:3,words:61,ago:1}],["Yusuf",81,"#58CC02","l14",{xp:760,streak:9,words:49,ago:0}],["Sara",64,"#FF4B4B","l9",{xp:520,streak:2,words:33,ago:1}],["Hamid",47,"#1CB0B5","l6",{xp:310,streak:4,words:21,ago:4}],["Layla",33,"#FFC800","l4",{xp:180,streak:1,words:14,ago:0}],["Karim",21,"#777F86","l2",{xp:90,streak:1,words:7,ago:0}],["Rana",9,"#D9761C","l1",{xp:25,streak:1,words:3,ago:0}]];
 
 /* ================= STATE ================= */
 const KEY="maslawi-proto-v2";
@@ -3926,14 +3948,49 @@ function sheet(html){ const s=$("#sheet"); s.innerHTML=`<div class="sheet" role=
 
 /* ================= OTHER TABS ================= */
 function learnedWords(){const s=new Set();LESSONS.forEach(l=>{if(S.done[l.id])l.ex.forEach(e=>{if(e.t==="intro")s.add(e.w);});});return [...s];}
+/* ================= LEAGUE: this week's XP, and where everyone is in the course ================= */
+let LG_VIEW="week";
+const LG_COLS=["#FF9A3C","#A86CF0","#1CA0F0","#58CC02","#FF4B4B","#1CB0B5","#E35B9C","#D9761C"];
+const lgColor=id=>LG_COLS[parseInt(String(id).replace(/[^0-9a-f]/gi,"").slice(0,6)||"0",16)%LG_COLS.length];
+const fmtN=n=>Number(n||0).toLocaleString(isSv()?"sv-SE":"en-GB");
+/* what other learners can see about you */
+function myStats(){ return {done:LESSONS.filter(l=>S.done[l.id]).length,xp:S.xp||0,streak:S.streak||0,last:S.lastDay||"",words:learnedWords().length}; }
+function lgMe(){ return {n:userName()||tt("You","Du"),x:S.weekXp||0,c:"#1CB0B5",me:true,level:myLevel(),stats:myStats()}; }
+/* how much of the course someone has done, in percent */
+function lgDone(r){ const st=r.stats||{}; if(typeof st.done==="number") return st.done; if(r.level==="done") return LESSONS.length; const i=LESSONS.findIndex(l=>l.id===r.level); return i<0?0:i; }
+const lgPct=r=>Math.max(0,Math.min(100,Math.round(lgDone(r)/LESSONS.length*100)));
+const streakOf=st=>st&&(st.last===today()||st.last===yesterday())?(st.streak||0):0;
+function agoText(ts){ if(!ts) return ""; const d=Math.floor((Date.now()-new Date(ts).getTime())/864e5); return d<=0?tt("Active today","Aktiv i dag"):d===1?tt("Active yesterday","Aktiv i går"):tt(`Last active ${d} days ago`,`Senast aktiv för ${d} dagar sedan`); }
+function lgProfile(r){
+  const st=r.stats||null, p=lgPct(r), done=lgDone(r);
+  const tile=(ic,cls,v,l)=>`<div class="lp-t"><span class="lp-ic ${cls}">${ic}</span><b>${v}</b><small>${l}</small></div>`;
+  const tiles=st&&st.xp!=null?[tile(I.bolt,"c-xp",fmtN(st.xp),tt("XP in total","XP totalt")),tile(I.flame,"c-flame",streakOf(st),tt("day streak","dagar i rad")),tile(I.book,"c-gem",fmtN(st.words),tt("words learned","inlärda ord")),tile(I.star.replace('fill="#fff"','fill="currentColor"'),"c-star",fmtN(r.x),tt("XP this week","XP den här veckan"))].join(""):"";
+  sheet(`<div class="lp-head"><span class="lp-av" style="background:${r.c}">${esc((r.n||"?")[0].toUpperCase())}</span><div class="lp-ht"><h2 class="sec">${esc(r.n)}${r.me?tt(" (you)"," (du)"):""}</h2><p class="sub">${esc(levelText(r.level)||tt("Level not shared yet","Nivån är inte delad än"))}</p></div></div>
+    <div class="pbar lp-bar"><i style="width:${Math.max(p,2)}%"></i><span>${tt(`${done} of ${LESSONS.length} levels · ${p}%`,`${done} av ${LESSONS.length} nivåer · ${p} %`)}</span></div>
+    ${tiles?`<div class="lp-grid">${tiles}</div>`:`<p class="sub" style="margin:0;text-align:center">${tt("More details show up once they've opened the latest version of the app.","Fler detaljer syns när de har öppnat den senaste versionen av appen.")}</p>`}
+    ${!r.me&&r.upd?`<p class="sub lp-ago">${esc(agoText(r.upd))}</p>`:""}
+    <button class="btn wide" data-close>${tt("Close","Stäng")}</button>`);
+}
 function renderLeague(el){
   const d=new Date(), left=7-((d.getDay()+6)%7), leftTxt=tt(`${left} day${left>1?"s":""} left`,`${left} ${left>1?"dagar":"dag"} kvar`);
   const hero=sub=>`<div class="league-hero">${TABS.find(t=>t[0]==="league")[2].replace('viewBox','style="width:80px;height:80px" viewBox')}<h1 class="screen" style="margin-top:4px">${tt("Tigris League","Tigrisligan")}</h1><p class="sub" style="margin:0">${sub}</p></div>`;
-  const row=(r,i)=>`<div class="lrow ${r.me?"me":""}"><span class="rank" style="color:${i<3?"var(--gold-deep)":"var(--muted)"}">${i<3?["🥇","🥈","🥉"][i]:i+1}</span><span class="av" style="background:${r.c}">${esc((r.n||"?")[0].toUpperCase())}</span><span class="nm"><b>${esc(r.n)}${r.me?tt(" (you)"," (du)"):""}</b>${r.lv?`<small>${esc(r.lv)}</small>`:""}</span><span class="px">${r.x} XP</span></div>`;
-  const head=`<div class="lhead"><span>${tt("Level in the course","Nivå i kursen")}</span><span>${tt("This week's XP","Veckans XP")}</span></div>`;
+  const week=LG_VIEW==="week";
+  const seg=`<div class="seg lg-seg" role="group" aria-label="${tt("Show","Visa")}">${[["week",tt("This week","Den här veckan")],["all",tt("Course progress","Framsteg i kursen")]].map(([v,l])=>`<button data-v="${v}" aria-pressed="${LG_VIEW===v}">${l}</button>`).join("")}</div>`;
+  const init=r=>esc((r.n||"?")[0].toUpperCase()), you=r=>r.me?tt(" (you)"," (du)"):"";
+  const wrow=(r,i)=>`<div class="lrow ${r.me?"me":""}" role="button" tabindex="0" data-i="${i}" aria-label="${esc(r.n)}: ${r.x} XP. ${tt("Tap to see their progress","Tryck för att se framstegen")}"><span class="rank" style="color:${i<3?"var(--gold-deep)":"var(--muted)"}">${i<3?["🥇","🥈","🥉"][i]:i+1}</span><span class="av" style="background:${r.c}">${init(r)}</span><span class="nm"><b>${esc(r.n)}${you(r)}</b>${levelText(r.level)?`<small>${esc(levelText(r.level))}</small>`:""}</span><span class="px">${r.x} XP</span></div>`;
+  const prow=(r,i)=>{ const p=lgPct(r); return `<div class="lrow ${r.me?"me":""}" role="button" tabindex="0" data-i="${i}" aria-label="${esc(r.n)}: ${p} %. ${tt("Tap to see their progress","Tryck för att se framstegen")}"><span class="rank" style="color:var(--muted)">${i+1}</span><span class="av" style="background:${r.c}">${init(r)}</span><span class="nm"><b>${esc(r.n)}${you(r)}</b><small>${esc(levelText(r.level)||tt("Level not shared yet","Nivån är inte delad än"))}</small><span class="lp-mini" aria-hidden="true"><i style="width:${p}%"></i></span></span><span class="px">${p} %</span></div>`; };
+  const head=week?`<div class="lhead"><span>${tt("Level in the course","Nivå i kursen")}</span><span>${tt("This week's XP","Veckans XP")}</span></div>`:`<div class="lhead"><span>${tt("Where everyone is","Var alla ligger")}</span><span>${tt("Of the course","Av kursen")}</span></div>`;
+  const sortRows=rows=>week?rows.slice().sort((a,b)=>b.x-a.x):rows.slice().sort((a,b)=>lgPct(b)-lgPct(a)||(((b.stats||{}).xp||0)-((a.stats||{}).xp||0)));
+  const foot=`<p class="sub" style="text-align:center;margin-top:12px;font-size:14px">${tt("Tap someone to see how they're doing. Only first names, XP and course progress are shown. You can leave the league in Settings.","Tryck på någon för att se hur det går för dem. Bara förnamn, XP och framsteg i kursen visas. Du kan lämna ligan under Inställningar.")}</p>`;
+  const invite=`<div class="card stack" style="margin-top:12px"><b>${tt("Invite friends and family","Bjud in vänner och familj")}</b><p class="sub" style="margin:0">${tt("Send them <b>feli.yasso.se</b> and race each other this week.","Skicka <b>feli.yasso.se</b> till dem och tävla mot varandra den här veckan.")}</p></div>`;
+  const wire=sorted=>{
+    el.querySelectorAll(".lg-seg button").forEach(b=>b.onclick=()=>{ if(LG_VIEW===b.dataset.v) return; sTap(); LG_VIEW=b.dataset.v; renderLeague(el); });
+    el.querySelectorAll(".lrow[data-i]").forEach(x=>{ const go=()=>{ sTap(); lgProfile(sorted[+x.dataset.i]); }; x.onclick=go; x.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } }; });
+  };
   if(!CLOUD){ /* offline preview: sample learners */
-    const rows=LEAGUE.map(([n,x,c,lv])=>({n,x,c,lv:levelText(lv)})).concat([{n:tt("You","Du"),x:S.weekXp,c:"#1CB0B5",me:true,lv:levelText(myLevel())}]).sort((a,b)=>b.x-a.x);
-    el.innerHTML=hero(tt("Sample league · ","Exempelliga · ")+leftTxt)+`<div class="card" style="padding:6px">${head}${rows.map(row).join("")}</div>`; return;
+    const rows=LEAGUE.map(([n,x,c,level,st])=>({n,x,c,level,stats:Object.assign({},st,{last:st.ago===0?today():st.ago===1?yesterday():""}),upd:new Date(Date.now()-st.ago*864e5).toISOString()})).concat([lgMe()]);
+    const sorted=sortRows(rows);
+    el.innerHTML=hero(tt("Sample league · ","Exempelliga · ")+leftTxt)+seg+`<div class="card" style="padding:6px">${head}${sorted.map(week?wrow:prow).join("")}</div>`+foot; wire(sorted); return;
   }
   if(!SES){
     el.innerHTML=hero(tt("Compete with other learners every week","Tävla mot andra elever varje vecka"))+`<div class="card stack" style="text-align:center"><b style="font-size:18px">${tt("Join the league","Gå med i ligan")}</b><p class="sub" style="margin:0">${tt("Create a free account to earn a place on this week's leaderboard. Everyone starts from zero each Monday.","Skapa ett gratis konto för att få en plats på veckans topplista. Alla börjar från noll varje måndag.")}</p><button class="btn wide" id="lg-join">${tt("Create account","Skapa konto")}</button><button class="btn ghost wide blue" id="lg-in">${tt("I already have an account","Jag har redan ett konto")}</button></div>`;
@@ -3941,45 +3998,62 @@ function renderLeague(el){
   }
   if(S.leagueHidden){
     el.innerHTML=hero(tt("You've left the league","Du har lämnat ligan"))+`<div class="card stack" style="text-align:center"><p class="sub" style="margin:0">${tt("Other learners can't see your name or XP. You can join again any time.","Andra elever ser inte ditt namn eller din XP. Du kan gå med igen när du vill.")}</p><button class="btn wide" id="lg-rejoin">${tt("Join the league","Gå med i ligan")}</button></div>`;
-    $("#lg-rejoin").onclick=()=>{S.leagueHidden=false;save();pushNow().then(()=>{LG.at=0;render();});}; return;
+    $("#lg-rejoin").onclick=()=>{S.leagueHidden=false;save();pushNow().then(()=>{LG.at=0;LG.allAt=0;render();});}; return;
   }
   const draw=()=>{
     if(tab!=="league") return;
-    const me=SES.user.id, cols=["#FF9A3C","#A86CF0","#1CA0F0","#58CC02","#FF4B4B","#1CB0B5","#E35B9C","#D9761C"];
-    let rows=(LG.rows||[]).filter(r=>r.user_id!==me).map(r=>({n:r.name||"Learner",x:r.week_xp||0,lv:levelText(r.level),c:cols[parseInt(r.user_id.replace(/[^0-9a-f]/gi,"").slice(0,6)||"0",16)%cols.length]}));
-    rows.push({n:userName()||tt("You","Du"),x:S.weekXp||0,c:"#1CB0B5",me:true,lv:levelText(myLevel())}); rows.sort((a,b)=>b.x-a.x);
-    const body=LG.state==="loading"&&!LG.rows?`<p class="sub" style="text-align:center;padding:20px">${tt("Loading this week's league…","Laddar veckans liga…")}</p>`:
-      LG.state==="error"?`<p class="sub" style="text-align:center;padding:16px">${tt("Couldn't load the league","Kunde inte ladda ligan")}${LG.err?": "+esc(LG.err):"."}</p>`:
-      head+rows.map(row).join("");
-    el.innerHTML=hero(tt(`${rows.length} learner${rows.length>1?"s":""} this week · ${leftTxt}`,`${rows.length} ${rows.length>1?"elever":"elev"} den här veckan · ${leftTxt}`))+`<div class="card" style="padding:6px">${body}</div>`+
-      (rows.length<4?`<div class="card stack" style="margin-top:12px"><b>${tt("Invite friends and family","Bjud in vänner och familj")}</b><p class="sub" style="margin:0">${tt("Send them <b>feli.yasso.se</b> and race each other this week.","Skicka <b>feli.yasso.se</b> till dem och tävla mot varandra den här veckan.")}</p></div>`:"")+
-      `<p class="sub" style="text-align:center;margin-top:12px;font-size:14px">${tt("Only first names, XP and course level are shown.","Bara förnamn, XP och nivå i kursen visas.")}</p>`;
+    const me=SES.user.id, src=week?LG.rows:LG.all, state=week?LG.state:LG.allState;
+    const rows=(src||[]).filter(r=>r.user_id!==me).map(r=>({n:r.name||"Learner",x:r.week===S.week?(r.week_xp||0):0,level:r.level,stats:r.stats,upd:r.updated_at,c:lgColor(r.user_id)}));
+    rows.push(lgMe());
+    const sorted=sortRows(rows);
+    const body=state==="loading"&&!src?`<p class="sub" style="text-align:center;padding:20px">${tt("Loading the league…","Laddar ligan…")}</p>`:
+      state==="error"?`<p class="sub" style="text-align:center;padding:16px">${tt("Couldn't load the league","Kunde inte ladda ligan")}${LG.err?": "+esc(LG.err):"."}</p>`:
+      head+sorted.map(week?wrow:prow).join("");
+    const sub=week?tt(`${sorted.length} learner${sorted.length>1?"s":""} this week · ${leftTxt}`,`${sorted.length} ${sorted.length>1?"elever":"elev"} den här veckan · ${leftTxt}`):tt(`${sorted.length} learner${sorted.length>1?"s":""} in the league`,`${sorted.length} ${sorted.length>1?"elever":"elev"} i ligan`);
+    el.innerHTML=hero(sub)+seg+`<div class="card" style="padding:6px">${body}</div>`+(week&&sorted.length<4?invite:"")+foot;
+    wire(sorted);
   };
   draw();
-  if(Date.now()-LG.at>30000||!LG.rows) loadLeague().then(draw);
+  if(week){ if(Date.now()-LG.at>30000||!LG.rows) loadLeague().then(draw); }
+  else if(Date.now()-(LG.allAt||0)>30000||!LG.all) loadLeagueAll().then(draw);
 }
-const LG={rows:null,at:0,state:"idle",err:"",noLevel:false};
+const LG={rows:null,at:0,state:"idle",err:"",all:null,allAt:0,allState:"idle",missing:{}};
 /* where a learner is in the course: the level after the furthest one they've done */
 function myLevel(){ let last=-1; LESSONS.forEach((l,i)=>{ if(S.done[l.id]) last=i; }); return last+1>=LESSONS.length?"done":LESSONS[last+1].id; }
 function levelText(id){ if(!id) return ""; if(id==="done") return tt("Finished the course","Klar med hela kursen"); const i=LESSONS.findIndex(l=>l.id===id); if(i<0) return ""; return tt(`Unit ${LESSONS[i].unit+1} · Level ${i+1}`,`Enhet ${LESSONS[i].unit+1} · Nivå ${i+1}`); }
+/* "level" and "stats" need two lines of SQL in Supabase (see README). Until they're added the league works without them. */
+const LG_OPT=["level","stats"];
+const lgCols=()=>LG_OPT.filter(c=>!LG.missing[c]).map(c=>","+c).join("");
+function lgMissing(e){ const m=(e&&e.message)||""; const c=LG_OPT.find(c=>!LG.missing[c]&&(m.includes("'"+c+"'")||m.includes("league."+c))); if(c) LG.missing[c]=true; return !!c; }
+async function lgGet(q){ for(let i=0;i<LG_OPT.length;i++){ try{ return await api(q(lgCols())); }catch(e){ if(!lgMissing(e)) throw e; } } return api(q(lgCols())); }
 async function loadLeague(){
   if(!CLOUD||!SES) return;
   LG.state="loading";
   try{ if(!(await freshToken())) return;
     await pushLeague();
-    const q=f=>api("/rest/v1/league?select=user_id,name,week_xp"+f+"&week=eq."+S.week+"&order=week_xp.desc&limit=100");
-    /* the level column needs one line of SQL in Supabase; until then the league works without it */
-    try{ LG.rows=await q(LG.noLevel?"":",level"); }catch(e){ if(LG.noLevel||!/level/i.test(e.message||"")) throw e; LG.noLevel=true; LG.rows=await q(""); }
+    LG.rows=await lgGet(c=>"/rest/v1/league?select=user_id,name,week,week_xp,updated_at"+c+"&week=eq."+S.week+"&order=week_xp.desc&limit=100");
     LG.state="ok"; LG.at=Date.now();
   }catch(e){ LG.state="error"; LG.err=e.message||""; }
+}
+/* everyone in the league, whatever week they were last active */
+async function loadLeagueAll(){
+  if(!CLOUD||!SES) return;
+  LG.allState="loading";
+  try{ if(!(await freshToken())) return;
+    if(Date.now()-LG.at>30000) await pushLeague();
+    LG.all=await lgGet(c=>"/rest/v1/league?select=user_id,name,week,week_xp,updated_at"+c+"&order=updated_at.desc&limit=200");
+    LG.allState="ok"; LG.allAt=Date.now();
+  }catch(e){ LG.allState="error"; LG.err=e.message||""; }
 }
 async function pushLeague(){
   if(!CLOUD||!SES) return;
   if(S.leagueHidden){ try{ await api("/rest/v1/league?user_id=eq."+SES.user.id,{method:"DELETE"}); }catch(e){} return; }
-  const row={user_id:SES.user.id,name:(userName()||"Learner").slice(0,40),week:S.week,week_xp:Math.min(S.weekXp||0,100000),updated_at:new Date().toISOString()};
-  const send=r=>api("/rest/v1/league",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify(r)});
-  if(LG.noLevel) return send(row);
-  try{ await send(Object.assign({level:myLevel()},row)); }catch(e){ if(!/level/i.test(e.message||"")) throw e; LG.noLevel=true; await send(row); }
+  const row={user_id:SES.user.id,name:(userName()||"Learner").slice(0,40),week:S.week,week_xp:Math.min(S.weekXp||0,100000),updated_at:new Date().toISOString(),level:myLevel(),stats:myStats()};
+  for(let i=0;i<=LG_OPT.length;i++){
+    const r=Object.assign({},row); LG_OPT.forEach(c=>{ if(LG.missing[c]) delete r[c]; });
+    try{ return await api("/rest/v1/league",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify(r)}); }
+    catch(e){ if(!lgMissing(e)) throw e; }
+  }
 }
 function render(){ refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
 
@@ -4219,7 +4293,7 @@ async function signIn(email,password){
 }
 async function signOut(){
   try{ await pushNow(); await api("/auth/v1/logout",{method:"POST"}); }catch(e){}
-  SES=null; storeSes(); syncState="idle"; IS_REVIEWER=false; CHECKS={}; LG.rows=null; LG.at=0; render();
+  SES=null; storeSes(); syncState="idle"; IS_REVIEWER=false; CHECKS={}; LG.rows=null; LG.at=0; LG.all=null; LG.allAt=0; render();
 }
 
 /* combine device progress and cloud progress without losing either */
