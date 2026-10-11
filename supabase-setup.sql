@@ -59,9 +59,9 @@ grant select on public.reviewers to authenticated;
 grant select, insert, update, delete on public.phrase_checks to authenticated;
 grant execute on function public.is_reviewer() to authenticated;
 
--- Add yourself (and your Mosul speaker) as reviewers. Replace the email, then run.
--- To add more people later, run this line again with their email.
-insert into public.reviewers (email) values ('YOUR-EMAIL@example.com') on conflict do nothing;
+-- Add yourself (and your Mosul speaker) as reviewers: run this line on its own,
+-- with the email you sign in with. Run it again for each new person.
+-- insert into public.reviewers (email) values ('YOUR-EMAIL@example.com') on conflict do nothing;
 
 -- ============ League (weekly leaderboard) ============
 -- Each learner has one row: first name, XP for the current week, where they are in the course
@@ -91,3 +91,54 @@ create policy "add own league row"    on public.league for insert to authenticat
 create policy "change own league row" on public.league for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
 create policy "remove own league row" on public.league for delete to authenticated using (auth.uid() = user_id);
 grant select, insert, update, delete on public.league to authenticated;
+
+-- ============ Suggested phrases ============
+-- Signed-in learners send in phrases they say in Mosul. Each one waits as "pending"
+-- until a reviewer approves it (or not). Approved phrases show up for everyone under
+-- Words, with the first name of the person who sent them in.
+
+create table if not exists public.phrase_suggestions (
+  id         bigint generated always as identity primary key,
+  user_id    uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  name       text check (char_length(name) <= 40),
+  tr         text not null check (char_length(tr) between 1 and 120),
+  meaning    text not null check (char_length(meaning) between 1 and 200),
+  ar         text check (char_length(ar) <= 120),
+  note       text check (char_length(note) <= 300),
+  lang       text check (lang in ('en', 'sv')),
+  status     text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
+  created_at timestamptz not null default now()
+);
+create index if not exists phrase_suggestions_status on public.phrase_suggestions (status, created_at desc);
+create index if not exists phrase_suggestions_user   on public.phrase_suggestions (user_id, created_at desc);
+alter table public.phrase_suggestions enable row level security;
+drop policy if exists "everyone sees approved phrases" on public.phrase_suggestions;
+drop policy if exists "learners see own suggestions"   on public.phrase_suggestions;
+drop policy if exists "learners add suggestions"       on public.phrase_suggestions;
+drop policy if exists "reviewers see suggestions"      on public.phrase_suggestions;
+drop policy if exists "reviewers change suggestions"   on public.phrase_suggestions;
+drop policy if exists "reviewers remove suggestions"   on public.phrase_suggestions;
+create policy "everyone sees approved phrases" on public.phrase_suggestions for select to anon, authenticated using (status = 'approved');
+create policy "learners see own suggestions"   on public.phrase_suggestions for select to authenticated using (auth.uid() = user_id);
+-- New suggestions always start as pending.
+create policy "learners add suggestions"       on public.phrase_suggestions for insert to authenticated
+  with check (auth.uid() = user_id and status = 'pending');
+create policy "reviewers see suggestions"      on public.phrase_suggestions for select to authenticated using (public.is_reviewer());
+create policy "reviewers change suggestions"   on public.phrase_suggestions for update to authenticated using (public.is_reviewer()) with check (public.is_reviewer());
+create policy "reviewers remove suggestions"   on public.phrase_suggestions for delete to authenticated using (public.is_reviewer());
+-- One person can have at most 50 suggestions waiting for review.
+create or replace function public.limit_pending_suggestions() returns trigger
+  language plpgsql set search_path = public as $$
+begin
+  if (select count(*) from public.phrase_suggestions where user_id = new.user_id and status = 'pending') >= 50 then
+    raise exception 'Too many suggestions waiting for review' using errcode = 'check_violation';
+  end if;
+  return new;
+end $$;
+drop trigger if exists limit_pending_suggestions on public.phrase_suggestions;
+create trigger limit_pending_suggestions before insert on public.phrase_suggestions
+  for each row execute function public.limit_pending_suggestions();
+-- Visitors who aren't signed in can only read the columns that approved phrases show.
+revoke all on public.phrase_suggestions from anon;
+grant select (id, tr, ar, meaning, note, name, status, created_at) on public.phrase_suggestions to anon;
+grant select, insert, update, delete on public.phrase_suggestions to authenticated;

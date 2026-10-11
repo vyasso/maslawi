@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Learn the Mosul (Maslawi) Iraqi Arabic dialect with short, fun lessons. No Arabic letters needed.">
 <meta name="theme-color" content="#F4F5FC">
+<!-- Link preview (WhatsApp, Facebook, Messenger, iMessage, X…). The image is og-image.png, 1200×630. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Maslawi">
+<meta property="og:url" content="https://feli.yasso.se/">
+<meta property="og:title" content="Maslawi – lär dig Mosul-dialekten">
+<meta property="og:description" content="Korta, roliga lektioner i Mosul-arabiska med ljud till varje fras. Gratis, på svenska och engelska.">
+<meta property="og:image" content="https://feli.yasso.se/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Maslawis maskot, ett vinkande teglas, bredvid texten Lär dig Mosul-dialekten">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
 <script>try{var t=(JSON.parse(localStorage.getItem("maslawi-proto-v2")||"{}")||{}).theme;if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -881,6 +895,53 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .sbox .sb-ic svg{width:22px;height:22px}
 .sbox .sb-l{display:block;font-size:13px;color:var(--muted);line-height:1.2}
 .pf-av .mascot,.pf-m{width:78px;height:78px}
+/* phrases from friends and family (learner suggestions) */
+.cr-sub{margin:4px 0 0}
+.cr-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.wg .cr-list{margin-top:8px}
+.cr{display:flex;align-items:flex-start;gap:12px;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:10px 12px 10px 10px;color:var(--ink)}
+.cr-ic{width:42px;height:42px;border-radius:12px;flex:none;display:grid;place-items:center;background:rgba(255,186,25,.2);background:color-mix(in srgb,var(--gold) 20%,transparent);color:#9A6500}
+.cr-ic svg{width:22px;height:22px}
+.cr-t{flex:1;min-width:0;display:flex;flex-direction:column}
+.cr-t .say{font-size:18px;line-height:1.2;overflow-wrap:anywhere}
+.cr-t .arsm{font-size:17px}
+.cr-t small{color:var(--muted);font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+.cr-t small:first-of-type{color:var(--ink);font-weight:700}
+.cr-t .cr-note{font-style:italic}
+.cr-t .cr-by{font-size:12px;font-weight:700;margin-top:2px}
+.cr-add{display:flex;align-items:center;gap:12px;width:100%;margin-top:10px;padding:10px 14px 10px 10px;text-align:start;border:2px dashed var(--sel-line);border-radius:18px;background:var(--primary-soft);color:var(--ink)}
+.cr-add:active{transform:translateY(2px)}
+.cr-m{width:64px;height:64px;flex:none}
+.cr-at{flex:1;min-width:0;display:flex;flex-direction:column}
+.cr-at b{font-size:17px;line-height:1.2}
+.cr-at small{color:var(--muted);font-weight:700;line-height:1.3}
+.cr-add>svg:last-child{width:18px;height:18px;flex:none;color:var(--muted)}
+.wl-none .wl-sg{display:inline-block;margin-top:10px;padding:8px 14px;font-size:14px}
+.sg-head{display:flex;align-items:center;gap:12px}
+.sg-m{width:72px;height:72px;flex:none}
+.sg-fine{margin:0;font-size:13px;text-align:center}
+.fld textarea{font:inherit;font-weight:700;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 14px;resize:vertical;min-height:64px}
+.fld textarea:focus{outline:none;border-color:var(--blue)}
+.fld input[lang="ar"]{font-family:var(--arabic);font-size:18px;padding-block:9px}
+.sg-h{margin:4px 0 0;font-size:15px;font-weight:800;color:var(--muted)}
+.sg-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:2px solid var(--line)}
+.sg-row:last-child{border-bottom:0}
+.sg-row>span:first-child{min-width:0}
+.sg-row b{display:block;overflow-wrap:anywhere}
+.sg-row small{display:block;color:var(--muted);font-weight:600;overflow-wrap:anywhere}
+.sg-st{flex:none;font-size:12px;font-weight:900;padding:3px 9px;border-radius:99px;white-space:nowrap;background:var(--lock);color:var(--muted)}
+.sg-st.pending{background:rgba(255,186,25,.2);color:#8A5A00}
+.sg-st.approved{background:var(--good-bg);color:var(--good)}
+.sg-st.rejected{background:var(--bad-bg);color:var(--bad)}
+.sr{display:flex;flex-direction:column;gap:10px;padding:14px}
+.sr .fld{font-size:14px}
+.sr-meta{color:var(--muted);font-weight:700}
+.sr-tip{margin:0}
+#review{z-index:23}
+#review .l-head .btn.ghost{font-size:13px;letter-spacing:.03em}
+:root[data-theme="dark"] .cr-ic{color:var(--gold)}
+:root[data-theme="dark"] .sg-st.pending{color:var(--gold)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .cr-ic,:root:not([data-theme="light"]) .sg-st.pending{color:var(--gold)} }
 canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
 @media (prefers-reduced-motion: reduce){ .start,.combo{animation:none} *{transition:none!important;animation:none!important} }
 </style>
@@ -3327,6 +3388,7 @@ function renderWords(el){
   ${ok?"":`<p class="sub" style="margin:10px 0 0">${tt("Practice opens after your first lesson.","Övningarna öppnas efter din första lektion.")}</p>`}
   <h2 class="sec">${tt("Word of the day","Dagens ord")}</h2>
   <div class="wotd-wrap"><button class="wotd" id="wotd" aria-label="${tt("Word of the day. Tap to flip","Dagens ord. Tryck för att vända")}"><span class="wotd-in"><span class="wf wf-front"><span class="say">${esc(W[wotd].tr)}</span>${arSm(wotd)}<small>${tt("Tap to see what it means","Tryck för att se vad det betyder")}</small></span><span class="wf wf-back"><span class="wf-en">${esc(W[wotd].en)}</span>${W[wotd].note?`<small>${esc(W[wotd].note)}</small>`:""}</span></span></button>${lbtn(wotd)}</div>
+  <div id="sg-sec"></div>
   <h2 class="sec">${learned.length?tt("Your words","Dina ord"):tt("Look up a word","Slå upp ett ord")}</h2>
   <label class="wsearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="wq" type="search" placeholder="${tt("Search: hi, thanks, chai…","Sök: hej, tack, chai…")}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${tt("Search words in English or Maslawi","Sök ord på svenska, engelska eller maslawi")}"></label>
   ${learned.length&&weak?`<div class="wfilter" role="group" aria-label="${tt("Show","Visa")}"><button class="rchip" data-f="all" aria-pressed="${WFILTER!=="weak"}">${tt("All words","Alla ord")}</button><button class="rchip" data-f="weak" aria-pressed="${WFILTER==="weak"}">${tt("To practise","Att öva")} · ${weak}</button></div>`:""}
@@ -3335,16 +3397,19 @@ function renderWords(el){
   const go=(id,f)=>{ const b=$(id); if(b) b.onclick=()=>{sTap();f();}; };
   go("#p-mist",startReview); go("#p-fresh",startFreshen); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters); go("#open-grammar",()=>openGrammar()); go("#open-verbs",openVerbs); go("#p-dict",startDictation);
   const wc=$("#wotd"); if(wc) wc.onclick=()=>{ wc.classList.toggle("flipped"); sTap(); };
+  drawSgSection(); const had=SG.approved; loadApproved().then(()=>{ if(SG.approved!==had&&el.isConnected) drawSgSection(); });
+  $("#wlist").addEventListener("click",e=>{ if(e.target.closest("[data-suggest]")){ sTap(); suggestSheet(); } });
   const q=$("#wq"); q.oninput=()=>{ $("#wlist").innerHTML=wordList(q.value); const f=document.querySelector(".wfilter"); if(f) f.hidden=!!q.value.trim(); };
   el.querySelectorAll(".wfilter .rchip").forEach(b=>b.onclick=()=>{ WFILTER=b.dataset.f; sTap(); el.querySelectorAll(".wfilter .rchip").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); $("#wlist").innerHTML=wordList(q.value); });
 }
 function wordList(q){
   const learned=new Set(learnedWords()), qq=String(q||"").trim();
   if(qq){
-    const hits=searchWords(qq), mine=hits.filter(k=>learned.has(k)), later=hits.filter(k=>!learned.has(k));
-    if(!hits.length) return `<div class="wl-none">${mascot("think","wl-m")}<p><b>${tt(`No words match “${esc(qq)}”`,`Inga ord matchar ”${esc(qq)}”`)}</b><span>${tt("Try another spelling, or an English word like “thanks”.","Testa en annan stavning, eller ett ord som ”tack”.")}</span></p></div>`;
+    const hits=searchWords(qq), mine=hits.filter(k=>learned.has(k)), later=hits.filter(k=>!learned.has(k)), comm=sgSearch(qq);
+    if(!hits.length&&!comm.length) return `<div class="wl-none">${mascot("think","wl-m")}<p><b>${tt(`No words match “${esc(qq)}”`,`Inga ord matchar ”${esc(qq)}”`)}</b><span>${tt("Try another spelling, or an English word like “thanks”.","Testa en annan stavning, eller ett ord som ”tack”.")}</span>${CLOUD&&!SG.off?`<button class="btn ghost blue wl-sg" data-suggest>${tt("Suggest a phrase","Föreslå en fras")}</button>`:""}</p></div>`;
     return (mine.length?`<div class="wg"><div class="wg-h"><b>${tt("Your words","Dina ord")}</b><span>${mine.length}</span></div>${mine.slice(0,40).map(k=>wordRow(k)).join("")}</div>`:"")
-      +(later.length?`<div class="wg"><div class="wg-h"><b>${tt("Coming up later","Kommer senare")}</b><span>${later.length}</span></div>${later.slice(0,12).map(k=>wordRow(k,true)).join("")}</div>`:"");
+      +(later.length?`<div class="wg"><div class="wg-h"><b>${tt("Coming up later","Kommer senare")}</b><span>${later.length}</span></div>${later.slice(0,12).map(k=>wordRow(k,true)).join("")}</div>`:"")
+      +(comm.length?`<div class="wg"><div class="wg-h"><b>${tt("From friends and family","Från släkt och vänner")}</b><span>${comm.length}</span></div><div class="cr-list">${comm.slice(0,12).map(sgRow).join("")}</div></div>`:"");
   }
   const weakOnly=WFILTER==="weak"; let out="", found=0;
   UNITS.forEach((u,ui)=>{
@@ -3450,8 +3515,8 @@ function renderSettings(){
         <div class="set-row"><span class="set-l"><b>${tt("Sounds and voice","Ljud och röst")}</b><small>${tt("Effects, spoken phrases and vibration","Effekter, upplästa fraser och vibration")}</small></span>${sw("snd",S.sound,tt("Sounds and voice","Ljud och röst"))}</div>
         <div class="set-row"><span class="set-l"><b>${tt("Show Arabic letters","Visa arabiska bokstäver")}</b><small>${tt("For learners who can read Arabic","För dig som kan läsa arabiska")}</small></span>${sw("arb",S.arabic,tt("Show Arabic letters","Visa arabiska bokstäver"))}</div>
       </div>
-      ${CLOUD?`<h2 class="set-h">${tt("Account","Konto")}</h2>${accountCard()}${SES?`<div class="set-card"><div class="set-row"><span class="set-l"><b>${tt("Show me in the league","Visa mig i ligan")}</b><small>${tt("Others see your first name and weekly XP","Andra ser ditt förnamn och din XP för veckan")}</small></span>${sw("lgs",!S.leagueHidden,tt("Show me in the league","Visa mig i ligan"))}</div></div>`:""}`:""}
-      ${canReview()?`<h2 class="set-h">${tt("Reviewer tools","Granskarverktyg")}</h2>${reviewCard().replace(/<h2 class="sec">[^<]*<\/h2>/,'')}`:""}
+      ${CLOUD?`<h2 class="set-h">${tt("Account","Konto")}</h2>${accountCard()}${SES?`<div class="set-card"><div class="set-row"><span class="set-l"><b>${tt("Show me in the league","Visa mig i ligan")}</b><small>${tt("Others see your first name, XP and how far you've got","Andra ser ditt förnamn, din XP och hur långt du har kommit")}</small></span>${sw("lgs",!S.leagueHidden,tt("Show me in the league","Visa mig i ligan"))}</div></div>`:""}`:""}
+      ${canReview()?`<h2 class="set-h">${tt("Reviewer tools","Granskarverktyg")}</h2>${reviewCard().replace(/<h2 class="sec">[^<]*<\/h2>/,'')}${suggestCard()}`:""}
       <h2 class="set-h">${tt("Progress","Framsteg")}</h2>
       <div class="set-card"><div class="set-row"><span class="set-l"><b>${tt("Reset progress","Nollställ framsteg")}</b><small>${tt("Start the course again from Unit 1","Börja om kursen från enhet 1")}</small></span><button class="btn ghost danger" id="reset">${tt("Reset","Nollställ")}</button></div></div>
       <h2 class="set-h">${tt("About","Om appen")}</h2>
@@ -3466,11 +3531,12 @@ function renderSettings(){
   $("#arb").onclick=()=>{ S.arabic=!S.arabic; save(); sTap(); renderSettings(); };
   const lgs=$("#lgs"); if(lgs) lgs.onclick=()=>{ S.leagueHidden=!S.leagueHidden; save(); LG.at=0; pushLeague().catch(()=>{}); sTap(); renderSettings(); };
   const rv=$("#open-review"); if(rv) rv.onclick=openReview;
+  const sgo=$("#open-sg"); if(sgo) sgo.onclick=()=>{ sTap(); openSuggestReview(); };
   wireAccount();
   let armed=false; $("#reset").onclick=e=>{ if(!armed){ armed=true; e.target.textContent=tt("Tap again","Tryck igen"); e.target.classList.add("armed"); return; } const keep={checked:S.checked,sound:S.sound,arabic:S.arabic,theme:S.theme,lang:S.lang,gender:S.gender,goal:S.goal,why:S.why,joined:S.joined}; S=Object.assign(fresh(),keep,{onboarded:true}); S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}}; S.week=weekId(); save(); toast(tt("Progress reset. Back to Unit 1.","Framstegen är nollställda. Tillbaka till enhet 1.")); closeSettings(); setTab("learn"); };
   document.addEventListener("keydown",setEsc);
 }
-function setEsc(e){ if(e.key==="Escape"&&!$("#settings").hidden&&$("#sheet").hidden){ document.removeEventListener("keydown",setEsc); closeSettings(); } }
+function setEsc(e){ if(e.key==="Escape"&&!$("#settings").hidden&&$("#sheet").hidden&&$("#review").hidden){ document.removeEventListener("keydown",setEsc); closeSettings(); } }
 
 /* ================= PROFILE (just you) ================= */
 const BOOK_IC='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-3H6.5A1 1 0 0 0 6.5 20.5z" opacity=".55"/></svg>';
@@ -4293,7 +4359,7 @@ async function signIn(email,password){
 }
 async function signOut(){
   try{ await pushNow(); await api("/auth/v1/logout",{method:"POST"}); }catch(e){}
-  SES=null; storeSes(); syncState="idle"; IS_REVIEWER=false; CHECKS={}; LG.rows=null; LG.at=0; LG.all=null; LG.allAt=0; render();
+  SES=null; storeSes(); syncState="idle"; IS_REVIEWER=false; CHECKS={}; LG.rows=null; LG.at=0; LG.all=null; LG.allAt=0; SG.mine=null; SG.all=null; SG.allAt=0; render();
 }
 
 /* combine device progress and cloud progress without losing either */
@@ -4400,7 +4466,7 @@ async function loadReviewer(){
   if(!CLOUD||!SES){ IS_REVIEWER=false; return; }
   try{ if(!(await freshToken())) return;
     const r=await api("/rest/v1/reviewers?select=email"); IS_REVIEWER=!!(r&&r.length);
-    if(IS_REVIEWER){ const rows=await api("/rest/v1/phrase_checks?select=phrase,status,note,checked_by"); CHECKS={}; (rows||[]).forEach(x=>CHECKS[x.phrase]=x); }
+    if(IS_REVIEWER){ const rows=await api("/rest/v1/phrase_checks?select=phrase,status,note,checked_by"); CHECKS={}; (rows||[]).forEach(x=>CHECKS[x.phrase]=x); await loadSuggestions(); }
   }catch(e){ IS_REVIEWER=false; }
 }
 const checksMap=()=>CLOUD?CHECKS:(S.reviews||(S.reviews={}));
@@ -4445,6 +4511,153 @@ function drawReview(){
     const done=()=>toast(tt("Copied. Paste it to Claude to apply the fixes.","Kopierat. Klistra in det till Claude så rättas det."));
     try{ navigator.clipboard.writeText("Maslawi fixes:\n"+txt).then(done,()=>sheet(`<h2 class="sec" style="margin:0">${tt("Fixes to send","Rättelser att skicka")}</h2><textarea class="type-in" readonly style="min-height:240px">${esc("Maslawi fixes:\n"+txt)}</textarea><button class="btn wide" data-close>${tt("Done","Klar")}</button>`)); }
     catch(e){ sheet(`<textarea class="type-in" readonly style="min-height:240px">${esc(txt)}</textarea><button class="btn wide" data-close>${tt("Done","Klar")}</button>`); }
+  };
+}
+
+/* ================= SUGGEST A PHRASE =================
+   Signed-in learners send in phrases they say in Mosul. Reviewers check them,
+   and approved phrases show up for everyone under Words. Needs the
+   phrase_suggestions table in Supabase (see supabase-setup.sql). */
+const SG={approved:null,at:0,mine:null,all:null,allAt:0,off:false,showAll:false};
+/* the table isn't there yet (the SQL hasn't been run) */
+const sgOff=e=>/PGRST205|42P01|(could not find the table|relation)[^]*phrase_suggestions/i.test((e&&e.message)||"");
+const sgStatus=s=>s==="approved"?tt("Approved","Godkänd"):s==="rejected"?tt("Not added","Inte med"):tt("Waiting for review","Väntar på granskning");
+const sgPending=()=>(SG.all||[]).filter(p=>p.status==="pending").length;
+function loadApproved(force){
+  if(!CLOUD||SG.off) return Promise.resolve();
+  if(!force&&SG.approved&&Date.now()-SG.at<300000) return Promise.resolve();
+  if(SG.p&&!force) return SG.p;
+  return SG.p=(async()=>{
+    try{
+      if(SES) await freshToken();
+      SG.approved=await api("/rest/v1/phrase_suggestions?select=id,tr,ar,meaning,note,name&status=eq.approved&order=created_at.desc&limit=300",{},!!SES)||[]; SG.at=Date.now();
+    }catch(e){ if(sgOff(e)) SG.off=true; SG.approved=SG.approved||[]; SG.at=Date.now()-240000; }
+    finally{ SG.p=null; }
+  })();
+}
+/* the friends-and-family phrases that match a search */
+function sgSearch(q){
+  const raw=String(q||"").trim().toLowerCase(), f=fold(raw).trim();
+  if(!raw||!SG.approved) return [];
+  return SG.approved.filter(p=>[p.tr,p.meaning,p.note,p.ar].some(x=>x&&((f&&fold(x).includes(f))||String(x).toLowerCase().includes(raw))));
+}
+function sgRow(p){ return `<div class="cr"><span class="cr-ic" aria-hidden="true">${I.chat.replace('fill="#fff"','fill="currentColor"')}</span><span class="cr-t"><span class="say">${esc(p.tr)}</span>${p.ar&&S.arabic?`<span class="arsm" lang="ar" dir="rtl">${esc(p.ar)}</span>`:""}<small>${esc(p.meaning)}</small>${p.note?`<small class="cr-note">${esc(p.note)}</small>`:""}${p.name?`<small class="cr-by">${tt("Suggested by","Föreslagen av")} ${esc(p.name)}</small>`:""}</span></div>`; }
+function sgSection(){
+  if(!CLOUD||SG.off||SG.approved===null) return "";
+  const list=SG.approved, n=IS_REVIEWER?sgPending():0;
+  return `<h2 class="sec">${tt("From friends and family","Från släkt och vänner")}</h2>
+  ${list.length?`<p class="sub cr-sub">${tt("Phrases other learners say in Mosul. They're checked before they show up here.","Fraser som andra säger i Mosul. De granskas innan de syns här.")}</p><div class="cr-list">${list.slice(0,SG.showAll?300:3).map(sgRow).join("")}</div>${list.length>3&&!SG.showAll?`<button class="btn ghost wide blue" id="cr-all" style="margin-top:10px">${tt(`Show all ${list.length}`,`Visa alla ${list.length}`)}</button>`:""}`:""}
+  ${n?`<button class="btn gold wide" id="cr-rev" style="margin-top:10px">${tt(`${n} new suggestion${n>1?"s":""} to review`,`${n} ${n>1?"nya förslag":"nytt förslag"} att granska`)}</button>`:""}
+  <button class="cr-add" id="cr-add">${mascot("think","cr-m")}<span class="cr-at"><b>${tt("Suggest a phrase","Föreslå en fras")}</b><small>${tt("Something you say in Mosul that's missing? Send it in.","Säger ni något i Mosul som saknas här? Skicka in det.")}</small></span>${CHEV}</button>`;
+}
+/* draw (or redraw) the section on the Words page and wire its buttons */
+function drawSgSection(){
+  const box=$("#sg-sec"); if(!box) return;
+  box.innerHTML=sgSection();
+  const add=$("#cr-add"); if(add) add.onclick=()=>{ sTap(); suggestSheet(); };
+  const all=$("#cr-all"); if(all) all.onclick=()=>{ sTap(); SG.showAll=true; drawSgSection(); };
+  const rev=$("#cr-rev"); if(rev) rev.onclick=()=>{ sTap(); openSuggestReview(); };
+}
+function suggestSheet(prefill){
+  if(!CLOUD) return;
+  if(!SES){
+    sheet(`<div style="text-align:center">${mascot("wow")}<h2 class="sec" style="margin:4px 0">${tt("Suggest a phrase","Föreslå en fras")}</h2><p class="sub" style="margin:0">${tt("Create a free account to send in phrases you say in Mosul.","Skapa ett gratis konto för att skicka in fraser som ni säger i Mosul.")}</p></div><button class="btn wide" id="sg-up">${tt("Create account","Skapa konto")}</button><button class="btn ghost wide blue" id="sg-in">${tt("I already have an account","Jag har redan ett konto")}</button>`);
+    $("#sg-up").onclick=()=>authSheet("up"); $("#sg-in").onclick=()=>authSheet("in"); return;
+  }
+  const nm=userName();
+  sheet(`<div class="sg-head">${mascot("think","sg-m")}<div><h2 class="sec" style="margin:0">${tt("Suggest a phrase","Föreslå en fras")}</h2><p class="sub" style="margin:2px 0 0">${tt("Something you say in Mosul that the app is missing? Send it in. Everyone sees it once it's been checked.","Säger ni något i Mosul som saknas i appen? Skicka in det. Alla ser det när det har granskats.")}</p></div></div>
+  <form id="sgf" class="stack" novalidate>
+    <label class="fld">${tt("The phrase, in English letters","Frasen, med vanliga bokstäver")}<input id="sg-tr" maxlength="120" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${tt("As you say it","Som ni säger det")}" value="${esc(prefill||"")}"></label>
+    <label class="fld">${tt("What it means","Vad det betyder")}<input id="sg-mean" maxlength="200" autocomplete="off" placeholder="${tt("In English or Swedish","På svenska eller engelska")}"></label>
+    <label class="fld">${tt("In Arabic letters (optional)","Med arabiska bokstäver (valfritt)")}<input id="sg-ar" maxlength="120" dir="rtl" lang="ar" autocomplete="off"></label>
+    <label class="fld">${tt("When do you say it? (optional)","När säger man det? (valfritt)")}<textarea id="sg-note" maxlength="300" rows="2" placeholder="${tt("e.g. to a guest, or when someone sneezes","t.ex. till en gäst, eller när någon nyser")}"></textarea></label>
+    <p class="ferr" id="sg-err" hidden></p>
+    <button class="btn wide" id="sg-go" type="submit">${tt("Send suggestion","Skicka förslag")}</button>
+    <p class="sub sg-fine">${nm?tt(`Your first name (${esc(nm)}) is shown next to the phrase once it's approved.`,`Ditt förnamn (${esc(nm)}) visas bredvid frasen när den har godkänts.`):tt("Your first name is shown next to the phrase once it's approved.","Ditt förnamn visas bredvid frasen när den har godkänts.")}</p>
+  </form>
+  <div id="sg-mine"></div>`);
+  const err=$("#sg-err"), go=$("#sg-go");
+  (prefill?$("#sg-mean"):$("#sg-tr")).focus();
+  $("#sgf").onsubmit=async ev=>{
+    ev.preventDefault(); err.hidden=true;
+    const tr=$("#sg-tr").value.trim(), meaning=$("#sg-mean").value.trim(), ar=$("#sg-ar").value.trim(), note=$("#sg-note").value.trim();
+    if(!tr||!meaning){ err.textContent=tt("Write the phrase and what it means.","Skriv frasen och vad den betyder."); err.hidden=false; (tr?$("#sg-mean"):$("#sg-tr")).focus(); return; }
+    go.disabled=true; go.textContent=tt("Sending…","Skickar…");
+    try{
+      if(!(await freshToken())) throw new Error(tt("Sign in again and try once more.","Logga in igen och försök en gång till."));
+      await api("/rest/v1/phrase_suggestions",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({user_id:SES.user.id,name:(userName()||"").slice(0,40)||null,tr,meaning,ar:ar||null,note:note||null,lang:lang()})});
+      SG.mine=null; if(IS_REVIEWER) loadSuggestions().then(drawSgSection); sWin();
+      $("#sheet .sheet").innerHTML=`<div style="text-align:center">${mascot("cheer")}<h2 class="sec" style="margin:4px 0">${tt("Thank you!","Tack!")}</h2><p class="sub" style="margin:0">${tt(`“${esc(tr)}” will be checked first. Then everyone can see it under Words.`,`”${esc(tr)}” granskas först. Sedan kan alla se den under Ord.`)}</p></div><button class="btn wide" id="sg-more">${tt("Suggest another","Föreslå en till")}</button><button class="btn ghost wide" data-close>${tt("Done","Klar")}</button>`;
+      $("#sg-more").onclick=()=>suggestSheet(); $("#sg-more").focus();
+    }catch(e){
+      const m=(e&&e.message)||"";
+      err.textContent=sgOff(e)?tt("Suggestions aren't switched on yet.","Förslag är inte påslagna än.")
+        :/row-level security|too many suggestions/i.test(m)?tt("You have a lot of suggestions waiting. Send more once they've been reviewed.","Du har många förslag som väntar. Skicka fler när de har granskats.")
+        :/fetch|network/i.test(m)?tt("No connection. Check your internet and try again.","Ingen anslutning. Kolla internet och försök igen.")
+        :(m||tt("Something went wrong.","Något gick fel."));
+      err.hidden=false; go.disabled=false; go.textContent=tt("Send suggestion","Skicka förslag");
+    }
+  };
+  /* what this learner has sent in before */
+  (async()=>{
+    try{ if(!SG.mine) SG.mine=await api("/rest/v1/phrase_suggestions?select=id,tr,meaning,status&user_id=eq."+SES.user.id+"&order=created_at.desc&limit=20"); }catch(e){ return; }
+    const box=$("#sg-mine"); if(!box||!SG.mine||!SG.mine.length) return;
+    box.innerHTML=`<h3 class="sg-h">${tt("Your suggestions","Dina förslag")}</h3>${SG.mine.map(p=>`<div class="sg-row"><span><b>${esc(p.tr)}</b><small>${esc(p.meaning)}</small></span><span class="sg-st ${esc(p.status)}">${sgStatus(p.status)}</span></div>`).join("")}`;
+  })();
+}
+
+/* reviewers: approve, fix or turn down what learners sent in */
+let SG_FILTER="pending";
+async function loadSuggestions(){
+  if(!CLOUD||!SES||!IS_REVIEWER) return;
+  try{ SG.all=await api("/rest/v1/phrase_suggestions?select=id,tr,ar,meaning,note,name,lang,status,created_at&order=created_at.desc&limit=500")||[]; SG.allAt=Date.now(); }
+  catch(e){ if(sgOff(e)) SG.off=true; SG.all=SG.all||[]; }
+}
+function suggestCard(){
+  if(!CLOUD||!IS_REVIEWER) return "";
+  const n=sgPending();
+  return `<div class="set-card" style="margin-top:12px"><div class="set-row"><span class="set-l"><b>${tt("Suggested phrases","Föreslagna fraser")}</b><small>${SG.off?tt("Run the phrase_suggestions SQL in Supabase to switch this on.","Kör SQL-koden för phrase_suggestions i Supabase för att slå på det här."):n?tt(`${n} new to review`,`${n} ${n>1?"nya":"nytt"} att granska`):tt("Nothing new to review","Inget nytt att granska")}</small></span><button class="btn ghost blue" id="open-sg" style="padding:8px 14px" ${SG.off?"disabled":""}>${tt("Open","Öppna")}</button></div></div>`;
+}
+async function openSuggestReview(){ SG_FILTER="pending"; $("#review").hidden=false; document.body.style.overflow="hidden"; drawSuggestReview(); await loadSuggestions(); drawSuggestReview(); }
+function closeSuggestReview(){
+  const o=$("#review"); o.hidden=true; o.innerHTML="";
+  if($("#settings").hidden) document.body.style.overflow=""; else renderSettings();
+  loadApproved(true).then(render);
+}
+function drawSuggestReview(){
+  const o=$("#review"); if(!o||o.hidden) return;
+  const all=SG.all||[], cnt=s=>all.filter(p=>s==="all"||p.status===s).length;
+  const list=all.filter(p=>SG_FILTER==="all"||p.status===SG_FILTER);
+  const chip=(f,label)=>`<button class="rchip" data-f="${f}" aria-pressed="${SG_FILTER===f}">${label} <b>${cnt(f)}</b></button>`;
+  const when=d=>{ try{ return new Date(d).toLocaleDateString(isSv()?"sv-SE":"en-GB",{day:"numeric",month:"short"}); }catch(e){ return ""; } };
+  o.innerHTML=`<div class="l-in"><div class="l-head"><button class="x" id="sr-x" aria-label="${tt("Close","Stäng")}">${I.x}</button><h2 class="sec" style="margin:0;flex:1">${tt("Suggested phrases","Föreslagna fraser")}</h2><button class="btn ghost blue" id="sr-copy" style="padding:8px 12px" ${cnt("approved")?"":"disabled"}>${tt("Copy approved","Kopiera godkända")}</button></div>
+  <div class="rchips">${chip("pending",tt("New","Nya"))}${chip("approved",tt("Approved","Godkända"))}${chip("rejected",tt("Not added","Inte med"))}${chip("all",tt("All","Alla"))}</div>
+  <div class="l-body" style="gap:10px">${SG.all===null?`<p class="sub" style="text-align:center;padding:30px">${tt("Loading…","Laddar…")}</p>`:list.length?`<p class="sub sr-tip">${tt("You can fix the spelling or meaning before you approve. Approved phrases show up for everyone under Words.","Du kan rätta stavningen eller betydelsen innan du godkänner. Godkända fraser syns för alla under Ord.")}</p>`+list.map(p=>`<div class="card sr" data-id="${p.id}">
+    <small class="sr-meta">${esc(p.name||tt("Someone","Någon"))} · ${when(p.created_at)}${p.status!=="pending"?` · <b class="sg-st ${esc(p.status)}">${sgStatus(p.status)}</b>`:""}</small>
+    <label class="fld">${tt("Phrase","Fras")}<input class="sr-tr" value="${esc(p.tr)}" maxlength="120" autocomplete="off" spellcheck="false"></label>
+    <label class="fld">${tt("Meaning","Betydelse")}<input class="sr-mean" value="${esc(p.meaning)}" maxlength="200" autocomplete="off"></label>
+    <label class="fld">${tt("Arabic","Arabiska")}<input class="sr-ar" value="${esc(p.ar||"")}" maxlength="120" dir="rtl" lang="ar" autocomplete="off"></label>
+    <label class="fld">${tt("When it's said","När man säger det")}<input class="sr-note" value="${esc(p.note||"")}" maxlength="300" autocomplete="off"></label>
+    <div class="rv-btns"><button class="rbtn ok" data-s="approved" aria-pressed="${p.status==="approved"}">${I.ok}${p.status==="approved"?tt("Save","Spara"):tt("Approve","Godkänn")}</button><button class="rbtn fix" data-s="rejected" aria-pressed="${p.status==="rejected"}">${tt("Don't add","Lägg inte till")}</button></div>
+  </div>`).join(""):`<div class="end" style="flex:none;padding-block:40px">${mascot("happy")}<p class="sub">${SG_FILTER==="pending"?tt("Nothing new to review.","Inget nytt att granska."):tt("Nothing here.","Inget här.")}</p></div>`}</div></div>`;
+  $("#sr-x").onclick=closeSuggestReview;
+  o.querySelectorAll(".rchip").forEach(b=>b.onclick=()=>{ SG_FILTER=b.dataset.f; sTap(); drawSuggestReview(); });
+  o.querySelectorAll(".sr").forEach(card=>{
+    const id=+card.dataset.id, p=all.find(x=>x.id===id);
+    card.querySelectorAll(".rbtn").forEach(b=>b.onclick=async()=>{
+      const v=c=>card.querySelector(c).value.trim();
+      const patch={status:b.dataset.s,tr:v(".sr-tr")||p.tr,meaning:v(".sr-mean")||p.meaning,ar:v(".sr-ar")||null,note:v(".sr-note")||null};
+      b.disabled=true;
+      try{ await freshToken(); await api("/rest/v1/phrase_suggestions?id=eq."+id,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(patch)}); Object.assign(p,patch); sTap(); toast(patch.status==="approved"?tt("Approved. Everyone can see it now.","Godkänd. Alla kan se den nu."):tt("It won't be added.","Den läggs inte till.")); }
+      catch(e){ toast(tt("Couldn't save. Check your internet.","Kunde inte spara. Kolla din internetuppkoppling.")); }
+      const lb0=o.querySelector(".l-body"), y=lb0?lb0.scrollTop:0; drawSuggestReview(); const lb=o.querySelector(".l-body"); if(lb) lb.scrollTop=y;
+    });
+  });
+  $("#sr-copy").onclick=()=>{
+    const txt="Maslawi phrases from learners:\n"+all.filter(p=>p.status==="approved").map(p=>`- ${p.tr}${p.ar?` (${p.ar})`:""}: ${p.meaning}${p.note?` · ${p.note}`:""}`).join("\n");
+    const done=()=>toast(tt("Copied. Paste it to Claude to add them to the lessons with audio.","Kopierat. Klistra in det till Claude så läggs de in i lektionerna med ljud."));
+    const show=()=>sheet(`<h2 class="sec" style="margin:0">${tt("Approved phrases","Godkända fraser")}</h2><textarea class="type-in" readonly style="min-height:240px">${esc(txt)}</textarea><button class="btn wide" data-close>${tt("Done","Klar")}</button>`);
+    try{ navigator.clipboard.writeText(txt).then(done,show); }catch(e){ show(); }
   };
 }
 
