@@ -4508,7 +4508,7 @@ function drawReview(){
   });
   $("#rv-copy").onclick=()=>{
     const txt=Object.keys(W).filter(k=>m[k]&&m[k].status==="fix").map(k=>`- ${W[k].tr} (${W[k].en0}): ${(m[k].note||"no note").trim()}`).join("\n");
-    const done=()=>toast(tt("Copied. Paste it to Claude to apply the fixes.","Kopierat. Klistra in det till Claude så rättas det."));
+    const done=()=>toast(tt("Copied. The fixes are on your clipboard.","Kopierat. Rättelserna ligger i urklipp."));
     try{ navigator.clipboard.writeText("Maslawi fixes:\n"+txt).then(done,()=>sheet(`<h2 class="sec" style="margin:0">${tt("Fixes to send","Rättelser att skicka")}</h2><textarea class="type-in" readonly style="min-height:240px">${esc("Maslawi fixes:\n"+txt)}</textarea><button class="btn wide" data-close>${tt("Done","Klar")}</button>`)); }
     catch(e){ sheet(`<textarea class="type-in" readonly style="min-height:240px">${esc(txt)}</textarea><button class="btn wide" data-close>${tt("Done","Klar")}</button>`); }
   };
@@ -4655,7 +4655,7 @@ function drawSuggestReview(){
   });
   $("#sr-copy").onclick=()=>{
     const txt="Maslawi phrases from learners:\n"+all.filter(p=>p.status==="approved").map(p=>`- ${p.tr}${p.ar?` (${p.ar})`:""}: ${p.meaning}${p.note?` · ${p.note}`:""}`).join("\n");
-    const done=()=>toast(tt("Copied. Paste it to Claude to add them to the lessons with audio.","Kopierat. Klistra in det till Claude så läggs de in i lektionerna med ljud."));
+    const done=()=>toast(tt("Copied. The approved phrases are on your clipboard.","Kopierat. De godkända fraserna ligger i urklipp."));
     const show=()=>sheet(`<h2 class="sec" style="margin:0">${tt("Approved phrases","Godkända fraser")}</h2><textarea class="type-in" readonly style="min-height:240px">${esc(txt)}</textarea><button class="btn wide" data-close>${tt("Done","Klar")}</button>`);
     try{ navigator.clipboard.writeText(txt).then(done,show); }catch(e){ show(); }
   };
@@ -4760,7 +4760,7 @@ function drawWelcome(){
 }
 
 /* offline + install support when served from a website */
-if("serviceWorker" in navigator && location.protocol==="https:" && !/claude|anthropic/.test(location.hostname)){
+if("serviceWorker" in navigator && location.protocol==="https:" && /(^|\.)yasso\.se$|github\.io$/.test(location.hostname)){
   window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 }
 

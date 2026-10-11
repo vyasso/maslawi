@@ -42,7 +42,7 @@ Open `index.html` and search for:
 - `const GRAMMAR=` – the Grammar in a minute topics
 - `const PRON=` / `VERBS=` – the persons and the verb tables (their audio is in `extra-audio.json`, keys `V_<verb>_<past|now>_<person>`)
 
-New phrases need an audio clip in `const AUD=` (ask Claude to generate one). Letter names use the keys `L_alif`, `L_ba` and so on.
+New phrases need an audio clip in `const AUD=` (generated with the Piper voice, see *Audio*). Letter names use the keys `L_alif`, `L_ba` and so on.
 
 ## Publishing
 
@@ -74,7 +74,7 @@ Clips were generated with the open-source Piper voice `ar_JO-kareem-medium` (a J
 
 ## Content check
 
-Only accounts whose email is in the `reviewers` table see **Settings (the gear) → Reviewer tools → Content check**. Reviewers mark each phrase as *Correct* or *Needs fix* and can write how people in Mosul really say it. Everyone on the list shares the same checks. **Copy fixes** copies all the fixes as a list you can paste to Claude.
+Only accounts whose email is in the `reviewers` table see **Settings (the gear) → Reviewer tools → Content check**. Reviewers mark each phrase as *Correct* or *Needs fix* and can write how people in Mosul really say it. Everyone on the list shares the same checks. **Copy fixes** copies all the fixes as a list.
 
 Add a reviewer in Supabase → SQL Editor:
 
@@ -86,7 +86,7 @@ insert into public.reviewers (email) values ('their@email.com');
 
 On the Words page, signed-in learners tap **Suggest a phrase** (under *From friends and family*, or when a search finds nothing) and send in the phrase, what it means, and optionally the Arabic and when people say it. Each suggestion waits until a reviewer looks at it in **Settings → Reviewer tools → Suggested phrases**. Reviewers also get a button on the Words page when something new is waiting. They can fix the spelling, meaning, Arabic or note, then **Approve** or **Don't add**.
 
-Approved phrases show up for everyone under Words, with the first name of the person who sent them in, and they turn up in search. They have no audio. **Copy approved** copies them as a list you can paste to Claude, who can add them to the lessons with audio.
+Approved phrases show up for everyone under Words, with the first name of the person who sent them in, and they turn up in search. They have no audio. **Copy approved** copies them as a list, ready to be added to the lessons with audio.
 
 The `phrase_suggestions` table is part of `supabase-setup.sql`. If you set up Supabase before this feature, run the file again (it's safe to run more than once). Until the table exists, the feature stays hidden. Each learner can have at most 50 suggestions waiting.
 
