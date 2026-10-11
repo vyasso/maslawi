@@ -106,5 +106,5 @@ Setup (once):
 1. Run `supabase-setup.sql` again in Supabase (it adds the `push_subscriptions` table).
 2. In GitHub → the repo → **Settings → Secrets and variables → Actions**, add two repository secrets:
    - `SUPABASE_SERVICE_KEY`: Supabase → Project Settings → API Keys → the secret (`service_role`) key. Never put it in `index.html`.
-   - `VAPID_PRIVATE_KEY`: the private half of the push key pair. Its public half is `VAPID_PUBLIC` in `index.html` and `VAPID_PUBLIC_KEY` in the workflow. If you make a new pair, change all three, and everyone has to switch the reminder on again.
+   - `VAPID_PRIVATE_KEY`: make a push key pair on your own computer with `npx web-push generate-vapid-keys`. The private key goes in this secret and nowhere else. The public key goes in `VAPID_PUBLIC` in `index.html` and `VAPID_PUBLIC_KEY` in the workflow. Phones that already switched the reminder on move to a new key by themselves the next time they open the app.
 3. Optional: in the **Actions** tab, open *Streak reminders* and press **Run workflow** to check that it says "… subscribed, … reminded".

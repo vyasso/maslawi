@@ -35,7 +35,7 @@ for (const row of rows) {
     sent++;
     await fetch(`${base}?id=eq.${row.id}`, { method: "PATCH", headers, body: JSON.stringify({ last_sent: t.date }) });
   } catch (e) {
-    if (e.statusCode === 404 || e.statusCode === 410) { // the browser threw the subscription away
+    if (e.statusCode === 404 || e.statusCode === 410 || e.statusCode === 403) { // thrown away by the browser, or made with an old key
       gone++;
       await fetch(`${base}?id=eq.${row.id}`, { method: "DELETE", headers });
     } else { failed++; console.error("Push failed:", e.statusCode || "", (e.body || e.message || "").toString().slice(0, 200)); }

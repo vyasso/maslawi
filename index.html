@@ -4353,6 +4353,14 @@ const pushOk=()=>CLOUD&&"serviceWorker" in navigator&&"PushManager" in window&&"
 const pushHour=()=>S.pushHour||19;
 const tzName=()=>{ try{ return Intl.DateTimeFormat().resolvedOptions().timeZone||""; }catch(e){ return ""; } };
 const b64u=s=>{ const b=atob((s+"=".repeat((4-s.length%4)%4)).replace(/-/g,"+").replace(/_/g,"/")); return Uint8Array.from(b,c=>c.charCodeAt(0)); };
+/* this phone's push subscription; replaced if it was made with another key */
+async function pushGet(reg,create){
+  const want=b64u(VAPID_PUBLIC); let sub=await reg.pushManager.getSubscription();
+  if(sub){ try{ const have=new Uint8Array((sub.options&&sub.options.applicationServerKey)||[]);
+    if(have.length&&(have.length!==want.length||have.some((v,i)=>v!==want[i]))){ api("/rest/v1/rpc/delete_push",{method:"POST",body:JSON.stringify({p_endpoint:sub.endpoint})},false).catch(()=>{}); await sub.unsubscribe(); sub=null; } }catch(e){} }
+  if(!sub&&create) sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:want});
+  return sub;
+}
 const swReady=()=>Promise.race([navigator.serviceWorker.ready,new Promise((_,no)=>setTimeout(()=>no(new Error("no service worker")),8000))]);
 async function pushSave(sub){
   const j=sub.toJSON();
@@ -4375,8 +4383,7 @@ async function pushOn(){
   }
   try{
     const reg=await swReady();
-    let sub=await reg.pushManager.getSubscription();
-    if(!sub) sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID_PUBLIC)});
+    const sub=await pushGet(reg,true);
     await pushSave(sub);
     S.push=true; save(); sWin();
     toast(tt(`Done! If you haven't practised by ${pushHour()}:00, you'll get a reminder.`,`Klart! Har du inte övat till kl. ${pushHour()} får du en påminnelse.`));
@@ -4395,8 +4402,7 @@ function pushTouch(now){
   clearTimeout(pushT);
   pushT=setTimeout(async()=>{
     try{
-      const reg=await swReady(); let sub=await reg.pushManager.getSubscription();
-      if(!sub&&Notification.permission==="granted") sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(VAPID_PUBLIC)});
+      const reg=await swReady(), sub=await pushGet(reg,Notification.permission==="granted");
       if(sub) await pushSave(sub); else { S.push=false; save(); }
     }catch(e){}
   },now?0:1200);
