@@ -5,7 +5,7 @@ import { isDue, message } from "./plan.mjs";
 
 const { SUPABASE_URL, SUPABASE_SERVICE_KEY, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY } = process.env;
 if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY || !VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) {
-  console.error("Not set up yet: add SUPABASE_SERVICE_KEY and VAPID_PRIVATE_KEY under GitHub → Settings → Secrets and variables → Actions.");
+  console.error("::error::Not set up yet: add SUPABASE_SERVICE_KEY and VAPID_PRIVATE_KEY under GitHub → Settings → Secrets and variables → Actions.");
   process.exit(1);
 }
 webpush.setVapidDetails("https://feli.yasso.se", VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
@@ -17,8 +17,8 @@ if (SUPABASE_SERVICE_KEY.startsWith("eyJ")) headers.Authorization = "Bearer " + 
 const res = await fetch(base + "?select=id,endpoint,p256dh,auth,tz,hour,lang,last_day,streak,last_sent&order=id&limit=5000", { headers });
 if (!res.ok) {
   const txt = await res.text();
-  if (/push_subscriptions|PGRST205|42P01/.test(txt)) { console.error("The push_subscriptions table doesn't exist yet. Run supabase-setup.sql."); process.exit(1); }
-  console.error("Couldn't read subscriptions:", res.status, txt.slice(0, 300)); process.exit(1);
+  if (/push_subscriptions|PGRST205|42P01/.test(txt)) { console.error("::error::The push_subscriptions table doesn't exist yet. Run supabase-setup.sql."); process.exit(1); }
+  console.error("::error::Couldn't read subscriptions:", res.status, txt.slice(0, 300)); process.exit(1);
 }
 const rows = await res.json();
 let sent = 0, gone = 0, failed = 0;
@@ -41,4 +41,4 @@ for (const row of rows) {
     } else { failed++; console.error("Push failed:", e.statusCode || "", (e.body || e.message || "").toString().slice(0, 200)); }
   }
 }
-console.log(`${rows.length} subscribed, ${sent} reminded, ${gone} removed, ${failed} failed.`);
+console.log(`::notice::${rows.length} subscribed, ${sent} reminded, ${gone} removed, ${failed} failed.`);
