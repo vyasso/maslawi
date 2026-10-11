@@ -143,6 +143,56 @@ revoke all on public.phrase_suggestions from anon;
 grant select (id, tr, ar, meaning, note, name, status, created_at) on public.phrase_suggestions to anon;
 grant select, insert, update, delete on public.phrase_suggestions to authenticated;
 
+-- ============ Question box (Ask about Maslawi) ============
+-- Signed-in learners ask about a word or phrase. A reviewer answers in the app, and
+-- answered questions show up for everyone under Words.
+
+create table if not exists public.word_questions (
+  id          bigint generated always as identity primary key,
+  user_id     uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  name        text check (char_length(name) <= 40),
+  word        text check (char_length(word) <= 80),
+  question    text not null check (char_length(question) between 1 and 300),
+  answer      text check (char_length(answer) <= 600),
+  lang        text check (lang in ('en', 'sv')),
+  status      text not null default 'pending' check (status in ('pending', 'answered', 'hidden')),
+  created_at  timestamptz not null default now(),
+  answered_at timestamptz
+);
+create index if not exists word_questions_status on public.word_questions (status, answered_at desc);
+create index if not exists word_questions_user   on public.word_questions (user_id, created_at desc);
+alter table public.word_questions enable row level security;
+drop policy if exists "everyone sees answered questions" on public.word_questions;
+drop policy if exists "learners see own questions"       on public.word_questions;
+drop policy if exists "learners ask questions"           on public.word_questions;
+drop policy if exists "reviewers see questions"          on public.word_questions;
+drop policy if exists "reviewers answer questions"       on public.word_questions;
+drop policy if exists "reviewers remove questions"       on public.word_questions;
+create policy "everyone sees answered questions" on public.word_questions for select to anon, authenticated using (status = 'answered');
+create policy "learners see own questions"       on public.word_questions for select to authenticated using (auth.uid() = user_id);
+-- New questions always start as pending, without an answer.
+create policy "learners ask questions"           on public.word_questions for insert to authenticated
+  with check (auth.uid() = user_id and status = 'pending' and answer is null and answered_at is null);
+create policy "reviewers see questions"          on public.word_questions for select to authenticated using (public.is_reviewer());
+create policy "reviewers answer questions"       on public.word_questions for update to authenticated using (public.is_reviewer()) with check (public.is_reviewer());
+create policy "reviewers remove questions"       on public.word_questions for delete to authenticated using (public.is_reviewer());
+-- One person can have at most 20 questions waiting for an answer.
+create or replace function public.limit_pending_questions() returns trigger
+  language plpgsql set search_path = public as $$
+begin
+  if (select count(*) from public.word_questions where user_id = new.user_id and status = 'pending') >= 20 then
+    raise exception 'Too many questions waiting for an answer' using errcode = 'check_violation';
+  end if;
+  return new;
+end $$;
+drop trigger if exists limit_pending_questions on public.word_questions;
+create trigger limit_pending_questions before insert on public.word_questions
+  for each row execute function public.limit_pending_questions();
+-- Visitors who aren't signed in can only read the columns answered questions show.
+revoke all on public.word_questions from anon;
+grant select (id, name, word, question, answer, status, created_at, answered_at) on public.word_questions to anon;
+grant select, insert, update, delete on public.word_questions to authenticated;
+
 -- ============ Streak reminders (push notifications) ============
 -- A learner who switches the reminder on gets one row per phone or browser. The app only
 -- reaches this table through the two functions below, keyed by the push address (which is

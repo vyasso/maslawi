@@ -6,7 +6,9 @@ A Duolingo-style app for learning the Mosul (Maslawi) dialect of Iraqi Arabic, i
 
 The Words page also has a **sound guide** (kh, gh, q, the deep h, ayn and more, each with words you can play), **Grammar in a minute** (8 short topics, such as talking to a woman, "my/your" endings and the Mosul -tu ending), **verb tables** (8 everyday verbs in past and present for every person, with audio), an optional **Write what you hear** dictation practice, and an optional **Arabic letters** track: 8 short lessons that teach the 28 letters of the alphabet plus چ, ة, ء and ال, their shapes and how to read simple words.
 
-Signed-in learners can **suggest phrases** they say in Mosul. Once a reviewer has approved them, they show up for everyone under Words, in a section called *From friends and family*.
+Signed-in learners can **suggest phrases** they say in Mosul. Once a reviewer has approved them, they show up for everyone under Words, in a section called *From friends and family*. They can also **ask about a word** in the question box (*Ask about Maslawi*). A reviewer answers in the app, and answered questions show up for everyone under Words and in search.
+
+39 everyday words have **pictures** (food, animals, places, colours, weather and a few things like a gift or a clay jar): on the new-word card, in the word list, on the back of the word of the day, and in "Which picture is it?" questions that lessons with those words get automatically. The pictures are in `const PIC=` in `index.html`.
 
 Learners who already know some Maslawi can **jump ahead**: the welcome screen asks how much they know, and locked units on the Learn page have a "Jump here" button. A short test with 3 lives unlocks everything before it.
 
@@ -90,6 +92,12 @@ On the Words page, signed-in learners tap **Suggest a phrase** (under *From frie
 Approved phrases show up for everyone under Words, with the first name of the person who sent them in, and they turn up in search. They have no audio. **Copy approved** copies them as a list, ready to be added to the lessons with audio.
 
 The `phrase_suggestions` table is part of `supabase-setup.sql`. If you set up Supabase before this feature, run the file again (it's safe to run more than once). Until the table exists, the feature stays hidden. Each learner can have at most 50 suggestions waiting.
+
+## Question box
+
+On the Words page, signed-in learners tap **Ask a question** (under *Ask about Maslawi*) and write which word it's about (optional) and their question. Reviewers answer in **Settings → Reviewer tools → Questions**, or from the button on the Words page when something new is waiting. They can fix typos in the question, write the answer, then **Publish** or **Don't show**. Published answers show up for everyone under Words, with the asker's first name, and in search. Askers see their own questions and answers when they open the question form.
+
+The `word_questions` table is part of `supabase-setup.sql`. Until it exists, the question box stays hidden. Each learner can have at most 20 questions waiting.
 
 ## Link preview
 

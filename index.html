@@ -939,6 +939,27 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .sr-tip{margin:0}
 #review{z-index:23}
 #review .l-head .btn.ghost{font-size:13px;letter-spacing:.03em}
+/* picture words */
+.pic{display:block}
+.intro-pic{width:112px;height:112px;border-radius:28px;background:var(--primary-soft);display:grid;place-items:center;margin-bottom:6px}
+.intro-pic .pic{width:84px;height:84px}
+.pic-opts{grid-template-columns:repeat(2,minmax(0,1fr))}
+.pic-opt{align-items:center;justify-content:center;aspect-ratio:1/1;max-height:150px;padding:10px}
+.pic-opt .pic{width:min(100%,104px);height:auto;aspect-ratio:1/1}
+.bub-pic{width:56px;height:56px;margin:0 auto 4px}
+.wr-pic{width:40px;height:40px;flex:none;border-radius:10px;background:var(--primary-soft);padding:4px}
+.wf-pic{width:44px;height:44px}
+/* question box */
+.qa-list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.qa{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.qa-q{display:flex;flex-direction:column;gap:3px}
+.qa-q b{line-height:1.3;overflow-wrap:anywhere}
+.qa-q small{color:var(--muted);font-weight:700;font-size:12px}
+.qa-w{align-self:flex-start;background:var(--primary-soft);color:var(--sel-ink);border-radius:99px;padding:2px 10px;font-size:13px;font-weight:900;overflow-wrap:anywhere}
+.qa-a{display:flex;gap:10px;align-items:flex-start;padding-top:8px;border-top:2px dashed var(--line)}
+.qa-tag{flex:none;background:var(--good-bg);color:var(--good);border-radius:8px;padding:2px 8px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+.qa-a p{margin:0;font-weight:600;line-height:1.45;white-space:pre-line;overflow-wrap:anywhere}
+.qa-mine-a{color:var(--good)!important;white-space:pre-line}
 /* streak reminder */
 .remind-ask{display:flex;align-items:center;flex-wrap:wrap;gap:10px 12px;width:100%;max-width:420px;margin-top:4px;padding:12px 14px;border:2px solid var(--line);border-radius:18px;background:var(--surface);text-align:start}
 .ra-ic{width:40px;height:40px;border-radius:12px;flex:none;display:grid;place-items:center;background:rgba(255,138,26,.16);color:var(--flame)}
@@ -3376,7 +3397,7 @@ PICONS.ok='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid
 function freshTag(k){ const s=wordStrength(k); return s===1?`<span class="fresh f1">${tt("Practise","Öva")}</span>`:s===2?`<span class="fresh f2">${tt("Rusty","Rostig")}</span>`:""; }
 let WFILTER="all", UNIT_OF=null;
 function unitOf(k){ if(!UNIT_OF){ UNIT_OF={}; UNITS.forEach((u,ui)=>unitWords(ui).forEach(w=>{ if(!(w in UNIT_OF)) UNIT_OF[w]=ui; })); } return k in UNIT_OF?UNIT_OF[k]:-1; }
-function wordRow(k,later){ const u=later?unitOf(k):-1; return `<button class="wr${later?" wr-later":""}" data-k="${k}" aria-label="${esc(W[k].tr)}: ${esc(W[k].en)}. ${tt("Tap to listen","Tryck för att lyssna")}"><span class="wr-sp">${SPK}</span><span class="wr-t"><span class="say">${esc(W[k].tr)}</span>${arSm(k)}<small>${esc(W[k].en)}</small></span>${later?`<span class="fresh fu">${u>=0?tt("Unit ","Enhet ")+(u+1):tt("Soon","Snart")}</span>`:freshTag(k)}</button>`; }
+function wordRow(k,later){ const u=later?unitOf(k):-1; return `<button class="wr${later?" wr-later":""}" data-k="${k}" aria-label="${esc(W[k].tr)}: ${esc(W[k].en)}. ${tt("Tap to listen","Tryck för att lyssna")}"><span class="wr-sp">${SPK}</span><span class="wr-t"><span class="say">${esc(W[k].tr)}</span>${arSm(k)}<small>${esc(W[k].en)}</small></span>${picSvg(k,"pic wr-pic")}${later?`<span class="fresh fu">${u>=0?tt("Unit ","Enhet ")+(u+1):tt("Soon","Snart")}</span>`:freshTag(k)}</button>`; }
 function renderWords(el){
   const learned=learnedWords(), total=Object.keys(W).length, nm=mistakeKeys().length, ok=learned.length>=4;
   const weak=learned.filter(k=>wordStrength(k)<=2).length;
@@ -3397,8 +3418,9 @@ function renderWords(el){
   </div>
   ${ok?"":`<p class="sub" style="margin:10px 0 0">${tt("Practice opens after your first lesson.","Övningarna öppnas efter din första lektion.")}</p>`}
   <h2 class="sec">${tt("Word of the day","Dagens ord")}</h2>
-  <div class="wotd-wrap"><button class="wotd" id="wotd" aria-label="${tt("Word of the day. Tap to flip","Dagens ord. Tryck för att vända")}"><span class="wotd-in"><span class="wf wf-front"><span class="say">${esc(W[wotd].tr)}</span>${arSm(wotd)}<small>${tt("Tap to see what it means","Tryck för att se vad det betyder")}</small></span><span class="wf wf-back"><span class="wf-en">${esc(W[wotd].en)}</span>${W[wotd].note?`<small>${esc(W[wotd].note)}</small>`:""}</span></span></button>${lbtn(wotd)}</div>
+  <div class="wotd-wrap"><button class="wotd" id="wotd" aria-label="${tt("Word of the day. Tap to flip","Dagens ord. Tryck för att vända")}"><span class="wotd-in"><span class="wf wf-front"><span class="say">${esc(W[wotd].tr)}</span>${arSm(wotd)}<small>${tt("Tap to see what it means","Tryck för att se vad det betyder")}</small></span><span class="wf wf-back">${picSvg(wotd,"pic wf-pic")}<span class="wf-en">${esc(W[wotd].en)}</span>${W[wotd].note?`<small>${esc(W[wotd].note)}</small>`:""}</span></span></button>${lbtn(wotd)}</div>
   <div id="sg-sec"></div>
+  <div id="qa-sec"></div>
   <h2 class="sec">${learned.length?tt("Your words","Dina ord"):tt("Look up a word","Slå upp ett ord")}</h2>
   <label class="wsearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="wq" type="search" placeholder="${tt("Search: hi, thanks, chai…","Sök: hej, tack, chai…")}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${tt("Search words in English or Maslawi","Sök ord på svenska, engelska eller maslawi")}"></label>
   ${learned.length&&weak?`<div class="wfilter" role="group" aria-label="${tt("Show","Visa")}"><button class="rchip" data-f="all" aria-pressed="${WFILTER!=="weak"}">${tt("All words","Alla ord")}</button><button class="rchip" data-f="weak" aria-pressed="${WFILTER==="weak"}">${tt("To practise","Att öva")} · ${weak}</button></div>`:""}
@@ -3408,6 +3430,7 @@ function renderWords(el){
   go("#p-mist",startReview); go("#p-fresh",startFreshen); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters); go("#open-grammar",()=>openGrammar()); go("#open-verbs",openVerbs); go("#p-dict",startDictation);
   const wc=$("#wotd"); if(wc) wc.onclick=()=>{ wc.classList.toggle("flipped"); sTap(); };
   drawSgSection(); const had=SG.approved; loadApproved().then(()=>{ if(SG.approved!==had&&el.isConnected) drawSgSection(); });
+  drawQaSection(); const hadQ=QA.answered; loadAnswered().then(()=>{ if(QA.answered!==hadQ&&el.isConnected) drawQaSection(); });
   $("#wlist").addEventListener("click",e=>{ if(e.target.closest("[data-suggest]")){ sTap(); suggestSheet(); } });
   const q=$("#wq"); q.oninput=()=>{ $("#wlist").innerHTML=wordList(q.value); const f=document.querySelector(".wfilter"); if(f) f.hidden=!!q.value.trim(); };
   el.querySelectorAll(".wfilter .rchip").forEach(b=>b.onclick=()=>{ WFILTER=b.dataset.f; sTap(); el.querySelectorAll(".wfilter .rchip").forEach(x=>x.setAttribute("aria-pressed",String(x===b))); $("#wlist").innerHTML=wordList(q.value); });
@@ -3415,11 +3438,12 @@ function renderWords(el){
 function wordList(q){
   const learned=new Set(learnedWords()), qq=String(q||"").trim();
   if(qq){
-    const hits=searchWords(qq), mine=hits.filter(k=>learned.has(k)), later=hits.filter(k=>!learned.has(k)), comm=sgSearch(qq);
-    if(!hits.length&&!comm.length) return `<div class="wl-none">${mascot("think","wl-m")}<p><b>${tt(`No words match “${esc(qq)}”`,`Inga ord matchar ”${esc(qq)}”`)}</b><span>${tt("Try another spelling, or an English word like “thanks”.","Testa en annan stavning, eller ett ord som ”tack”.")}</span>${CLOUD&&!SG.off?`<button class="btn ghost blue wl-sg" data-suggest>${tt("Suggest a phrase","Föreslå en fras")}</button>`:""}</p></div>`;
+    const hits=searchWords(qq), mine=hits.filter(k=>learned.has(k)), later=hits.filter(k=>!learned.has(k)), comm=sgSearch(qq), qs=qaSearch(qq);
+    if(!hits.length&&!comm.length&&!qs.length) return `<div class="wl-none">${mascot("think","wl-m")}<p><b>${tt(`No words match “${esc(qq)}”`,`Inga ord matchar ”${esc(qq)}”`)}</b><span>${tt("Try another spelling, or an English word like “thanks”.","Testa en annan stavning, eller ett ord som ”tack”.")}</span>${CLOUD&&!SG.off?`<button class="btn ghost blue wl-sg" data-suggest>${tt("Suggest a phrase","Föreslå en fras")}</button>`:""}</p></div>`;
     return (mine.length?`<div class="wg"><div class="wg-h"><b>${tt("Your words","Dina ord")}</b><span>${mine.length}</span></div>${mine.slice(0,40).map(k=>wordRow(k)).join("")}</div>`:"")
       +(later.length?`<div class="wg"><div class="wg-h"><b>${tt("Coming up later","Kommer senare")}</b><span>${later.length}</span></div>${later.slice(0,12).map(k=>wordRow(k,true)).join("")}</div>`:"")
-      +(comm.length?`<div class="wg"><div class="wg-h"><b>${tt("From friends and family","Från släkt och vänner")}</b><span>${comm.length}</span></div><div class="cr-list">${comm.slice(0,12).map(sgRow).join("")}</div></div>`:"");
+      +(comm.length?`<div class="wg"><div class="wg-h"><b>${tt("From friends and family","Från släkt och vänner")}</b><span>${comm.length}</span></div><div class="cr-list">${comm.slice(0,12).map(sgRow).join("")}</div></div>`:"")
+      +(qs.length?`<div class="wg"><div class="wg-h"><b>${tt("From the question box","Från frågelådan")}</b><span>${qs.length}</span></div><div class="qa-list">${qs.slice(0,8).map(qaItem).join("")}</div></div>`:"");
   }
   const weakOnly=WFILTER==="weak"; let out="", found=0;
   UNITS.forEach((u,ui)=>{
@@ -3527,7 +3551,7 @@ function renderSettings(){
         ${CLOUD?`<div class="set-row"><span class="set-l"><b>${tt("Streak reminder","Påminnelse för sviten")}</b><small>${S.push?tt(`At ${pushHour()}:00 if you haven't practised that day`,`Kl. ${pushHour()} om du inte har övat den dagen`):tt("A notification in the evening if you haven't practised","En notis på kvällen om du inte har övat")}</small></span>${sw("psh",!!S.push,tt("Streak reminder","Påminnelse för sviten"))}</div>${S.push?`<div class="set-row"><span class="set-l"><b>${tt("Remind me at","Påminn mig kl.")}</b></span>${seg("pushseg",[[17,"17"],[18,"18"],[19,"19"],[20,"20"],[21,"21"]],pushHour(),tt("Reminder time","Tid för påminnelse"))}</div>`:""}`:""}
       </div>
       ${CLOUD?`<h2 class="set-h">${tt("Account","Konto")}</h2>${accountCard()}${SES?`<div class="set-card"><div class="set-row"><span class="set-l"><b>${tt("Show me in the league","Visa mig i ligan")}</b><small>${tt("Others see your first name, XP and how far you've got","Andra ser ditt förnamn, din XP och hur långt du har kommit")}</small></span>${sw("lgs",!S.leagueHidden,tt("Show me in the league","Visa mig i ligan"))}</div></div>`:""}`:""}
-      ${canReview()?`<h2 class="set-h">${tt("Reviewer tools","Granskarverktyg")}</h2>${reviewCard().replace(/<h2 class="sec">[^<]*<\/h2>/,'')}${suggestCard()}`:""}
+      ${canReview()?`<h2 class="set-h">${tt("Reviewer tools","Granskarverktyg")}</h2>${reviewCard().replace(/<h2 class="sec">[^<]*<\/h2>/,'')}${suggestCard()}${questionsCard()}`:""}
       <h2 class="set-h">${tt("Progress","Framsteg")}</h2>
       <div class="set-card"><div class="set-row"><span class="set-l"><b>${tt("Reset progress","Nollställ framsteg")}</b><small>${tt("Start the course again from Unit 1","Börja om kursen från enhet 1")}</small></span><button class="btn ghost danger" id="reset">${tt("Reset","Nollställ")}</button></div></div>
       <h2 class="set-h">${tt("About","Om appen")}</h2>
@@ -3545,6 +3569,7 @@ function renderSettings(){
   const lgs=$("#lgs"); if(lgs) lgs.onclick=()=>{ S.leagueHidden=!S.leagueHidden; save(); LG.at=0; pushLeague().catch(()=>{}); sTap(); renderSettings(); };
   const rv=$("#open-review"); if(rv) rv.onclick=openReview;
   const sgo=$("#open-sg"); if(sgo) sgo.onclick=()=>{ sTap(); openSuggestReview(); };
+  const qao=$("#open-qa"); if(qao) qao.onclick=()=>{ sTap(); openQuestionReview(); };
   wireAccount();
   let armed=false; $("#reset").onclick=e=>{ if(!armed){ armed=true; e.target.textContent=tt("Tap again","Tryck igen"); e.target.classList.add("armed"); return; } const keep={checked:S.checked,push:S.push,pushHour:S.pushHour,pushAsked:S.pushAsked,sound:S.sound,arabic:S.arabic,theme:S.theme,lang:S.lang,gender:S.gender,goal:S.goal,why:S.why,joined:S.joined}; S=Object.assign(fresh(),keep,{onboarded:true}); S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}}; S.week=weekId(); save(); toast(tt("Progress reset. Back to Unit 1.","Framstegen är nollställda. Tillbaka till enhet 1.")); closeSettings(); setTab("learn"); };
   document.addEventListener("keydown",setEsc);
@@ -4140,14 +4165,89 @@ function render(){ refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="
 let L=null;
 function openOverlay(){ const o=$("#lesson"), was=o.hidden; o.hidden=false; document.body.style.overflow="hidden"; if(was) playIn(o,"rise"); }
 function closeLesson(){ $("#lesson").hidden=true; $("#lesson").innerHTML=""; const lt=$("#letters"), inLt=lt&&!lt.hidden; document.body.style.overflow=inLt?"hidden":""; L=null; render(); if(inLt){ drawLetters(); const b=lt.querySelector(".lt-go:not(:disabled)"); if(b) b.focus({preventScroll:true}); } if(SCROLL_CUR){ SCROLL_CUR=false; const c=$("#cur-node"); if(c&&tab==="learn") c.scrollIntoView({block:"center"}); } }
-function startLesson(i){ if(S.hearts<=0&&!LESSONS[i].chat) return noHearts(); L={missed:0,i,ex:LESSONS[i].ex.slice(),total:LESSONS[i].ex.length,k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()}; openOverlay(); step(); }
+/* ================= PICTURE WORDS =================
+   Small flat pictures for everyday words, so a word links to a picture instead of to
+   English or Swedish. Shown on the new-word card, in "Which picture is it?" exercises,
+   in the word list and on the back of the word of the day. 64×64 each. */
+const PIC_BLOB='M33 7c9 0 14 5 19 9s6 11 5 17-1 12-6 16-12 7-19 7-13-2-18-7-7-12-7-18 3-12 8-17 11-7 18-7z';
+const picColor=c=>`<path d="${PIC_BLOB}" fill="${c}" stroke="#1E2250" stroke-opacity=".18" stroke-width="2"/><ellipse cx="24" cy="21" rx="6" ry="3.4" fill="#fff" opacity=".4" transform="rotate(-28 24 21)"/>`;
+const PIC={
+  khubuz:'<ellipse cx="32" cy="39" rx="26" ry="13" fill="#C98A3E"/><ellipse cx="32" cy="36" rx="26" ry="13" fill="#E9B067"/><ellipse cx="32" cy="34" rx="19" ry="8.5" fill="#F3C886"/><circle cx="24" cy="34" r="2" fill="#C98A3E"/><circle cx="34" cy="31" r="1.8" fill="#C98A3E"/><circle cx="41" cy="36" r="2" fill="#C98A3E"/><circle cx="29" cy="39" r="1.5" fill="#C98A3E"/>',
+  chay:'<ellipse cx="32" cy="55" rx="21" ry="5" fill="#3D57F0"/><ellipse cx="32" cy="54" rx="15" ry="3" fill="none" stroke="#FFBA19" stroke-width="1.2" stroke-dasharray="1 2.5"/><path d="M19 14h26c0 10-1.5 17-5.5 23-1.5 2.4 2.5 4 2.5 7.5 0 3-2.4 5.5-6 5.5h-8c-3.6 0-6-2.5-6-5.5 0-3.5 4-5.1 2.5-7.5C20.5 31 19 24 19 14z" fill="#EEF2FF" stroke="#C3CBEC" stroke-width="1.5"/><path d="M21 19c.2 6 1.3 12 4.6 17.5 1.4 2.3-1.8 3.8-1.8 6.7 0 1.8 1.4 2.8 3.8 2.8h8.8c2.4 0 3.8-1 3.8-2.8 0-2.9-3.2-4.4-1.8-6.7C41.7 31 42.8 25 43 19z" fill="#DE5A1F"/><rect x="18" y="12" width="28" height="3" rx="1.5" fill="#FFBA19"/><path d="M28 9c-2-1.5 1.5-3 0-4.5M36 9c-2-1.5 1.5-3 0-4.5" stroke="#9AA3C7" stroke-width="2" fill="none" stroke-linecap="round"/>',
+  may:'<path d="M18 12h28l-3.5 40a4 4 0 0 1-4 3.6H25.5a4 4 0 0 1-4-3.6z" fill="#E6F4FF" stroke="#9CCBEE" stroke-width="2"/><path d="M20.3 26h23.4l-2.2 25.6a2.5 2.5 0 0 1-2.5 2.3H25a2.5 2.5 0 0 1-2.5-2.3z" fill="#5EB8F5"/><path d="M24 30v16" stroke="#fff" stroke-opacity=".6" stroke-width="2.5" stroke-linecap="round"/><circle cx="36" cy="38" r="1.8" fill="#fff" opacity=".7"/><circle cx="33" cy="45" r="1.2" fill="#fff" opacity=".7"/>',
+  kubba:'<ellipse cx="32" cy="45" rx="27" ry="9" fill="#DDE2F2"/><ellipse cx="32" cy="39" rx="22" ry="11" fill="#B86A2B"/><ellipse cx="32" cy="36" rx="22" ry="11" fill="#D98B43"/><ellipse cx="32" cy="35" rx="15" ry="6.5" fill="#E8A35E"/><path d="M14 34q18 6 36 0" stroke="#B86A2B" stroke-width="1.5" fill="none" opacity=".6"/><path d="M46 24l8-7" stroke="#2E9E5B" stroke-width="3" stroke-linecap="round"/><ellipse cx="54" cy="15" rx="4.5" ry="2.6" fill="#3FBF6F" transform="rotate(-35 54 15)"/>',
+  timman:'<path d="M8 32h48a24 20 0 0 1-48 0z" fill="#3D57F0"/><path d="M12 32c2-10 10-16 20-16s18 6 20 16z" fill="#FFFFFF" stroke="#D5D9E8" stroke-width="1.5"/><g fill="#D5D9E8"><ellipse cx="22" cy="26" rx="2" ry="1"/><ellipse cx="30" cy="21" rx="2" ry="1"/><ellipse cx="38" cy="24" rx="2" ry="1"/><ellipse cx="44" cy="29" rx="2" ry="1"/><ellipse cx="27" cy="29" rx="2" ry="1"/><ellipse cx="35" cy="29" rx="2" ry="1"/></g><path d="M7 32h50" stroke="#2A40C4" stroke-width="2.5" stroke-linecap="round"/><path d="M18 41q14 8 28 0" stroke="#FFBA19" stroke-width="2" fill="none" stroke-dasharray="1 3" stroke-linecap="round"/>',
+  laban:'<path d="M19 14h26l-3 38a4 4 0 0 1-4 3.7H26a4 4 0 0 1-4-3.7z" fill="#EEF2FF" stroke="#C3CBEC" stroke-width="2"/><path d="M20.5 22h23l-2.4 29.6a2.5 2.5 0 0 1-2.5 2.3H25.4a2.5 2.5 0 0 1-2.5-2.3z" fill="#FFFFFF"/><path d="M20.5 22q5.75-3 11.5 0t11.5 0" fill="#FFFFFF" stroke="#D5D9E8" stroke-width="1.5"/><path d="M39 6l-6 16" stroke="#22B862" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="41" cy="5" rx="3.5" ry="2" fill="#3FBF6F"/>',
+  dolma:'<ellipse cx="32" cy="49" rx="26" ry="8" fill="#DDE2F2"/><rect x="9" y="32" width="21" height="11" rx="5.5" fill="#5E8C31"/><path d="M13 35l3 5M18 34l3 6M23 35l3 5" stroke="#8FC255" stroke-width="1.6" stroke-linecap="round"/><rect x="34" y="32" width="21" height="11" rx="5.5" fill="#5E8C31"/><path d="M38 35l3 5M43 34l3 6M48 35l3 5" stroke="#8FC255" stroke-width="1.6" stroke-linecap="round"/><rect x="21" y="22" width="22" height="12" rx="6" fill="#6E9E3A"/><path d="M25 25l3 6M31 24l3 7M37 25l3 6" stroke="#9FD064" stroke-width="1.6" stroke-linecap="round"/>',
+  kabab:'<path d="M6 54L58 10" stroke="#9AA3B5" stroke-width="3" stroke-linecap="round"/><circle cx="57" cy="11" r="3" fill="#6E7891"/><g transform="rotate(-40 32 32)"><rect x="6" y="26" width="13" height="12" rx="5" fill="#8A4A24"/><circle cx="26" cy="32" r="6" fill="#E5453B"/><rect x="33" y="26" width="13" height="12" rx="5" fill="#8A4A24"/><rect x="49" y="27" width="8" height="10" rx="3" fill="#F2C14E"/></g>',
+  keik:'<rect x="12" y="30" width="40" height="23" rx="4" fill="#F7D6E0"/><rect x="12" y="44" width="40" height="4" fill="#E9B6C6"/><path d="M12 36q5 5 10 0t10 0 10 0 10 0" fill="none" stroke="#EC4C78" stroke-width="3" stroke-linecap="round"/><rect x="30" y="18" width="4" height="12" rx="1.5" fill="#3D57F0"/><path d="M32 9c3 3 3 6 0 7.5-3-1.5-3-4.5 0-7.5z" fill="#FFBA19"/>',
+  bazzoona:'<path d="M14 24l3-16 11 10h8l11-10 3 16" fill="#F2A65A"/><circle cx="32" cy="35" r="19" fill="#F2A65A"/><path d="M18 13l2 8M46 13l-2 8" stroke="#F7C8A0" stroke-width="3" stroke-linecap="round"/><path d="M25 21l2 5M32 19v6M39 21l-2 5" stroke="#D9873F" stroke-width="2.4" stroke-linecap="round"/><ellipse cx="25" cy="33" rx="2.6" ry="3.6" fill="#2A2A3A"/><ellipse cx="39" cy="33" rx="2.6" ry="3.6" fill="#2A2A3A"/><path d="M30 40h4l-2 2.5z" fill="#EC4C78"/><path d="M32 42.5q-2 3-5 2M32 42.5q2 3 5 2" stroke="#2A2A3A" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M6 37h11M7 43l10-2M58 37H47M57 43l-10-2" stroke="#2A2A3A" stroke-width="1.2" stroke-linecap="round"/>',
+  kalb:'<path d="M15 20c-7 4-7 19-1 23 4 2 7-8 6-15z" fill="#8A5A30"/><path d="M49 20c7 4 7 19 1 23-4 2-7-8-6-15z" fill="#8A5A30"/><circle cx="32" cy="32" r="17" fill="#D9A066"/><ellipse cx="32" cy="42" rx="10" ry="8" fill="#F1D3A8"/><ellipse cx="32" cy="38" rx="4" ry="3" fill="#2A2A3A"/><circle cx="25" cy="29" r="2.6" fill="#2A2A3A"/><circle cx="39" cy="29" r="2.6" fill="#2A2A3A"/><path d="M32 41v4M28 46q4 3 8 0" stroke="#2A2A3A" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M30 48q2 6 4 0z" fill="#EC4C78"/>',
+  teyr:'<path d="M26 49v7M34 49v7" stroke="#F7901E" stroke-width="2.4" stroke-linecap="round"/><path d="M12 38L4 31l2 11z" fill="#137BD3"/><ellipse cx="30" cy="37" rx="18" ry="14" fill="#1E9BFF"/><circle cx="44" cy="26" r="10" fill="#1E9BFF"/><path d="M53 24l8 3-8 3z" fill="#FFBA19"/><circle cx="46" cy="24" r="2" fill="#1E2250"/><path d="M14 35c6-8 16-8 22 0-6 8-16 8-22 0z" fill="#137BD3"/>',
+  dijaaja:'<path d="M27 52v6M35 52v6" stroke="#F7901E" stroke-width="2.4" stroke-linecap="round"/><path d="M8 25c5 2 7 6 7 11" stroke="#D5D9E8" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M14 35c0-10 8-16 18-16 3-8 14-8 16 0 2 6-2 9-2 12 0 12-8 20-18 20S14 45 14 35z" fill="#FFFFFF" stroke="#C9CEE0" stroke-width="2"/><path d="M38 13c1-4 4-5 5-2 1-3 4-3 4 1 2-1 4 1 2 4" fill="#E5453B"/><path d="M48 22l7 2-7 3z" fill="#FFBA19"/><circle cx="43" cy="20" r="1.8" fill="#1E2250"/><path d="M46 27c1 4-1 6-3 5" fill="#E5453B"/><path d="M22 35q8 6 14 0" stroke="#C9CEE0" stroke-width="2" fill="none"/>',
+  samak:'<path d="M8 32c8-12 26-16 40-6l10-8v28l-10-8c-14 10-32 6-40-6z" fill="#12B3A6"/><circle cx="18" cy="30" r="2.5" fill="#1E2250"/><path d="M26 23q4 9 0 18M34 22q4 10 0 20" stroke="#0B8A7F" stroke-width="2" fill="none"/><path d="M11 36q4 2 6 0" stroke="#0B8A7F" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
+  ghanam:'<path d="M22 46v10M29 47v9M36 47v9M42 46v10" stroke="#3C3C4E" stroke-width="2.6" stroke-linecap="round"/><g fill="#FFFFFF" stroke="#C9CEE0" stroke-width="1.5"><circle cx="21" cy="30" r="9"/><circle cx="31" cy="26" r="10"/><circle cx="41" cy="30" r="9"/><circle cx="25" cy="39" r="9"/><circle cx="37" cy="39" r="9"/></g><ellipse cx="50" cy="33" rx="7" ry="8.5" fill="#3C3C4E"/><path d="M46 27l-5-3" stroke="#3C3C4E" stroke-width="3" stroke-linecap="round"/><circle cx="52" cy="31" r="1.4" fill="#fff"/>',
+  beit:'<path d="M10 30L32 12l22 18v24H10z" fill="#EBD9B6"/><path d="M6 32L32 10l26 22" stroke="#C98A55" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round"/><rect x="27" y="38" width="10" height="16" rx="1.5" fill="#1CA0F0"/><rect x="15" y="34" width="8" height="8" rx="1" fill="#7FD3F7"/><rect x="41" y="34" width="8" height="8" rx="1" fill="#7FD3F7"/>',
+  kaneesa:'<rect x="26" y="12" width="12" height="20" fill="#E2CFA8"/><path d="M24 14l8-6 8 6z" fill="#C98A55"/><path d="M32 0v8M28.5 3.5h7" stroke="#E3A008" stroke-width="2" stroke-linecap="round"/><rect x="14" y="30" width="36" height="26" fill="#EBD9B6"/><path d="M10 32L32 20l22 12z" fill="#C98A55"/><circle cx="32" cy="34" r="3" fill="#1CA0F0"/><path d="M27 56V47a5 5 0 0 1 10 0v9z" fill="#8A5A30"/><rect x="18" y="39" width="5" height="8" rx="2.5" fill="#7FD3F7"/><rect x="41" y="39" width="5" height="8" rx="2.5" fill="#7FD3F7"/>',
+  madrasa:'<rect x="8" y="26" width="48" height="30" fill="#F2C14E"/><path d="M4 28L32 12l28 16z" fill="#E5453B"/><circle cx="32" cy="22" r="4.5" fill="#fff"/><path d="M32 19.5v2.8l2 1.2" stroke="#1E2250" stroke-width="1.2" fill="none" stroke-linecap="round"/><rect x="27" y="40" width="10" height="16" fill="#8A5A30"/><g fill="#7FD3F7"><rect x="13" y="32" width="9" height="7"/><rect x="42" y="32" width="9" height="7"/><rect x="13" y="44" width="9" height="7"/><rect x="42" y="44" width="9" height="7"/></g>',
+  mustashfa:'<rect x="10" y="16" width="44" height="40" rx="3" fill="#FFFFFF" stroke="#C9CEE0" stroke-width="2"/><rect x="26" y="8" width="12" height="12" rx="2" fill="#E5453B"/><path d="M32 10.5v7M28.5 14h7" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><g fill="#7FD3F7"><rect x="16" y="26" width="8" height="7"/><rect x="28" y="26" width="8" height="7"/><rect x="40" y="26" width="8" height="7"/><rect x="16" y="38" width="8" height="7"/><rect x="40" y="38" width="8" height="7"/></g><rect x="27" y="40" width="10" height="16" fill="#3D57F0"/>',
+  sayyara:'<path d="M8 40c0-4 2-6 6-6l6-10c1.5-2.5 3.5-3.5 6-3.5h14c2.5 0 4.5 1 6 3.5l6 10c4 0 6 2 6 6v6H8z" fill="#E5453B"/><path d="M22 33l4.5-7.5c.8-1.3 1.8-1.8 3.2-1.8H31v9.3zM34 33v-9.3h3.3c1.4 0 2.4.5 3.2 1.8L45 33z" fill="#BFE7FB"/><circle cx="19" cy="47" r="6.5" fill="#2A2A3A"/><circle cx="19" cy="47" r="2.6" fill="#C9D3DA"/><circle cx="45" cy="47" r="6.5" fill="#2A2A3A"/><circle cx="45" cy="47" r="2.6" fill="#C9D3DA"/><rect x="51" y="37" width="5" height="3" rx="1.5" fill="#FFF3B0"/>',
+  jisir:'<rect x="2" y="44" width="60" height="16" rx="2" fill="#5EB8F5"/><path d="M6 54q4-2 8 0t8 0 8 0 8 0 8 0 8 0" stroke="#fff" stroke-opacity=".6" stroke-width="1.5" fill="none"/><path d="M2 32h60v18h-6a10 10 0 0 0-20 0h-8a10 10 0 0 0-20 0H2z" fill="#B97A47"/><path d="M2 28h60" stroke="#8A5A30" stroke-width="3" stroke-linecap="round"/><path d="M8 28v4M20 28v4M32 28v4M44 28v4M56 28v4" stroke="#8A5A30" stroke-width="2"/>',
+  baabw:'<path d="M16 57V26a16 16 0 0 1 32 0v31z" fill="#8A5A30"/><path d="M20 57V27a12 12 0 0 1 24 0v30z" fill="#A86D3E"/><path d="M32 15v42" stroke="#8A5A30" stroke-width="2"/><circle cx="37" cy="40" r="2" fill="#FFBA19"/><circle cx="27" cy="40" r="2" fill="#FFBA19"/><rect x="10" y="56" width="44" height="4" rx="2" fill="#C9CCE0"/>',
+  jarraw:'<path d="M24 10h16v4c0 2 2 3 4 5 6 5 9 12 9 20 0 12-9 19-21 19S11 51 11 39c0-8 3-15 9-20 2-2 4-3 4-5z" fill="#C8693A"/><rect x="22" y="8" width="20" height="5" rx="2.5" fill="#A8522B"/><path d="M14 36q18 8 36 0" stroke="#F2C14E" stroke-width="2.4" fill="none"/><path d="M17 44q15 6 30 0" stroke="#F2C14E" stroke-width="1.6" fill="none" stroke-dasharray="2 3"/><path d="M20 24c-3 4-4 8-4 12" stroke="#fff" stroke-opacity=".35" stroke-width="3" fill="none" stroke-linecap="round"/>',
+  hadiyya:'<rect x="10" y="26" width="44" height="30" rx="3" fill="#9A5BF5"/><rect x="8" y="20" width="48" height="10" rx="3" fill="#B387FF"/><rect x="29" y="20" width="6" height="36" fill="#FFBA19"/><path d="M32 20c-4-8-14-10-14-4s10 4 14 4zM32 20c4-8 14-10 14-4s-10 4-14 4z" fill="#FFBA19"/>',
+  shajara:'<rect x="28" y="50" width="8" height="8" fill="#8A5A30"/><path d="M32 6L46 26h-6l10 14h-7l9 12H10l9-12h-7l10-14h-6z" fill="#22B862"/><path d="M32 2l1.8 3.8 4.2.4-3.1 2.8.9 4.1L32 11l-3.8 2.1.9-4.1L26 6.2l4.2-.4z" fill="#FFBA19"/><circle cx="26" cy="30" r="2" fill="#E5453B"/><circle cx="38" cy="36" r="2" fill="#1E9BFF"/><circle cx="30" cy="44" r="2" fill="#FFBA19"/><circle cx="42" cy="47" r="2" fill="#E5453B"/><circle cx="22" cy="47" r="2" fill="#1E9BFF"/>',
+  mihbas:'<circle cx="32" cy="38" r="16" fill="none" stroke="#FFBA19" stroke-width="6"/><circle cx="32" cy="38" r="19" fill="none" stroke="#C98A06" stroke-width="1" opacity=".5"/><path d="M24 20l8-10 8 10-8 6z" fill="#BFE7FB" stroke="#5EB8F5" stroke-width="1.5" stroke-linejoin="round"/><path d="M28 16l4 4 4-4" stroke="#fff" stroke-width="1.2" fill="none"/>',
+  beidmlawwan:'<ellipse cx="18" cy="41" rx="10" ry="13" fill="#EC4C78"/><path d="M9 39q9 5 18 0" stroke="#fff" stroke-width="2" fill="none"/><ellipse cx="46" cy="41" rx="10" ry="13" fill="#1E9BFF"/><path d="M37 43l3-3 3 3 3-3 3 3 3-3" stroke="#fff" stroke-width="1.8" fill="none"/><ellipse cx="32" cy="36" rx="10" ry="13" fill="#FFBA19"/><circle cx="29" cy="32" r="1.6" fill="#fff"/><circle cx="35" cy="36" r="1.6" fill="#fff"/><circle cx="30" cy="41" r="1.6" fill="#fff"/>',
+  dawa:'<rect x="14" y="18" width="24" height="36" rx="4" fill="#F7901E"/><rect x="12" y="10" width="28" height="9" rx="2.5" fill="#FFFFFF" stroke="#C9CEE0" stroke-width="1.5"/><rect x="17" y="28" width="18" height="14" rx="2" fill="#FFFFFF"/><path d="M26 31v8M22 35h8" stroke="#E5453B" stroke-width="2.4" stroke-linecap="round"/><g transform="rotate(-35 50 46)"><rect x="42" y="42" width="16" height="8" rx="4" fill="#FFFFFF" stroke="#C9CEE0" stroke-width="1.5"/><path d="M50 42h4a4 4 0 0 1 0 8h-4z" fill="#1E9BFF"/></g>',
+  einw:'<path d="M4 32c8-12 18-18 28-18s20 6 28 18c-8 12-18 18-28 18S12 44 4 32z" fill="#FFFFFF" stroke="#1E2250" stroke-width="2.5"/><circle cx="32" cy="32" r="11" fill="#6B4A2B"/><circle cx="32" cy="32" r="5" fill="#1E2250"/><circle cx="35" cy="29" r="2.2" fill="#fff"/>',
+  shamis:'<g stroke="#F7901E" stroke-width="3.5" stroke-linecap="round"><path d="M32 4v8M32 52v8M4 32h8M52 32h8M12 12l5.5 5.5M46.5 46.5L52 52M12 52l5.5-5.5M46.5 17.5L52 12"/></g><circle cx="32" cy="32" r="14" fill="#FFC94A" stroke="#F7901E" stroke-width="2"/>',
+  matar:'<path d="M16 38a10 10 0 0 1 2-19.8A14 14 0 0 1 45 20a9 9 0 0 1 3 18z" fill="#9AA9C7"/><g fill="#1E9BFF"><path d="M20 44l-3 7a3 3 0 0 0 6 0z"/><path d="M33 46l-3 7a3 3 0 0 0 6 0z"/><path d="M46 44l-3 7a3 3 0 0 0 6 0z"/></g>',
+  leil:'<circle cx="32" cy="32" r="29" fill="#2A2F6B"/><path d="M38 10a22 22 0 1 0 16 34A18 18 0 0 1 38 10z" fill="#FFC94A"/><path d="M16 15l1.4 3 3 .4-2.2 2 .6 3-2.8-1.5-2.8 1.5.6-3-2.2-2 3-.4z" fill="#FFE08A"/><circle cx="20" cy="42" r="1.6" fill="#FFE08A"/><circle cx="11" cy="31" r="1.2" fill="#FFE08A"/>',
+  subuh:'<path d="M14 42a18 18 0 0 1 36 0z" fill="#FFC94A"/><g stroke="#F7901E" stroke-width="3" stroke-linecap="round"><path d="M32 12v6M13 22l4 4M51 22l-4 4M5 36h5M54 36h5"/></g><path d="M2 42h60v16H2z" fill="#7FCF8A"/><path d="M2 42q15-6 30 0t30 0v6H2z" fill="#5EB86E"/>',
+  ahmar:picColor("#E5453B"), azraq:picColor("#1E9BFF"), akhdar:picColor("#22B862"), asfar:picColor("#FFC94A"), abyad:picColor("#FFFFFF"), aswad:picColor("#2A2A3A")
+};
+const hasPic=k=>!!(PIC[k]&&W[k]);
+const picSvg=(k,cls="pic")=>hasPic(k)?`<svg class="${cls}" viewBox="0 0 64 64" aria-hidden="true">${PIC[k]}</svg>`:"";
+/* "which picture is it?": turns up to two "what does this mean?" questions per lesson into
+   picture questions, and adds one after a new picture word if the lesson has none */
+function picPool(w,near){
+  const all=Object.keys(PIC).filter(hasPic), ok=k=>k!==w&&k!==PAIR[w]&&plainEn(k)!==plainEn(w);
+  const a=(near||[]).filter(k=>hasPic(k)&&ok(k)), rest=shuffle(all.filter(k=>ok(k)&&!a.includes(k)));
+  return [...a,...rest].slice(0,3);
+}
+function withPics(ex){
+  let n=0; const used=new Set();
+  const out=ex.map(e=>{
+    if(n>=2||e.t!=="mcq"||!hasPic(e.w)||used.has(e.w)) return e;
+    const pool=picPool(e.w,e.pool);
+    if(pool.length<3) return e;
+    n++; used.add(e.w); return {t:"pic",w:e.w,pool};
+  });
+  if(!n){
+    const at=out.findIndex(e=>e.t==="intro"&&hasPic(e.w));
+    if(at>=0){
+      const w=out[at].w, pool=picPool(w);
+      let j=at+1; while(j<out.length&&out[j].t==="intro") j++;
+      if(pool.length===3) out.splice(Math.min(j+1,out.length),0,{t:"pic",w,pool});
+    }
+  }
+  return out;
+}
+function exPic(e){
+  const list=shuffle([e.w,...e.pool]);
+  shell(`<h2 class="q">${tt("Which picture is it?","Vilken bild är det?")}</h2><div class="speaker">${mascot()}<div class="bubble row">${lbtn(e.w)}<div><span class="say">${esc(W[e.w].tr)}</span>${arSm(e.w)}</div></div></div><div class="opts pic-opts">${list.map((k,i)=>`<button class="opt pic-opt" data-i="${i}" data-k="${k}" aria-pressed="false" aria-label="${esc(W[k].en)}">${picSvg(k)}</button>`).join("")}</div>`,footCheck());
+  autoSay(e.w); L.key=e.w;
+  wireChoices((p,b)=>{ const ok=list[p]===e.w; b[p].classList.add(ok?"ok":"no"); b[list.indexOf(e.w)].classList.add("ok"); verdict(ok,`${esc(W[e.w].tr)} = ${esc(W[e.w].en)}`); });
+}
+function startLesson(i){ if(S.hearts<=0&&!LESSONS[i].chat) return noHearts(); const ex=withPics(LESSONS[i].ex); L={missed:0,i,ex,total:ex.length,k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()}; openOverlay(); step(); }
 function startPractice(){
   const pool=learnedWords(); if(pool.length<4) return;
   const weak=mistakeKeys().filter(k=>pool.includes(k));
   const pick=[...new Set([...shuffle(weak),...shuffle(pool)])].slice(0,6);
   const ex=pick.slice(0,5).map((w,j)=>({t:j%2?"mcqR":"mcq",w,pool:shuffle(pool.filter(x=>x!==w)).slice(0,3)}));
   const mw=matchSet(shuffle(pool)); if(mw.length>=3) ex.push({t:"match",ws:mw});
-  L={missed:0,i:-1,practice:true,ex,total:ex.length,k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()}; openOverlay(); step();
+  L={missed:0,i:-1,practice:true,ex:withPics(ex),total:ex.length,k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()}; openOverlay(); step();
 }
 /* ---- mistakes: words you got wrong come back until you get them right twice ---- */
 function mistakeKeys(){ return Object.keys(S.mist||{}).filter(k=>W[k]); }
@@ -4199,13 +4299,13 @@ function noHearts(){
   $("#prac").onclick=()=>{ if(learnedWords().length>=4){ startPractice(); } else { S.hearts=1; save(); closeLesson(); } };
   $("#back").onclick=closeLesson;
 }
-function step(){ if(L.k>=L.ex.length) return finish(); const e=L.ex[L.k]; ({intro:exIntro,mcq:exMcq,mcqR:exMcq,reply:exReply,match:exMatch,build:exBuild,type:exType,chat:exChat,listen:exListen,flash:exFlash,dict:exDict,lintro:exLIntro,lpick:exLPick,lhear:exLHear,lword:exLWord})[e.t](e); }
+function step(){ if(L.k>=L.ex.length) return finish(); const e=L.ex[L.k]; ({intro:exIntro,pic:exPic,mcq:exMcq,mcqR:exMcq,reply:exReply,match:exMatch,build:exBuild,type:exType,chat:exChat,listen:exListen,flash:exFlash,dict:exDict,lintro:exLIntro,lpick:exLPick,lhear:exLHear,lword:exLWord})[e.t](e); }
 function wireSkip(){ const s=$("#skip"); if(s) s.onclick=()=>{ document.querySelectorAll(".l-body button,.l-body textarea").forEach(b=>b.disabled=true); verdict(false,skipAnswer(),true); }; }
 function skipAnswer(){ const e=L.ex[L.k]; if(e.ans) return esc(e.ans); if(e.t==="build") return esc(((isF()&&e.fem)?e.fem.answer:e.answer).join(" ")); if(e.t==="reply") return esc(W[L.okK||e.ok].tr); if(e.t==="type") return esc(W[e.w].en); if(e.t==="mcqR") return esc(W[e.w].tr); return esc(W[e.w].en); }
 
 function exIntro(e){
   const w=W[e.w];
-  shell(`<span class="newtag">${I.star.replace('fill="#fff"','fill="currentColor" width="18" height="18"')}${tt("New phrase","Ny fras")}</span><div class="intro-card">${lbtn(e.w,true)}<div class="say">${esc(w.tr)}</div>${arSm(e.w)}<div class="en">${esc(w.en)}</div>${w.note?`<div class="note">${esc(w.note)}</div>`:""}</div><div class="coach">${mascot("wave")}<div class="bubble"><b>${tt(["Say it out loud!","Your turn: say it out loud.","Repeat it after me!","Say it a few times. It sticks!"],["Säg det högt!","Din tur: säg det högt.","Säg efter mig!","Säg det några gånger. Då fastnar det!"])[L.k%4]}</b></div></div>`,`<button class="btn wide" id="next">${tt("Continue","Fortsätt")}</button>`);
+  shell(`<span class="newtag">${I.star.replace('fill="#fff"','fill="currentColor" width="18" height="18"')}${tt("New phrase","Ny fras")}</span><div class="intro-card">${hasPic(e.w)?`<div class="intro-pic">${picSvg(e.w)}</div>`:""}${lbtn(e.w,true)}<div class="say">${esc(w.tr)}</div>${arSm(e.w)}<div class="en">${esc(w.en)}</div>${w.note?`<div class="note">${esc(w.note)}</div>`:""}</div><div class="coach">${mascot("wave")}<div class="bubble"><b>${tt(["Say it out loud!","Your turn: say it out loud.","Repeat it after me!","Say it a few times. It sticks!"],["Säg det högt!","Din tur: säg det högt.","Säg efter mig!","Säg det några gånger. Då fastnar det!"])[L.k%4]}</b></div></div>`,`<button class="btn wide" id="next">${tt("Continue","Fortsätt")}</button>`);
   autoSay(e.w); seen(e.w); $("#next").focus(); $("#next").onclick=()=>{sTap();L.k++;step();};
 }
 function opts(list,fn){return list.map((o,i)=>`<button class="opt" data-i="${i}" aria-pressed="false">${fn(o)}</button>`).join("");}
@@ -4217,7 +4317,7 @@ function wireChoices(onCheck){
 }
 function exMcq(e){
   const w=W[e.w], rev=e.t==="mcqR", list=shuffle([e.w,...e.pool]);
-  const bub=rev?`<div class="bubble"><span style="font-size:22px;font-weight:800">${esc(w.en)}</span></div>`:`<div class="bubble row">${lbtn(e.w)}<div><span class="say">${esc(w.tr)}</span>${arSm(e.w)}</div></div>`;
+  const bub=rev?`<div class="bubble">${picSvg(e.w,"pic bub-pic")}<span style="font-size:22px;font-weight:800">${esc(w.en)}</span></div>`:`<div class="bubble row">${lbtn(e.w)}<div><span class="say">${esc(w.tr)}</span>${arSm(e.w)}</div></div>`;
   shell(`<h2 class="q">${rev?tt("How do you say this?","Hur säger man det här?"):tt("What does this mean?","Vad betyder det här?")}</h2><div class="speaker">${mascot()}${bub}</div><div class="opts">${opts(list,k=>rev?`<span class="say">${esc(W[k].tr)}</span>${arSm(k)}`:esc(W[k].en))}</div>`,footCheck());
   if(!rev) autoSay(e.w); L.key=e.w;
   wireChoices((p,b)=>{const ok=list[p]===e.w;b[p].classList.add(ok?"ok":"no");b[list.indexOf(e.w)].classList.add("ok");verdict(ok,ok?"":skipAnswer());});
@@ -4441,7 +4541,7 @@ async function signIn(email,password){
 }
 async function signOut(){
   try{ await pushNow(); await api("/auth/v1/logout",{method:"POST"}); }catch(e){}
-  SES=null; storeSes(); syncState="idle"; IS_REVIEWER=false; CHECKS={}; LG.rows=null; LG.at=0; LG.all=null; LG.allAt=0; SG.mine=null; SG.all=null; SG.allAt=0; render();
+  SES=null; storeSes(); syncState="idle"; IS_REVIEWER=false; CHECKS={}; LG.rows=null; LG.at=0; LG.all=null; LG.allAt=0; SG.mine=null; SG.all=null; SG.allAt=0; QA.mine=null; QA.all=null; render();
 }
 
 /* combine device progress and cloud progress without losing either */
@@ -4549,7 +4649,7 @@ async function loadReviewer(){
   if(!CLOUD||!SES){ IS_REVIEWER=false; return; }
   try{ if(!(await freshToken())) return;
     const r=await api("/rest/v1/reviewers?select=email"); IS_REVIEWER=!!(r&&r.length);
-    if(IS_REVIEWER){ const rows=await api("/rest/v1/phrase_checks?select=phrase,status,note,checked_by"); CHECKS={}; (rows||[]).forEach(x=>CHECKS[x.phrase]=x); await loadSuggestions(); }
+    if(IS_REVIEWER){ const rows=await api("/rest/v1/phrase_checks?select=phrase,status,note,checked_by"); CHECKS={}; (rows||[]).forEach(x=>CHECKS[x.phrase]=x); await loadSuggestions(); await loadQuestions(); }
   }catch(e){ IS_REVIEWER=false; }
 }
 const checksMap=()=>CLOUD?CHECKS:(S.reviews||(S.reviews={}));
@@ -4742,6 +4842,146 @@ function drawSuggestReview(){
     const show=()=>sheet(`<h2 class="sec" style="margin:0">${tt("Approved phrases","Godkända fraser")}</h2><textarea class="type-in" readonly style="min-height:240px">${esc(txt)}</textarea><button class="btn wide" data-close>${tt("Done","Klar")}</button>`);
     try{ navigator.clipboard.writeText(txt).then(done,show); }catch(e){ show(); }
   };
+}
+
+/* ================= ASK ABOUT MASLAWI (question box) =================
+   Signed-in learners ask about a word or phrase. A reviewer answers in the app, and
+   answered questions show up for everyone under Words. Needs the word_questions table
+   in Supabase (see supabase-setup.sql). */
+const QA={answered:null,at:0,mine:null,all:null,off:false,showAll:false,p:null};
+const qaOff=e=>/PGRST205|42P01|(could not find the table|relation)[^]*word_questions/i.test((e&&e.message)||"");
+const qaPending=()=>(QA.all||[]).filter(q=>q.status==="pending").length;
+const qaStatus=s=>s==="answered"?tt("Answered","Besvarad"):s==="hidden"?tt("Not shown","Visas inte"):tt("Waiting for an answer","Väntar på svar");
+function loadAnswered(force){
+  if(!CLOUD||QA.off) return Promise.resolve();
+  if(!force&&QA.answered&&Date.now()-QA.at<300000) return Promise.resolve();
+  if(QA.p&&!force) return QA.p;
+  return QA.p=(async()=>{
+    try{
+      if(SES) await freshToken();
+      QA.answered=await api("/rest/v1/word_questions?select=id,name,word,question,answer,answered_at&status=eq.answered&order=answered_at.desc&limit=200",{},!!SES)||[]; QA.at=Date.now();
+    }catch(e){ if(qaOff(e)) QA.off=true; QA.answered=QA.answered||[]; QA.at=Date.now()-240000; }
+    finally{ QA.p=null; }
+  })();
+}
+function qaSearch(q){
+  const raw=String(q||"").trim().toLowerCase(), f=fold(raw).trim();
+  if(!raw||!QA.answered) return [];
+  return QA.answered.filter(x=>[x.word,x.question,x.answer].some(s=>s&&((f&&fold(s).includes(f))||String(s).toLowerCase().includes(raw))));
+}
+function qaItem(q){
+  return `<div class="qa"><div class="qa-q">${q.word?`<span class="qa-w">${esc(q.word)}</span>`:""}<b>${esc(q.question)}</b>${q.name?`<small>${tt("Asked by","Frågat av")} ${esc(q.name)}</small>`:""}</div><div class="qa-a"><span class="qa-tag">${tt("Answer","Svar")}</span><p>${esc(q.answer)}</p></div></div>`;
+}
+function qaSection(){
+  if(!CLOUD||QA.off||QA.answered===null) return "";
+  const list=QA.answered, n=IS_REVIEWER?qaPending():0;
+  return `<h2 class="sec">${tt("Ask about Maslawi","Fråga om maslawi")}</h2>
+  <p class="sub cr-sub">${tt("Wondering about a word? Ask, and the answer shows up here for everyone.","Undrar du något om ett ord? Fråga, så syns svaret här för alla.")}</p>
+  ${list.length?`<div class="qa-list">${list.slice(0,QA.showAll?200:3).map(qaItem).join("")}</div>${list.length>3&&!QA.showAll?`<button class="btn ghost wide blue" id="qa-all" style="margin-top:10px">${tt(`Show all ${list.length}`,`Visa alla ${list.length}`)}</button>`:""}`:""}
+  ${n?`<button class="btn gold wide" id="qa-rev" style="margin-top:10px">${tt(`${n} new question${n>1?"s":""} to answer`,`${n} ${n>1?"nya frågor":"ny fråga"} att svara på`)}</button>`:""}
+  <button class="cr-add" id="qa-add">${mascot("wow","cr-m")}<span class="cr-at"><b>${tt("Ask a question","Ställ en fråga")}</b><small>${tt("About a word, how to say something, or when it's used.","Om ett ord, hur man säger något eller när man använder det.")}</small></span>${CHEV}</button>`;
+}
+function drawQaSection(){
+  const box=$("#qa-sec"); if(!box) return;
+  box.innerHTML=qaSection();
+  const add=$("#qa-add"); if(add) add.onclick=()=>{ sTap(); askSheet(); };
+  const all=$("#qa-all"); if(all) all.onclick=()=>{ sTap(); QA.showAll=true; drawQaSection(); };
+  const rev=$("#qa-rev"); if(rev) rev.onclick=()=>{ sTap(); openQuestionReview(); };
+}
+function askSheet(word){
+  if(!CLOUD) return;
+  if(!SES){
+    sheet(`<div style="text-align:center">${mascot("wow")}<h2 class="sec" style="margin:4px 0">${tt("Ask a question","Ställ en fråga")}</h2><p class="sub" style="margin:0">${tt("Create a free account to ask about words and phrases.","Skapa ett gratis konto för att fråga om ord och uttryck.")}</p></div><button class="btn wide" id="qa-up">${tt("Create account","Skapa konto")}</button><button class="btn ghost wide blue" id="qa-in">${tt("I already have an account","Jag har redan ett konto")}</button>`);
+    $("#qa-up").onclick=()=>authSheet("up"); $("#qa-in").onclick=()=>authSheet("in"); return;
+  }
+  const nm=userName();
+  sheet(`<div class="sg-head">${mascot("wow","sg-m")}<div><h2 class="sec" style="margin:0">${tt("Ask a question","Ställ en fråga")}</h2><p class="sub" style="margin:2px 0 0">${tt("About a word, how to say something in Mosul, or when it's used. The answer shows up under Words.","Om ett ord, hur man säger något i Mosul eller när man använder det. Svaret syns under Ord.")}</p></div></div>
+  <form id="qaf" class="stack" novalidate>
+    <label class="fld">${tt("Which word or phrase? (optional)","Vilket ord eller uttryck? (valfritt)")}<input id="qa-word" maxlength="80" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${tt("e.g. shlonak","t.ex. shlonak")}" value="${esc(word||"")}"></label>
+    <label class="fld">${tt("Your question","Din fråga")}<textarea id="qa-q" maxlength="300" rows="3" placeholder="${tt("e.g. Do you say it to everyone, or only to friends?","t.ex. Säger man det till alla, eller bara till vänner?")}"></textarea></label>
+    <p class="ferr" id="qa-err" hidden></p>
+    <button class="btn wide" id="qa-go" type="submit">${tt("Send question","Skicka frågan")}</button>
+    <p class="sub sg-fine">${nm?tt(`Your first name (${esc(nm)}) is shown with the question once it's answered.`,`Ditt förnamn (${esc(nm)}) visas med frågan när den har besvarats.`):tt("Your first name is shown with the question once it's answered.","Ditt förnamn visas med frågan när den har besvarats.")}</p>
+  </form>
+  <div id="qa-mine"></div>`);
+  const err=$("#qa-err"), go=$("#qa-go");
+  (word?$("#qa-q"):$("#qa-word")).focus();
+  $("#qaf").onsubmit=async ev=>{
+    ev.preventDefault(); err.hidden=true;
+    const w=$("#qa-word").value.trim(), question=$("#qa-q").value.trim();
+    if(question.length<3){ err.textContent=tt("Write your question.","Skriv din fråga."); err.hidden=false; $("#qa-q").focus(); return; }
+    go.disabled=true; go.textContent=tt("Sending…","Skickar…");
+    try{
+      if(!(await freshToken())) throw new Error(tt("Sign in again and try once more.","Logga in igen och försök en gång till."));
+      await api("/rest/v1/word_questions",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({user_id:SES.user.id,name:(userName()||"").slice(0,40)||null,word:w||null,question,lang:lang()})});
+      QA.mine=null; if(IS_REVIEWER) loadQuestions().then(drawQaSection); sWin();
+      $("#sheet .sheet").innerHTML=`<div style="text-align:center">${mascot("cheer")}<h2 class="sec" style="margin:4px 0">${tt("Question sent!","Frågan är skickad!")}</h2><p class="sub" style="margin:0">${tt("You'll find the answer under Words → Ask about Maslawi, and in your questions here.","Svaret hittar du under Ord → Fråga om maslawi, och bland dina frågor här.")}</p></div><button class="btn wide" id="qa-more">${tt("Ask another","Fråga något mer")}</button><button class="btn ghost wide" data-close>${tt("Done","Klar")}</button>`;
+      $("#qa-more").onclick=()=>askSheet(); $("#qa-more").focus();
+    }catch(e){
+      const m=(e&&e.message)||"";
+      err.textContent=qaOff(e)?tt("Questions aren't switched on yet.","Frågor är inte påslagna än.")
+        :/row-level security|too many questions/i.test(m)?tt("You have a lot of questions waiting. Ask more once they've been answered.","Du har många frågor som väntar. Fråga mer när de har besvarats.")
+        :/fetch|network/i.test(m)?tt("No connection. Check your internet and try again.","Ingen anslutning. Kolla internet och försök igen.")
+        :(m||tt("Something went wrong.","Något gick fel."));
+      err.hidden=false; go.disabled=false; go.textContent=tt("Send question","Skicka frågan");
+    }
+  };
+  /* this learner's own questions, with answers */
+  (async()=>{
+    try{ if(!QA.mine) QA.mine=await api("/rest/v1/word_questions?select=id,word,question,answer,status&user_id=eq."+SES.user.id+"&order=created_at.desc&limit=20"); }catch(e){ return; }
+    const box=$("#qa-mine"); if(!box||!QA.mine||!QA.mine.length) return;
+    box.innerHTML=`<h3 class="sg-h">${tt("Your questions","Dina frågor")}</h3>${QA.mine.map(q=>`<div class="sg-row qa-row"><span><b>${q.word?`${esc(q.word)}: `:""}${esc(q.question)}</b>${q.status==="answered"&&q.answer?`<small class="qa-mine-a">${esc(q.answer)}</small>`:""}</span><span class="sg-st ${q.status==="answered"?"approved":q.status==="hidden"?"rejected":"pending"}">${qaStatus(q.status)}</span></div>`).join("")}`;
+  })();
+}
+
+/* reviewers: answer, fix or hide questions */
+let QA_FILTER="pending";
+async function loadQuestions(){
+  if(!CLOUD||!SES||!IS_REVIEWER) return;
+  try{ QA.all=await api("/rest/v1/word_questions?select=id,name,word,question,answer,lang,status,created_at,answered_at&order=created_at.desc&limit=500")||[]; }
+  catch(e){ if(qaOff(e)) QA.off=true; QA.all=QA.all||[]; }
+}
+function questionsCard(){
+  if(!CLOUD||!IS_REVIEWER) return "";
+  const n=qaPending();
+  return `<div class="set-card" style="margin-top:12px"><div class="set-row"><span class="set-l"><b>${tt("Questions","Frågor")}</b><small>${QA.off?tt("Run the word_questions SQL in Supabase to switch this on.","Kör SQL-koden för word_questions i Supabase för att slå på det här."):n?tt(`${n} new to answer`,`${n} ${n>1?"nya":"ny"} att svara på`):tt("Nothing new to answer","Inget nytt att svara på")}</small></span><button class="btn ghost blue" id="open-qa" style="padding:8px 14px" ${QA.off?"disabled":""}>${tt("Open","Öppna")}</button></div></div>`;
+}
+async function openQuestionReview(){ QA_FILTER="pending"; $("#review").hidden=false; document.body.style.overflow="hidden"; drawQuestionReview(); await loadQuestions(); drawQuestionReview(); }
+function closeQuestionReview(){
+  const o=$("#review"); o.hidden=true; o.innerHTML="";
+  if($("#settings").hidden) document.body.style.overflow=""; else renderSettings();
+  loadAnswered(true).then(render);
+}
+function drawQuestionReview(){
+  const o=$("#review"); if(!o||o.hidden) return;
+  const all=QA.all||[], cnt=s=>all.filter(q=>s==="all"||q.status===s).length;
+  const list=all.filter(q=>QA_FILTER==="all"||q.status===QA_FILTER);
+  const chip=(f,label)=>`<button class="rchip" data-f="${f}" aria-pressed="${QA_FILTER===f}">${label} <b>${cnt(f)}</b></button>`;
+  const when=d=>{ try{ return new Date(d).toLocaleDateString(isSv()?"sv-SE":"en-GB",{day:"numeric",month:"short"}); }catch(e){ return ""; } };
+  o.innerHTML=`<div class="l-in"><div class="l-head"><button class="x" id="qr-x" aria-label="${tt("Close","Stäng")}">${I.x}</button><h2 class="sec" style="margin:0;flex:1">${tt("Questions","Frågor")}</h2></div>
+  <div class="rchips">${chip("pending",tt("New","Nya"))}${chip("answered",tt("Answered","Besvarade"))}${chip("hidden",tt("Not shown","Visas inte"))}${chip("all",tt("All","Alla"))}</div>
+  <div class="l-body" style="gap:10px">${QA.all===null?`<p class="sub" style="text-align:center;padding:30px">${tt("Loading…","Laddar…")}</p>`:list.length?`<p class="sub sr-tip">${tt("Write an answer and publish it. You can fix typos in the question first. Published answers show up for everyone under Words.","Skriv ett svar och publicera det. Du kan rätta stavfel i frågan först. Publicerade svar syns för alla under Ord.")}</p>`+list.map(q=>`<div class="card sr qr" data-id="${q.id}">
+    <small class="sr-meta">${esc(q.name||tt("Someone","Någon"))} · ${when(q.created_at)}${q.status!=="pending"?` · <b class="sg-st ${q.status==="answered"?"approved":"rejected"}">${qaStatus(q.status)}</b>`:""}</small>
+    <label class="fld">${tt("Word or phrase","Ord eller uttryck")}<input class="qr-w" value="${esc(q.word||"")}" maxlength="80" autocomplete="off" spellcheck="false"></label>
+    <label class="fld">${tt("Question","Fråga")}<textarea class="qr-q" maxlength="300" rows="2">${esc(q.question)}</textarea></label>
+    <label class="fld">${tt("Your answer","Ditt svar")}<textarea class="qr-a" maxlength="600" rows="3" placeholder="${tt("How is it said in Mosul, and when?","Hur säger man i Mosul, och när?")}">${esc(q.answer||"")}</textarea></label>
+    <div class="rv-btns"><button class="rbtn ok" data-s="answered" aria-pressed="${q.status==="answered"}">${I.ok}${q.status==="answered"?tt("Save","Spara"):tt("Publish","Publicera")}</button><button class="rbtn fix" data-s="hidden" aria-pressed="${q.status==="hidden"}">${tt("Don't show","Visa inte")}</button></div>
+  </div>`).join(""):`<div class="end" style="flex:none;padding-block:40px">${mascot("happy")}<p class="sub">${QA_FILTER==="pending"?tt("No new questions.","Inga nya frågor."):tt("Nothing here.","Inget här.")}</p></div>`}</div></div>`;
+  $("#qr-x").onclick=closeQuestionReview;
+  o.querySelectorAll(".rchip").forEach(b=>b.onclick=()=>{ QA_FILTER=b.dataset.f; sTap(); drawQuestionReview(); });
+  o.querySelectorAll(".qr").forEach(card=>{
+    const id=+card.dataset.id, q=all.find(x=>x.id===id);
+    card.querySelectorAll(".rbtn").forEach(b=>b.onclick=async()=>{
+      const v=c=>card.querySelector(c).value.trim();
+      const patch={status:b.dataset.s,word:v(".qr-w")||null,question:v(".qr-q")||q.question,answer:v(".qr-a")||null};
+      if(patch.status==="answered"&&!patch.answer){ toast(tt("Write an answer first.","Skriv ett svar först.")); card.querySelector(".qr-a").focus(); return; }
+      if(patch.status==="answered"&&q.status!=="answered") patch.answered_at=new Date().toISOString();
+      b.disabled=true;
+      try{ await freshToken(); await api("/rest/v1/word_questions?id=eq."+id,{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify(patch)}); Object.assign(q,patch); sTap(); toast(patch.status==="answered"?tt("Published. Everyone can see it now.","Publicerad. Alla kan se den nu."):tt("It won't be shown.","Den visas inte.")); }
+      catch(e){ toast(tt("Couldn't save. Check your internet.","Kunde inte spara. Kolla din internetuppkoppling.")); }
+      const lb0=o.querySelector(".l-body"), y=lb0?lb0.scrollTop:0; drawQuestionReview(); const lb=o.querySelector(".l-body"); if(lb) lb.scrollTop=y;
+    });
+  });
 }
 
 function forgotSheet(prefill){
