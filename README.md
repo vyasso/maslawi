@@ -54,13 +54,14 @@ The site is published with GitHub Pages at **https://feli.yasso.se** (the `CNAME
 5. In Authentication → URL Configuration, set **Site URL** to `https://feli.yasso.se`, so confirmation emails link back to the app.
 6. Optional while testing: Authentication → Sign In / Providers → Email → turn off "Confirm email".
 
-The weekly league also shows where each learner is in the course ("Unit 9 · Level 26"). If your `league` table was made before that, run this once in the SQL Editor:
+The league has two views: **This week** (ranked by this week's XP, with each learner's level under their name) and **Course progress** (everyone ranked by how much of the course they've done). Tap a learner to see their level, total XP, streak and words learned. If your `league` table was made before these features, run this once in the SQL Editor:
 
 ```sql
 alter table public.league add column if not exists level text check (char_length(level) <= 12);
+alter table public.league add column if not exists stats jsonb check (pg_column_size(stats) <= 2000);
 ```
 
-Until then the league still works, it just shows the level for yourself only.
+Until then the league still works, but you only see your own progress.
 
 The anon key is meant to be public. Row level security in `supabase-setup.sql` keeps each user's progress private.
 

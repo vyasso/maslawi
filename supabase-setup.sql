@@ -64,7 +64,8 @@ grant execute on function public.is_reviewer() to authenticated;
 insert into public.reviewers (email) values ('YOUR-EMAIL@example.com') on conflict do nothing;
 
 -- ============ League (weekly leaderboard) ============
--- Each learner has one row: first name, XP for the current week and where they are in the course.
+-- Each learner has one row: first name, XP for the current week, where they are in the course
+-- and a few numbers about their progress (total XP, streak, words learned).
 -- Signed-in learners can see everyone's row, but only change their own.
 
 create table if not exists public.league (
@@ -73,10 +74,12 @@ create table if not exists public.league (
   week       date not null,
   week_xp    integer not null default 0 check (week_xp between 0 and 100000),
   level      text check (char_length(level) <= 12),
+  stats      jsonb check (pg_column_size(stats) <= 2000),
   updated_at timestamptz not null default now()
 );
--- For a league table made before the level column existed:
+-- For a league table made before these columns existed:
 alter table public.league add column if not exists level text check (char_length(level) <= 12);
+alter table public.league add column if not exists stats jsonb check (pg_column_size(stats) <= 2000);
 create index if not exists league_week_xp on public.league (week, week_xp desc);
 alter table public.league enable row level security;
 drop policy if exists "signed-in see league" on public.league;
