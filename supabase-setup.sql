@@ -196,7 +196,7 @@ grant select, insert, update, delete on public.word_questions to authenticated;
 -- ============ Streak reminders (push notifications) ============
 -- A learner who switches the reminder on gets one row per phone or browser. The app only
 -- reaches this table through the two functions below, keyed by the push address (which is
--- long and secret). The hourly GitHub Action (reminders/send.mjs) reads it with the secret key.
+-- long and secret). The GitHub Action (reminders/send.mjs, every 10 minutes) reads it with the secret key.
 
 create table if not exists public.push_subscriptions (
   id         bigint generated always as identity primary key,
@@ -214,23 +214,36 @@ create table if not exists public.push_subscriptions (
 );
 alter table public.push_subscriptions enable row level security;
 revoke all on public.push_subscriptions from anon, authenticated;
+-- remind: the streak reminder is on. alerts: a reviewer's phone that wants to hear about new
+-- questions and phrase suggestions (only reviewers can switch it on).
+alter table public.push_subscriptions add column if not exists remind boolean not null default true;
+alter table public.push_subscriptions add column if not exists alerts boolean not null default false;
+alter table public.push_subscriptions add column if not exists last_alert timestamptz;
 -- the reminder job (reminders/send.mjs) uses the secret key, which is the service_role
 grant select, update, delete on public.push_subscriptions to service_role;
+grant select on public.word_questions, public.phrase_suggestions to service_role;
 
+drop function if exists public.save_push(text, text, text, text, int, text, date, int);
 create or replace function public.save_push(p_endpoint text, p_p256dh text, p_auth text, p_tz text, p_hour int,
-                                            p_lang text, p_last_day date, p_streak int)
+                                            p_lang text, p_last_day date, p_streak int,
+                                            p_remind boolean default true, p_alerts boolean default false)
   returns void language plpgsql security definer set search_path = public as $$
+declare
+  want_alerts boolean := coalesce(p_alerts, false) and public.is_reviewer();
 begin
   -- only real push services (Chrome/Android, Firefox, Apple, Microsoft)
   if p_endpoint !~ '^https://(fcm\.googleapis\.com|updates\.push\.services\.mozilla\.com|web\.push\.apple\.com|[a-z0-9.-]+\.notify\.windows\.com)/' then
     raise exception 'Not a push address' using errcode = 'check_violation';
   end if;
-  insert into public.push_subscriptions as s (endpoint, p256dh, auth, tz, hour, lang, last_day, streak)
+  insert into public.push_subscriptions as s (endpoint, p256dh, auth, tz, hour, lang, last_day, streak, remind, alerts, last_alert)
   values (p_endpoint, p_p256dh, p_auth, coalesce(nullif(p_tz, ''), 'Europe/Stockholm'), coalesce(p_hour, 19),
-          coalesce(p_lang, 'sv'), p_last_day, greatest(coalesce(p_streak, 0), 0))
+          coalesce(p_lang, 'sv'), p_last_day, greatest(coalesce(p_streak, 0), 0), coalesce(p_remind, true),
+          want_alerts, case when want_alerts then now() end)
   on conflict (endpoint) do update
     set p256dh = excluded.p256dh, auth = excluded.auth, tz = excluded.tz, hour = excluded.hour, lang = excluded.lang,
-        last_day = excluded.last_day, streak = excluded.streak, updated_at = now();
+        last_day = excluded.last_day, streak = excluded.streak, remind = excluded.remind, alerts = excluded.alerts,
+        last_alert = case when excluded.alerts and not s.alerts then now() else s.last_alert end,
+        updated_at = now();
 end $$;
 
 create or replace function public.delete_push(p_endpoint text)
@@ -238,7 +251,7 @@ create or replace function public.delete_push(p_endpoint text)
   delete from public.push_subscriptions where endpoint = p_endpoint
 $$;
 
-revoke execute on function public.save_push(text, text, text, text, int, text, date, int) from public;
+revoke execute on function public.save_push(text, text, text, text, int, text, date, int, boolean, boolean) from public;
 revoke execute on function public.delete_push(text) from public;
-grant execute on function public.save_push(text, text, text, text, int, text, date, int) to anon, authenticated;
+grant execute on function public.save_push(text, text, text, text, int, text, date, int, boolean, boolean) to anon, authenticated;
 grant execute on function public.delete_push(text) to anon, authenticated;

@@ -1,7 +1,7 @@
-// Streak reminders: run every hour by .github/workflows/streak-reminder.yml.
+// Streak reminders and reviewer alerts: run every 10 minutes by .github/workflows/streak-reminder.yml.
 // Sends a push notification to learners who switched reminders on and haven't practised today.
 import webpush from "web-push";
-import { isDue, message } from "./plan.mjs";
+import { isDue, message, alertDue } from "./plan.mjs";
 
 const { SUPABASE_URL, SUPABASE_SERVICE_KEY, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY } = process.env;
 if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY || !VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) {
@@ -14,7 +14,9 @@ const base = SUPABASE_URL.replace(/\/$/, "") + "/rest/v1/push_subscriptions";
 const headers = { apikey: SUPABASE_SERVICE_KEY, "Content-Type": "application/json", Prefer: "return=minimal" };
 if (SUPABASE_SERVICE_KEY.startsWith("eyJ")) headers.Authorization = "Bearer " + SUPABASE_SERVICE_KEY;
 
-const res = await fetch(base + "?select=id,endpoint,p256dh,auth,tz,hour,lang,last_day,streak,last_sent,updated_at&order=id&limit=5000", { headers });
+const COLS = "id,endpoint,p256dh,auth,tz,hour,lang,last_day,streak,last_sent,updated_at";
+let res = await fetch(base + `?select=${COLS},remind,alerts,last_alert&order=id&limit=5000`, { headers });
+if (res.status === 400) res = await fetch(base + `?select=${COLS}&order=id&limit=5000`, { headers }); // before the alert columns existed
 if (!res.ok) {
   const txt = await res.text();
   if (/PGRST205|42P01|Could not find the table/.test(txt)) { console.error("::error::The push_subscriptions table doesn't exist yet. Run supabase-setup.sql."); process.exit(1); }
@@ -46,4 +48,28 @@ for (const row of rows) {
     } else { failed++; console.error("Push failed:", e.statusCode || "", (e.body || e.message || "").toString().slice(0, 200)); }
   }
 }
-console.log(`::notice::${test ? "TEST: " : ""}${rows.length} subscribed, ${sent} reminded, ${gone} removed, ${failed} failed.`);
+// reviewer alerts about new questions and phrase suggestions
+let alerted = 0;
+const watchers = test ? [] : rows.filter(r => r.alerts);
+if (watchers.length) {
+  const rest = SUPABASE_URL.replace(/\/$/, "") + "/rest/v1/";
+  const get = async (path, kind) => { const r = await fetch(rest + path, { headers }); return r.ok ? (await r.json()).map(x => ({ ...x, kind })) : []; };
+  const items = [
+    ...await get("word_questions?select=id,name,word,question,created_at&status=eq.pending&order=created_at.desc&limit=50", "q"),
+    ...await get("phrase_suggestions?select=id,name,tr,meaning,created_at&status=eq.pending&order=created_at.desc&limit=50", "s"),
+  ];
+  for (const row of watchers) {
+    const a = alertDue(row, items);
+    if (!a) continue;
+    try {
+      await webpush.sendNotification({ endpoint: row.endpoint, keys: { p256dh: row.p256dh, auth: row.auth } },
+        JSON.stringify({ title: a.title, body: a.body, tag: "review", url: "./" }), { TTL: 12 * 3600, urgency: "normal" });
+      alerted++;
+      await fetch(`${base}?id=eq.${row.id}`, { method: "PATCH", headers, body: JSON.stringify({ last_alert: a.latest }) });
+    } catch (e) {
+      if ([403, 404, 410].includes(e.statusCode)) { gone++; await fetch(`${base}?id=eq.${row.id}`, { method: "DELETE", headers }); }
+      else { failed++; console.error("Alert failed:", e.statusCode || "", (e.body || e.message || "").toString().slice(0, 200)); }
+    }
+  }
+}
+console.log(`::notice::${test ? "TEST: " : ""}${rows.length} subscribed, ${alerted} reviewer alert${alerted === 1 ? "" : "s"}, ${sent} reminded, ${gone} removed, ${failed} failed.`);

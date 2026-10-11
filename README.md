@@ -107,7 +107,9 @@ The `og:` tags at the top of `index.html` and the picture `og-image.png` decide 
 
 Learners switch on **Settings → Learning → Streak reminder** (the app also offers it once on the streak screen) and pick an hour between 17 and 21. On days they haven't practised by then, their phone gets a notification. It works in Chrome and Firefox on Android and computers. On iPhone (iOS 16.4 or later) it only works when Maslawi is opened from the home screen, and the app explains how to add it.
 
-How it works: the browser gives the app a private push address, which the app saves with `save_push()` together with the learner's time zone, chosen hour and the last day they practised. Once an hour, the GitHub Action `.github/workflows/streak-reminder.yml` runs `reminders/send.mjs`, which reminds everyone who is due. A learner gets at most one reminder a day, never after 22:59.
+How it works: the browser gives the app a private push address, which the app saves with `save_push()` together with the learner's time zone, chosen hour and the last day they practised. Every 10 minutes, the GitHub Action `.github/workflows/streak-reminder.yml` runs `reminders/send.mjs`, which reminds everyone who is due. A learner gets at most one reminder a day, never after 22:59. (GitHub sometimes runs scheduled jobs late, and pauses them in a repo with no new commits for 60 days.)
+
+**Reviewer alerts:** reviewers can switch on **Settings → Reviewer tools → Notify me about new posts**. The same job then sends them a notification when someone asks a question or suggests a phrase, at most one every 10 minutes and never between 22:00 and 08:00 (those wait until morning).
 
 Setup (once):
 
