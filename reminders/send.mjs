@@ -17,7 +17,7 @@ if (SUPABASE_SERVICE_KEY.startsWith("eyJ")) headers.Authorization = "Bearer " + 
 const res = await fetch(base + "?select=id,endpoint,p256dh,auth,tz,hour,lang,last_day,streak,last_sent&order=id&limit=5000", { headers });
 if (!res.ok) {
   const txt = await res.text();
-  if (/push_subscriptions|PGRST205|42P01/.test(txt)) { console.error("::error::The push_subscriptions table doesn't exist yet. Run supabase-setup.sql."); process.exit(1); }
+  if (/PGRST205|42P01|Could not find the table/.test(txt)) { console.error("::error::The push_subscriptions table doesn't exist yet. Run supabase-setup.sql."); process.exit(1); }
   console.error("::error::Couldn't read subscriptions:", res.status, txt.slice(0, 300)); process.exit(1);
 }
 const rows = await res.json();
