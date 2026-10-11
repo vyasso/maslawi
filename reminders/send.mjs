@@ -49,7 +49,7 @@ for (const row of rows) {
   }
 }
 // reviewer alerts about new questions and phrase suggestions
-let alerted = 0;
+let alerted = 0, pendingCount = 0;
 const watchers = test ? [] : rows.filter(r => r.alerts);
 if (watchers.length) {
   const rest = SUPABASE_URL.replace(/\/$/, "") + "/rest/v1/";
@@ -58,6 +58,7 @@ if (watchers.length) {
     ...await get("word_questions?select=id,name,word,question,created_at&status=eq.pending&order=created_at.desc&limit=50", "q"),
     ...await get("phrase_suggestions?select=id,name,tr,meaning,created_at&status=eq.pending&order=created_at.desc&limit=50", "s"),
   ];
+  pendingCount = items.length;
   for (const row of watchers) {
     const a = alertDue(row, items);
     if (!a) continue;
@@ -72,4 +73,4 @@ if (watchers.length) {
     }
   }
 }
-console.log(`::notice::${test ? "TEST: " : ""}${rows.length} subscribed, ${alerted} reviewer alert${alerted === 1 ? "" : "s"}, ${sent} reminded, ${gone} removed, ${failed} failed.`);
+console.log(`::notice::${test ? "TEST: " : ""}${rows.length} subscribed (${watchers.length} reviewer, ${pendingCount} waiting), ${alerted} reviewer alert${alerted === 1 ? "" : "s"}, ${sent} reminded, ${gone} removed, ${failed} failed.`);
