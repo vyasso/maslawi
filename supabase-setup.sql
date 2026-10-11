@@ -164,6 +164,8 @@ create table if not exists public.push_subscriptions (
 );
 alter table public.push_subscriptions enable row level security;
 revoke all on public.push_subscriptions from anon, authenticated;
+-- the reminder job (reminders/send.mjs) uses the secret key, which is the service_role
+grant select, update, delete on public.push_subscriptions to service_role;
 
 create or replace function public.save_push(p_endpoint text, p_p256dh text, p_auth text, p_tz text, p_hour int,
                                             p_lang text, p_last_day date, p_streak int)
