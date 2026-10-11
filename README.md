@@ -109,6 +109,8 @@ Learners switch on **Settings → Learning → Streak reminder** (the app also o
 
 How it works: the browser gives the app a private push address, which the app saves with `save_push()` together with the learner's time zone, chosen hour and the last day they practised. Every 10 minutes, the GitHub Action `.github/workflows/streak-reminder.yml` runs `reminders/send.mjs`, which reminds everyone who is due. A learner gets at most one reminder a day, never after 22:59. (GitHub sometimes runs scheduled jobs late, and pauses them in a repo with no new commits for 60 days.)
 
+**Instant start:** GitHub's schedule is often late, so Supabase starts the job itself: right away when someone asks a question or suggests a phrase, and every 10 minutes (pg_cron). It needs a fine-grained GitHub token with access to only this repo and *Actions: Read and write*, saved in Supabase Vault as `github_dispatch_token` (see the end of `supabase-setup.sql`). When the token expires, make a new one and replace it in Vault.
+
 **Reviewer alerts:** reviewers can switch on **Settings → Reviewer tools → Notify me about new posts**. The same job then sends them a notification when someone asks a question or suggests a phrase, at most one every 10 minutes and never between 22:00 and 08:00 (those wait until morning).
 
 Setup (once):

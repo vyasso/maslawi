@@ -255,3 +255,44 @@ revoke execute on function public.save_push(text, text, text, text, int, text, d
 revoke execute on function public.delete_push(text) from public;
 grant execute on function public.save_push(text, text, text, text, int, text, date, int, boolean, boolean) to anon, authenticated;
 grant execute on function public.delete_push(text) to anon, authenticated;
+
+-- ============ Instant notifications ============
+-- GitHub's own schedule is often late, so Supabase starts the notification job instead:
+-- right away when someone asks a question or suggests a phrase, and every 10 minutes for
+-- the streak reminders. Needs a GitHub token that may only start the job (Actions: read and
+-- write on this repo), saved in Supabase Vault as github_dispatch_token:
+--   select vault.create_secret('github_pat_…', 'github_dispatch_token');
+-- Without the token, nothing happens and the GitHub schedule still runs the job.
+create extension if not exists pg_net with schema extensions;
+create extension if not exists pg_cron with schema pg_catalog;
+
+create or replace function public.kick_notifications() returns void
+  language plpgsql security definer set search_path = public as $$
+declare tok text;
+begin
+  select decrypted_secret into tok from vault.decrypted_secrets where name = 'github_dispatch_token' limit 1;
+  if tok is null then return; end if;
+  perform net.http_post(
+    url := 'https://api.github.com/repos/vyasso/maslawi/actions/workflows/streak-reminder.yml/dispatches',
+    body := '{"ref":"main"}'::jsonb,
+    headers := jsonb_build_object('Authorization', 'Bearer ' || tok, 'Accept', 'application/vnd.github+json',
+                                  'X-GitHub-Api-Version', '2022-11-28', 'User-Agent', 'maslawi-supabase',
+                                  'Content-Type', 'application/json'));
+end $$;
+revoke execute on function public.kick_notifications() from public, anon, authenticated;
+
+create or replace function public.kick_on_new_post() returns trigger
+  language plpgsql security definer set search_path = public as $$
+begin
+  perform public.kick_notifications();
+  return null;
+end $$;
+revoke execute on function public.kick_on_new_post() from public, anon, authenticated;
+drop trigger if exists kick_new_question on public.word_questions;
+create trigger kick_new_question after insert on public.word_questions
+  for each statement execute function public.kick_on_new_post();
+drop trigger if exists kick_new_suggestion on public.phrase_suggestions;
+create trigger kick_new_suggestion after insert on public.phrase_suggestions
+  for each statement execute function public.kick_on_new_post();
+
+select cron.schedule('maslawi-notifications', '*/10 * * * *', 'select public.kick_notifications()');
