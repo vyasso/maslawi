@@ -989,17 +989,20 @@ canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
   --bank:#EFD9A3; --water:#36B5D8; --water-hi:#7DD5EC; --wave:#FFFFFF; --bank-fog:#E3DFCB; --water-fog:#AFD5E0;
   --chip:#FFFFFF; --chip-line:#E1E4F4; --kleicha:#93560F; --awning:#FFFFFF; --combo-ink:#B5520A;
   --party:#3D57F0; --tg-glass:#EEF2FF; --tg-edge:#8A93C2;
+  --city-far:#C9D7F4; --city-near:#AEC0EC; --city-band:#C9D7F4; --city-win:#97ACE2; --city-off:#97ACE2; --city-glow:transparent; --city-lamp:#AEC0EC; --city-clock:#E6EDFB; --city-hand:#8FA3DA; --city-day:1; --city-night:0;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --sky:#0E1440; --hill:#18382A; --land:#1F4A33; --tuft:#2E6B45; --flower:#FFE58A; --flower-b:#FFE58A; --flower-c:#FFF6CF;
   --bank:#4A4232; --water:#154E6E; --water-hi:#2C7FA6; --wave:#CFE9FF; --bank-fog:#2C3326; --water-fog:#1B3443;
   --chip:#1B1D3F; --chip-line:#2C2F61; --kleicha:#F0B76E; --awning:#E8E2F0; --combo-ink:#FFB866;
-  --party:#1A1F5C; --tg-glass:#2B3166; --tg-edge:#8E92C4 }}
+  --party:#1A1F5C; --tg-glass:#2B3166; --tg-edge:#8E92C4;
+  --city-far:#1A2256; --city-near:#252F6C; --city-band:#323C80; --city-win:#FFD27A; --city-off:#1A2256; --city-glow:#FFD27A; --city-lamp:#FFD27A; --city-clock:#FFE9A8; --city-hand:#8A6A2A; --city-day:0; --city-night:1 }}
 :root[data-theme="dark"]{
   --sky:#0E1440; --hill:#18382A; --land:#1F4A33; --tuft:#2E6B45; --flower:#FFE58A; --flower-b:#FFE58A; --flower-c:#FFF6CF;
   --bank:#4A4232; --water:#154E6E; --water-hi:#2C7FA6; --wave:#CFE9FF; --bank-fog:#2C3326; --water-fog:#1B3443;
   --chip:#1B1D3F; --chip-line:#2C2F61; --kleicha:#F0B76E; --awning:#E8E2F0; --combo-ink:#FFB866;
-  --party:#1A1F5C; --tg-glass:#2B3166; --tg-edge:#8E92C4 }
+  --party:#1A1F5C; --tg-glass:#2B3166; --tg-edge:#8E92C4;
+  --city-far:#1A2256; --city-near:#252F6C; --city-band:#323C80; --city-win:#FFD27A; --city-off:#1A2256; --city-glow:#FFD27A; --city-lamp:#FFD27A; --city-clock:#FFE9A8; --city-hand:#8A6A2A; --city-day:0; --city-night:1 }
 
 /* top bar: chunky chips (streak, the day's tea glass, kleicha, hearts) */
 .top .stat{background:var(--chip);border:2px solid var(--chip-line);border-bottom-width:4px;border-radius:14px;padding:4px 8px;gap:4px;font-family:var(--display);font-size:17px;font-weight:800;line-height:1;min-height:38px}
@@ -1020,6 +1023,38 @@ body.map{background:var(--land)}
 .sky .hello{margin-top:8px;position:relative;z-index:1}
 .hills{position:absolute;left:-16px;right:-16px;bottom:-1px;width:calc(100% + 32px);height:36px;display:block}
 .hills .h1{fill:var(--hill)} .hills .h2{fill:var(--land)}
+/* Mosul on the horizon: the old city, the leaning al-Hadba minaret and the clock tower; windows light up at night */
+.sky{padding-bottom:118px}
+.city{position:absolute;left:-16px;bottom:14px;width:calc(100% + 32px);height:100px;display:block}
+.city .cf{fill:var(--city-far)} .city .cn{fill:var(--city-near)} .city .cw{fill:var(--city-win)} .city .co{fill:var(--city-off)}
+.city .cb{fill:none;stroke:var(--city-band);stroke-width:1.8;stroke-linecap:round}
+.city .cg{fill:var(--city-glow);opacity:.2} .city .cl{fill:var(--city-lamp)} .city .cc{fill:var(--city-clock)}
+.city .ch{fill:none;stroke:var(--city-hand);stroke-width:1.4;stroke-linecap:round}
+.city .c-day{opacity:var(--city-day)} .city .c-night{opacity:var(--city-night)}
+@media (min-width:520px){ .city{left:50%;width:520px;margin-left:-260px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)} .hills{left:calc(50% - 50vw);right:auto;width:100vw} }
+/* a unit is done: a stamp on its sign; the next one gets a "new" sticker */
+.ub{overflow:visible}
+.ub-stamp{position:absolute;top:12px;right:68px;display:flex;align-items:center;height:30px;padding:0 8px;border:4px double #FFD45A;border-radius:10px;background:rgba(30,34,80,.5);background:var(--board,rgba(30,34,80,.5));color:#FFD45A;font-family:var(--display);font-size:19px;font-weight:800;letter-spacing:.08em;line-height:1;text-shadow:0 2px 0 rgba(0,0,0,.3);transform:rotate(-10deg);pointer-events:none}
+.ub-stamp.slam{animation:slam .55s cubic-bezier(.2,1.3,.4,1) .15s both}
+@keyframes slam{0%{transform:rotate(-10deg) scale(2.8);opacity:0}60%{transform:rotate(-10deg) scale(.9);opacity:1}100%{transform:rotate(-10deg) scale(1);opacity:1}}
+.ub-new{position:absolute;top:-11px;right:64px;display:flex;align-items:center;gap:4px;padding:2px 10px;border-radius:12px;background:var(--pink);box-shadow:0 3px 0 #B92E57;color:#fff;font-size:13px;font-weight:900;transform:rotate(6deg);pointer-events:none}
+.ub-new svg{width:13px;height:13px}
+.ub-new.wait{opacity:0}
+.ub-new.pop{animation:newpop .45s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes newpop{0%{transform:rotate(6deg) scale(0);opacity:0}70%{transform:rotate(6deg) scale(1.15);opacity:1}100%{transform:rotate(6deg) scale(1);opacity:1}}
+.ub.pre{filter:grayscale(1) brightness(1.08)}
+.ub.unlock{animation:ubopen .7s ease-out both}
+@keyframes ubopen{0%{filter:grayscale(1) brightness(1.08);transform:none}45%{transform:scale(1.04)}100%{filter:none;transform:none}}
+.ub.glow{box-shadow:0 5px 0 rgba(0,0,0,.2),0 0 0 5px rgba(255,255,255,.4),0 0 28px 6px var(--uc,var(--primary))}
+.ub{transition:box-shadow 1s}
+/* Istikan on a kalak, the old raft of the Tigris */
+.raft{position:absolute;left:0;top:0;width:96px;height:86px;z-index:2;pointer-events:none;will-change:transform;transition:opacity .4s}
+.raft.in{animation:raftin .35s ease-out both}
+@keyframes raftin{0%{opacity:0}100%{opacity:1}}
+.raft .raft-m{position:absolute;left:15px;top:7px;width:66px;height:66px;overflow:visible}
+.raft .kalak{position:absolute;left:0;top:34px;width:96px;height:52px}
+.raft .kr{fill:none;stroke:var(--wave);stroke-width:2.4;stroke-linecap:round;opacity:.8}
+.pm{transition:opacity .4s} .pm.away{opacity:0}
 .pic-opts{gap:14px}
 .pic-opt{position:relative;aspect-ratio:auto;height:clamp(112px,19vh,150px);max-height:none;border-radius:20px;border-bottom-width:6px}
 .pic-opt .pic{width:auto;height:min(96px,calc(100% - 8px));aspect-ratio:1/1}
@@ -1033,7 +1068,7 @@ body{overflow-x:clip} /* the hills reach the screen edge; keep the slide-in from
 .map .sdiv>div{background:var(--surface);border:2px solid var(--chip-line);border-bottom-width:4px;border-radius:16px;padding:6px 18px 5px}
 .ub{padding-top:26px}
 @supports (color:color-mix(in srgb,red 50%,blue)){ .ub{--board:color-mix(in srgb,var(--uc,var(--primary)) 58%,#1E2250);background:var(--board)} }
-.ub::before{inset:0 0 auto 0;height:18px;background:repeating-linear-gradient(90deg,var(--uc,var(--primary)) 0 24px,var(--awning) 24px 48px);
+.ub::before{inset:0 0 auto 0;height:18px;border-radius:18px 18px 0 0;background:repeating-linear-gradient(90deg,var(--uc,var(--primary)) 0 24px,var(--awning) 24px 48px);
   -webkit-mask:radial-gradient(12.6px 8.6px at 12px 9.4px,#000 97%,#0000) 0 0/24px 18px repeat-x,linear-gradient(#000 0 0) 0 0/100% 10px no-repeat;
           mask:radial-gradient(12.6px 8.6px at 12px 9.4px,#000 97%,#0000) 0 0/24px 18px repeat-x,linear-gradient(#000 0 0) 0 0/100% 10px no-repeat}
 .ub.locked::before{background:repeating-linear-gradient(90deg,var(--lock-deep) 0 24px,var(--surface) 24px 48px)}
@@ -3397,7 +3432,7 @@ function mGlass(face){ /* the glass, tea, gold rim and highlights around a face 
 <path d="${M_GLASS}" fill="none" stroke="var(--m-edge,#C3CBEC)" stroke-width="2"/>
 <rect x="26.6" y="15" width="66.8" height="5.4" rx="2.7" fill="#FFBA19"/><rect x="29" y="15.6" width="62" height="1.6" rx=".8" fill="#FFE08A"/>`;
 }
-function mascot(mood="happy",cls="mascot"){
+function mascot(mood="happy",cls="mascot",bare){
   const ARM="#C24614";
   const arm=(d,hx,hy,c)=>`<g${c?` class="${c}"`:""}><path d="${d}" stroke="${ARM}" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="${hx}" cy="${hy}" r="5.6" fill="${ARM}"/><circle cx="${hx-1.6}" cy="${hy-1.8}" r="1.6" fill="#fff" opacity=".35"/></g>`;
   const down=arm("M37 67q-9 4-12 13",24.5,81), downR=arm("M83 67q9 4 12 13",95.5,81);
@@ -3410,8 +3445,8 @@ function mascot(mood="happy",cls="mascot"){
     ? `<path class="m-steam" d="M60 12q-3-3 0-6" stroke="var(--m-steam,#B9C1E4)" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>`
     : `<g class="m-steam" stroke="var(--m-steam,#B9C1E4)" fill="none" stroke-linecap="round"><path d="M52 13c-4-3 3-5.5 0-8.6c-1.6-1.6 0-3 .6-3.6" stroke-width="3.2"/><path d="M67 13c-3.6-2.6 2.6-4.8 0-7.4" stroke-width="2.8" opacity=".85"/></g>`;
   const sparks=mood==="cheer"||mood==="wow"?`<g fill="#FFBA19"><path d="M12 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/><path d="M107 18l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/><circle cx="104" cy="70" r="2.4"/><circle cx="15" cy="74" r="2"/></g>`:"";
-  return `<svg class="${cls}" viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="60" cy="114.5" rx="40" ry="3.6" fill="var(--line)"/>
-<ellipse cx="60" cy="108" rx="44" ry="8.6" fill="#2A40C4"/><ellipse cx="60" cy="105.6" rx="44" ry="8.6" fill="#3D57F0"/><ellipse cx="60" cy="105.6" rx="38.5" ry="6.4" fill="none" stroke="#FFBA19" stroke-width="1.6" stroke-dasharray="1.6 4.2" stroke-linecap="round"/><ellipse cx="60" cy="105" rx="19" ry="3.6" fill="#2A40C4" opacity=".55"/>
+  return `<svg class="${cls}" viewBox="0 0 120 120" aria-hidden="true">${bare?"":`<ellipse cx="60" cy="114.5" rx="40" ry="3.6" fill="var(--line)"/>
+<ellipse cx="60" cy="108" rx="44" ry="8.6" fill="#2A40C4"/><ellipse cx="60" cy="105.6" rx="44" ry="8.6" fill="#3D57F0"/><ellipse cx="60" cy="105.6" rx="38.5" ry="6.4" fill="none" stroke="#FFBA19" stroke-width="1.6" stroke-dasharray="1.6 4.2" stroke-linecap="round"/><ellipse cx="60" cy="105" rx="19" ry="3.6" fill="#2A40C4" opacity=".55"/>`}
 ${back}${mGlass(mFace(mood))}${front}${steam}${sparks}</svg>`;
 }
 /* the brand mark: the glass on a lapis tile */
@@ -3523,11 +3558,11 @@ function renderLearn(el){
   const cur=LESSONS.findIndex(l=>!S.done[l.id]);
   const mUnit=cur>=0?LESSONS[cur].unit:UNITS.length-1;
   const lockedU=UNITS.map((u,ui)=>ui).filter(ui=>!LESSONS.some((l,i)=>l.unit===ui&&lessonOpen(i))), jumpU=lockedU.filter(ui=>ui===lockedU[0]||SECTION_START.includes(ui));
-  let h=`<div class="sky">${todayCard()}<svg class="hills" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true"><path class="h1" d="M0 20 Q60 2 120 16 T240 12 T400 10 V36 H0Z"/><path class="h2" d="M0 30 Q90 20 190 27 T400 25 V36 H0Z"/></svg></div>`;
+  let h=`<div class="sky">${todayCard()}${CITY}<svg class="hills" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true"><path class="h1" d="M0 20 Q60 2 120 16 T240 12 T400 10 V36 H0Z"/><path class="h2" d="M0 30 Q90 20 190 27 T400 25 V36 H0Z"/></svg></div>`;
   UNITS.forEach((u,ui)=>{
     if(SECTION_START.includes(ui)) h+=`<div class="sdiv"><div><span>${tt("Section","Del")} ${secOf(ui)+1}</span><b>${esc(tx(SECTIONS[secOf(ui)]||"More Maslawi"))}</b></div></div>`;
-    const unitOpen=LESSONS.some((l,i)=>l.unit===ui&&lessonOpen(i)), unitDone=LESSONS.filter(l=>l.unit===ui).every(l=>S.done[l.id]);
-    h+=`<section class="usec${ui>mUnit?" fog":""}" data-u="${ui}" style="--uc:${u.color}"><div class="ub ${u.cls}${unitOpen?"":" locked"}"><div class="ub-t"><small>${unitDone?`${I.check}${tt(`Unit ${ui+1} done`,`Enhet ${ui+1} klar`)}`:tt(`Unit ${ui+1}`,`Enhet ${ui+1}`)}</small><h2>${esc(u.title)}</h2></div>${jumpU.includes(ui)?`<button class="ub-jump" data-j="${ui}">${tt("Jump here","Hoppa hit")}</button>`:""}<button class="ub-g" data-g="${ui}" aria-label="${tt(`Guidebook for unit ${ui+1}`,`Guide för enhet ${ui+1}`)}">${I.book}</button></div>${unitPath(u,ui,cur,ui===mUnit)}</section>`;
+    const unitOpen=LESSONS.some((l,i)=>l.unit===ui&&lessonOpen(i)), unitDone=LESSONS.filter(l=>l.unit===ui).every(l=>S.done[l.id]), isNew=ui>0&&ui===mUnit&&unitOpen&&!LESSONS.some(l=>l.unit===ui&&S.done[l.id]);
+    h+=`<section class="usec${ui>mUnit?" fog":""}" data-u="${ui}" style="--uc:${u.color}"><div class="ub ${u.cls}${unitOpen?"":" locked"}"><div class="ub-t"><small>${unitDone?`${I.check}${tt(`Unit ${ui+1} done`,`Enhet ${ui+1} klar`)}`:tt(`Unit ${ui+1}`,`Enhet ${ui+1}`)}</small><h2>${esc(u.title)}</h2></div>${jumpU.includes(ui)?`<button class="ub-jump" data-j="${ui}">${tt("Jump here","Hoppa hit")}</button>`:""}<button class="ub-g" data-g="${ui}" aria-label="${tt(`Guidebook for unit ${ui+1}`,`Guide för enhet ${ui+1}`)}">${I.book}</button>${unitDone?`<span class="ub-stamp" aria-hidden="true">${tt("DONE!","KLAR!")}</span>`:""}${isNew?`<span class="ub-new">${STAR_S}${tt("New unit!","Ny enhet!")}</span>`:""}</div>${unitPath(u,ui,cur,ui===mUnit)}</section>`;
   });
   h+=`<div class="more">${mascot("happy","more-m")}<b>${tt("More of Mosul is on the way","Mer från Mosul är på väg")}</b><span>${tt("New units are added regularly. Keep your streak going in the meantime.","Nya enheter läggs till hela tiden. Håll din svit vid liv under tiden.")}</span></div>`;
   if(canReview()) h+=`<p class="proto">${tt("Reviewer note: every phrase is a draft for a native speaker to check in Settings.","Granskare: varje fras är ett utkast som någon som pratar maslawi ska kolla under Inställningar.")}</p>`;
@@ -4131,7 +4166,7 @@ function toast(t){const d=document.createElement("div");d.className="toast";d.te
 let actx;
 function tone(seq,type="sine",vol=.16){ if(!S.sound) return; try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); const t0=actx.currentTime;
   seq.forEach(([f,t,d])=>{const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.0001,t0+t);g.gain.exponentialRampToValueAtTime(vol,t0+t+.015);g.gain.exponentialRampToValueAtTime(.0001,t0+t+d);o.connect(g).connect(actx.destination);o.start(t0+t);o.stop(t0+t+d+.05);}); }catch(e){} }
-const sGood=()=>tone([[784,0,.12],[1175,.09,.25]]), sBad=()=>{ tone([[196,0,.18],[165,.12,.25]],"triangle",.2); try{ if(S.sound&&navigator.vibrate) navigator.vibrate(90); }catch(e){} }, sWin=()=>tone([[523,0,.15],[659,.13,.15],[784,.26,.15],[1047,.39,.4]]), sTap=()=>tone([[520,0,.05]],"sine",.06);
+const sGood=()=>tone([[784,0,.12],[1175,.09,.25]]), sBad=()=>{ tone([[196,0,.18],[165,.12,.25]],"triangle",.2); try{ if(S.sound&&navigator.vibrate) navigator.vibrate(90); }catch(e){} }, sWin=()=>tone([[523,0,.15],[659,.13,.15],[784,.26,.15],[1047,.39,.4]]), sTap=()=>tone([[520,0,.05]],"sine",.06), sStamp=()=>tone([[140,0,.1],[90,.04,.22]],"triangle",.28);
 
 /* confetti */
 function confetti(){ if(reduced) return; const c=document.createElement("canvas");c.className="confetti";document.body.appendChild(c);const x=c.getContext("2d");
@@ -4656,6 +4691,68 @@ function drawCollection(){
   el.querySelectorAll(".ccard[data-k]").forEach(b=>b.onclick=()=>{ const k=b.dataset.k; speak(k); b.classList.remove("hop"); void b.offsetWidth; b.classList.add("hop"); toast(`${W[k].tr} = ${W[k].en}`); });
 }
 
+/* ================= MOSUL ON THE SKY, AND A UNIT IS DONE =================
+   The skyline sits behind the hills on Learn. When the last level of a unit is done, its sign gets a
+   KLAR! stamp, and Istikan rides a kalak (كلك), the old raft of the Tigris at Mosul, made of poles
+   lashed over blown-up skins, down the river to the next unit, whose sign comes alive. */
+const CITY=`<svg class="city" viewBox="0 0 520 100" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><g class="c-day"><circle cx="411" cy="32" r="23" fill="#FFF1B8" opacity=".8"/><circle cx="411" cy="32" r="13" fill="#FFE38A"/><g fill="#fff" opacity=".95"><circle cx="115" cy="24" r="8"/><circle cx="127" cy="19" r="10"/><circle cx="140" cy="25" r="7"/><rect x="109" y="24" width="38" height="8" rx="4"/></g><path d="M261 16q4 -4 8 0q4 -4 8 0M281 25q3 -3 6 0q3 -3 6 0" fill="none" stroke="#7F8FC9" stroke-width="1.6" stroke-linecap="round"/></g><g class="c-night"><g fill="#fff"><circle cx="87" cy="10" r="1.3" opacity="0.85"/><circle cx="159" cy="6" r="1.1" opacity="0.7"/><circle cx="217" cy="20" r="1.4" opacity="0.9"/><circle cx="241" cy="6" r="1" opacity="0.6"/><circle cx="301" cy="16" r="1.3" opacity="0.8"/><circle cx="381" cy="6" r="1.1" opacity="0.7"/><circle cx="443" cy="18" r="1.2" opacity="0.75"/><circle cx="327" cy="36" r="1" opacity="0.6"/><circle cx="123" cy="38" r="1.1" opacity="0.65"/><circle cx="20" cy="30" r="1.2" opacity="0.7"/><circle cx="500" cy="12" r="1.1" opacity="0.65"/><circle cx="470" cy="40" r="1" opacity="0.6"/><circle cx="40" cy="8" r="1" opacity="0.55"/></g><circle cx="409" cy="30" r="17" fill="#FFE9A8" opacity=".09"/><mask id="city-moon"><rect x="390" y="10" width="40" height="40" fill="#fff"/><circle cx="414.5" cy="25.5" r="10" fill="#000"/></mask><circle cx="409" cy="30" r="11" fill="#FFE9A8" mask="url(#city-moon)"/></g><g class="cf"><path d="M0 100V62H22V58H44V64H65V66H75V60H89V64H105V56H121V62H137V58H155V64H199V60H225V66H243V58H261V62H279V54H295V60H315V64H365V58H383V62H401V56H417V60H437V64H455V60H478V64H500V58H520V100Z"/><circle cx="30" cy="58" r="5"/><circle cx="129" cy="57" r="6"/><circle cx="271" cy="55" r="7"/><circle cx="409" cy="57" r="6"/><rect x="296" y="32" width="4" height="26" rx="1"/><circle cx="298" cy="31" r="2.6"/></g><g class="cn"><path d="M0 100V66H14V62H40V68H65V100Z"/><path d="M65 100V70H71V66H89V70H95V100Z"/><path d="M95 100V60H123V100Z"/><path d="M123 100V66H161V100Z"/><path d="M161 100V60H193V100Z"/><path d="M170 60L186 60L192 16L181 16Z"/><path d="M178 18L195 18L196 13L179 13Z"/><path d="M183 13L192 13L193 7L184 7Z"/><path d="M193 100V70H235V100Z"/><path d="M199 70A15 15 0 0 1 229 70Z"/><path d="M235 100V62H239V58H267V62H271V100Z"/><path d="M271 100V66H309V100Z"/><path d="M309 100V64L323 54L337 64V100Z"/><path d="M337 100V27H361V100Z"/><path d="M335 28L349 13L363 28Z"/><path d="M361 100V60H395V100Z"/><path d="M395 100V68H427V100Z"/><path d="M427 100V62H455V100Z"/><path d="M455 100V66H470V60H496V66H520V100Z"/><circle cx="188.5" cy="7" r="4.6"/><rect x="188" y="0" width="1.6" height="4"/><rect x="213.2" y="49" width="1.6" height="7"/><circle cx="214" cy="48" r="1.8"/><rect x="348" y="2" width="2" height="12"/><rect x="344.5" y="5.5" width="9" height="2"/></g><path class="cb" d="M172.5 50L187.4 50M175.5 38L189 38M178.5 26L190.6 26"/><g class="cg"><circle cx="104" cy="76" r="7"/><circle cx="132" cy="82" r="7"/><circle cx="154" cy="82" r="7"/><circle cx="246" cy="72" r="7"/><circle cx="258" cy="72" r="7"/><circle cx="292" cy="80" r="7"/><circle cx="323" cy="79" r="7"/><circle cx="349" cy="60" r="7"/><circle cx="370" cy="74" r="7"/><circle cx="418" cy="82" r="7"/><circle cx="436" cy="76" r="7"/><circle cx="446" cy="76" r="7"/><circle cx="15" cy="80" r="7"/><circle cx="29" cy="80" r="7"/><circle cx="479" cy="76" r="7"/><circle cx="349" cy="39" r="12"/><circle cx="187.5" cy="15.5" r="5"/></g><path class="co" d="M111 79V73A3 3 0 0 1 117 73V79ZM140 85V79A3 3 0 0 1 146 79V85ZM277 83V77A3 3 0 0 1 283 77V83ZM299 83V77A3 3 0 0 1 305 77V83ZM379 77V71A3 3 0 0 1 385 71V77ZM403 85V79A3 3 0 0 1 409 79V85ZM46 85V79A3 3 0 0 1 52 79V85ZM502 83V77A3 3 0 0 1 508 77V83Z"/><path class="cw" d="M101 79V73A3 3 0 0 1 107 73V79ZM129 85V79A3 3 0 0 1 135 79V85ZM151 85V79A3 3 0 0 1 157 79V85ZM243 75V69A3 3 0 0 1 249 69V75ZM255 75V69A3 3 0 0 1 261 69V75ZM289 83V77A3 3 0 0 1 295 77V83ZM320 84V74A3 3 0 0 1 326 74V84ZM346 64V56A3 3 0 0 1 352 56V64ZM367 77V71A3 3 0 0 1 373 71V77ZM415 85V79A3 3 0 0 1 421 79V85ZM433 79V73A3 3 0 0 1 439 73V79ZM443 79V73A3 3 0 0 1 449 73V79ZM12 83V77A3 3 0 0 1 18 77V83ZM26 83V77A3 3 0 0 1 32 77V83ZM476 79V73A3 3 0 0 1 482 73V79Z"/><circle class="cl" cx="187.5" cy="15.5" r="1.7"/><circle class="cc" cx="349" cy="39" r="6.5"/><path class="ch" d="M349 39V35M349 39l3 1.5"/></svg>`;
+const STAR_S='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z" fill="#FFE58A"/></svg>';
+const KALAK='<svg class="kalak" viewBox="0 0 130 70" aria-hidden="true"><path d="M114 52L126 4" stroke="#7A4E26" stroke-width="3.2" stroke-linecap="round"/><path d="M126 5L125 17L110 12Z" fill="#EC4C78"/><g fill="#D2A56E" stroke="#9C6B37" stroke-width="1.6"><ellipse cx="20" cy="56" rx="11" ry="7"/><ellipse cx="42" cy="57" rx="11" ry="7"/><ellipse cx="64" cy="57" rx="11" ry="7"/><ellipse cx="86" cy="57" rx="11" ry="7"/><ellipse cx="108" cy="56" rx="11" ry="7"/></g><rect x="8" y="42" width="114" height="13" rx="4" fill="#B9844B"/><path d="M20 42v13M32 42v13M44 42v13M56 42v13M68 42v13M80 42v13M92 42v13M104 42v13" stroke="#8C5A2B" stroke-width="1.6"/><path d="M8 45H122M8 52H122" stroke="#9C6B37" stroke-width="2.4"/><path d="M14 41v15M65 41v15M116 41v15" stroke="#6B4423" stroke-width="2.6" stroke-linecap="round"/><path class="kr" d="M0 64q6 -4 12 0M118 64q6 -4 12 0"/></svg>';
+let UNIT_FX=null, FX=null;
+function stopFx(){ if(FX){ const f=FX; FX=null; f.stop(); } }
+const pageMid=el=>{ const r=el.getBoundingClientRect(); return [r.left+scrollX+r.width/2,r.top+scrollY+r.height/2]; };
+/* points (page px) along a unit's river, from the point nearest `from` to the one nearest `to` (null: the river's start or end) */
+function riverPts(svg,from,to){
+  const p=svg&&svg.querySelector(".rv-water"); if(!p||!p.getTotalLength) return [];
+  const r=svg.getBoundingClientRect(), ox=r.left+scrollX, oy=r.top+scrollY, len=p.getTotalLength();
+  const near=xy=>{ let best=0,bd=Infinity; for(let d=0;d<=len;d+=5){ const q=p.getPointAtLength(d), e=(q.x+ox-xy[0])**2+(q.y+oy-xy[1])**2; if(e<bd){ bd=e; best=d; } } return best; };
+  const a=from?near(from):0, b=to?near(to):len, out=[];
+  for(let d=a;d<=b;d+=6){ const q=p.getPointAtLength(d); out.push([q.x+ox,q.y+oy]); }
+  return out;
+}
+function unitFx(ui){
+  stopFx();
+  const sec=document.querySelector(`.usec[data-u="${ui}"]`), nsec=document.querySelector(`.usec[data-u="${ui+1}"]`);
+  const last=sec&&[...sec.querySelectorAll(".node[data-l]")].pop();
+  if(!sec||!last||reduced) return scrollToCur();
+  const stamp=sec.querySelector(".ub-stamp"), nub=nsec&&nsec.querySelector(".ub"), badge=nub&&nub.querySelector(".ub-new"), pm=document.querySelector(".pm");
+  const lm=pageMid(last); window.scrollTo(0,Math.max(0,lm[1]-innerHeight*.42));
+  const timers=[], later=(ms,f)=>timers.push(setTimeout(f,ms)); let raf=0, raft=null, follow=true;
+  const quit=()=>{ follow=false; }, unhook=()=>{ removeEventListener("wheel",quit); removeEventListener("touchstart",quit); };
+  addEventListener("wheel",quit,{passive:true}); addEventListener("touchstart",quit,{passive:true});
+  FX={stop(){ timers.forEach(clearTimeout); cancelAnimationFrame(raf); unhook(); if(raft) raft.remove(); if(pm) pm.classList.remove("away"); if(nub) nub.classList.remove("pre"); if(badge) badge.classList.remove("wait"); }};
+  if(stamp) stamp.classList.add("slam");
+  if(pm) pm.classList.add("away"); if(nub) nub.classList.add("pre"); if(badge) badge.classList.add("wait");
+  later(260,()=>sStamp()); later(420,()=>confetti());
+  later(1100,()=>{
+    const trail=sec.querySelector(".trail"), stopAt=nub||document.querySelector(".map .more"), nTop=stopAt?stopAt.getBoundingClientRect().top+scrollY:Infinity;
+    const pts=riverPts(sec.querySelector(".trail-svg"),lm,null).filter(q=>q[1]<nTop-64&&Math.hypot(q[0]-lm[0],q[1]-lm[1])>40);
+    if(pts.length<2||!trail) return arrive();
+    const tr=trail.getBoundingClientRect(), x0=tr.left+scrollX, y0=tr.top+scrollY;
+    const seg=[0]; for(let k=1;k<pts.length;k++) seg.push(seg[k-1]+Math.hypot(pts[k][0]-pts[k-1][0],pts[k][1]-pts[k-1][1]));
+    const total=seg[seg.length-1], dur=Math.max(2200,Math.min(5000,total/150*1000));
+    const at=d=>{ let k=1; while(k<seg.length-1&&seg[k]<d) k++; const f=(d-seg[k-1])/Math.max(1e-6,seg[k]-seg[k-1]); return [pts[k-1][0]+(pts[k][0]-pts[k-1][0])*f,pts[k-1][1]+(pts[k][1]-pts[k-1][1])*f]; };
+    raft=document.createElement("div"); raft.className="raft in"; raft.innerHTML=KALAK+mascot("cheer","raft-m",true); trail.appendChild(raft);
+    const place=(q,w)=>{ raft.style.transform=`translate(${(q[0]-x0-48).toFixed(1)}px,${(q[1]-y0-70).toFixed(1)}px) rotate(${w.toFixed(2)}deg)`; };
+    place(pts[0],0);
+    const t0=performance.now();
+    const tick=now=>{ const t=Math.min(1,(now-t0)/dur), e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2, q=at(e*total);
+      place(q,Math.sin(now/260)*3);
+      if(follow){ const want=q[1]-innerHeight*.55; window.scrollTo(0,scrollY+(want-scrollY)*.12); }
+      if(t<1) raf=requestAnimationFrame(tick); else arrive(); };
+    raf=requestAnimationFrame(tick);
+  });
+  function arrive(){
+    unhook();
+    if(raft){ const r=raft; raft=null; r.style.transition="transform .6s ease-in,opacity .6s ease-in"; r.style.transform=r.style.transform.replace(/translate\(([-\d.]+)px,([-\d.]+)px\)/,(m,a,b)=>`translate(${a}px,${(+b+44).toFixed(1)}px)`); r.style.opacity="0"; later(650,()=>r.remove()); }
+    if(pm) pm.classList.remove("away");
+    if(nub){ nub.classList.remove("pre"); nub.classList.add("unlock","glow"); later(2600,()=>nub.classList.remove("glow")); }
+    if(badge){ badge.classList.remove("wait"); badge.classList.add("pop"); }
+    sGood();
+    if(follow) later(500,()=>{ const c=$("#cur-node"); if(c){ const r=c.getBoundingClientRect(); if(r.top<90||r.bottom>innerHeight-110) c.scrollIntoView({block:"center",behavior:"smooth"}); } });
+  }
+}
+
 /* ================= MOTION ================= */
 const TAB_ORDER=["learn","words","league","profile"];
 function moveTabInd(){ const ind=$("#tab-ind"); if(ind) ind.style.transform=`translateX(${Math.max(0,TAB_ORDER.indexOf(tab))*100}%)`; }
@@ -4827,12 +4924,12 @@ async function pushLeague(){
     catch(e){ if(!lgMissing(e)) throw e; }
   }
 }
-function render(){ document.body.classList.toggle("map",tab==="learn"); refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
+function render(){ stopFx(); document.body.classList.toggle("map",tab==="learn"); refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
 
 /* ================= LESSON PLAYER ================= */
 let L=null;
 function openOverlay(){ const o=$("#lesson"), was=o.hidden; o.classList.remove("party"); o.hidden=false; document.body.style.overflow="hidden"; if(was) playIn(o,"rise"); }
-function closeLesson(){ $("#lesson").hidden=true; $("#lesson").innerHTML=""; const lt=$("#letters"), inLt=lt&&!lt.hidden; document.body.style.overflow=inLt?"hidden":""; L=null; render(); if(inLt){ drawLetters(); const b=lt.querySelector(".lt-go:not(:disabled)"); if(b) b.focus({preventScroll:true}); } if(SCROLL_CUR){ SCROLL_CUR=false; const c=$("#cur-node"); if(c&&tab==="learn") c.scrollIntoView({block:"center"}); } else if(!inLt) scrollToCur(); }
+function closeLesson(){ $("#lesson").hidden=true; $("#lesson").innerHTML=""; const lt=$("#letters"), inLt=lt&&!lt.hidden; document.body.style.overflow=inLt?"hidden":""; L=null; render(); if(inLt){ drawLetters(); const b=lt.querySelector(".lt-go:not(:disabled)"); if(b) b.focus({preventScroll:true}); } if(SCROLL_CUR){ SCROLL_CUR=false; const c=$("#cur-node"); if(c&&tab==="learn") c.scrollIntoView({block:"center"}); } else if(!inLt){ const u=UNIT_FX; UNIT_FX=null; if(u!=null&&tab==="learn") unitFx(u); else scrollToCur(); } }
 /* ================= PICTURE WORDS =================
    Small flat pictures for everyday words, so a word links to a picture instead of to
    English or Swedish. Shown on the new-word card, in "Which picture is it?" exercises,
@@ -5133,7 +5230,7 @@ function finish(){
   if(L.mode==="letters") S.ltr=Object.assign({},S.ltr,{["g"+L.group]:true});
   else if(L.mode==="jump"){ unlockTo(L.target); SCROLL_CUR=true; }
   else if(L.practice) S.hearts=Math.min(5,S.hearts+1);
-  else { S.done[LESSONS[L.i].id]=true; if(perfect) S.perfect++; S.gems+=perfect?5:2; }
+  else { const uix=LESSONS[L.i].unit, inU=LESSONS.filter(l=>l.unit===uix), uWas=inU.every(l=>S.done[l.id]); S.done[LESSONS[L.i].id]=true; if(!uWas&&inU.every(l=>S.done[l.id])) UNIT_FX=uix; if(perfect) S.perfect++; S.gems+=perfect?5:2; }
   if(firstToday){ S.streak=(S.lastDay===yesterday()?S.streak:0)+1; S.lastDay=today(); S.days=[...new Set([...(S.days||[]),today()])].slice(-14); }
   const newQ=QUESTS.map(questInfo).filter(x=>x.done&&!x.claimed&&!(S.q.told||{})[x.q.id]);
   if(newQ.length) S.q.told=Object.assign({},S.q.told,Object.fromEntries(newQ.map(x=>[x.q.id,1])));
