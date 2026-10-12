@@ -8,7 +8,7 @@ The Words page also has a **sound guide** (kh, gh, q, the deep h, ayn and more, 
 
 Signed-in learners can **suggest phrases** they say in Mosul. Once a reviewer has approved them, they show up for everyone under Words, in a section called *From friends and family*. They can also **ask about a word** in the question box (*Ask about Maslawi*). A reviewer answers in the app, and answered questions show up for everyone under Words and in search.
 
-39 everyday words have **pictures** (food, animals, places, colours, weather and a few things like a gift or a clay jar): on the new-word card, in the word list, on the back of the word of the day, and in "Which picture is it?" questions that lessons with those words get automatically. The pictures are in `const PIC=` in `index.html`.
+59 everyday words have **pictures** (food, animals, places, colours, weather, the body, clothes, things at home, a phone, travel, and a few things like a gift or a clay jar): on the new-word card, in the word list, on the back of the word of the day, and in two kinds of questions that lessons with those words get automatically: "Which picture is it?" (pick the picture for a word) and "What is this called?" (see a picture and pick its Maslawi name). The pictures are in `const PIC=` in `index.html`.
 
 Learners who already know some Maslawi can **jump ahead**: the welcome screen asks how much they know, and locked units on the Learn page have a "Jump here" button. A short test with 3 lives unlocks everything before it.
 
@@ -24,8 +24,8 @@ Made by A. Yasso.
 | `extra-audio.json` | Audio for the verb tables and grammar tables, loaded the first time they are opened |
 | `manifest.webmanifest`, `sw.js`, `icon-*.png` | Let people install it to their home screen and open it offline |
 | `og-image.png` | The picture shown when someone shares the link (1200×630) |
-| `supabase-setup.sql` | Creates the tables for accounts, the league, the content check, suggested phrases and streak reminders (run in Supabase; safe to run again) |
-| `reminders/`, `.github/workflows/streak-reminder.yml` | Sends the evening streak reminders, once an hour |
+| `supabase-setup.sql` | Creates the tables for accounts, the league, the content check, suggested phrases, the question box and notifications (run in Supabase; safe to run again) |
+| `reminders/`, `.github/workflows/streak-reminder.yml` | Sends the evening streak reminders and the reviewer alerts, every 10 minutes |
 
 ## Editing lessons
 
