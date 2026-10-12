@@ -22,6 +22,8 @@ Made by A. Yasso.
 | --- | --- |
 | `index.html` | The whole app: lessons, words, audio, accounts |
 | `extra-audio.json` | Audio for the verb tables and grammar tables, loaded the first time they are opened |
+| `voice/`, `.github/workflows/voice.yml` | Make the audio with Microsoft Azure's Iraqi voices (see *Audio*) |
+| `audio-kareem.json` | The old voice, Kareem, for every clip: a backup the app doesn't load |
 | `manifest.webmanifest`, `sw.js`, `icon-*.png` | Let people install it to their home screen and open it offline |
 | `og-image.png` | The picture shown when someone shares the link (1200×630) |
 | `supabase-setup.sql` | Creates the tables for accounts, the league, the content check, suggested phrases, the question box and notifications (run in Supabase; safe to run again) |
@@ -45,7 +47,7 @@ Open `index.html` and search for:
 - `const GRAMMAR=` – the Grammar in a minute topics
 - `const PRON=` / `VERBS=` – the persons and the verb tables (their audio is in `extra-audio.json`, keys `V_<verb>_<past|now>_<person>`)
 
-New phrases need an audio clip in `const AUD=` (generated with the Piper voice, see *Audio*). Letter names use the keys `L_alif`, `L_ba` and so on.
+New phrases need an audio clip in `const AUD=` (made with the *Make audio* workflow, see *Audio*). Letter names use the keys `L_alif`, `L_ba` and so on.
 
 ## Publishing
 
@@ -73,7 +75,23 @@ The anon key is meant to be public. Row level security in `supabase-setup.sql` k
 
 ## Audio
 
-Clips were generated with the open-source Piper voice `ar_JO-kareem-medium` (a Jordanian Arabic voice). Check its dataset licence before publishing the app commercially.
+Every phrase is read by **Bassel**, one of Microsoft Azure's Iraqi Arabic AI voices (`ar-IQ-BasselNeural`), a little slower than normal. Phrases only a woman says about herself (the "if you're a woman" forms, such as *ana mashghoola*) are read by **Rana** (`ar-IQ-RanaNeural`). The voices are built for standard Arabic, so the Arabic they read has vowel marks that steer them towards the Mosul pronunciation. The list is `voice/clips.json`: key, the Arabic to read, and the voice.
+
+**Backup:** the old voice, the open-source Piper voice `ar_JO-kareem-medium` (Jordanian), is kept in `audio-kareem.json`, with the same keys as `AUD` and `extra-audio.json`. To switch a phrase back to Kareem, copy its clip from there into `AUD` (or `extra-audio.json`).
+
+**Audio for new or changed phrases:**
+
+1. Add or change the phrase in `voice/clips.json`. Use `ar-IQ-RanaNeural` only for what a woman says about herself.
+2. In GitHub → **Actions → Make audio → Run workflow**, write the keys separated by commas (or leave the box empty to remake everything). Several phrases are read in one request, with a 2-second pause between them, because the free tier allows 20 requests a minute.
+3. The result lands on the branch `voice-audio`. Put it into the app with ffmpeg and Python on your own computer:
+   ```sh
+   git fetch origin voice-audio
+   mkdir -p /tmp/audio && git archive origin/voice-audio | tar -x -C /tmp/audio
+   python3 voice/add.py /tmp/audio
+   ```
+   It cuts the phrases apart, trims the silence, makes them all equally loud and writes them into `AUD` and `extra-audio.json`. Then raise `CACHE` in `sw.js` and push.
+
+Setup (once): an Azure **Speech** resource on the free tier (F0: half a million characters a month, and all of the app's audio is about 5,500), and two repository secrets, `AZURE_SPEECH_KEY` (the resource's Keys and Endpoint → KEY 1) and `AZURE_SPEECH_REGION` (the Location/Region on the same page, for example `swedencentral`). The app's About text says the voices are AI voices from Microsoft Azure.
 
 ## Content check
 
