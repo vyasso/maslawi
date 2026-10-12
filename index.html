@@ -4980,7 +4980,7 @@ function shell(body,foot){
 }
 const footCheck=()=>`<button class="btn ghost" id="skip">${tt("Skip","Hoppa över")}</button><button class="btn good" id="check" disabled>${tt("Check","Kontrollera")}</button>`;
 /* praise the way they say it in Mosul */
-function praiseWord(){ const f=isF(), P=[["Afya!","عفية"],["Afya!","عفية"],["Mashallah!","ما شاء الله"],[f?"Ahsanti!":"Ahsant!",f?"أحسنتِ":"أحسنت"],["Zein!","زين"]]; return P[Math.random()*P.length|0]; }
+function praiseWord(){ const P=[["Afya!","عفية"],["Afya!","عفية"],["Mashallah!","ما شاء الله"],["Zein!","زين"]]; return P[Math.random()*P.length|0]; }
 const STAR8=(x,y,r,c)=>`<g transform="translate(${x} ${y})"><rect x="-${r}" y="-${r}" width="${2*r}" height="${2*r}" fill="${c}"/><rect x="-${r}" y="-${r}" width="${2*r}" height="${2*r}" fill="${c}" transform="rotate(45)"/></g>`;
 const CONFETTI_ROW=`<svg class="fb-confetti" viewBox="0 0 390 40" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${STAR8(34,18,6,"#FFBA19")}<circle cx="80" cy="10" r="5" fill="#EC4C78"/><rect x="118" y="14" width="12" height="6" rx="3" fill="#1E9BFF" transform="rotate(-25 124 17)"/>${STAR8(166,26,5,"#9A5BF5")}<circle cx="208" cy="8" r="4" fill="#FFBA19"/><rect x="242" y="20" width="13" height="6" rx="3" fill="#EC4C78" transform="rotate(30 248 23)"/>${STAR8(290,12,6,"#1E9BFF")}<circle cx="332" cy="26" r="5" fill="#9A5BF5"/><rect x="358" y="8" width="12" height="6" rx="3" fill="#FFBA19" transform="rotate(-35 364 11)"/></svg>`;
 const PARTY_BG=(()=>{ let r=""; for(let i=0;i<12;i++) r+=`<path class="ray" d="M0 0 L-44 -330 L44 -330 Z" transform="rotate(${i*30})"/>`;
