@@ -1,0 +1,114 @@
+{
+ "region": "swedencentral",
+ "locale": "ar-IQ",
+ "rate": "-10%",
+ "voices": [
+  {
+   "name": "ar-IQ-RanaNeural",
+   "local": "رنا",
+   "gender": "Female",
+   "type": "Neural"
+  },
+  {
+   "name": "ar-IQ-BasselNeural",
+   "local": "باسل",
+   "gender": "Male",
+   "type": "Neural"
+  }
+ ],
+ "phrases": [
+  {
+   "key": "marhaba",
+   "text": "مِرْحَبا"
+  },
+  {
+   "key": "shlonak",
+   "text": "شْلُونَك؟"
+  },
+  {
+   "key": "zenhamd",
+   "text": "زِين، اَلْحَمْدُ لِلّه"
+  },
+  {
+   "key": "ashismak",
+   "text": "أَشْ اِسْمَك؟"
+  },
+  {
+   "key": "anamin",
+   "text": "أَنا مِنِ الْمُوصِل"
+  },
+  {
+   "key": "qeltu",
+   "text": "قِلْتُو"
+  },
+  {
+   "key": "kubba",
+   "text": "كُبَّة مُوصْلِيَّة"
+  },
+  {
+   "key": "tfaddal",
+   "text": "تْفَضَّلْ تْشاي"
+  },
+  {
+   "key": "tislam",
+   "text": "تِسْلَمْ إِيدَك"
+  },
+  {
+   "key": "nshoofak",
+   "text": "نْشُوفَك باتْشِر إِنْ شاءَ الله"
+  },
+  {
+   "key": "beshhadha",
+   "text": "بِيش هاذا؟"
+  },
+  {
+   "key": "weinilhammaam",
+   "text": "وَيْن الحَمّام؟"
+  },
+  {
+   "key": "anamashghoola",
+   "text": "أَنا مَشْغُولَة"
+  },
+  {
+   "key": "hamdillasalaama",
+   "text": "الحَمْدِلله عَلَى السَّلامَة"
+  },
+  {
+   "key": "ain",
+   "text": "العِين ما تِعْلا عَلى الحاجِب"
+  }
+ ],
+ "made": [
+  "marhaba.ar-IQ-RanaNeural.mp3",
+  "shlonak.ar-IQ-RanaNeural.mp3",
+  "zenhamd.ar-IQ-RanaNeural.mp3",
+  "ashismak.ar-IQ-RanaNeural.mp3",
+  "anamin.ar-IQ-RanaNeural.mp3",
+  "qeltu.ar-IQ-RanaNeural.mp3",
+  "kubba.ar-IQ-RanaNeural.mp3",
+  "tfaddal.ar-IQ-RanaNeural.mp3",
+  "tislam.ar-IQ-RanaNeural.mp3",
+  "nshoofak.ar-IQ-RanaNeural.mp3",
+  "beshhadha.ar-IQ-RanaNeural.mp3",
+  "weinilhammaam.ar-IQ-RanaNeural.mp3",
+  "anamashghoola.ar-IQ-RanaNeural.mp3",
+  "hamdillasalaama.ar-IQ-RanaNeural.mp3",
+  "ain.ar-IQ-RanaNeural.mp3",
+  "marhaba.ar-IQ-BasselNeural.mp3",
+  "shlonak.ar-IQ-BasselNeural.mp3",
+  "zenhamd.ar-IQ-BasselNeural.mp3",
+  "ashismak.ar-IQ-BasselNeural.mp3",
+  "anamin.ar-IQ-BasselNeural.mp3",
+  "qeltu.ar-IQ-BasselNeural.mp3",
+  "kubba.ar-IQ-BasselNeural.mp3",
+  "tfaddal.ar-IQ-BasselNeural.mp3",
+  "tislam.ar-IQ-BasselNeural.mp3",
+  "nshoofak.ar-IQ-BasselNeural.mp3",
+  "beshhadha.ar-IQ-BasselNeural.mp3",
+  "weinilhammaam.ar-IQ-BasselNeural.mp3",
+  "anamashghoola.ar-IQ-BasselNeural.mp3",
+  "hamdillasalaama.ar-IQ-BasselNeural.mp3",
+  "ain.ar-IQ-BasselNeural.mp3"
+ ],
+ "failed": []
+}
