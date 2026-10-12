@@ -980,6 +980,181 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .cr-ic,:root:not([data-theme="light"]) .sg-st.pending{color:var(--gold)} }
 canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
 @media (prefers-reduced-motion: reduce){ .start,.combo{animation:none} *{transition:none!important;animation:none!important} }
+
+/* ================= TIGRIS: the Learn page is a trip down the river through Mosul =================
+   Sky and spring meadows by day, Mosul in the evening by night. The unit signs are souq stalls with a
+   striped awning, the levels sit on the river, done levels turn gold. */
+:root{
+  --sky:#CDEBFF; --hill:#BCE28F; --land:#A9DB79; --tuft:#7FBF4D; --flower:#FFFFFF; --flower-b:#FFB3C7; --flower-c:#FFC94A;
+  --bank:#EFD9A3; --water:#36B5D8; --water-hi:#7DD5EC; --wave:#FFFFFF; --bank-fog:#E3DFCB; --water-fog:#AFD5E0;
+  --chip:#FFFFFF; --chip-line:#E1E4F4; --kleicha:#93560F; --awning:#FFFFFF; --combo-ink:#B5520A;
+  --party:#3D57F0; --tg-glass:#EEF2FF; --tg-edge:#8A93C2;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --sky:#0E1440; --hill:#18382A; --land:#1F4A33; --tuft:#2E6B45; --flower:#FFE58A; --flower-b:#FFE58A; --flower-c:#FFF6CF;
+  --bank:#4A4232; --water:#154E6E; --water-hi:#2C7FA6; --wave:#CFE9FF; --bank-fog:#2C3326; --water-fog:#1B3443;
+  --chip:#1B1D3F; --chip-line:#2C2F61; --kleicha:#F0B76E; --awning:#E8E2F0; --combo-ink:#FFB866;
+  --party:#1A1F5C; --tg-glass:#2B3166; --tg-edge:#8E92C4 }}
+:root[data-theme="dark"]{
+  --sky:#0E1440; --hill:#18382A; --land:#1F4A33; --tuft:#2E6B45; --flower:#FFE58A; --flower-b:#FFE58A; --flower-c:#FFF6CF;
+  --bank:#4A4232; --water:#154E6E; --water-hi:#2C7FA6; --wave:#CFE9FF; --bank-fog:#2C3326; --water-fog:#1B3443;
+  --chip:#1B1D3F; --chip-line:#2C2F61; --kleicha:#F0B76E; --awning:#E8E2F0; --combo-ink:#FFB866;
+  --party:#1A1F5C; --tg-glass:#2B3166; --tg-edge:#8E92C4 }
+
+/* top bar: chunky chips (streak, the day's tea glass, kleicha, hearts) */
+.top .stat{background:var(--chip);border:2px solid var(--chip-line);border-bottom-width:4px;border-radius:14px;padding:4px 8px;gap:4px;font-family:var(--display);font-size:17px;font-weight:800;line-height:1;min-height:38px}
+.top .stat svg{width:22px;height:22px;flex:none}
+.top .stat:active{transform:translateY(2px);border-bottom-width:2px;background:var(--chip)}
+.stats{gap:6px;margin-left:auto}
+.c-gem{color:var(--kleicha)} .c-tea{color:var(--ink)}
+.tg-n small{font-size:12px;color:var(--muted);font-weight:800}
+@media (hover:hover){ .top .stat:hover{background:var(--primary-soft)} }
+.brand b{display:none}
+@media (max-width:519px){ .brand{display:none} .stats{flex:1;justify-content:space-between;gap:4px} }
+@media (max-width:374px){ .top .stat{padding:4px 6px;gap:3px;font-size:16px} .top .stat svg{width:20px;height:20px} .tg-n small{display:none} .gear{padding:2px} .gear svg{width:24px;height:24px} }
+
+/* the map */
+body.map{background:var(--land)}
+.map .top{background:var(--sky);border-bottom:0;box-shadow:0 0 0 100vmax var(--sky);clip-path:inset(0 -100vmax)}
+.sky{position:relative;background:var(--sky);box-shadow:0 0 0 100vmax var(--sky);clip-path:inset(0 -100vmax);padding:2px 0 34px}
+.sky .hello{margin-top:8px;position:relative;z-index:1}
+.hills{position:absolute;left:-16px;right:-16px;bottom:-1px;width:calc(100% + 32px);height:36px;display:block}
+.hills .h1{fill:var(--hill)} .hills .h2{fill:var(--land)}
+.pic-opts{gap:14px}
+.pic-opt{position:relative;aspect-ratio:auto;height:clamp(112px,19vh,150px);max-height:none;border-radius:20px;border-bottom-width:6px}
+.pic-opt .pic{width:auto;height:min(96px,calc(100% - 8px));aspect-ratio:1/1}
+.pic-opt.ok::after{content:"";position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;background:var(--good-btn) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center/18px no-repeat}
+.fb-again{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+@media (max-height:720px){ .pic-opt{height:clamp(100px,17vh,150px)} .fb-m{width:70px;height:70px;margin:-14px -4px -6px 0} .fb-ok h3{font-size:26px} .fb-ok h3 .ar{font-size:21px} }
+body{overflow-x:clip} /* the hills reach the screen edge; keep the slide-in from making the page wider for a moment */
+.gring .tg-big{width:100%;height:100%;display:block}
+.map .sdiv{margin-top:26px}
+.map .sdiv::before{display:none}
+.map .sdiv>div{background:var(--surface);border:2px solid var(--chip-line);border-bottom-width:4px;border-radius:16px;padding:6px 18px 5px}
+.ub{padding-top:26px}
+@supports (color:color-mix(in srgb,red 50%,blue)){ .ub{--board:color-mix(in srgb,var(--uc,var(--primary)) 58%,#1E2250);background:var(--board)} }
+.ub::before{inset:0 0 auto 0;height:18px;background:repeating-linear-gradient(90deg,var(--uc,var(--primary)) 0 24px,var(--awning) 24px 48px);
+  -webkit-mask:radial-gradient(12.6px 8.6px at 12px 9.4px,#000 97%,#0000) 0 0/24px 18px repeat-x,linear-gradient(#000 0 0) 0 0/100% 10px no-repeat;
+          mask:radial-gradient(12.6px 8.6px at 12px 9.4px,#000 97%,#0000) 0 0/24px 18px repeat-x,linear-gradient(#000 0 0) 0 0/100% 10px no-repeat}
+.ub.locked::before{background:repeating-linear-gradient(90deg,var(--lock-deep) 0 24px,var(--surface) 24px 48px)}
+.ub-g{background:rgba(255,255,255,.16)}
+.trail-svg .rv-bank{fill:none;stroke:var(--bank);stroke-width:98;stroke-linecap:round}
+.trail-svg .rv-water{fill:none;stroke:var(--water);stroke-width:76;stroke-linecap:round}
+.trail-svg .rv-hi{fill:none;stroke:var(--water-hi);stroke-width:26;stroke-linecap:round;opacity:.5}
+.trail-svg .rv-wave{fill:none;stroke:var(--wave);stroke-width:2.4;stroke-linecap:round;opacity:.75}
+.trail-svg .rv-tuft{fill:none;stroke:var(--tuft);stroke-width:2;stroke-linecap:round}
+.trail-svg .rv-fl{fill:var(--flower)} .trail-svg .rv-fl.b{fill:var(--flower-b)} .trail-svg .rv-flc{fill:var(--flower-c)}
+.usec.fog .rv-bank{stroke:var(--bank-fog)} .usec.fog .rv-water{stroke:var(--water-fog)} .usec.fog .rv-hi,.usec.fog .rv-wave{opacity:.25}
+.usec.fog .lmk{opacity:.55;filter:grayscale(.7)}
+.map .node.done{background:var(--gold);box-shadow:0 8px 0 var(--gold-deep);color:#fff}
+.map .node.done:active{box-shadow:0 2px 0 var(--gold-deep)}
+.map .node.cur,.map .node.open{background:var(--primary);box-shadow:0 8px 0 var(--primary-deep)}
+.map .node.cur:active,.map .node.open:active{box-shadow:0 2px 0 var(--primary-deep)}
+.map .pr-bg{stroke:rgba(255,255,255,.8)}
+.map .pn .start{text-transform:none;letter-spacing:0;font-family:var(--display);font-size:16px;font-weight:800;color:var(--ink);background:var(--surface);border:2px solid var(--chip-line);border-bottom-width:4px;border-radius:14px;padding:4px 12px 3px}
+.map .nlabel{background:var(--surface);border:2px solid var(--chip-line);color:var(--ink)}
+.map .more{position:relative;z-index:1;background:var(--surface);border-style:solid} /* the river runs on under the card */
+.map .proto{background:var(--surface);border-radius:12px;padding:8px 12px}
+.map .pm-say{border-bottom-width:4px}
+
+/* lesson: combo in the top row, and the feedback after Check */
+.l-head .combo{position:static;transform:none;display:flex;align-items:center;gap:2px;color:var(--flame);font-family:var(--display);font-size:18px;font-weight:800;text-transform:none;letter-spacing:0}
+.l-head .combo svg{width:22px;height:22px}
+.l-foot{position:relative}
+.fb-confetti{position:absolute;left:0;top:-18px;width:100%;height:40px;pointer-events:none;overflow:visible}
+.fb-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.fb-ok h3{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin:0;font-family:var(--display);font-size:30px;line-height:1.1;color:var(--good);animation:fbpop .35s ease-out}
+.fb-ok h3 .ar{font-size:24px}
+.fb-ok p,.fb-no p{margin:0;color:var(--ink);font-size:16px}
+.fb-combo{align-self:flex-start;margin-top:6px;display:flex;align-items:center;gap:4px;padding:2px 10px;border-radius:12px;background:var(--surface);color:var(--combo-ink);font-weight:900;font-size:14px}
+.fb-combo svg{width:16px;height:16px;color:var(--flame)}
+.fb-m{width:88px;height:88px;flex:none;margin:-22px -4px -8px 0}
+.fb-no h3{margin:0;font-family:var(--display);font-size:26px;line-height:1.15;color:var(--bad)}
+.fb-no .ic{color:var(--bad-btn)}
+@keyframes fbpop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+
+/* end of a lesson: a party */
+#lesson.party{background:var(--party)}
+#lesson.party .end{position:relative;color:#fff;gap:14px}
+.end-bg{position:absolute;left:50%;top:-20px;width:560px;height:460px;margin-left:-280px;pointer-events:none}
+.end-bg .ray{fill:#fff;opacity:.08}
+#lesson.party .end>*:not(.end-bg){position:relative}
+#lesson.party .end h2{color:#fff;font-size:36px;line-height:1.1}
+#lesson.party .end .mascot{width:168px;height:168px}
+#lesson.party .end .sub{color:#E7EBFF}
+#lesson.party .goalhit{color:#FFD45A}
+#lesson.party .goalhit.qdone{color:#BFE4FF}
+.end-h{display:flex;flex-direction:column;gap:2px}
+.end-sub{margin:0;font-weight:800;color:#E7EBFF}
+#lesson.party .es{border-width:3px;background:var(--surface)}
+#lesson.party .es.y{border-color:#FFD45A} #lesson.party .es.y>span{background:#FFD45A;color:#5A3B00}
+#lesson.party .es.g{border-color:#7BE0A6} #lesson.party .es.g>span{background:#7BE0A6;color:#0B4A26}
+#lesson.party .es.b{border-color:#8FD3FF} #lesson.party .es.b>span{background:#8FD3FF;color:#0A4470}
+#lesson.party .es>span{text-transform:none;letter-spacing:0;font-size:14px}
+.end-day{width:100%;max-width:420px;background:var(--surface);color:var(--ink);border-radius:20px;padding:12px 16px;display:flex;flex-direction:column;gap:10px;box-shadow:0 5px 0 rgba(0,0,0,.2);text-align:start}
+.ed-row{display:flex;align-items:center;gap:12px}
+.ed-row+.ed-row{border-top:2px solid var(--line);padding-top:10px}
+.ed-tg{width:46px;height:46px;flex:none}
+.ed-fl{width:46px;height:46px;flex:none;color:var(--flame);display:grid;place-items:center}
+.ed-fl svg{width:42px;height:42px}
+.ed-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.ed-t b{font-family:var(--display);font-size:18px;line-height:1.15}
+.ed-t small{color:var(--muted);font-weight:700}
+.ed-week{border:0;padding:0;justify-content:space-between;gap:2px}
+.ed-week .day{width:auto;flex:1;font-size:11px;gap:2px}
+.ed-week .day i{width:22px;height:22px}
+.ed-week .day.on i::after{width:8px;height:5px;border-width:0 0 2.5px 2.5px}
+#lesson.party #cont{background:#fff;color:var(--primary-deep);box-shadow:0 5px 0 rgba(0,0,0,.25)}
+.end-again{color:#fff;font-weight:800;background:none;border:0;padding:10px;font-size:16px;font-family:var(--body)}
+:root[data-theme="dark"] #lesson.party #cont{background:var(--primary);color:#fff;box-shadow:0 5px 0 var(--primary-deep)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) #lesson.party #cont{background:var(--primary);color:#fff;box-shadow:0 5px 0 var(--primary-deep)} }
+
+/* Samling: picture cards to collect */
+#collection{z-index:19;overflow-y:auto;overscroll-behavior:contain}
+.col-entry{position:relative;display:flex;align-items:center;gap:12px;width:100%;margin-top:14px;padding:12px 14px;border:2px solid var(--line);border-bottom-width:5px;border-radius:20px;background:var(--surface);color:var(--ink);text-align:start}
+.col-entry:active{transform:translateY(3px);border-bottom-width:2px}
+.ce-cards{position:relative;width:88px;height:60px;flex:none}
+.ce-cards .mini{position:absolute;top:2px;width:44px;height:56px;border-radius:10px;border:2.5px solid #FFBA19;border-bottom-width:4px;background:#FFF4D1;display:grid;place-items:center}
+.ce-cards .mini .pic{width:32px;height:32px}
+.ce-cards .mini:nth-child(1){left:0;transform:rotate(-10deg)} .ce-cards .mini:nth-child(2){left:22px;z-index:1} .ce-cards .mini:nth-child(3){left:44px;transform:rotate(10deg);z-index:2}
+.ce-cards .mini.off{border:2.5px dashed var(--chip-line);background:var(--lock)} .ce-cards .mini.off .pic{filter:brightness(0);opacity:.15}
+.ce-t{flex:1;min-width:0;display:flex;flex-direction:column}
+.ce-t b{font-family:var(--display);font-size:21px;line-height:1.1}
+.ce-t small{color:var(--muted);font-size:15px}
+.ce-new{position:absolute;top:-11px;right:14px;padding:2px 10px;border-radius:12px;background:var(--pink);color:#fff;font-weight:900;font-size:13px;box-shadow:0 0 0 3px var(--bg)}
+.ce-go{flex:none;color:var(--muted);display:grid} .ce-go svg{width:20px;height:20px}
+.col-lead{margin:12px 0 0}
+.col-prog{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.cp-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.cp-row b{font-family:var(--display);font-size:19px}
+.cp-row span{color:var(--gold-deep);font-weight:900}
+.cp-bar{height:14px;border-radius:7px;background:var(--line);overflow:hidden}
+.cp-bar i{display:block;height:100%;min-width:14px;border-radius:7px;background:var(--gold)}
+.col-chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:14px -16px 0;padding:2px 16px 8px}
+.col-chips::-webkit-scrollbar{display:none}
+.col-chip{flex:none;height:40px;padding:0 15px;border:2px solid var(--chip-line);border-bottom-width:4px;border-radius:20px;background:var(--chip);color:var(--ink);font-family:var(--display);font-weight:800;font-size:16px}
+.col-chip[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);border-bottom-color:var(--primary-deep);color:#fff}
+.col-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 10px;margin-top:8px}
+.ccard{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;padding:10px 4px 8px;border-radius:18px;border:3px solid var(--cf);border-bottom:7px solid var(--cfd);background:var(--surface);color:var(--ink);font:inherit}
+.ccard.t1{--cf:#E09A5E;--cfd:#B5652A;--cp:#FBE7D6;--cs:#B5652A}
+.ccard.t2{--cf:#B8C0D9;--cfd:#8D96B8;--cp:#EEF1FA;--cs:#8D96B8}
+.ccard.t3{--cf:#FFBA19;--cfd:#C98A06;--cp:#FFF4D1;--cs:#E09F0A}
+.cc-pic{width:78%;max-width:84px;aspect-ratio:1/1;border-radius:16px;background:var(--cp);display:grid;place-items:center}
+.cc-pic .pic{width:80%;height:80%}
+.ccard b{font-family:var(--display);font-size:16px;line-height:1.2;max-width:100%;overflow-wrap:anywhere;text-align:center}
+.cc-stars{display:flex;gap:1px;color:var(--chip-line)} .cc-stars span{display:grid} .cc-stars span.on{color:var(--cs)} .cc-stars svg{width:14px;height:14px}
+.cc-new{position:absolute;top:-10px;right:-6px;z-index:1;padding:1px 8px;border-radius:10px;background:var(--pink);box-shadow:0 3px 0 var(--pink-deep);transform:rotate(8deg);color:#fff;font-family:var(--display);font-size:13px;font-weight:800}
+.ccard.t0{border:3px dashed var(--chip-line);background:var(--lock)}
+.ccard.t0 .cc-pic{background:none} .ccard.t0 .pic{filter:brightness(0);opacity:.13}
+.ccard.t0 b{color:var(--lock-ink)} .ccard.t0 small{color:var(--muted);font-size:12px;font-weight:800}
+.ccard:not(.t0):active{transform:translateY(3px);border-bottom-width:4px}
+.ccard.hop{animation:hop .4s ease-out}
+:root[data-theme="dark"] .ccard.t0 .pic{filter:brightness(0) invert(1);opacity:.12}
+:root[data-theme="dark"] .ccard.t1{--cp:#F6DCC4;--cs:#E09A5E;--cfd:#9C5420} :root[data-theme="dark"] .ccard.t2{--cp:#DCE2FF;--cs:#B8C0D9;--cfd:#5E6688} :root[data-theme="dark"] .ccard.t3{--cp:#FFF0C2;--cs:#FFC94A;--cfd:#A9740A}
+:root[data-theme="dark"] .ce-cards .mini.off .pic{filter:brightness(0) invert(1);opacity:.15}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ccard.t0 .pic,:root:not([data-theme="light"]) .ce-cards .mini.off .pic{filter:brightness(0) invert(1);opacity:.12}
+  :root:not([data-theme="light"]) .ccard.t1{--cp:#F6DCC4;--cs:#E09A5E;--cfd:#9C5420} :root:not([data-theme="light"]) .ccard.t2{--cp:#DCE2FF;--cs:#B8C0D9;--cfd:#5E6688} :root:not([data-theme="light"]) .ccard.t3{--cp:#FFF0C2;--cs:#FFC94A;--cfd:#A9740A} }
+@media (prefers-reduced-motion: reduce){ .fb-ok h3,.ccard.hop{animation:none} }
 </style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0}</style>
 </head>
@@ -991,6 +1166,7 @@ canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
     <button class="brand" id="brand" aria-label="Maslawi: go to Learn"></button>
     <div class="stats">
       <button class="stat c-flame" id="st-streak"></button>
+      <button class="stat c-tea" id="st-goal"></button>
       <button class="stat c-gem" id="st-gems"></button>
       <button class="stat c-heart" id="st-hearts"></button>
       <button class="gear" id="gear" aria-label="Settings"></button>
@@ -1009,6 +1185,7 @@ canvas.confetti{position:fixed;inset:0;pointer-events:none;z-index:40}
 <div class="overlay" id="letters" role="dialog" aria-label="Arabic letters" hidden></div>
 <div class="overlay" id="grammar" role="dialog" aria-label="Grammar in a minute" hidden></div>
 <div class="overlay" id="verbs" role="dialog" aria-label="Verb tables" hidden></div>
+<div class="overlay" id="collection" role="dialog" aria-label="Collection" hidden></div>
 
 <script>
 /* ================= ACCOUNTS CONFIG =================
@@ -2855,7 +3032,7 @@ const fmtMonth=d=>new Date(d).toLocaleDateString(isSv()?"sv-SE":"en-GB",{month:"
 
 const I={
   flame:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5c1.2 4.5 6 6.3 6 12.3a6 6 0 0 1-12 0c0-3 1.4-4.8 2.6-6 .2 2 1.2 3.1 2.3 3.6-.1-4 .3-7.3 1.1-9.9z"/><path d="M12 22a3 3 0 0 1-3-3c0-1.7 1.2-2.7 2-3.6.3 1 .8 1.5 1.4 1.7.4-1 .6-2.1.6-3.1 1.2 1 2 2.6 2 4.4a3 3 0 0 1-3 3.6z" fill="#FFE0A3"/></svg>',
-  gem:'<svg viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9z" fill="currentColor"/><path d="M2 9h20M8 3l-2 6 6 13 6-13-2-6" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.3" stroke-linejoin="round"/></svg>',
+  gem:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#E2A65A"/><circle cx="12" cy="12" r="6.6" fill="#C27A35"/><path d="M12 9.1a2.9 2.9 0 1 1-2.9 2.9a1.45 1.45 0 0 1 2.9 0" fill="none" stroke="#F6D39A" stroke-width="1.7" stroke-linecap="round"/><circle cx="6.4" cy="8.6" r=".9" fill="#F6D39A"/><circle cx="17.7" cy="15.6" r=".9" fill="#F6D39A"/></svg>',
   heart:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.5-9.2C1 8.2 3.2 4.5 6.8 4.5c2.1 0 3.7 1.2 5.2 3 1.5-1.8 3.1-3 5.2-3 3.6 0 5.8 3.7 4.3 7.3C19.5 16.4 12 21 12 21z"/><ellipse cx="7.5" cy="8.5" rx="2" ry="1.3" fill="#fff" opacity=".45" transform="rotate(-30 7.5 8.5)"/></svg>',
   bolt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2 4 13.5h6.5L9.5 22 20 9.5h-6.5z"/></svg>',
   star:'<svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2.5l2.8 6 6.6.7-5 4.5 1.4 6.5L12 16.9l-5.8 3.3 1.4-6.5-5-4.5 6.6-.7z"/></svg>',
@@ -2867,6 +3044,11 @@ const I={
   target:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" opacity=".25"/><circle cx="12" cy="12" r="6.5" opacity=".55"/><circle cx="12" cy="12" r="3"/></svg>',
   ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
 };
+/* the day's goal is a glass of tea that fills up as you earn XP (kleicha are Iraqi date cookies: the app's coins) */
+let TGN=0;
+const TG_PATH="M6.6 4.2h10.8l-1.3 6.6c-.3 1.5 1.3 2.6 1.3 4.4 0 3.3-2.6 6.4-5.4 6.4s-5.4-3.1-5.4-6.4c0-1.8 1.6-2.9 1.3-4.4z";
+function teaGlass(frac,cls){ const id="tg"+(++TGN), f=Math.max(0,Math.min(1,frac||0)), top=(4.6+(1-f)*16.6).toFixed(1);
+  return `<svg class="${cls||"tg"}" viewBox="0 0 24 24" aria-hidden="true"><defs><clipPath id="${id}"><path d="${TG_PATH}"/></clipPath></defs><path d="${TG_PATH}" fill="var(--tg-glass,#EEF2FF)"/><rect x="4" y="${top}" width="16" height="20" fill="#DE5A1F" clip-path="url(#${id})"/><path d="${TG_PATH}" fill="none" stroke="var(--tg-edge,#8A93C2)" stroke-width="1.5" stroke-linejoin="round"/><path d="M6.2 4.2h11.6" stroke="#FFBA19" stroke-width="2.2" stroke-linecap="round"/>${f>=1?'<path d="M10 2.9c-.9-.9.5-1.4 0-2.2M14 2.9c-.8-.8.4-1.2 0-1.9" stroke="#B9C1E4" stroke-width="1.1" fill="none" stroke-linecap="round"/>':""}</svg>`; }
 function chestSvg(state){ /* state: locked | ready | open */
   const body=state==="locked"?"var(--lock)":"#C9822E", lid=state==="locked"?"var(--lock-deep)":"#A7621A", band=state==="locked"?"var(--lock-deep)":"var(--gold)";
   if(state==="open") return `<svg viewBox="0 0 66 58"><rect x="6" y="26" width="54" height="28" rx="6" fill="${body}"/><path d="M6 26 12 8h42l6 18z" fill="${lid}" opacity=".65"/><rect x="6" y="34" width="54" height="5" fill="${band}"/><path d="M33 22l2 4 4 .4-3 2.6 1 4-4-2.2-4 2.2 1-4-3-2.6 4-.4z" fill="var(--gold)"/></svg>`;
@@ -3280,7 +3462,7 @@ function todayCard(){
   const qtxt=claim?tt(`${claim} reward${claim>1?"s":""} to claim!`,`${claim} ${claim>1?"belöningar":"belöning"} att hämta!`):doneN===qs.length?tt("All done. New quests tomorrow","Allt klart. Nya uppdrag i morgon"):tt(`${doneN} of ${qs.length} done today`,`${doneN} av ${qs.length} klara i dag`);
   return `<div class="hello">
     <div class="hello-row">
-      <div class="gring${p>=1?" full":""}" role="img" aria-label="${tt(`${Math.min(x,g)} of ${g} XP today`,`${Math.min(x,g)} av ${g} XP i dag`)}"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="${R}" class="gr-bg"/><circle cx="26" cy="26" r="${R}" class="gr-fg" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-p)).toFixed(1)}" transform="rotate(-90 26 26)"/></svg><span>${p>=1?I.ok:I.bolt}</span></div>
+      <div class="gring${p>=1?" full":""}" role="img" aria-label="${tt(`${Math.min(x,g)} of ${g} XP today`,`${Math.min(x,g)} av ${g} XP i dag`)}">${teaGlass(p,"tg-big")}</div>
       <div class="hello-t"><b>${greet()}${name?", "+esc(name):""}!</b><span>${p>=1?tt("You reached today's goal. Mashallah!","Du har nått dagens mål. Mashallah!"):tt(`${g-x} XP to reach today's goal`,`${g-x} XP kvar till dagens mål`)}</span></div>
     </div>
     ${contBtn()}
@@ -3290,52 +3472,62 @@ function todayCard(){
 }
 function questsSheet(){
   const left=24-new Date().getHours(), qs=QUESTS.map(questInfo), all=qs.every(q=>q.claimed);
-  sheet(`<div class="sh-head"><div><h2 class="sec">${tt("Daily quests","Dagliga uppdrag")}</h2><p class="sub">${all?tt("All done. Mashallah!","Allt klart. Mashallah!"):tt("Finish a quest to win gems.","Klara ett uppdrag för att vinna diamanter.")} ${tt(`New quests in ${left} hour${left===1?"":"s"}.`,`Nya uppdrag om ${left} ${left===1?"timme":"timmar"}.`)}</p></div>${mascot(all?"cheer":"happy","sh-m")}</div>
-  <div class="stack">${qs.map(x=>{ const [col,ic]=qLook(x.q.id); return `<div class="card quest"><span class="qbadge" style="--qc:${col}">${ic}</span><div class="q-body"><h3>${esc(x.title)}</h3><div class="pbar"><i style="width:${x.v/x.goal*100}%"></i><span>${x.v} / ${x.goal}</span></div></div>${x.done&&!x.claimed?`<button class="btn gold qclaim" data-q="${x.q.id}">${tt("Claim","Hämta")}</button>`:`<span class="qrew${x.claimed?" got":""}" aria-label="${x.claimed?tt("Claimed","Hämtad"):x.q.gems+tt(" gems"," diamanter")}">${x.claimed?I.ok:I.gem+`<b>${x.q.gems}</b>`}</span>`}</div>`; }).join("")}</div>
-  <div class="sh-btns"><button class="btn ghost wide blue" id="qs-shop">${tt("Gem shop","Diamantbutik")}</button><button class="btn wide" data-close>${tt("Done","Klar")}</button></div>`);
-  document.querySelectorAll("#sheet .qclaim").forEach(b=>b.onclick=()=>{ const q=QUESTS.find(x=>x.id===b.dataset.q); if(!q||S.q.claimed[q.id]) return; S.q.claimed[q.id]=true; S.gems+=q.gems; save(); sWin(); confetti(); refreshTop(); render(); questsSheet(); toast(tt(`+${q.gems} gems`,`+${q.gems} diamanter`)); });
+  sheet(`<div class="sh-head"><div><h2 class="sec">${tt("Daily quests","Dagliga uppdrag")}</h2><p class="sub">${all?tt("All done. Mashallah!","Allt klart. Mashallah!"):tt("Finish a quest to win kleicha.","Klara ett uppdrag för att vinna kleicha.")} ${tt(`New quests in ${left} hour${left===1?"":"s"}.`,`Nya uppdrag om ${left} ${left===1?"timme":"timmar"}.`)}</p></div>${mascot(all?"cheer":"happy","sh-m")}</div>
+  <div class="stack">${qs.map(x=>{ const [col,ic]=qLook(x.q.id); return `<div class="card quest"><span class="qbadge" style="--qc:${col}">${ic}</span><div class="q-body"><h3>${esc(x.title)}</h3><div class="pbar"><i style="width:${x.v/x.goal*100}%"></i><span>${x.v} / ${x.goal}</span></div></div>${x.done&&!x.claimed?`<button class="btn gold qclaim" data-q="${x.q.id}">${tt("Claim","Hämta")}</button>`:`<span class="qrew${x.claimed?" got":""}" aria-label="${x.claimed?tt("Claimed","Hämtad"):x.q.gems+" kleicha"}">${x.claimed?I.ok:I.gem+`<b>${x.q.gems}</b>`}</span>`}</div>`; }).join("")}</div>
+  <div class="sh-btns"><button class="btn ghost wide blue" id="qs-shop">${tt("Kleicha shop","Kleichabutiken")}</button><button class="btn wide" data-close>${tt("Done","Klar")}</button></div>`);
+  document.querySelectorAll("#sheet .qclaim").forEach(b=>b.onclick=()=>{ const q=QUESTS.find(x=>x.id===b.dataset.q); if(!q||S.q.claimed[q.id]) return; S.q.claimed[q.id]=true; S.gems+=q.gems; save(); sWin(); confetti(); refreshTop(); render(); questsSheet(); toast(`+${q.gems} kleicha`); });
   $("#qs-shop").onclick=()=>{ sTap(); shopSheet(); };
 }
 function ringSvg(frac){ const R=44, C=+(2*Math.PI*R).toFixed(1), f=Math.max(.06,Math.min(1,frac)); return `<svg class="pring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="${R}" class="pr-bg"/><circle cx="50" cy="50" r="${R}" class="pr-fg" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-f)).toFixed(1)}" transform="rotate(-90 50 50)"/></svg>`; }
 const TRAIL={top:76,step:122,amp:70,half:110,afterTalk:44};
+/* the Tigris: one smooth line through the levels, flowing under the sign above and on under the next one */
+function riverD(pts,H){ const T=TRAIL, X=x=>T.half+x;
+  let d=`M${X(0)} -40 C${X(0)} ${pts[0][1]/2} ${X(pts[0][0])} ${pts[0][1]/2} ${X(pts[0][0])} ${pts[0][1]}`;
+  for(let k=1;k<pts.length;k++){ const [x0,y0]=pts[k-1],[x1,y1]=pts[k], m=(y0+y1)/2; d+=` C${X(x0)} ${m} ${X(x1)} ${m} ${X(x1)} ${y1}`; }
+  const [xl,yl]=pts[pts.length-1], m=(yl+H)/2; return d+` C${X(xl)} ${m} ${X(0)} ${m} ${X(0)} ${H+40}`; }
 function unitPath(u,ui,cur,withMascot){
   const items=PATH.filter(p=>p.unit===ui), n=items.length, dir=ui%2?-1:1, T=TRAIL;
   const off=k=>Math.round(dir*T.amp*Math.sin(Math.PI*k/(n-.5)));
   const lessonsN=items.filter(p=>p.k==="lesson").length, doneN=items.filter(p=>p.k==="lesson"&&S.done[LESSONS[p.i].id]).length;
   const ys=[]; items.reduce((y,p)=>{ ys.push(y); return y+T.step+(p.k==="lesson"&&LESSONS[p.i].chat?T.afterTalk:0); },T.top);
   const H=ys[n-1]+66+34;
-  let nodes="", pts=[], reach=-1;
+  let nodes="", pts=[], curK=-1;
   items.forEach((p,k)=>{
     const x=off(k), y=ys[k]; pts.push([x,y+31]);
     if(p.k==="lesson"){
       const L0=LESSONS[p.i], done=!!S.done[L0.id], open=lessonOpen(p.i), isCur=p.i===cur;
-      if(done||isCur) reach=k;
+      if(isCur) curK=k;
       const st=done?"done":isCur?"cur":open?"open":"locked";
       nodes+=`<div class="pn${isCur?" pn-cur":""}" style="top:${y}px;--x:${x}px">${isCur?`<span class="start">${S.lessons?tt("Start","Starta"):tt("Start here","Börja här")}</span>${ringSvg(doneN/lessonsN)}`:""}<button class="node ${st}${L0.chat?" talk":""}" data-l="${p.i}" ${isCur?'id="cur-node"':""} style="--uc:${u.color}" aria-label="${L0.chat?tt("Conversation: ","Samtal: ")+esc(tx(L0.title)):tt("Lesson","Lektion")}${done?tt(", done",", klar"):st==="locked"?tt(", locked",", låst"):""}">${done?I.check:L0.chat?I.chat:I.star}</button>${L0.chat?`<span class="nlabel">${esc(tx(L0.title))}</span>`:""}</div>`;
     } else {
       const st=S.chests[p.id]?"open":chestReady(ui)?"ready":"locked";
-      if(st!=="locked") reach=k;
       nodes+=`<div class="pn" style="top:${y}px;--x:${x}px">${st==="ready"?`<span class="start">${tt("Open me","Öppna mig")}</span>`:""}<button class="node chest ${st}" data-c="${p.id}" data-u="${ui}" aria-label="${tt("Treasure chest","Skattkista")}${st==="locked"?tt(", locked",", låst"):st==="open"?tt(", opened",", öppnad"):""}">${chestSvg(st)}</button></div>`;
     }
   });
-  const seg=(a,b)=>{ let d=`M${T.half+pts[a][0]} ${pts[a][1]}`; for(let k=a+1;k<=b;k++){ const [x0,y0]=pts[k-1],[x1,y1]=pts[k], m=(y0+y1)/2; d+=` C${T.half+x0} ${m} ${T.half+x1} ${m} ${T.half+x1} ${y1}`; } return d; };
-  const full=seg(0,n-1);
-  const trail=`<svg class="trail-svg" width="${T.half*2}" height="${H}" viewBox="0 0 ${T.half*2} ${H}" aria-hidden="true"><path d="${full}" class="tr-base"/>${reach>0?`<path d="${seg(0,reach)}" class="tr-done" style="stroke:${u.color}"/>`:""}<path d="${full}" class="tr-dots"/></svg>`;
-  const side=dir>0?"l":"r";
-  const lm=`<div class="lmk lmk-${side}" style="top:${ys[1]+31-70}px">${landmarkSvg(ui)}</div>`;
+  /* the river bends to one side, so the other bank is free for the landmark, flowers and Istikan */
+  const side=dir>0?"l":"r", fx=dir>0?-1:1;
+  let deco="";
+  for(let k=0;k<n-1;k++){ const [x0,y0]=pts[k],[x1,y1]=pts[k+1], wx=T.half+(x0+x1)/2+(k%2?9:-11), wy=Math.round((y0+y1)/2); deco+=`<path class="rv-wave" d="M${wx-8} ${wy} q4 -4 8 0 t8 0"/>`; }
+  for(let k=0;k<n;k++){ const y=ys[k]+(k%2?78:16), x=T.half+fx*(122+((k*37+ui*23)%34));
+    deco+=k%3===1?`<path class="rv-tuft" d="M${x} ${y} l-3 -7 M${x} ${y} l0 -9 M${x} ${y} l3 -7"/>`:`<circle class="rv-fl${(k+ui)%2?" b":""}" cx="${x}" cy="${y}" r="3.3"/><circle class="rv-flc" cx="${x}" cy="${y}" r="1.4"/>`; }
+  const d=riverD(pts,H);
+  const trail=`<svg class="trail-svg" width="${T.half*2}" height="${H}" viewBox="0 0 ${T.half*2} ${H}" aria-hidden="true"><path d="${d}" class="rv-bank"/><path d="${d}" class="rv-water"/><path d="${d}" class="rv-hi"/>${deco}</svg>`;
+  const mTop=withMascot?(curK>=0?Math.max(0,ys[curK]-88):ys[n-1]-62):null;
+  const lmTop=[1,0,...ys.keys()].filter((k,i,a)=>k<n&&a.indexOf(k)===i).map(k=>Math.max(0,ys[k]-39)).find(t=>t+136<=H+16&&(mTop===null||t+136<mTop-6||t>mTop+184));
+  const lm=lmTop==null?"":`<div class="lmk lmk-${side}" style="top:${lmTop}px">${landmarkSvg(ui)}</div>`;
   let mas="";
-  if(withMascot){ const ln=mascotLines()[MLI%mascotLines().length]; mas=`<div class="pm pm-${side}" style="top:${ys[n-1]-62}px"><div class="pm-say" id="pm-say" aria-live="polite"><b>${esc(ln.t)}</b><span>${esc(ln.e)}</span></div><button class="pm-btn" id="pm-btn" aria-label="${tt("Tap Istikan to hear a phrase","Tryck på Istikan för att höra en fras")}">${mascot("wave","pm-svg")}</button></div>`; }
+  if(withMascot){ const ln=mascotLines()[MLI%mascotLines().length], top=mTop; mas=`<div class="pm pm-${side}" style="top:${top}px"><div class="pm-say" id="pm-say" aria-live="polite"><b>${esc(ln.t)}</b><span>${esc(ln.e)}</span></div><button class="pm-btn" id="pm-btn" aria-label="${tt("Tap Istikan to hear a phrase","Tryck på Istikan för att höra en fras")}">${mascot("wave","pm-svg")}</button></div>`; }
   return `<div class="trail" style="height:${H}px">${trail}${lm}${mas}${nodes}</div>`;
 }
 function renderLearn(el){
   const cur=LESSONS.findIndex(l=>!S.done[l.id]);
   const mUnit=cur>=0?LESSONS[cur].unit:UNITS.length-1;
   const lockedU=UNITS.map((u,ui)=>ui).filter(ui=>!LESSONS.some((l,i)=>l.unit===ui&&lessonOpen(i))), jumpU=lockedU.filter(ui=>ui===lockedU[0]||SECTION_START.includes(ui));
-  let h=todayCard();
+  let h=`<div class="sky">${todayCard()}<svg class="hills" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true"><path class="h1" d="M0 20 Q60 2 120 16 T240 12 T400 10 V36 H0Z"/><path class="h2" d="M0 30 Q90 20 190 27 T400 25 V36 H0Z"/></svg></div>`;
   UNITS.forEach((u,ui)=>{
     if(SECTION_START.includes(ui)) h+=`<div class="sdiv"><div><span>${tt("Section","Del")} ${secOf(ui)+1}</span><b>${esc(tx(SECTIONS[secOf(ui)]||"More Maslawi"))}</b></div></div>`;
     const unitOpen=LESSONS.some((l,i)=>l.unit===ui&&lessonOpen(i)), unitDone=LESSONS.filter(l=>l.unit===ui).every(l=>S.done[l.id]);
-    h+=`<section class="usec" data-u="${ui}"><div class="ub ${u.cls}${unitOpen?"":" locked"}"><div class="ub-t"><small>${unitDone?`${I.check}${tt(`Unit ${ui+1} done`,`Enhet ${ui+1} klar`)}`:tt(`Unit ${ui+1}`,`Enhet ${ui+1}`)}</small><h2>${esc(u.title)}</h2></div>${jumpU.includes(ui)?`<button class="ub-jump" data-j="${ui}">${tt("Jump here","Hoppa hit")}</button>`:""}<button class="ub-g" data-g="${ui}" aria-label="${tt(`Guidebook for unit ${ui+1}`,`Guide för enhet ${ui+1}`)}">${I.book}</button></div>${unitPath(u,ui,cur,ui===mUnit)}</section>`;
+    h+=`<section class="usec${ui>mUnit?" fog":""}" data-u="${ui}" style="--uc:${u.color}"><div class="ub ${u.cls}${unitOpen?"":" locked"}"><div class="ub-t"><small>${unitDone?`${I.check}${tt(`Unit ${ui+1} done`,`Enhet ${ui+1} klar`)}`:tt(`Unit ${ui+1}`,`Enhet ${ui+1}`)}</small><h2>${esc(u.title)}</h2></div>${jumpU.includes(ui)?`<button class="ub-jump" data-j="${ui}">${tt("Jump here","Hoppa hit")}</button>`:""}<button class="ub-g" data-g="${ui}" aria-label="${tt(`Guidebook for unit ${ui+1}`,`Guide för enhet ${ui+1}`)}">${I.book}</button></div>${unitPath(u,ui,cur,ui===mUnit)}</section>`;
   });
   h+=`<div class="more">${mascot("happy","more-m")}<b>${tt("More of Mosul is on the way","Mer från Mosul är på väg")}</b><span>${tt("New units are added regularly. Keep your streak going in the meantime.","Nya enheter läggs till hela tiden. Håll din svit vid liv under tiden.")}</span></div>`;
   if(canReview()) h+=`<p class="proto">${tt("Reviewer note: every phrase is a draft for a native speaker to check in Settings.","Granskare: varje fras är ett utkast som någon som pratar maslawi ska kolla under Inställningar.")}</p>`;
@@ -3386,7 +3578,7 @@ function nodePop(btn,i){
 }
 function chestPop(btn,u){
   const opened=!!S.chests[UNITS[u].chest];
-  placePop(btn,opened?`<b class="np-h">${tt("Chest opened","Kistan är öppnad")}</b><p class="np-s">${tt("You already collected these gems. Mashallah!","Du har redan hämtat de här diamanterna. Mashallah!")}</p>`:`<b class="np-h">${tt("Treasure chest","Skattkista")}</b><p class="np-s">${tt("Finish every level in this unit to open it and win 20 gems.","Klara alla nivåer i enheten för att öppna den och vinna 20 diamanter.")}</p>`,"np-locked");
+  placePop(btn,opened?`<b class="np-h">${tt("Chest opened","Kistan är öppnad")}</b><p class="np-s">${tt("You already collected this kleicha. Mashallah!","Du har redan hämtat kleichan. Mashallah!")}</p>`:`<b class="np-h">${tt("Treasure chest","Skattkista")}</b><p class="np-s">${tt("Finish every level in this unit to open it and win 20 kleicha.","Klara alla nivåer i enheten för att öppna den och vinna 20 kleicha.")}</p>`,"np-locked");
 }
 /* floating button that jumps back to your next lesson */
 let JUMP_OBS=null;
@@ -3829,6 +4021,7 @@ function renderWords(el){
     :weak&&ok?practiceTile("p-fresh",tt("Freshen up","Fräscha upp"),tt(`${weak} word${weak>1?"s":""} getting rusty`,`${weak} ord börjar rosta`),"t-teal",PICONS.fresh)
     :practiceTile("p-none",ok?tt("All fresh","Allt fräscht"):tt("Fix mistakes","Rätta misstag"),ok?tt("No mistakes to fix","Inga misstag att rätta"):tt("Nothing to fix yet","Inget att rätta än"),"t-done",PICONS.ok,true);
   let h=`<section class="whero">${mascot(learned.length?"happy":"wave","wh-m")}<div class="wh-t"><b class="wh-n">${learned.length}</b><span>${tt(learned.length===1?"word learned":"words learned",learned.length===1?"inlärt ord":"inlärda ord")}</span><div class="pbar"><i style="width:${(learned.length/total*100).toFixed(1)}%"></i><span>${tt(`${learned.length} of ${total}`,`${learned.length} av ${total}`)}</span></div><small>${!learned.length?tt("Finish a lesson to start your collection.","Klara en lektion för att börja din samling."):weak?tt(`${weak} could use some practice`,`${weak} behöver övas`):tt("All your words are fresh","Alla dina ord är fräscha")}</small></div></section>
+  ${colEntry()}
   ${guideCards()}
   <h2 class="sec">${tt("Practise","Öva")}</h2>
   <div class="pgrid">
@@ -3849,7 +4042,7 @@ function renderWords(el){
   <div id="wlist" aria-live="polite">${wordList("")}</div>`;
   el.innerHTML=h;
   const go=(id,f)=>{ const b=$(id); if(b) b.onclick=()=>{sTap();f();}; };
-  go("#p-mist",startReview); go("#p-fresh",startFreshen); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters); go("#open-grammar",()=>openGrammar()); go("#open-verbs",openVerbs); go("#p-dict",startDictation);
+  go("#p-mist",startReview); go("#p-fresh",startFreshen); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters); go("#open-grammar",()=>openGrammar()); go("#open-verbs",openVerbs); go("#p-dict",startDictation); go("#open-col",openCollection);
   const wc=$("#wotd"); if(wc) wc.onclick=()=>{ wc.classList.toggle("flipped"); sTap(); };
   drawSgSection(); const had=SG.approved; loadApproved().then(()=>{ if(SG.approved!==had&&el.isConnected) drawSgSection(); });
   drawQaSection(); const hadQ=QA.answered; loadAnswered().then(()=>{ if(QA.answered!==hadQ&&el.isConnected) drawQaSection(); });
@@ -4054,12 +4247,12 @@ function renderProfile(el){
   el.querySelectorAll(".wk-col").forEach(c=>{ const show=()=>{ tip.textContent=c.dataset.tip; tip.hidden=false; const pr=c.parentElement.getBoundingClientRect(), r=c.getBoundingClientRect(); tip.style.left=Math.max(0,Math.min(pr.width-tip.offsetWidth,r.left-pr.left+r.width/2-tip.offsetWidth/2))+"px"; }; c.onmouseenter=show; c.onfocus=show; c.onclick=show; c.onmouseleave=()=>{tip.hidden=true;}; c.onblur=()=>{tip.hidden=true;}; });
 }
 
-/* ================= TOP-BAR SHEETS: streak, gem shop, hearts ================= */
+/* ================= TOP-BAR SHEETS: streak, kleicha shop, hearts ================= */
 function shopItems(){
   const f=S.freeze||0, canF=S.gems>=50&&f<2, canH=S.gems>=30&&S.hearts<5;
   return `<div class="stack">
-    <div class="card shop-item"><span class="shop-ic ice">${SNOW}</span><div class="q-body"><h3>${tt("Streak freeze","Svitskydd")}</h3><p>${tt(`Keeps your streak safe if you miss a day. You have ${f} of 2.`,`Skyddar din svit om du missar en dag. Du har ${f} av 2.`)}</p></div><button class="btn buy" id="buy-freeze" ${canF?"":"disabled"} aria-label="${tt("Buy a streak freeze for 50 gems","Köp ett svitskydd för 50 diamanter")}">${I.gem}50</button></div>
-    <div class="card shop-item"><span class="shop-ic hearts">${I.heart}</span><div class="q-body"><h3>${tt("Refill hearts","Fyll på hjärtan")}</h3><p>${S.hearts>=5?tt("Your hearts are already full.","Dina hjärtan är redan fulla."):tt("Get all 5 hearts back right away.","Få tillbaka alla 5 hjärtan direkt.")}</p></div><button class="btn buy" id="buy-hearts" ${canH?"":"disabled"} aria-label="${tt("Refill hearts for 30 gems","Fyll på hjärtan för 30 diamanter")}">${I.gem}30</button></div>
+    <div class="card shop-item"><span class="shop-ic ice">${SNOW}</span><div class="q-body"><h3>${tt("Streak freeze","Svitskydd")}</h3><p>${tt(`Keeps your streak safe if you miss a day. You have ${f} of 2.`,`Skyddar din svit om du missar en dag. Du har ${f} av 2.`)}</p></div><button class="btn buy" id="buy-freeze" ${canF?"":"disabled"} aria-label="${tt("Buy a streak freeze for 50 kleicha","Köp ett svitskydd för 50 kleicha")}">${I.gem}50</button></div>
+    <div class="card shop-item"><span class="shop-ic hearts">${I.heart}</span><div class="q-body"><h3>${tt("Refill hearts","Fyll på hjärtan")}</h3><p>${S.hearts>=5?tt("Your hearts are already full.","Dina hjärtan är redan fulla."):tt("Get all 5 hearts back right away.","Få tillbaka alla 5 hjärtan direkt.")}</p></div><button class="btn buy" id="buy-hearts" ${canH?"":"disabled"} aria-label="${tt("Refill hearts for 30 kleicha","Fyll på hjärtan för 30 kleicha")}">${I.gem}30</button></div>
   </div>`;
 }
 function wireShop(after){
@@ -4068,7 +4261,7 @@ function wireShop(after){
   const bh=$("#buy-hearts"); if(bh) bh.onclick=()=>{ if(S.gems<30||S.hearts>=5) return; S.gems-=30; S.hearts=5; done(tt("Hearts refilled.","Hjärtana är påfyllda.")); };
 }
 function shopSheet(){
-  sheet(`<div class="sh-head"><div><h2 class="sec">${tt("Gem shop","Diamantbutik")}</h2><p class="sub">${tt("Win gems from daily quests, chests and perfect lessons.","Vinn diamanter med dagliga uppdrag, kistor och perfekta lektioner.")}</p></div><span class="gembal" aria-label="${tt(`You have ${S.gems} gems`,`Du har ${S.gems} diamanter`)}">${I.gem}${S.gems}</span></div>
+  sheet(`<div class="sh-head"><div><h2 class="sec">${tt("Kleicha shop","Kleichabutiken")}</h2><p class="sub">${tt("Win kleicha from daily quests, chests and perfect lessons.","Vinn kleicha med dagliga uppdrag, kistor och perfekta lektioner.")}</p></div><span class="gembal" aria-label="${tt(`You have ${S.gems} kleicha`,`Du har ${S.gems} kleicha`)}">${I.gem}${S.gems}</span></div>
   ${shopItems()}<button class="btn wide" data-close>${tt("Done","Klar")}</button>`);
   wireShop();
 }
@@ -4081,14 +4274,14 @@ function streakSheet(){
   sheet(`<div class="ss-top"><span class="ss-flame${on?"":" off"}">${I.flame}</span><div><b class="ss-n">${S.streak}</b><span>${tt("day streak","dagar i rad")}</span></div></div>
   <div class="week">${weekDots()}</div>
   <p class="sub" style="margin:0;text-align:center">${on?tt("You practised today. Come back tomorrow to keep it going!","Du har övat i dag. Kom tillbaka i morgon så håller du sviten i gång!"):S.streak?tt("Finish a lesson today to keep your streak.","Klara en lektion i dag för att behålla din svit."):tt("Finish a lesson today to start a streak.","Klara en lektion i dag för att starta en svit.")}</p>
-  <div class="card shop-item"><span class="shop-ic ice">${SNOW}</span><div class="q-body"><h3>${tt(`Streak freezes: ${f} of 2`,`Svitskydd: ${f} av 2`)}</h3><p>${tt("A freeze saves your streak if you miss a day.","Ett svitskydd räddar din svit om du missar en dag.")}</p></div>${f<2?`<button class="btn buy" id="buy-freeze" ${S.gems>=50?"":"disabled"} aria-label="${tt("Buy a streak freeze for 50 gems","Köp ett svitskydd för 50 diamanter")}">${I.gem}50</button>`:""}</div>
+  <div class="card shop-item"><span class="shop-ic ice">${SNOW}</span><div class="q-body"><h3>${tt(`Streak freezes: ${f} of 2`,`Svitskydd: ${f} av 2`)}</h3><p>${tt("A freeze saves your streak if you miss a day.","Ett svitskydd räddar din svit om du missar en dag.")}</p></div>${f<2?`<button class="btn buy" id="buy-freeze" ${S.gems>=50?"":"disabled"} aria-label="${tt("Buy a streak freeze for 50 kleicha","Köp ett svitskydd för 50 kleicha")}">${I.gem}50</button>`:""}</div>
   <button class="btn wide" data-close>${tt("Got it","Uppfattat")}</button>`);
   wireShop(streakSheet);
 }
 function heartsSheet(){
   const h=S.hearts, can=S.gems>=30, prac=learnedWords().length>=4;
   sheet(`<div class="hs-top"><div class="hs-row" role="img" aria-label="${tt(`${h} of 5 hearts`,`${h} av 5 hjärtan`)}">${[0,1,2,3,4].map(i=>`<span class="${i<h?"on":""}">${I.heart}</span>`).join("")}</div><h2 class="sec">${h>=5?tt("Your hearts are full","Dina hjärtan är fulla"):h?tt(`You have ${h} heart${h>1?"s":""} left`,`Du har ${h} ${h>1?"hjärtan":"hjärta"} kvar`):tt("You're out of hearts","Hjärtana är slut")}</h2><p class="sub">${tt("You lose a heart for each mistake in a lesson. Practice and conversations are free, and your hearts refill every day.","Du förlorar ett hjärta för varje misstag i en lektion. Övningar och samtal är gratis, och hjärtana fylls på varje dag.")}</p></div>
-  ${h<5?`<button class="btn wide" id="hs-refill" ${can?"":"disabled"}>${tt("Refill for 30 gems","Fyll på för 30 diamanter")}</button>${prac?`<button class="btn ghost wide blue" id="hs-prac">${tt("Practise to earn a heart","Öva för att få ett hjärta")}</button>`:""}`:""}
+  ${h<5?`<button class="btn wide" id="hs-refill" ${can?"":"disabled"}>${tt("Refill for 30 kleicha","Fyll på för 30 kleicha")}</button>${prac?`<button class="btn ghost wide blue" id="hs-prac">${tt("Practise to earn a heart","Öva för att få ett hjärta")}</button>`:""}`:""}
   <button class="btn ${h<5?"ghost ":""}wide" data-close>${h<5?tt("Not now","Inte nu"):tt("Got it","Uppfattat")}</button>`);
   const r=$("#hs-refill"); if(r) r.onclick=()=>{ if(S.gems<30) return; S.gems-=30; S.hearts=5; save(); sWin(); toast(tt("Hearts refilled.","Hjärtana är påfyllda.")); refreshTop(); render(); heartsSheet(); };
   const p=$("#hs-prac"); if(p) p.onclick=()=>{ $("#sheet").hidden=true; $("#sheet").innerHTML=""; startPractice(); };
@@ -4108,7 +4301,7 @@ const GUIDE=[
 const READ_EN=[["ee","a long ee, as in “see”","rkhis"],["oo","a long oo, as in “food”","issooq"],["aa","a long aa, as in “father”","baadein"],["il-","means “the”: is-sooq is “the market”","issooq"]];
 const READ_SV=[["j","som j i engelska ”jeans”","jiddi"],["y","som j i ”ja”","yalla"],["sh","som sh i engelska ”shop”, ungefär som sj","shukran"],["ch","som ch i engelska ”chips”","chay"],["w","som w i engelska ”water”","wen"],["z","ett surrande s, som z i engelska ”zoo”","zen"],["ee","ett långt i, som i ”vit”","rkhis"],["oo","ett långt o, som i ”bo”","issooq"],["aa","ett långt a, som i ”glas”","baadein"]];
 function panelOpen(id,draw){ const el=$(id); el._ret=document.activeElement; el.hidden=false; el.classList.remove("slide-out"); el.classList.add("slide-in"); document.body.style.overflow="hidden"; draw(); const b=el.querySelector(".set-head .x"); if(b) b.focus(); }
-function panelClose(id){ const el=$(id); if(el.hidden) return; el.classList.remove("slide-in"); el.classList.add("slide-out"); let done=false; const fin=()=>{ if(done) return; done=true; el.hidden=true; el.classList.remove("slide-out"); el.innerHTML=""; if(["#settings","#guide","#letters","#grammar","#verbs"].every(q=>$(q).hidden)){ document.body.style.overflow=""; const r=el._ret; if(r&&document.contains(r)) r.focus({preventScroll:true}); } }; el.addEventListener("animationend",fin,{once:true}); setTimeout(fin,320); }
+function panelClose(id){ const el=$(id); if(el.hidden) return; el.classList.remove("slide-in"); el.classList.add("slide-out"); let done=false; const fin=()=>{ if(done) return; done=true; el.hidden=true; el.classList.remove("slide-out"); el.innerHTML=""; if(["#settings","#guide","#letters","#grammar","#verbs","#collection"].every(q=>$(q).hidden)){ document.body.style.overflow=""; const r=el._ret; if(r&&document.contains(r)) r.focus({preventScroll:true}); } }; el.addEventListener("animationend",fin,{once:true}); setTimeout(fin,320); }
 function openGuide(){ if(!S.guideSeen){ S.guideSeen=true; save(); } document.querySelectorAll('.gb-new[data-new="guide"]').forEach(x=>x.remove()); panelOpen("#guide",drawGuide); }
 const closeGuide=()=>panelClose("#guide");
 function drawGuide(){
@@ -4233,7 +4426,7 @@ function exLWord(e){
   shell(`<h2 class="q">${tt("Read this word","Läs det här ordet")}</h2><div class="lt-q lt-word" lang="ar">${w.ar}</div><div class="opts">${opts(list,k=>`<span class="say">${esc(W[k].tr)}</span>`)}</div>`,footCheck());
   wireChoices((p,b)=>{ const ok=list[p]===e.w; b[p].classList.add(ok?"ok":"no"); b[list.indexOf(e.w)].classList.add("ok"); verdict(ok,esc(e.ans)); if(S.sound) speak(e.w,true); });
 }
-document.addEventListener("keydown",e=>{ if(e.key!=="Escape"||!$("#sheet").hidden||!$("#lesson").hidden) return; if(!$("#letters").hidden) closeLetters(); else if(!$("#guide").hidden) closeGuide(); else if(!$("#grammar").hidden) closeGrammar(); else if(!$("#verbs").hidden) closeVerbs(); });
+document.addEventListener("keydown",e=>{ if(e.key!=="Escape"||!$("#sheet").hidden||!$("#lesson").hidden) return; if(!$("#letters").hidden) closeLetters(); else if(!$("#guide").hidden) closeGuide(); else if(!$("#grammar").hidden) closeGrammar(); else if(!$("#verbs").hidden) closeVerbs(); else if(!$("#collection").hidden) closeCollection(); });
 
 /* the 8 verb tables (audio lives in extra-audio.json, keys V_<verb>_<past|now>_<person>) */
 const PRON=[["ana", "I", "jag"], ["inta", "you (man)", "du (man)"], ["inti", "you (woman)", "du (kvinna)"], ["huwwa", "he", "han"], ["hiyya", "she", "hon"], ["nihna", "we", "vi"], ["intum", "you (all)", "ni"], ["humma", "they", "de"]];
@@ -4415,6 +4608,54 @@ function guideCards(){
     +`</div>`;
 }
 
+/* ================= SAMLING: picture cards to collect =================
+   Every word with a picture is a card. You get it when you learn the word; it turns silver when you
+   know the word on two different days and gold after three (S.okd counts the days). */
+const CARD_CATS=[
+  ["food","Food","Mat",["khubuz","chay","may","kubba","timman","laban","dolma","kabab","keik"]],
+  ["animals","Animals","Djur",["bazzoona","kalb","teyr","dijaaja","samak","ghanam"]],
+  ["home","At home","Hemma",["beit","baabw","kursi","meiz","shibbaak","tilifizyon","thallaaja","jarraw","mobaayil"]],
+  ["town","In town","Staden",["kaneesa","madrasa","mustashfa","sayyara","jisir"]],
+  ["clothes","Clothes","Kläder",["qameez","pantaroon","qundara","jaakeit","fustaan","shafqa","jwaarib"]],
+  ["body","Body and health","Kropp och hälsa",["einw","eed","rijil","dawa"]],
+  ["party","Celebrations","Fest",["hadiyya","shajara","mihbas","beidmlawwan"]],
+  ["travel","Travel","Resa",["tayyaara","jawaaz","junta","bitaaqa","taksi"]],
+  ["weather","Weather and time","Väder och tid",["shamis","matar","leil","subuh"]],
+  ["colours","Colours","Färger",["ahmar","azraq","akhdar","asfar","abyad","aswad"]],
+];
+const cardKeys=()=>CARD_CATS.flatMap(c=>c[3]).filter(hasPic);
+const STARC='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3.2l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 17l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg>';
+let COLF="all", COL_NEW=new Set();
+function cardTier(k,learned){ if(!learned.has(k)) return 0; const o=S.okd&&S.okd[k], n=o?(o.n||0):0; return n>=3?3:n>=2?2:1; }
+/* a card is yours once the word is learned in a lesson, or once you have got it right (mai/water is only ever asked, never introduced) */
+function cardUnit(k){ const u=unitOf(k); if(u>=0) return u; const l=LESSONS.find(l=>l.ex.some(e=>e.w===k||(e.ws||[]).includes(k))); return l?l.unit:-1; }
+function colStats(){ const learned=new Set([...learnedWords(),...Object.keys(S.seen||{}).filter(k=>W[k])]), ks=cardKeys(), got=ks.filter(k=>learned.has(k)); return {ks,learned,got,gold:got.filter(k=>cardTier(k,learned)===3).length,fresh:got.filter(k=>!(S.colSeen||{})[k])}; }
+function colEntry(){
+  const c=colStats(), show=c.got.length?c.got.slice(-3):c.ks.slice(0,3);
+  return `<button class="col-entry" id="open-col"><span class="ce-cards" aria-hidden="true">${show.map(k=>`<span class="mini${c.got.includes(k)?"":" off"}">${picSvg(k)}</span>`).join("")}</span><span class="ce-t"><b>${tt("Collection","Samling")}</b><small>${tt(`${c.got.length} of ${c.ks.length} picture cards`,`${c.got.length} av ${c.ks.length} bildkort`)}</small></span>${c.fresh.length?`<span class="ce-new">${tt(`${c.fresh.length} new`,`${c.fresh.length} nya`)}</span>`:""}<span class="ce-go" aria-hidden="true">${CHEV}</span></button>`;
+}
+function openCollection(){ const c=colStats(); COL_NEW=new Set(c.fresh); if(c.fresh.length){ S.colSeen=Object.assign({},S.colSeen,Object.fromEntries(c.fresh.map(k=>[k,1]))); save(); } panelOpen("#collection",drawCollection); }
+function closeCollection(){ panelClose("#collection"); if(tab==="words") render(); }
+function drawCollection(){
+  const el=$("#collection"); if(!el||el.hidden) return;
+  const c=colStats(), cats=[["all","All","Allt"],...CARD_CATS];
+  const list=COLF==="all"?c.ks:((CARD_CATS.find(x=>x[0]===COLF)||[])[3]||c.ks).filter(hasPic);
+  const tierName=t=>[tt("not found yet","inte hittat än"),tt("bronze card","bronskort"),tt("silver card","silverkort"),tt("gold card","guldkort")][t];
+  const card=k=>{ const t=cardTier(k,c.learned);
+    if(!t){ const u=cardUnit(k); return `<div class="ccard t0" role="img" aria-label="${tt("A card you haven't found yet","Ett kort du inte har hittat än")}"><span class="cc-pic">${picSvg(k)}</span><b>?</b><small>${u>=0?tt(`Unit ${u+1}`,`Enhet ${u+1}`):tt("Soon","Snart")}</small></div>`; }
+    return `<button class="ccard t${t}" data-k="${k}" aria-label="${esc(W[k].tr)}: ${esc(W[k].en)}. ${tierName(t)}">${COL_NEW.has(k)?`<span class="cc-new">${tt("New!","Nytt!")}</span>`:""}<span class="cc-pic">${picSvg(k)}</span><b>${esc(W[k].tr)}</b><span class="cc-stars" aria-hidden="true">${[1,2,3].map(i=>`<span class="${i<=t?"on":""}">${STARC}</span>`).join("")}</span></button>`; };
+  el.innerHTML=`<div class="set-in col-in">
+    <div class="set-head"><button class="x" id="col-back" aria-label="${tt("Close","Stäng")}">${BACK}</button><h1>${tt("Collection","Samling")}</h1></div>
+    <p class="sub col-lead">${tt("Learn a word, get its card. A card turns silver when you know the word on two different days, and gold after three.","Lär dig ett ord, få kortet. Kortet blir silver när du kan ordet två olika dagar, och guld efter tre.")}</p>
+    <div class="col-prog"><div class="cp-row"><b>${tt(`${c.got.length} of ${c.ks.length} cards`,`${c.got.length} av ${c.ks.length} kort`)}</b><span>${tt(`${c.gold} gold`,`${c.gold} i guld`)}</span></div><div class="cp-bar" role="img" aria-label="${tt(`${c.got.length} of ${c.ks.length} cards`,`${c.got.length} av ${c.ks.length} kort`)}"><i style="width:${(c.got.length/c.ks.length*100).toFixed(1)}%"></i></div></div>
+    <div class="col-chips" role="group" aria-label="${tt("Categories","Kategorier")}">${cats.map(x=>`<button class="col-chip" data-f="${x[0]}" aria-pressed="${COLF===x[0]}">${tt(x[1],x[2])}</button>`).join("")}</div>
+    <div class="col-grid">${list.map(card).join("")}</div>
+  </div>`;
+  $("#col-back").onclick=()=>{ sTap(); closeCollection(); };
+  el.querySelectorAll(".col-chip").forEach(b=>b.onclick=()=>{ sTap(); COLF=b.dataset.f; const y=el.scrollTop, cx=el.querySelector(".col-chips").scrollLeft; drawCollection(); el.scrollTop=y; el.querySelector(".col-chips").scrollLeft=cx; const nb=el.querySelector(`.col-chip[data-f="${COLF}"]`); if(nb) nb.focus({preventScroll:true}); });
+  el.querySelectorAll(".ccard[data-k]").forEach(b=>b.onclick=()=>{ const k=b.dataset.k; speak(k); b.classList.remove("hop"); void b.offsetWidth; b.classList.add("hop"); toast(`${W[k].tr} = ${W[k].en}`); });
+}
+
 /* ================= MOTION ================= */
 const TAB_ORDER=["learn","words","league","profile"];
 function moveTabInd(){ const ind=$("#tab-ind"); if(ind) ind.style.transform=`translateX(${Math.max(0,TAB_ORDER.indexOf(tab))*100}%)`; }
@@ -4425,13 +4666,15 @@ function hop(sel,cls){ const m=document.querySelector(sel); if(!m) return; m.cla
 /* ================= SHELL ================= */
 let PREV_TOP=null;
 function refreshTop(){
-  const st=document.querySelectorAll(".top .stat"), now=[S.streak,S.gems,S.hearts];
+  const g=S.goal||20, x=Math.min((S.q&&S.q.xp)||0,g);
+  const st=[$("#st-streak"),$("#st-goal"),$("#st-gems"),$("#st-hearts")], now=[S.streak,x,S.gems,S.hearts];
   if(PREV_TOP) now.forEach((v,i)=>{ if(v!==PREV_TOP[i]){ st[i].classList.remove("bump"); void st[i].offsetWidth; st[i].classList.add("bump"); } });
   PREV_TOP=now;
   st[0].innerHTML=`<span class="${S.lastDay===today()?"":"dim"}" style="display:flex">${I.flame}</span>${S.streak}`;
-  st[1].innerHTML=I.gem+S.gems;
-  st[2].innerHTML=I.heart+S.hearts;
-  st[0].setAttribute("aria-label",tt(`${S.streak} day streak`,`${S.streak} dagar i rad`)); st[1].setAttribute("aria-label",tt(`${S.gems} gems. Open the gem shop`,`${S.gems} diamanter. Öppna diamantbutiken`)); st[2].setAttribute("aria-label",tt(`${S.hearts} hearts`,`${S.hearts} hjärtan`));
+  st[1].innerHTML=teaGlass(x/g)+`<span class="tg-n">${x}<small>/${g}</small></span>`;
+  st[2].innerHTML=I.gem+S.gems;
+  st[3].innerHTML=I.heart+S.hearts;
+  st[0].setAttribute("aria-label",tt(`${S.streak} day streak`,`${S.streak} dagar i rad`)); st[1].setAttribute("aria-label",tt(`Today's goal: ${x} of ${g} XP. Open the daily quests`,`Dagens mål: ${x} av ${g} XP. Öppna dagens uppdrag`)); st[2].setAttribute("aria-label",tt(`${S.gems} kleicha. Open the kleicha shop`,`${S.gems} kleicha. Öppna kleichabutiken`)); st[3].setAttribute("aria-label",tt(`${S.hearts} hearts`,`${S.hearts} hjärtan`));
 }
 const TABS=[
   ["learn","Learn",'<svg viewBox="0 0 28 28"><path d="M4 13 14 4l10 9v10a2 2 0 0 1-2 2h-5v-7h-6v7H6a2 2 0 0 1-2-2z" fill="#F7901E"/><path d="M11 25v-7h6v7" fill="#B4560B"/></svg>',"Lär dig"],
@@ -4442,12 +4685,12 @@ const TABS=[
 function drawTabs(){
   $("#tabs").innerHTML='<span class="tab-ind" id="tab-ind" aria-hidden="true"></span>'+TABS.map(([k,n,svg,sv])=>`<button class="tab" data-tab="${k}" aria-current="${k===tab}">${svg}${tt(n,sv)}</button>`).join("");
   document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{sTap();setTab(b.dataset.tab);});
-  $("#tabs").parentElement.setAttribute("aria-label",tt("Sections","Avsnitt")); $("#gear").setAttribute("aria-label",tt("Settings","Inställningar")); $("#brand").setAttribute("aria-label",tt("Maslawi: go to Learn","Maslawi: till Lär dig")); [["#settings","Settings","Inställningar"],["#guide","Sound guide","Ljudguide"],["#letters","Arabic letters","Arabiska bokstäver"],["#grammar","Grammar in a minute","Grammatik på en minut"],["#verbs","Verb tables","Verbtabeller"]].forEach(([q,e,v])=>{ const o=$(q); if(o) o.setAttribute("aria-label",tt(e,v)); });
+  $("#tabs").parentElement.setAttribute("aria-label",tt("Sections","Avsnitt")); $("#gear").setAttribute("aria-label",tt("Settings","Inställningar")); $("#brand").setAttribute("aria-label",tt("Maslawi: go to Learn","Maslawi: till Lär dig")); [["#settings","Settings","Inställningar"],["#guide","Sound guide","Ljudguide"],["#letters","Arabic letters","Arabiska bokstäver"],["#grammar","Grammar in a minute","Grammatik på en minut"],["#verbs","Verb tables","Verbtabeller"],["#collection","Collection","Samling"]].forEach(([q,e,v])=>{ const o=$(q); if(o) o.setAttribute("aria-label",tt(e,v)); });
   moveTabInd();
 }
 $("#gear").innerHTML=GEAR; $("#gear").onclick=()=>{ sTap(); openSettings(); };
 $("#brand").innerHTML=logoMark()+"<b>Maslawi</b>"; $("#brand").onclick=()=>{ sTap(); if(tab!=="learn") setTab("learn"); else window.scrollTo({top:0,behavior:reduced?"auto":"smooth"}); };
-$("#st-streak").onclick=()=>{ sTap(); streakSheet(); }; $("#st-gems").onclick=()=>{ sTap(); shopSheet(); }; $("#st-hearts").onclick=()=>{ sTap(); heartsSheet(); };
+$("#st-streak").onclick=()=>{ sTap(); streakSheet(); }; $("#st-goal").onclick=()=>{ sTap(); questsSheet(); }; $("#st-gems").onclick=()=>{ sTap(); shopSheet(); }; $("#st-hearts").onclick=()=>{ sTap(); heartsSheet(); };
 let tab="learn";
 function setTab(t){ const from=TAB_ORDER.indexOf(tab), to=TAB_ORDER.indexOf(t); tab=t; document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-current",String(b.dataset.tab===t))); moveTabInd(); render(); window.scrollTo(0,0); if(t==="learn"){ scrollToCur(); requestAnimationFrame(scrollToCur); } playIn($("#screen"),to>=from?"enter-r":"enter-l"); }
 /* like Duolingo: the Learn page opens at the level you are on, not at the top */
@@ -4460,7 +4703,7 @@ function chestReady(u){return LESSONS.filter(l=>l.unit===u).every(l=>S.done[l.id
 function openChest(id,u){
   if(S.chests[id]||!chestReady(u)) return;
   S.chests[id]=true; S.gems+=20; save(); sWin(); confetti(); refreshTop(); render();
-  sheet(`<div style="text-align:center">${chestSvg("open").replace("<svg",'<svg style="width:120px;height:104px"')}<h2 class="sec" style="margin:6px 0">${tt("You found 20 gems!","Du hittade 20 diamanter!")}</h2><p class="sub" style="margin:0">${tt("Spend them in the gem shop. Tap your gems at the top.","Använd dem i diamantbutiken. Tryck på dina diamanter högst upp.")}</p></div><button class="btn wide" data-close>${tt("Continue","Fortsätt")}</button>`);
+  sheet(`<div style="text-align:center">${chestSvg("open").replace("<svg",'<svg style="width:120px;height:104px"')}<h2 class="sec" style="margin:6px 0">${tt("You found 20 kleicha!","Du hittade 20 kleicha!")}</h2><p class="sub" style="margin:0">${tt("Spend them in the kleicha shop. Tap your kleicha at the top.","Använd dem i kleichabutiken. Tryck på din kleicha högst upp.")}</p></div><button class="btn wide" data-close>${tt("Continue","Fortsätt")}</button>`);
 }
 function guidebook(u){
   const U=UNITS[u], ws=[...new Set(LESSONS.filter(l=>l.unit===u).flatMap(l=>l.ex.filter(e=>e.t==="intro").map(e=>e.w)))];
@@ -4584,11 +4827,11 @@ async function pushLeague(){
     catch(e){ if(!lgMissing(e)) throw e; }
   }
 }
-function render(){ refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
+function render(){ document.body.classList.toggle("map",tab==="learn"); refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
 
 /* ================= LESSON PLAYER ================= */
 let L=null;
-function openOverlay(){ const o=$("#lesson"), was=o.hidden; o.hidden=false; document.body.style.overflow="hidden"; if(was) playIn(o,"rise"); }
+function openOverlay(){ const o=$("#lesson"), was=o.hidden; o.classList.remove("party"); o.hidden=false; document.body.style.overflow="hidden"; if(was) playIn(o,"rise"); }
 function closeLesson(){ $("#lesson").hidden=true; $("#lesson").innerHTML=""; const lt=$("#letters"), inLt=lt&&!lt.hidden; document.body.style.overflow=inLt?"hidden":""; L=null; render(); if(inLt){ drawLetters(); const b=lt.querySelector(".lt-go:not(:disabled)"); if(b) b.focus({preventScroll:true}); } if(SCROLL_CUR){ SCROLL_CUR=false; const c=$("#cur-node"); if(c&&tab==="learn") c.scrollIntoView({block:"center"}); } else if(!inLt) scrollToCur(); }
 /* ================= PICTURE WORDS =================
    Small flat pictures for everyday words, so a word links to a picture instead of to
@@ -4710,8 +4953,8 @@ function startPractice(){
 }
 /* ---- mistakes: words you got wrong come back until you get them right twice ---- */
 function mistakeKeys(){ return Object.keys(S.mist||{}).filter(k=>W[k]); }
-function miss(k){ if(!k||!W[k]) return; S.mist=S.mist||{}; if(!S.mist[k]&&L) L.missed=(L.missed||0)+1; S.mist[k]=2; }
-function hit(k){ seen(k); if(S.mist&&S.mist[k]){ S.mist[k]--; if(S.mist[k]<=0) delete S.mist[k]; } }
+function miss(k){ if(!k||!W[k]) return; S.mist=S.mist||{}; if(!S.mist[k]&&L) L.missed=(L.missed||0)+1; S.mist[k]=2; S.okd=S.okd||{}; const o=S.okd[k]; if(o&&(o.d!==today()||!o.m)) S.okd[k]={n:Math.max(0,(o.n||0)-1),d:today(),m:1}; }
+function hit(k){ seen(k); if(S.mist&&S.mist[k]){ S.mist[k]--; if(S.mist[k]<=0) delete S.mist[k]; } if(!k||!W[k]) return; S.okd=S.okd||{}; const o=S.okd[k]||{n:0,d:""}; if(o.d!==today()) S.okd[k]={n:(o.n||0)+1,d:today()}; }
 const plainEn=k=>W[k].en.replace(/\s*\(.*?\)/g,"").trim();
 function matchSet(keys){ const out=[], seenE=new Set(), seenT=new Set(); for(const k of keys){ const e=plainEn(k).toLowerCase(), t=W[k].tr; if(seenE.has(e)||seenT.has(t)||out.includes(PAIR[k])) continue; seenE.add(e); seenT.add(t); out.push(k); if(out.length===4) break; } return out; }
 function accFor(k){ const out=[]; [W[k].en0,SV_W[k]].filter(Boolean).forEach(m=>{ const e=m.replace(/\s*\(.*?\)/g,"").trim(); out.push(e,...e.split("/").map(x=>x.trim())); }); return out.concat(SV_ACC[k]||[]).filter(Boolean); }
@@ -4731,15 +4974,25 @@ function quitConfirm(){
 }
 function shell(body,foot){
   const pct=Math.round(L.k/L.ex.length*100);
-  $("#lesson").innerHTML=`<div class="l-in"><div class="l-head"><button class="x" id="quit" aria-label="${tt("Quit lesson","Avsluta lektionen")}">${I.x}</button><div class="bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${Math.max(L.pct==null?pct:L.pct,3)}%"></i></div><span class="stat c-heart">${I.heart}${L.lives!=null?L.lives:S.hearts}</span>${L.combo>=3?`<span class="combo">${tt(`${L.combo} in a row!`,`${L.combo} i rad!`)}</span>`:""}</div><div class="l-body ex-in">${body}</div><div class="l-foot" id="foot">${foot}</div></div>`;
+  $("#lesson").innerHTML=`<div class="l-in"><div class="l-head"><button class="x" id="quit" aria-label="${tt("Quit lesson","Avsluta lektionen")}">${I.x}</button><div class="bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${Math.max(L.pct==null?pct:L.pct,3)}%"></i></div>${L.combo>=3?`<span class="combo" aria-label="${tt(`${L.combo} right in a row`,`${L.combo} rätt i rad`)}">${I.flame}${L.combo}</span>`:""}<span class="stat c-heart">${I.heart}${L.lives!=null?L.lives:S.hearts}</span></div><div class="l-body ex-in">${body}</div><div class="l-foot" id="foot">${foot}</div></div>`;
   $("#quit").onclick=quitConfirm;
   L.pct=pct; requestAnimationFrame(()=>requestAnimationFrame(()=>{ const b=$("#lesson .bar i"); if(b) b.style.width=Math.max(pct,3)+"%"; }));
 }
 const footCheck=()=>`<button class="btn ghost" id="skip">${tt("Skip","Hoppa över")}</button><button class="btn good" id="check" disabled>${tt("Check","Kontrollera")}</button>`;
+/* praise the way they say it in Mosul */
+function praiseWord(){ const f=isF(), P=[["Afya!","عفية"],["Afya!","عفية"],["Mashallah!","ما شاء الله"],[f?"Ahsanti!":"Ahsant!",f?"أحسنتِ":"أحسنت"],["Zein!","زين"]]; return P[Math.random()*P.length|0]; }
+const STAR8=(x,y,r,c)=>`<g transform="translate(${x} ${y})"><rect x="-${r}" y="-${r}" width="${2*r}" height="${2*r}" fill="${c}"/><rect x="-${r}" y="-${r}" width="${2*r}" height="${2*r}" fill="${c}" transform="rotate(45)"/></g>`;
+const CONFETTI_ROW=`<svg class="fb-confetti" viewBox="0 0 390 40" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${STAR8(34,18,6,"#FFBA19")}<circle cx="80" cy="10" r="5" fill="#EC4C78"/><rect x="118" y="14" width="12" height="6" rx="3" fill="#1E9BFF" transform="rotate(-25 124 17)"/>${STAR8(166,26,5,"#9A5BF5")}<circle cx="208" cy="8" r="4" fill="#FFBA19"/><rect x="242" y="20" width="13" height="6" rx="3" fill="#EC4C78" transform="rotate(30 248 23)"/>${STAR8(290,12,6,"#1E9BFF")}<circle cx="332" cy="26" r="5" fill="#9A5BF5"/><rect x="358" y="8" width="12" height="6" rx="3" fill="#FFBA19" transform="rotate(-35 364 11)"/></svg>`;
+const PARTY_BG=(()=>{ let r=""; for(let i=0;i<12;i++) r+=`<path class="ray" d="M0 0 L-44 -330 L44 -330 Z" transform="rotate(${i*30})"/>`;
+  return `<svg class="end-bg" viewBox="0 0 560 460" aria-hidden="true"><g transform="translate(280 200)">${r}</g>${STAR8(70,80,7,"#FFBA19")}${STAR8(488,110,6,"#EC4C78")}${STAR8(440,280,5,"#22B862")}<circle cx="118" cy="170" r="6" fill="#8FD3FF"/><circle cx="430" cy="52" r="5" fill="#FFBA19"/><circle cx="96" cy="276" r="5" fill="#fff"/><rect x="160" y="52" width="16" height="7" rx="3.5" fill="#EC4C78" transform="rotate(-30 168 55)"/><rect x="392" y="170" width="16" height="7" rx="3.5" fill="#8FD3FF" transform="rotate(35 400 173)"/><rect x="44" y="180" width="16" height="7" rx="3.5" fill="#22B862" transform="rotate(20 52 183)"/><rect x="500" y="220" width="16" height="7" rx="3.5" fill="#fff" transform="rotate(-20 508 223)"/><rect x="270" y="30" width="16" height="7" rx="3.5" fill="#FFBA19" transform="rotate(10 278 33)"/></svg>`; })();
+function endSub(i){ const L0=LESSONS[i], u=UNITS[L0.unit], inUnit=LESSONS.filter(l=>l.unit===L0.unit&&!l.chat), num=inUnit.indexOf(L0)+1;
+  return L0.chat?`${u.title}, ${tt("conversation","samtal")}`:`${u.title}, ${tt(`lesson ${num} of ${inUnit.length}`,`lektion ${num} av ${inUnit.length}`)}`; }
 function verdict(ok,detail,skipped){
   const f=$("#foot"); f.className="l-foot "+(ok?"ok":"no");
-  const praise=tt(["Nicely done!","Great job!","Excellent!","Ahsant!","Amazing!"],["Snyggt!","Bra jobbat!","Utmärkt!","Ahsant!","Grymt!"])[Math.random()*5|0];
-  f.innerHTML=`<div class="fb"><span class="ic" style="color:${ok?"var(--good-btn)":"var(--bad-btn)"}">${ok?I.ok:I.x}</span><div><h3>${ok?praise:tt("Correct solution:","Rätt svar:")}</h3>${detail?`<p>${detail}</p>`:""}</div></div><button class="btn ${ok?"good":"bad"} wide" id="next">${ok?tt("Continue","Fortsätt"):tt("Got it","Uppfattat")}</button>`;
+  const pr=praiseWord(), combo=ok?L.combo+1:0;
+  f.innerHTML=ok
+    ? `${CONFETTI_ROW}<div class="fb fb-ok"><div class="fb-t"><h3><span>${pr[0]}</span><span class="ar" lang="ar">${pr[1]}</span></h3>${detail?`<p>${detail}</p>`:""}${combo>=3?`<span class="fb-combo">${I.flame}${tt(`${combo} right in a row`,`${combo} rätt i rad`)}</span>`:""}</div>${mascot("cheer","fb-m")}</div><button class="btn good wide" id="next">${tt("Continue","Fortsätt")}</button>`
+    : `<div class="fb fb-no"><span class="ic">${I.x}</span><div class="fb-t"><h3>${skipped?tt("Here's the answer","Här är svaret"):tt("Almost!","Nästan!")}</h3>${detail?`<p>${skipped?"":tt("Correct answer:","Rätt svar:")+" "}${detail}</p>`:""}${L.mode!=="jump"?`<small class="fb-again">${tt("It'll come back soon.","Den kommer tillbaka strax.")}</small>`:""}</div></div><button class="btn bad wide" id="next">${tt("OK","Okej")}</button>`;
   if(L.mode!=="jump") [].concat(L.key||[]).forEach(ok?hit:miss); L.key=null;
   if(ok){ L.right++; L.combo++; L.xp+= L.combo>=5?2:1; S.bestCombo=Math.max(S.bestCombo,L.combo); S.q.combo=Math.max(S.q.combo,L.combo); sGood(); }
   else { L.wrong++; L.combo=0; if(!skipped&&!L.practice) S.hearts=Math.max(0,S.hearts-1); sBad(); if(L.mode==="jump"){ L.lives--; const hc=$("#lesson .l-head .c-heart"); if(hc) hc.innerHTML=I.heart+L.lives; } else L.ex.push(L.ex[L.k]); }
@@ -4750,8 +5003,8 @@ function verdict(ok,detail,skipped){
 }
 function noHearts(){
   openOverlay();
-  $("#lesson").innerHTML=`<div class="l-in"><div class="end">${mascot("sad")}<h2 style="color:var(--heart)">${tt("You ran out of hearts!","Hjärtana är slut!")}</h2><p class="sub" style="margin:0">${tt("Hearts refill tomorrow. You can also refill now with gems, or practice old words to win one back.","Hjärtana fylls på i morgon. Du kan också fylla på nu med diamanter, eller öva på gamla ord för att vinna tillbaka ett.")}</p>
-  <button class="btn wide" id="refill" ${S.gems<30?"disabled":""}>${tt(`Refill for 30 gems (you have ${S.gems})`,`Fyll på för 30 diamanter (du har ${S.gems})`)}</button>
+  $("#lesson").innerHTML=`<div class="l-in"><div class="end">${mascot("sad")}<h2 style="color:var(--heart)">${tt("You ran out of hearts!","Hjärtana är slut!")}</h2><p class="sub" style="margin:0">${tt("Hearts refill tomorrow. You can also refill now with kleicha, or practice old words to win one back.","Hjärtana fylls på i morgon. Du kan också fylla på nu med kleicha, eller öva på gamla ord för att vinna tillbaka ett.")}</p>
+  <button class="btn wide" id="refill" ${S.gems<30?"disabled":""}>${tt(`Refill for 30 kleicha (you have ${S.gems})`,`Fyll på för 30 kleicha (du har ${S.gems})`)}</button>
   <button class="btn ghost wide blue" id="prac">${tt("Practice to earn a heart","Öva för att få ett hjärta")}</button>
   <button class="btn ghost wide" id="back">${tt("No thanks","Nej tack")}</button></div></div>`;
   $("#refill").onclick=()=>{S.gems-=30;S.hearts=5;save();closeLesson();};
@@ -4876,6 +5129,7 @@ function finish(){
   S.xp+=gained; S.weekXp+=gained; S.q.xp+=gained; S.lessons++; S.q.lessons++;
   S.hist=S.hist||{}; S.hist[today()]=(S.hist[today()]||0)+gained; Object.keys(S.hist).sort().slice(0,-60).forEach(k=>delete S.hist[k]);
   const goalNow=before<goal&&S.q.xp>=goal&&!S.q.goalHit; if(goalNow){ S.q.goalHit=true; S.gems+=5; }
+  const again=!L.practice&&!L.mode&&L.i>=0, sub=again?endSub(L.i):"", li=L.i, gx=Math.min(S.q.xp,goal);
   if(L.mode==="letters") S.ltr=Object.assign({},S.ltr,{["g"+L.group]:true});
   else if(L.mode==="jump"){ unlockTo(L.target); SCROLL_CUR=true; }
   else if(L.practice) S.hearts=Math.min(5,S.hearts+1);
@@ -4887,14 +5141,17 @@ function finish(){
   const isChat=!L.practice&&LESSONS[L.i].chat, left=mistakeKeys().length;
   const head=L.mode==="jump"?tt("You tested out!","Du klarade testet!"):L.mode==="dict"?tt("Great listening!","Bra lyssnat!"):L.mode==="letters"?tt("Letters learned!","Bokstäverna klara!"):L.review?(left?tt("Review complete!","Repetitionen klar!"):tt("All mistakes fixed!","Alla misstag rättade!")):L.mode==="listen"?tt("Listening done!","Hörövningen klar!"):L.mode==="fresh"?tt("All freshened up!","Allt uppfräschat!"):L.mode==="flash"?tt(`You knew ${L.right} of ${L.right+L.wrong}`,`Du kunde ${L.right} av ${L.right+L.wrong}`):L.practice?tt("Practice complete!","Övningen klar!"):isChat?tt("Conversation complete!","Samtalet klart!"):perfect?tt("Perfect lesson!","Perfekt lektion!"):tt("Lesson complete!","Lektionen klar!");
   const notes=[L.mode==="jump"?tt(`You can start unit ${L.target+1} now.`,`Nu kan du börja med enhet ${L.target+1}.`):L.practice&&L.mode!=="letters"?tt("You won back a heart.","Du vann tillbaka ett hjärta."):"", L.review&&left?tt(`${left} word${left>1?"s":""} still to review.`,`${left} ord kvar att repetera.`):"", !L.review&&L.missed&&L.mode!=="letters"?tt(`${L.missed} word${L.missed>1?"s":""} added to your review list.`,`${L.missed} ord har lagts till i din repetitionslista.`):""].filter(Boolean);
-  $("#lesson").innerHTML=`<div class="l-in"><div class="end">${mascot(perfect||acc>=80?"cheer":"happy")}<h2>${head}</h2>${notes.map(t=>`<p class="sub" style="margin:0">${esc(t)}</p>`).join("")}${goalNow?`<p class="goalhit">${I.bolt.replace("<svg",'<svg width="20" height="20"')}${tt("Daily goal reached! +5 gems","Dagens mål nått! +5 diamanter")}</p>`:""}${newQ.length?`<p class="goalhit qdone">${I.gem.replace("<svg",'<svg width="20" height="20"')}${tt("Quest complete! Claim it on Learn.","Uppdrag klart! Hämta belöningen under Lär dig.")}</p>`:""}
+  $("#lesson").classList.add("party");
+  $("#lesson").innerHTML=`<div class="l-in"><div class="end">${PARTY_BG}${mascot(perfect||acc>=80?"cheer":"happy")}<div class="end-h"><h2>${head}</h2>${sub?`<p class="end-sub">${esc(sub)}</p>`:""}</div>${notes.map(t=>`<p class="sub" style="margin:0">${esc(t)}</p>`).join("")}${newQ.length?`<p class="goalhit qdone">${I.gem.replace("<svg",'<svg width="20" height="20"')}${tt("Quest complete! Claim it on Learn.","Uppdrag klart! Hämta belöningen under Lär dig.")}</p>`:""}
   <div class="endstats"><div class="es y"><span>${tt("Total XP","Totalt XP")}</span><b>${I.bolt.replace("<svg",'<svg width="20" height="20"')}<span class="cnt" data-to="${gained}">0</span></b></div><div class="es g"><span>${acc>=90?tt("Amazing","Grymt"):acc>=70?tt("Good","Bra"):tt("Accuracy","Träffsäkerhet")}</span><b><span class="cnt" data-to="${acc}">0</span>%</b></div><div class="es b"><span>${tt("Quick","Tid")}</span><b>${time}</b></div></div>
-  <button class="btn wide" id="cont" style="max-width:420px">${tt("Continue","Fortsätt")}</button></div></div>`;
+  <div class="end-day"><div class="ed-row">${teaGlass(gx/goal,"ed-tg")}<span class="ed-t"><b>${S.q.xp>=goal?(goalNow?tt("Daily goal reached! +5 kleicha","Dagens mål klart! +5 kleicha"):tt("Daily goal reached!","Dagens mål klart!")):tt(`${goal-gx} XP to today's goal`,`${goal-gx} XP kvar till dagens mål`)}</b><small>${S.q.xp>=goal?tt(`Your tea glass is full: ${gx} of ${goal} XP`,`Teglaset är fullt: ${gx} av ${goal} XP`):tt(`${gx} of ${goal} XP today`,`${gx} av ${goal} XP i dag`)}</small></span></div><div class="ed-row"><span class="ed-fl">${I.flame}</span><span class="ed-t"><b>${tt(`${S.streak} day streak`,`${S.streak} dagar i rad`)}</b><span class="week ed-week">${weekDots()}</span></span></div></div>
+  <button class="btn wide" id="cont" style="max-width:420px">${tt("Continue","Fortsätt")}</button>${again?`<button class="end-again" id="again">${tt("Practise again","Öva en gång till")}</button>`:""}</div></div>`;
   countUp($("#lesson")); $("#cont").focus(); $("#cont").onclick=()=>firstToday?streakScreen():closeLesson();
+  const ag=$("#again"); if(ag) ag.onclick=()=>{ sTap(); startLesson(li); };
   if(L.mode==="jump"&&L.place&&nextSec(L.target)!=null){ const nx=nextSec(L.target); $("#cont").insertAdjacentHTML("afterend",`<button class="btn ghost wide blue" id="jp-more" style="max-width:420px">${tt(`Keep going: jump to unit ${nx+1}`,`Fortsätt: hoppa till enhet ${nx+1}`)}</button>`); $("#jp-more").onclick=()=>{ sTap(); startJump(nx,true); }; }
 }
 function streakScreen(){
-  sWin();
+  sWin(); $("#lesson").classList.remove("party");
   const days=weekDots();
   $("#lesson").innerHTML=`<div class="l-in"><div class="end"><span class="bigflame">${I.flame.replace("<svg",'<svg width="140" height="140"')}</span><div class="streaknum">${S.streak}</div><h2 style="color:var(--flame)">${tt("day streak!","dagar i rad!")}</h2><div class="week">${days}</div><p class="sub" style="margin:0;max-width:32ch">${tt("Practice every day to keep your streak growing.","Öva varje dag så att din svit växer.")}</p><button class="btn wide" id="cont" style="max-width:420px;background:var(--flame);box-shadow:0 4px 0 var(--orange-deep)">${tt("I'm committed","Jag kör på!")}</button>${pushCanAsk()?`<div class="remind-ask" id="rm-ask"><span class="ra-ic" aria-hidden="true">${BELL}</span><span class="ra-t"><b>${tt("Want a reminder?","Vill du ha en påminnelse?")}</b><small>${tt(`A notification at ${pushHour()}:00 on days you haven't practised.`,`En notis kl. ${pushHour()} de dagar du inte har övat.`)}</small></span><span class="ra-b"><button class="btn ghost blue" id="rm-yes">${tt("Remind me","Påminn mig")}</button><button class="linkbtn" id="rm-no">${tt("Not now","Inte nu")}</button></span></div>`:""}</div></div>`;
   $("#cont").focus(); $("#cont").onclick=closeLesson;
@@ -5032,6 +5289,8 @@ function mergeState(a,b){
   r.freeze=Math.max(a.freeze||0,b.freeze||0); r.joined=Math.min(a.joined||Date.now(),b.joined||Date.now());
   r.hist=Object.assign({},b.hist||{}); Object.entries(a.hist||{}).forEach(([k,v])=>{ if(!r.hist[k]||v>r.hist[k]) r.hist[k]=v; }); r.leagueHidden=!!(a.leagueHidden||b.leagueHidden);
   r.mist=Object.assign({},b.mist||{},a.mist||{});
+  r.okd=Object.assign({},b.okd||{}); Object.entries(a.okd||{}).forEach(([k,v])=>{ const o=r.okd[k]; if(!o||(v.d||"")>(o.d||"")||((v.d||"")===(o.d||"")&&(v.n||0)>(o.n||0))) r.okd[k]=v; });
+  r.colSeen=Object.assign({},b.colSeen||{},a.colSeen||{});
   r.seen=Object.assign({},b.seen||{}); Object.entries(a.seen||{}).forEach(([k,t])=>{ if(!r.seen[k]||t>r.seen[k]) r.seen[k]=t; });
   r.onboarded=!!(a.onboarded||b.onboarded); r.ltr=Object.assign({},b.ltr||{},a.ltr||{}); r.guideSeen=!!(a.guideSeen||b.guideSeen); r.seenNew=Object.assign({},b.seenNew||{},a.seenNew||{});
   const tq=[a,b].filter(x=>x.q&&x.q.day===today());
