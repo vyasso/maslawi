@@ -946,6 +946,11 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .pic-opts{grid-template-columns:repeat(2,minmax(0,1fr))}
 .pic-opt{align-items:center;justify-content:center;aspect-ratio:1/1;max-height:150px;padding:10px}
 .pic-opt .pic{width:min(100%,104px);height:auto;aspect-ratio:1/1}
+.pic-big{width:150px;height:150px;margin:4px auto 0;border-radius:32px;background:var(--primary-soft);display:grid;place-items:center}
+.pic-big .pic{width:112px;height:112px}
+:root[data-theme="dark"] .pic-big,:root[data-theme="dark"] .intro-pic,:root[data-theme="dark"] .wr-pic{background:#DCE2FF}
+:root[data-theme="dark"] .pic-opt .pic,:root[data-theme="dark"] .bub-pic,:root[data-theme="dark"] .wf-pic,:root[data-theme="dark"] .qa .pic{background:#DCE2FF;border-radius:14px;padding:5px}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .pic-big,:root:not([data-theme="light"]) .intro-pic,:root:not([data-theme="light"]) .wr-pic{background:#DCE2FF} :root:not([data-theme="light"]) .pic-opt .pic,:root:not([data-theme="light"]) .bub-pic,:root:not([data-theme="light"]) .wf-pic{background:#DCE2FF;border-radius:14px;padding:5px} }
 .bub-pic{width:56px;height:56px;margin:0 auto 4px}
 .wr-pic{width:40px;height:40px;flex:none;border-radius:10px;background:var(--primary-soft);padding:4px}
 .wf-pic{width:44px;height:44px}
@@ -4656,13 +4661,21 @@ function picPool(w,near){
   return [...a,...rest].slice(0,3);
 }
 function withPics(ex){
-  let n=0; const used=new Set();
+  let n=0, nr=0; const used=new Set();
+  const lessonPics=[...new Set(ex.filter(e=>(e.t==="intro"||e.t==="mcq"||e.t==="mcqR")&&hasPic(e.w)).map(e=>e.w))];
   const out=ex.map(e=>{
+    /* "what is this called?": a picture, and the Maslawi words to choose from */
+    if(e.t==="mcqR"&&hasPic(e.w)&&!nr){ const pool=picPool(e.w,[...lessonPics,...(e.pool||[])]); if(pool.length===3){ nr++; used.add(e.w); return {t:"picR",w:e.w,pool}; } }
     if(n>=2||e.t!=="mcq"||!hasPic(e.w)||used.has(e.w)) return e;
     const pool=picPool(e.w,e.pool);
     if(pool.length<3) return e;
     n++; used.add(e.w); return {t:"pic",w:e.w,pool};
   });
+  if(!nr&&lessonPics.length){
+    const w=lessonPics.find(k=>!used.has(k))||lessonPics[0], pool=picPool(w,lessonPics);
+    const last=out.length&&out[out.length-1].t==="match"?out.length-1:out.length;
+    if(pool.length===3&&out.findIndex(e=>e.t==="intro"&&e.w===w)<last-1){ out.splice(last,0,{t:"picR",w,pool}); nr++; }
+  }
   if(!n){
     const at=out.findIndex(e=>e.t==="intro"&&hasPic(e.w));
     if(at>=0){
@@ -4672,6 +4685,12 @@ function withPics(ex){
     }
   }
   return out;
+}
+function exPicR(e){
+  const list=shuffle([e.w,...e.pool]);
+  shell(`<h2 class="q">${tt("What is this called?","Vad heter det här?")}</h2><div class="pic-big" role="img" aria-label="${esc(W[e.w].en)}">${picSvg(e.w)}</div><div class="opts">${list.map((k,i)=>`<button class="opt" data-i="${i}" data-k="${k}" aria-pressed="false"><span class="say">${esc(W[k].tr)}</span>${arSm(k)}</button>`).join("")}</div>`,footCheck());
+  L.key=e.w;
+  wireChoices((p,b)=>{ const ok=list[p]===e.w; b[p].classList.add(ok?"ok":"no"); b[list.indexOf(e.w)].classList.add("ok"); autoSay(e.w); verdict(ok,`${esc(W[e.w].tr)} = ${esc(W[e.w].en)}`); });
 }
 function exPic(e){
   const list=shuffle([e.w,...e.pool]);
@@ -4738,9 +4757,9 @@ function noHearts(){
   $("#prac").onclick=()=>{ if(learnedWords().length>=4){ startPractice(); } else { S.hearts=1; save(); closeLesson(); } };
   $("#back").onclick=closeLesson;
 }
-function step(){ if(L.k>=L.ex.length) return finish(); const e=L.ex[L.k]; ({intro:exIntro,pic:exPic,mcq:exMcq,mcqR:exMcq,reply:exReply,match:exMatch,build:exBuild,type:exType,chat:exChat,listen:exListen,flash:exFlash,dict:exDict,lintro:exLIntro,lpick:exLPick,lhear:exLHear,lword:exLWord})[e.t](e); }
+function step(){ if(L.k>=L.ex.length) return finish(); const e=L.ex[L.k]; ({intro:exIntro,pic:exPic,picR:exPicR,mcq:exMcq,mcqR:exMcq,reply:exReply,match:exMatch,build:exBuild,type:exType,chat:exChat,listen:exListen,flash:exFlash,dict:exDict,lintro:exLIntro,lpick:exLPick,lhear:exLHear,lword:exLWord})[e.t](e); }
 function wireSkip(){ const s=$("#skip"); if(s) s.onclick=()=>{ document.querySelectorAll(".l-body button,.l-body textarea").forEach(b=>b.disabled=true); verdict(false,skipAnswer(),true); }; }
-function skipAnswer(){ const e=L.ex[L.k]; if(e.ans) return esc(e.ans); if(e.t==="build") return esc(((isF()&&e.fem)?e.fem.answer:e.answer).join(" ")); if(e.t==="reply") return esc(W[L.okK||e.ok].tr); if(e.t==="type") return esc(W[e.w].en); if(e.t==="mcqR") return esc(W[e.w].tr); return esc(W[e.w].en); }
+function skipAnswer(){ const e=L.ex[L.k]; if(e.ans) return esc(e.ans); if(e.t==="build") return esc(((isF()&&e.fem)?e.fem.answer:e.answer).join(" ")); if(e.t==="reply") return esc(W[L.okK||e.ok].tr); if(e.t==="type") return esc(W[e.w].en); if(e.t==="mcqR"||e.t==="picR") return esc(W[e.w].tr); return esc(W[e.w].en); }
 
 function exIntro(e){
   const w=W[e.w];
