@@ -20,6 +20,19 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <script>try{var t=(JSON.parse(localStorage.getItem("maslawi-proto-v2")||"{}")||{}).theme;if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<script>/* if something breaks, show what happened (and a reload button) instead of a blank page */
+(function(){ var shown=false;
+  function show(msg){ if(shown) return; shown=true;
+    var sv=/^sv/i.test(document.documentElement.lang||navigator.language||"");
+    var go=function(){ var d=document.createElement("div"); d.id="crash"; d.setAttribute("role","alert");
+      d.style.cssText="position:fixed;left:12px;right:12px;bottom:96px;z-index:99;background:#fff;color:#1E2250;border:2px solid #F2475B;border-radius:16px;padding:12px 14px;font:700 14px/1.35 system-ui,-apple-system,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.2)";
+      d.innerHTML='<b style="display:block;font-size:16px;margin-bottom:4px">'+(sv?"Något gick fel":"Something went wrong")+'</b><span style="display:block;color:#686D95;font-weight:600;word-break:break-word">'+String(msg).replace(/[<>&"]/g,"")+'</span><button style="margin-top:10px;border:0;border-radius:12px;background:#3D57F0;color:#fff;font:800 15px system-ui,sans-serif;padding:10px 14px">'+(sv?"Ladda om":"Reload")+'</button>';
+      d.querySelector("button").onclick=function(){ location.reload(); };
+      document.body.appendChild(d); };
+    if(document.body) go(); else document.addEventListener("DOMContentLoaded",go); }
+  window.addEventListener("error",function(e){ var m=e&&e.message; if(!m||/ResizeObserver|^Script error/i.test(m)) return; show(m+(e.lineno?" (rad "+e.lineno+":"+e.colno+")":"")); });
+  window.__crash=show;
+})();</script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -3646,7 +3659,7 @@ function mascotLines(){ const f=isF(); return [
 const greet=()=>{ const h=new Date().getHours(); return h>=4&&h<12?"Sabah il-kheir":"Masa il-kheir"; };
 const CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
 /* daily quests: open them from the tea glass in the top bar */
-function questInfo(q){ const goal=typeof q.goal==="function"?q.goal():q.goal, title=tx(typeof q.title==="function"?q.title():q.title), v=Math.min(q.get(),goal); return {q,goal,title,v,done:v>=goal,claimed:!!S.q.claimed[q.id]}; }
+function questInfo(q){ const goal=typeof q.goal==="function"?q.goal():q.goal, title=tx(typeof q.title==="function"?q.title():q.title), v=Math.min(q.get(),goal); return {q,goal,title,v,done:v>=goal,claimed:!!(S.q.claimed&&S.q.claimed[q.id])}; }
 const qLook=id=>({xp:["var(--gold)",I.bolt],les:["var(--blue)",BOOK_IC],combo:["var(--pink)",I.target]})[id]||["var(--primary)",I.star];
 function qRing(frac,col){ const R=15.5, C=+(2*Math.PI*R).toFixed(1); return `<svg class="qring" viewBox="0 0 38 38" aria-hidden="true"><circle cx="19" cy="19" r="${R}" fill="none" stroke="var(--line)" stroke-width="4"/><circle cx="19" cy="19" r="${R}" fill="none" stroke="${col}" stroke-width="4" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-Math.max(.04,frac))).toFixed(1)}" transform="rotate(-90 19 19)"/></svg>`; }
 function questIcon(x){
@@ -3731,7 +3744,8 @@ function renderLearn(el){
   const cur=LESSONS.findIndex(l=>!S.done[l.id]);
   const mUnit=cur>=0?LESSONS[cur].unit:UNITS.length-1;
   const lockedU=UNITS.map((u,ui)=>ui).filter(ui=>!LESSONS.some((l,i)=>l.unit===ui&&lessonOpen(i))), jumpU=lockedU.filter(ui=>ui===lockedU[0]||SECTION_START.includes(ui));
-  let h=`<div class="sky"><div id="yl">${yallaStrip()}</div>${todayCard()}${CITY}<svg class="hills" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true"><path class="h1" d="M0 20 Q60 2 120 16 T240 12 T400 10 V36 H0Z"/><path class="h2" d="M0 30 Q90 20 190 27 T400 25 V36 H0Z"/></svg></div>`;
+  let strip=""; try{ strip=yallaStrip(); }catch(e){ console.error(e); }
+  let h=`<div class="sky"><div id="yl">${strip}</div>${todayCard()}${CITY}<svg class="hills" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true"><path class="h1" d="M0 20 Q60 2 120 16 T240 12 T400 10 V36 H0Z"/><path class="h2" d="M0 30 Q90 20 190 27 T400 25 V36 H0Z"/></svg></div>`;
   UNITS.forEach((u,ui)=>{
     if(SECTION_START.includes(ui)) h+=`<div class="sdiv"><div><span>${tt("Section","Del")} ${secOf(ui)+1}</span><b>${esc(tx(SECTIONS[secOf(ui)]||"More Maslawi"))}</b></div></div>`;
     const unitOpen=LESSONS.some((l,i)=>l.unit===ui&&lessonOpen(i)), unitDone=LESSONS.filter(l=>l.unit===ui).every(l=>S.done[l.id]), isNew=ui>0&&ui===mUnit&&unitOpen&&!LESSONS.some(l=>l.unit===ui&&S.done[l.id]);
@@ -3750,7 +3764,8 @@ function renderLearn(el){
     if(lessonOpen(i)) return startLesson(i);
     const n=document.querySelector(`.node[data-l="${i}"]`); if(n) n.scrollIntoView({block:"center",behavior:reduced?"auto":"smooth"}); };
   const pb=$("#pm-btn"); if(pb) pb.onclick=()=>{ MLI++; const ln=mascotLines()[MLI%mascotLines().length]; speak(ln.k,true); const say=$("#pm-say"); say.innerHTML=`<b>${esc(ln.t)}</b><span>${esc(ln.e)}</span>`; pb.classList.remove("jig"); void pb.offsetWidth; pb.classList.add("jig"); };
-  watchJump(); drawBoats(); wireYalla(); loadSocial();
+  watchJump();
+  try{ drawBoats(); wireYalla(); loadSocial(); }catch(e){ console.error(e); }
 }
 
 /* tapping a level shows what's inside before you start */
@@ -5140,7 +5155,7 @@ const TOPICS=[
   {id:"say",en:"Sayings",sv:"Ordspråk",u:[27],c:"#8A6A2E",ic:"quote"},
 ].filter(t=>t.u.every(u=>u<UNITS.length));
 const topicWords=t=>t.w||(t.w=[...new Set(t.u.flatMap(unitWords))].filter(k=>W[k]));
-function wordScore(k,learned){ if(!learned.has(k)) return 0; if(S.mist&&S.mist[k]) return .3; const n=((S.okd||{})[k]||{}).n||0; return n>=3?1:n===2?.8:n===1?.6:.4; }
+function wordScore(k,learned){ if(!learned.has(k)) return 0; if(S.mist&&S.mist[k]) return .3; const n=((S.okd||{})[k]||{}).n||0; return n>=3?1:n===2?0.8:n===1?0.6:0.4; }
 function topicStats(){
   const learned=new Set(learnedWords());
   return TOPICS.map(t=>{ const ws=topicWords(t), got=ws.filter(k=>learned.has(k)), sum=ws.reduce((a,k)=>a+wordScore(k,learned),0), pct=ws.length?Math.round(sum/ws.length*100):0;
@@ -5459,7 +5474,10 @@ async function pushLeague(){
     catch(e){ if(!lgMissing(e)) throw e; }
   }
 }
-function render(){ stopFx(); document.body.classList.toggle("map",tab==="learn"); refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
+function render(){ stopFx(); document.body.classList.toggle("map",tab==="learn"); try{ refreshTop(); }catch(e){ console.error(e); } closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen");
+  try{ ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); }
+  catch(e){ console.error(e); el.innerHTML=`<div class="card stack" style="margin-top:16px;text-align:center"><b style="font-size:18px">${tt("Something went wrong on this page","Något gick fel på den här sidan")}</b><p class="sub" style="margin:0;word-break:break-word">${esc((e&&e.message)||e)}</p><button class="btn wide" id="crash-reload">${tt("Reload","Ladda om")}</button></div>`; const r=$("#crash-reload"); if(r) r.onclick=()=>location.reload(); }
+  try{ renderSettings(); }catch(e){ console.error(e); } }
 
 /* ================= LESSON PLAYER ================= */
 let L=null;
@@ -5919,7 +5937,8 @@ function mergeState(a,b){
   const later=(a.lastDay||"")>(b.lastDay||"")?a:(b.lastDay||"")>(a.lastDay||"")?b:null;
   if(later){ r.streak=later.streak; r.lastDay=later.lastDay; } else r.streak=Math.max(a.streak||0,b.streak||0);
   r.days=[...new Set([...(a.days||[]),...(b.days||[])])].sort().slice(-14);
-  if(a.week===b.week) r.weekXp=Math.max(a.weekXp||0,b.weekXp||0);
+  /* this week, whichever copy is older: a copy saved last week has nothing for this week */
+  const wk=weekId(); r.week=wk; r.weekXp=Math.max(a.week===wk?(a.weekXp||0):0,b.week===wk?(b.weekXp||0):0);
   r.sound=a.sound; r.arabic=a.arabic; r.theme=a.theme; r.lang=a.lang;
   r.push=a.push; r.pushHour=a.pushHour; r.pushAsked=a.pushAsked; r.pushAlerts=a.pushAlerts; /* reminders belong to this phone */
   r.wotdPush=a.wotdPush; r.wotdHour=a.wotdHour; r.pushYalla=a.pushYalla; r.nAsk=a.nAsk; r.boats=a.boats; r.wplan=a.wplan||b.wplan;
