@@ -20,19 +20,6 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <script>try{var t=(JSON.parse(localStorage.getItem("maslawi-proto-v2")||"{}")||{}).theme;if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
-<script>/* if something breaks, show what happened (and a reload button) instead of a blank page */
-(function(){ var shown=false;
-  function show(msg){ if(shown) return; shown=true;
-    var sv=/^sv/i.test(document.documentElement.lang||navigator.language||"");
-    var go=function(){ var d=document.createElement("div"); d.id="crash"; d.setAttribute("role","alert");
-      d.style.cssText="position:fixed;left:12px;right:12px;bottom:96px;z-index:99;background:#fff;color:#1E2250;border:2px solid #F2475B;border-radius:16px;padding:12px 14px;font:700 14px/1.35 system-ui,-apple-system,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.2)";
-      d.innerHTML='<b style="display:block;font-size:16px;margin-bottom:4px">'+(sv?"Något gick fel":"Something went wrong")+'</b><span style="display:block;color:#686D95;font-weight:600;word-break:break-word">'+String(msg).replace(/[<>&"]/g,"")+'</span><button style="margin-top:10px;border:0;border-radius:12px;background:#3D57F0;color:#fff;font:800 15px system-ui,sans-serif;padding:10px 14px">'+(sv?"Ladda om":"Reload")+'</button>';
-      d.querySelector("button").onclick=function(){ location.reload(); };
-      document.body.appendChild(d); };
-    if(document.body) go(); else document.addEventListener("DOMContentLoaded",go); }
-  window.addEventListener("error",function(e){ var m=e&&e.message; if(!m||/ResizeObserver|^Script error/i.test(m)) return; show(m+(e.lineno?" (rad "+e.lineno+":"+e.colno+")":"")); });
-  window.__crash=show;
-})();</script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -837,7 +824,7 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .hs-row span.on{color:var(--heart)}
 .hs-row svg{width:40px;height:40px}
 
-/* today card on Learn: the tea glass, Continue and mistakes */
+/* today card on Learn: goal ring, daily quests, mistakes */
 .hello{background:var(--surface);border:2px solid var(--line);border-bottom-width:4px;border-radius:20px;padding:14px 14px 12px;gap:0}
 .hello .revbtn{margin-top:12px;padding:12px 0 0;border:0;border-top:2px solid var(--line);border-radius:0;background:none}
 .hello .revbtn:active{transform:none;border-bottom-width:0}
@@ -845,6 +832,14 @@ h2.sec{font-family:var(--display);font-size:22px;margin:14px 0 0}
 .cont-btn>span{font-size:17px}
 .cont-btn small{text-transform:none;letter-spacing:0;font-weight:800;font-size:14px;opacity:.92;line-height:1.3;text-wrap:balance}
 .cont-btn:active{transform:translateY(4px);box-shadow:0 0 0 rgba(0,0,0,.22)}
+.qrow{display:flex;align-items:center;gap:10px;width:100%;margin-top:12px;padding:12px 0 0;border:0;border-top:2px solid var(--line);background:none;text-align:start;color:var(--ink)}
+.qr-t{flex:1;min-width:0}
+.qr-t b{display:block;font-size:16px}
+.qr-t small{display:block;color:var(--muted);font-weight:700;font-size:14px}
+.qrow.can-claim .qr-t small{color:var(--gold-deep)}
+.qr-ics{display:flex;gap:6px;flex:none}
+.qr-go{color:var(--lock-ink);display:grid;flex:none}
+.qr-go svg{width:20px;height:20px}
 .qi{position:relative;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--qc,var(--primary));flex:none}
 .qi .qring{position:absolute;inset:0;width:100%;height:100%}
 .qic{display:grid}
@@ -1195,187 +1190,6 @@ body{overflow-x:clip} /* the hills reach the screen edge; keep the slide-in from
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ccard.t0 .pic,:root:not([data-theme="light"]) .ce-cards .mini.off .pic{filter:brightness(0) invert(1);opacity:.12}
   :root:not([data-theme="light"]) .ccard.t1{--cp:#F6DCC4;--cs:#E09A5E;--cfd:#9C5420} :root:not([data-theme="light"]) .ccard.t2{--cp:#DCE2FF;--cs:#B8C0D9;--cfd:#5E6688} :root:not([data-theme="light"]) .ccard.t3{--cp:#FFF0C2;--cs:#FFC94A;--cfd:#A9740A} }
 @media (prefers-reduced-motion: reduce){ .fb-ok h3,.ccard.hop{animation:none} }
-/* friends on the river, Yalla, your topics, the word of the day, notifications */
-:root{ --yl-bg:#FFE6EE; --yl-line:#F6B6CA; --yl-ink:#8E1440; --yl-btn:#D23668; --yl-btn-deep:#9E2449; --yl-x:#B0587A;
-  --tp-weak:#9A4A00; --tp-weak-bg:#FFF0DF; --tp-weak-line:#F9CF9E; --tp-low:#E07A10; --tp-track:#E9EBF5 }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --yl-bg:#3B1730; --yl-line:#7A2B55; --yl-ink:#FFC2D6; --yl-btn:#E2457A; --yl-btn-deep:#A32A58; --yl-x:#E79AB8;
-  --tp-weak:#FFB866; --tp-weak-bg:#36230F; --tp-weak-line:#7A4A1A; --tp-low:#F08A2C; --tp-track:#2C2F61 } }
-:root[data-theme="dark"]{ --yl-bg:#3B1730; --yl-line:#7A2B55; --yl-ink:#FFC2D6; --yl-btn:#E2457A; --yl-btn-deep:#A32A58; --yl-x:#E79AB8;
-  --tp-weak:#FFB866; --tp-weak-bg:#36230F; --tp-weak-line:#7A4A1A; --tp-low:#F08A2C; --tp-track:#2C2F61 }
-/* a reward to claim: a dot on the tea glass */
-.top .stat{position:relative}
-.st-dot{position:absolute;top:-6px;right:-6px;width:14px;height:14px;border-radius:50%;background:var(--pink);border:2.5px solid var(--bg);animation:dotpop .4s cubic-bezier(.2,1.4,.4,1) both}
-.map .st-dot{border-color:var(--sky)}
-@keyframes dotpop{0%{transform:scale(0)}100%{transform:scale(1)}}
-/* someone sent you a Yalla: a strip above the today card */
-#yl{position:relative;z-index:1}
-#yl:empty{display:none}
-.yl{display:flex;align-items:center;gap:8px;min-height:48px;margin-top:8px;padding:5px 6px 5px 7px;background:var(--yl-bg);border:2px solid var(--yl-line);border-bottom-width:4px;border-radius:16px;animation:popin .25s ease-out}
-.yl-avs{display:flex;flex:none}
-.yl-av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--display);font-size:15px;font-weight:800;line-height:1}
-.yl-avs .yl-av+.yl-av{margin-left:-10px;box-shadow:0 0 0 2px var(--yl-bg)}
-.yl-t{flex:1;min-width:0;font-size:14.5px;line-height:17px;font-weight:800;color:var(--yl-ink);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere}
-.yl-go{flex:none;height:32px;padding:0 10px;border:0;border-radius:11px;background:var(--yl-btn);box-shadow:0 3px 0 var(--yl-btn-deep);color:#fff;font-family:var(--display);font-size:15px;font-weight:800;white-space:nowrap}
-.yl-go:active:not(:disabled){transform:translateY(3px);box-shadow:none}
-.yl-go:disabled{opacity:.7}
-.yl-x{flex:none;width:28px;height:30px;border:0;border-radius:9px;background:none;display:grid;place-items:center;color:var(--yl-x);padding:0}
-.yl-x svg{width:15px;height:15px}
-.yl.done{background:var(--good-bg);border-color:var(--good-line)}
-.yl.done .yl-t{color:var(--good)}
-.yl-ok{flex:none;width:30px;height:30px;border-radius:50%;background:var(--good-btn);display:grid;place-items:center}
-.yl-ok svg{width:16px;height:16px}
-/* friends on the river: a kalak at the level each one is on */
-.boat{position:absolute;z-index:1;width:60px;height:48px;margin-left:-30px;padding:0;border:0;background:none;animation:boatbob 3.4s ease-in-out infinite}
-.boat:nth-of-type(2n){animation-delay:-1.3s}
-@keyframes boatbob{50%{transform:translateY(-2px) rotate(-1.5deg)}}
-.boat:active{animation:none;transform:scale(.94)}
-.boat.cheer{z-index:3}
-.bt-av{position:absolute;top:0;left:calc(50% - (28px + (var(--n,1) - 1) * 16px) / 2 + var(--j,0) * 16px);z-index:calc(3 - var(--j,0));width:28px;height:28px;border-radius:50%;border:2.5px solid #fff;display:grid;place-items:center;color:#fff;font-family:var(--display);font-size:14px;font-weight:800;line-height:1;box-shadow:0 3px 0 rgba(30,34,80,.18)}
-.bt-raft{position:absolute;left:0;top:23px;width:60px;height:25px;display:block}
-.bt-tag{position:absolute;top:3px;max-width:96px;padding:1px 8px;border-radius:9px;background:var(--surface);border:2px solid var(--chip-line);font-size:13px;line-height:17px;font-weight:800;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bt-tag.r{left:calc(100% - 4px)} .bt-tag.l{right:calc(100% - 4px)}
-.bt-ok{position:absolute;top:-5px;left:calc(50% + 7px);z-index:4;width:18px;height:18px;border-radius:50%;background:var(--pink);border:2px solid #fff;display:grid;place-items:center}
-.bt-ok svg{width:10px;height:10px}
-.boat.sel .bt-av{box-shadow:0 0 0 3px var(--gold),0 4px 10px rgba(30,34,80,.25)}
-.bt-yalla{position:absolute;left:50%;top:-30px;z-index:5;padding:2px 10px;border-radius:12px;background:var(--pink);box-shadow:0 3px 0 var(--pink-deep);font-family:var(--display);font-size:15px;line-height:20px;font-weight:800;color:#fff;white-space:nowrap;pointer-events:none;animation:ylpop 1.8s ease-out forwards}
-@keyframes ylpop{0%{opacity:0;transform:translate(-50%,8px) scale(.6)}15%{opacity:1;transform:translate(-50%,0) scale(1.08)}25%{transform:translate(-50%,0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-14px)}}
-.lg-pill{position:absolute;top:10px;z-index:2;height:34px;padding:0 12px;border:2px solid var(--chip-line);border-bottom-width:4px;border-radius:12px;background:var(--surface);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:800;color:var(--ink);white-space:nowrap}
-.lg-pill.l{left:0} .lg-pill.r{right:0}
-.lg-pill svg{width:18px;height:18px;flex:none;color:var(--primary)}
-.lg-pill[aria-pressed="false"] svg{color:var(--muted)}
-.lg-pill:active{transform:translateY(2px);border-bottom-width:2px}
-.npop.bpop{z-index:4;background:var(--surface);color:var(--ink);border:2px solid var(--line);border-bottom-width:5px;box-shadow:0 12px 30px rgba(30,34,80,.18);padding:14px 14px 12px;display:flex;flex-direction:column;gap:10px}
-.npop.bpop .npop-arrow{background:var(--surface);border-left:2px solid var(--line);border-top:2px solid var(--line);top:-10px}
-.bp-head{display:flex;align-items:center;gap:12px}
-.bp-av{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--display);font-size:22px;font-weight:800;line-height:1}
-.bp-av.sm{width:36px;height:36px;font-size:17px}
-.bp-stack{display:flex;flex:none} .bp-stack .bp-av+.bp-av{margin-left:-14px;box-shadow:0 0 0 3px var(--surface)}
-.bp-t{flex:1;min-width:0;display:flex;flex-direction:column}
-.bp-t b{font-family:var(--display);font-size:22px;line-height:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bp-t small{font-size:14px;line-height:18px;color:var(--muted);font-weight:700}
-.bp-x{flex:none;width:40px;height:40px;border:0;border-radius:12px;background:var(--bg);display:grid;place-items:center;color:var(--muted);padding:0}
-.bp-x svg{width:18px;height:18px}
-.bp-chips{display:flex;flex-wrap:wrap;gap:6px}
-.bp-chip{display:flex;align-items:center;gap:6px;padding:3px 10px;border-radius:10px;font-size:13px;line-height:18px;font-weight:800}
-.bp-act{background:var(--good-bg);color:var(--good)} .bp-act i{width:8px;height:8px;border-radius:50%;background:var(--good-btn)}
-.bp-act.old{background:var(--bg);color:var(--muted)} .bp-act.old i{background:var(--lock-ink)}
-.bp-xp{background:var(--warn-bg);color:var(--warn)} .bp-xp svg{width:13px;height:13px;color:var(--gold)}
-.bp-send{height:52px;border:0;border-radius:16px;background:var(--pink);box-shadow:0 5px 0 var(--pink-deep);display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--display);font-size:20px;font-weight:800;color:#fff}
-.bp-send svg{width:24px;height:24px}
-.bp-send:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 var(--pink-deep)}
-.bp-send:disabled,.bp-mini:disabled{opacity:.7;cursor:progress}
-.bp-note{margin:0;font-size:13px;line-height:17px;font-weight:700;color:var(--muted);text-align:center}
-.bp-done{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:var(--good-bg)}
-.bp-ok{flex:none;width:34px;height:34px;border-radius:50%;background:var(--good-btn);display:grid;place-items:center} .bp-ok svg{width:18px;height:18px}
-.bp-done b{display:block;font-family:var(--display);font-size:18px;line-height:22px;color:var(--good)}
-.bp-done small{display:block;font-size:13px;line-height:17px;font-weight:700;color:var(--muted)}
-.bp-list{display:flex;flex-direction:column}
-.bp-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:2px solid var(--line)}
-.bp-rt{flex:1;min-width:0;display:flex;flex-direction:column}
-.bp-rt b{font-family:var(--display);font-size:18px;line-height:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bp-rt small{font-size:13px;line-height:17px;color:var(--muted)}
-.bp-mini{flex:none;height:36px;padding:0 12px;border:0;border-radius:12px;background:var(--pink);box-shadow:0 3px 0 var(--pink-deep);font-family:var(--display);font-size:16px;font-weight:800;color:#fff}
-.bp-rok{flex:none;width:30px;height:30px;border-radius:50%;background:var(--good-btn);display:grid;place-items:center} .bp-rok svg{width:15px;height:15px}
-/* your topics */
-#topics{z-index:19;overflow-y:auto;overscroll-behavior:contain}
-#topics.slide-in{animation:slideIn .32s cubic-bezier(.2,.85,.25,1)}
-#topics.slide-out{animation:slideOut .26s cubic-bezier(.5,0,.75,0) forwards}
-.tp-in{padding-bottom:0;min-height:100%;display:flex;flex-direction:column}
-.tp-lead{margin:12px 0 0;font-size:15px}
-.tp-sum{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
-.tp-card{padding:10px 12px;border-radius:18px;border:2px solid;display:flex;flex-direction:column;min-width:0}
-.tp-card small{font-size:13px;line-height:17px;font-weight:800}
-.tp-card b{font-family:var(--display);font-size:19px;line-height:23px;overflow-wrap:anywhere}
-.tp-card span{font-size:14px;line-height:18px;font-weight:800}
-.tp-card.strong{background:var(--good-bg);border-color:var(--good-line)} .tp-card.strong small,.tp-card.strong span{color:var(--good)}
-.tp-card.weak{background:var(--tp-weak-bg);border-color:var(--tp-weak-line)} .tp-card.weak small,.tp-card.weak span{color:var(--tp-weak)}
-.tp-list{display:flex;flex-direction:column;gap:8px;margin-top:14px;padding-bottom:16px;flex:1}
-.tp-row{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;background:var(--surface);border:2px solid var(--line);border-bottom-width:4px;border-radius:18px;color:var(--ink);text-align:start;font:inherit}
-button.tp-row:active{transform:translateY(2px);border-bottom-width:2px}
-.tp-row.weak{border-color:var(--tp-weak-line)}
-.tp-ic{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:#fff}
-.tp-ic svg{width:24px;height:24px}
-.tp-num{font-family:var(--display);font-size:16px;font-weight:800;line-height:1}
-.tp-m{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
-.tp-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.tp-top b{font-family:var(--display);font-size:18px;line-height:21px;min-width:0}
-.tp-top small{font-size:13px;line-height:17px;color:var(--muted);white-space:nowrap}
-.tp-top small.need{color:var(--tp-weak);font-weight:800}
-.tp-bar{height:10px;border-radius:5px;background:var(--tp-track);overflow:hidden}
-.tp-bar i{display:block;height:100%;border-radius:5px}
-.tp-pct{flex:none;width:48px;text-align:end;font-family:var(--display);font-size:18px;font-weight:800}
-.tp-row.off{background:var(--lock);border:2px dashed var(--chip-line)}
-.tp-row.off .tp-ic{background:var(--lock-deep);color:var(--lock-ink)}
-.tp-row.off .tp-m{gap:0} .tp-row.off b{font-family:var(--display);font-size:18px;line-height:21px;color:var(--muted)} .tp-row.off small{font-size:13px;color:var(--muted)}
-.tp-empty{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px 14px;border-radius:18px;background:var(--surface);border:2px solid var(--line)}
-.tp-empty .tp-m2{width:64px;height:64px;flex:none}
-.tp-empty p{margin:0;color:var(--muted)}
-.tp-foot{position:sticky;bottom:0;z-index:2;margin:0 -16px;padding:12px 16px calc(18px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:2px solid var(--line);display:flex;flex-direction:column;gap:8px}
-.tp-foot small{text-align:center;color:var(--muted);font-size:13px}
-.tp-go{display:flex;align-items:center;justify-content:center;gap:8px;text-transform:none;letter-spacing:0;font-family:var(--display);font-size:19px;font-weight:800}
-.tp-go svg{width:22px;height:22px;flex:none}
-.tpe-ic{flex:none;width:60px;height:60px;border-radius:16px;background:var(--bg);display:flex;align-items:flex-end;justify-content:center;gap:5px;padding:12px 0}
-.tpe-ic i{width:10px;border-radius:4px}
-/* the word of the day */
-.wd-top{display:flex;align-items:center;gap:10px}
-.wd-tag{padding:3px 12px;border-radius:10px;background:var(--purple-deep);font-size:13px;line-height:18px;font-weight:900;color:#fff}
-.wd-date{font-size:14px;color:var(--muted)}
-.wd-word{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.wd-say{display:flex;flex-direction:column;min-width:0}
-.wd-say b{font-family:var(--display);font-size:42px;line-height:48px;font-weight:800;overflow-wrap:anywhere}
-.wd-say .arsm{font-size:22px}
-.wd-btns{display:flex;gap:10px;flex:none;align-items:flex-start}
-.wd-play{width:62px;height:62px;border:0;border-radius:50%;background:var(--blue);box-shadow:0 5px 0 var(--blue-deep),0 0 0 7px rgba(30,155,255,.2);display:grid;place-items:center;color:#fff;padding:0}
-.wd-play svg{width:30px;height:30px}
-.wd-play:active{transform:translateY(4px);box-shadow:0 1px 0 var(--blue-deep),0 0 0 7px rgba(30,155,255,.2)}
-.wd-slow{width:52px;height:52px;margin-top:5px;border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;background:var(--surface);display:grid;place-items:center;color:var(--good-btn);padding:0}
-.wd-slow svg{width:28px;height:28px}
-.wd-card{padding:14px 16px;border-radius:20px;background:var(--surface);border:2px solid var(--line);display:flex;flex-direction:column;gap:10px}
-.wd-card small{display:block;font-size:13px;line-height:17px;font-weight:800;color:var(--muted)}
-.wd-card b{display:block;font-family:var(--display);font-size:24px;line-height:28px}
-.wd-sub{display:block;font-size:14px;line-height:18px;color:var(--muted)}
-.wd-hr{display:block;height:2px;background:var(--line)}
-.wd-pair{display:flex;align-items:center;gap:10px}
-.wd-pair>div{flex:1;min-width:0}
-.wd-pair b{font-size:22px;line-height:26px}
-.wd-pplay{flex:none;width:44px;height:44px;border:0;border-radius:14px;background:var(--blue);box-shadow:0 4px 0 var(--blue-deep);display:grid;place-items:center;color:#fff;padding:0}
-.wd-pplay svg{width:22px;height:22px}
-.wd-foot{display:flex;flex-direction:column;gap:6px}
-.wd-foot .btn{text-transform:none;letter-spacing:0;font-family:var(--display);font-size:20px;font-weight:800}
-.wd-foot .linkbtn{align-self:center;padding:10px;font-family:var(--display);font-size:18px}
-.wd-note{display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;line-height:17px;color:var(--muted)}
-.wd-note svg,.wd-on svg{width:15px;height:15px}
-.wd-foot .wd-on{display:flex;align-items:center;gap:6px;font-family:var(--body);font-size:15px;padding:4px 10px}
-/* asked once: notifications */
-.na-head{text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
-.na-head h2.sec{margin:0}
-.na-head .sub{margin:0;max-width:34ch}
-.na-m{width:92px;height:92px;margin-bottom:-4px}
-.na-opts{display:flex;flex-direction:column;gap:8px}
-.na-opt{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:2px solid var(--line);border-bottom-width:4px;border-radius:18px;background:var(--surface);color:var(--ink);text-align:start}
-.na-opt[aria-checked="true"]{border-color:var(--sel-line);background:var(--sel-bg)}
-.na-ic{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff}
-.na-ic svg{width:24px;height:24px}
-.na-t{flex:1;min-width:0;display:flex;flex-direction:column}
-.na-t b{font-family:var(--display);font-size:18px;line-height:22px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.na-t small{font-size:14px;line-height:18px;color:var(--muted)}
-.na-box{flex:none;width:28px;height:28px;border-radius:9px;border:2.5px solid var(--lock-deep);display:grid;place-items:center;background:var(--surface)}
-.na-box svg{width:16px;height:16px;opacity:0}
-.na-opt[aria-checked="true"] .na-box{background:var(--primary);border-color:var(--primary)}
-.na-opt[aria-checked="true"] .na-box svg{opacity:1}
-.na-new{padding:0 7px;border-radius:8px;background:var(--gold);font-family:var(--body);font-size:11px;line-height:18px;font-weight:900;letter-spacing:.04em;color:#4A2E00}
-.na-btns .linkbtn{align-self:center;color:var(--muted);padding:8px 12px}
-/* settings: the word of the day */
-.set-l b.set-new{display:flex;align-items:center;gap:8px}
-.set-row.pv-row{display:block}
-.pv-l{display:block;margin-bottom:8px;font-size:14px;font-weight:800;color:var(--muted)}
-.pv{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:18px;background:var(--bg)}
-.pv-logo{flex:none;width:40px;height:40px;display:block}
-.pv-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
-.pv-app{display:flex;justify-content:space-between;gap:8px;font-size:12px;line-height:16px;font-weight:800;letter-spacing:.06em;color:var(--muted)}
-.pv-t b{font-size:15px;line-height:20px}
-.pv-b{font-size:14px;line-height:19px;font-weight:600;color:var(--ink);opacity:.85}
-@media (prefers-reduced-motion: reduce){ .boat,.yl,.st-dot{animation:none} }
 </style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0}</style>
 </head>
@@ -1407,7 +1221,6 @@ button.tp-row:active{transform:translateY(2px);border-bottom-width:2px}
 <div class="overlay" id="grammar" role="dialog" aria-label="Grammar in a minute" hidden></div>
 <div class="overlay" id="verbs" role="dialog" aria-label="Verb tables" hidden></div>
 <div class="overlay" id="collection" role="dialog" aria-label="Collection" hidden></div>
-<div class="overlay" id="topics" role="dialog" aria-label="Your topics" hidden></div>
 
 <script>
 /* ================= ACCOUNTS CONFIG =================
@@ -3658,8 +3471,8 @@ function mascotLines(){ const f=isF(); return [
 ]; }
 const greet=()=>{ const h=new Date().getHours(); return h>=4&&h<12?"Sabah il-kheir":"Masa il-kheir"; };
 const CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
-/* daily quests: open them from the tea glass in the top bar */
-function questInfo(q){ const goal=typeof q.goal==="function"?q.goal():q.goal, title=tx(typeof q.title==="function"?q.title():q.title), v=Math.min(q.get(),goal); return {q,goal,title,v,done:v>=goal,claimed:!!(S.q.claimed&&S.q.claimed[q.id])}; }
+/* daily quests live at the top of Learn (no separate tab) */
+function questInfo(q){ const goal=typeof q.goal==="function"?q.goal():q.goal, title=tx(typeof q.title==="function"?q.title():q.title), v=Math.min(q.get(),goal); return {q,goal,title,v,done:v>=goal,claimed:!!S.q.claimed[q.id]}; }
 const qLook=id=>({xp:["var(--gold)",I.bolt],les:["var(--blue)",BOOK_IC],combo:["var(--pink)",I.target]})[id]||["var(--primary)",I.star];
 function qRing(frac,col){ const R=15.5, C=+(2*Math.PI*R).toFixed(1); return `<svg class="qring" viewBox="0 0 38 38" aria-hidden="true"><circle cx="19" cy="19" r="${R}" fill="none" stroke="var(--line)" stroke-width="4"/><circle cx="19" cy="19" r="${R}" fill="none" stroke="${col}" stroke-width="4" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-Math.max(.04,frac))).toFixed(1)}" transform="rotate(-90 19 19)"/></svg>`; }
 function questIcon(x){
@@ -3679,12 +3492,16 @@ function contBtn(){
 }
 function todayCard(){
   const g=S.goal||20, x=S.q.xp||0, p=Math.min(x/g,1), nm=mistakeKeys().length, name=(CLOUD&&SES&&userName())||"";
+  const R=21, C=+(2*Math.PI*R).toFixed(1), qs=QUESTS.map(questInfo);
+  const claim=qs.filter(q=>q.done&&!q.claimed).length, doneN=qs.filter(q=>q.done).length;
+  const qtxt=claim?tt(`${claim} reward${claim>1?"s":""} to claim!`,`${claim} ${claim>1?"belöningar":"belöning"} att hämta!`):doneN===qs.length?tt("All done. New quests tomorrow","Allt klart. Nya uppdrag i morgon"):tt(`${doneN} of ${qs.length} done today`,`${doneN} av ${qs.length} klara i dag`);
   return `<div class="hello">
     <div class="hello-row">
       <div class="gring${p>=1?" full":""}" role="img" aria-label="${tt(`${Math.min(x,g)} of ${g} XP today`,`${Math.min(x,g)} av ${g} XP i dag`)}">${teaGlass(p,"tg-big")}</div>
       <div class="hello-t"><b>${greet()}${name?", "+esc(name):""}!</b><span>${p>=1?tt("You reached today's goal. Mashallah!","Du har nått dagens mål. Mashallah!"):tt(`${g-x} XP to reach today's goal`,`${g-x} XP kvar till dagens mål`)}</span></div>
     </div>
     ${contBtn()}
+    <button class="qrow${claim?" can-claim":""}" id="qrow" aria-label="${tt("Daily quests","Dagliga uppdrag")}: ${qtxt}"><span class="qr-t"><b>${tt("Daily quests","Dagliga uppdrag")}</b><small>${qtxt}</small></span><span class="qr-ics" aria-hidden="true">${qs.map(questIcon).join("")}</span><span class="qr-go" aria-hidden="true">${CHEV}</span></button>
     ${nm?`<button class="revbtn" id="rev-go"><span class="revic">${I.target}</span><span class="revtx"><b>${tt("Review your mistakes","Repetera dina misstag")}</b><small>${tt(`${nm} word${nm>1?"s":""} to practise again`,`${nm} ord att öva igen`)}</small></span><span class="revgo">${tt("Go","Kör")}</span></button>`:""}
   </div>`;
 }
@@ -3698,8 +3515,6 @@ function questsSheet(){
 }
 function ringSvg(frac){ const R=44, C=+(2*Math.PI*R).toFixed(1), f=Math.max(.06,Math.min(1,frac)); return `<svg class="pring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="${R}" class="pr-bg"/><circle cx="50" cy="50" r="${R}" class="pr-fg" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-f)).toFixed(1)}" transform="rotate(-90 50 50)"/></svg>`; }
 const TRAIL={top:76,step:122,amp:70,half:110,afterTalk:44};
-/* where each unit's levels sit on the river (for the boats), and the league data the map uses */
-const GEO={}, BOATS={rows:null,at:0,busy:false}, YL={in:[],at:0,busy:false,off:false};
 /* the Tigris: one smooth line through the levels, flowing under the sign above and on under the next one */
 function riverD(pts,H){ const T=TRAIL, X=x=>T.half+x;
   let d=`M${X(0)} -40 C${X(0)} ${pts[0][1]/2} ${X(pts[0][0])} ${pts[0][1]/2} ${X(pts[0][0])} ${pts[0][1]}`;
@@ -3737,15 +3552,13 @@ function unitPath(u,ui,cur,withMascot){
   const lm=lmTop==null?"":`<div class="lmk lmk-${side}" style="top:${lmTop}px">${landmarkSvg(ui)}</div>`;
   let mas="";
   if(withMascot){ const ln=mascotLines()[MLI%mascotLines().length], top=mTop; mas=`<div class="pm pm-${side}" style="top:${top}px"><div class="pm-say" id="pm-say" aria-live="polite"><b>${esc(ln.t)}</b><span>${esc(ln.e)}</span></div><button class="pm-btn" id="pm-btn" aria-label="${tt("Tap Istikan to hear a phrase","Tryck på Istikan för att höra en fras")}">${mascot("wave","pm-svg")}</button></div>`; }
-  GEO[ui]={pts,ys,les:items.map(p=>p.k==="lesson"?p.i:-1),H};
   return `<div class="trail" style="height:${H}px">${trail}${lm}${mas}${nodes}</div>`;
 }
 function renderLearn(el){
   const cur=LESSONS.findIndex(l=>!S.done[l.id]);
   const mUnit=cur>=0?LESSONS[cur].unit:UNITS.length-1;
   const lockedU=UNITS.map((u,ui)=>ui).filter(ui=>!LESSONS.some((l,i)=>l.unit===ui&&lessonOpen(i))), jumpU=lockedU.filter(ui=>ui===lockedU[0]||SECTION_START.includes(ui));
-  let strip=""; try{ strip=yallaStrip(); }catch(e){ console.error(e); }
-  let h=`<div class="sky"><div id="yl">${strip}</div>${todayCard()}${CITY}<svg class="hills" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true"><path class="h1" d="M0 20 Q60 2 120 16 T240 12 T400 10 V36 H0Z"/><path class="h2" d="M0 30 Q90 20 190 27 T400 25 V36 H0Z"/></svg></div>`;
+  let h=`<div class="sky">${todayCard()}${CITY}<svg class="hills" viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true"><path class="h1" d="M0 20 Q60 2 120 16 T240 12 T400 10 V36 H0Z"/><path class="h2" d="M0 30 Q90 20 190 27 T400 25 V36 H0Z"/></svg></div>`;
   UNITS.forEach((u,ui)=>{
     if(SECTION_START.includes(ui)) h+=`<div class="sdiv"><div><span>${tt("Section","Del")} ${secOf(ui)+1}</span><b>${esc(tx(SECTIONS[secOf(ui)]||"More Maslawi"))}</b></div></div>`;
     const unitOpen=LESSONS.some((l,i)=>l.unit===ui&&lessonOpen(i)), unitDone=LESSONS.filter(l=>l.unit===ui).every(l=>S.done[l.id]), isNew=ui>0&&ui===mUnit&&unitOpen&&!LESSONS.some(l=>l.unit===ui&&S.done[l.id]);
@@ -3760,16 +3573,16 @@ function renderLearn(el){
   el.querySelectorAll(".ub-g").forEach(b=>b.onclick=()=>guidebook(+b.dataset.g));
   el.querySelectorAll(".ub-jump").forEach(b=>b.onclick=()=>{ sTap(); jumpSheet(+b.dataset.j); });
   const rg=$("#rev-go"); if(rg) rg.onclick=()=>{sTap();startReview();};
+  const qr=$("#qrow"); if(qr) qr.onclick=()=>{sTap();questsSheet();};
   const cg=$("#cont-go"); if(cg) cg.onclick=()=>{ sTap(); if(cg.dataset.all) return startPractice(); const i=nextLesson(); if(i<0) return;
     if(lessonOpen(i)) return startLesson(i);
     const n=document.querySelector(`.node[data-l="${i}"]`); if(n) n.scrollIntoView({block:"center",behavior:reduced?"auto":"smooth"}); };
   const pb=$("#pm-btn"); if(pb) pb.onclick=()=>{ MLI++; const ln=mascotLines()[MLI%mascotLines().length]; speak(ln.k,true); const say=$("#pm-say"); say.innerHTML=`<b>${esc(ln.t)}</b><span>${esc(ln.e)}</span>`; pb.classList.remove("jig"); void pb.offsetWidth; pb.classList.add("jig"); };
   watchJump();
-  try{ drawBoats(); wireYalla(); loadSocial(); }catch(e){ console.error(e); }
 }
 
 /* tapping a level shows what's inside before you start */
-function closePop(){ const p=document.querySelector(".npop"); if(p) p.remove(); document.querySelectorAll(".boat.sel").forEach(b=>b.classList.remove("sel")); }
+function closePop(){ const p=document.querySelector(".npop"); if(p) p.remove(); }
 document.addEventListener("click",e=>{ if(!e.target.closest(".npop")) closePop(); });
 document.addEventListener("keydown",e=>{ if(e.key==="Escape") closePop(); });
 function placePop(btn,html,cls){
@@ -3805,8 +3618,7 @@ function chestPop(btn,u){
 /* floating button that jumps back to your next lesson */
 let JUMP_OBS=null;
 function watchJump(){
-  let jb=$("#jump"); if(!jb){ jb=document.createElement("button"); jb.id="jump"; jb.className="jump"; jb.hidden=true; document.body.appendChild(jb); jb.onclick=()=>{ const c=$("#cur-node"); if(c) c.scrollIntoView({block:"center",behavior:reduced?"auto":"smooth"}); }; }
-  jb.setAttribute("aria-label",tt("Jump to your level","Hoppa till din nivå"));
+  let jb=$("#jump"); if(!jb){ jb=document.createElement("button"); jb.id="jump"; jb.className="jump"; jb.setAttribute("aria-label",tt("Jump to your next lesson","Hoppa till nästa lektion")); jb.hidden=true; document.body.appendChild(jb); jb.onclick=()=>{ const c=$("#cur-node"); if(c) c.scrollIntoView({block:"center",behavior:reduced?"auto":"smooth"}); }; }
   if(JUMP_OBS) JUMP_OBS.disconnect();
   const c=$("#cur-node"); if(!c||tab!=="learn"||!("IntersectionObserver" in window)){ jb.hidden=true; return; }
   JUMP_OBS=new IntersectionObserver(([en])=>{ if(tab!=="learn"){ jb.hidden=true; return; } jb.hidden=en.isIntersecting; jb.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="${en.boundingClientRect.top<0?"M6 14l6-6 6 6":"M6 10l6 6 6-6"}"/></svg>`; },{threshold:.4});
@@ -4239,13 +4051,12 @@ function renderWords(el){
   const learned=learnedWords(), total=Object.keys(W).length, nm=mistakeKeys().length, ok=learned.length>=4;
   const weak=learned.filter(k=>wordStrength(k)<=2).length;
   if(!weak&&WFILTER==="weak") WFILTER="all";
-  const wotd=wotdToday();
+  const ids=learned.length?learned:Object.keys(W), wotd=ids[Math.floor(Date.now()/864e5)%ids.length];
   const first=nm?practiceTile("p-mist",tt("Fix mistakes","Rätta misstag"),tt(`${nm} word${nm>1?"s":""} to fix`,`${nm} ord att rätta`),"t-red",PICONS.mist)
     :weak&&ok?practiceTile("p-fresh",tt("Freshen up","Fräscha upp"),tt(`${weak} word${weak>1?"s":""} getting rusty`,`${weak} ord börjar rosta`),"t-teal",PICONS.fresh)
     :practiceTile("p-none",ok?tt("All fresh","Allt fräscht"):tt("Fix mistakes","Rätta misstag"),ok?tt("No mistakes to fix","Inga misstag att rätta"):tt("Nothing to fix yet","Inget att rätta än"),"t-done",PICONS.ok,true);
   let h=`<section class="whero">${mascot(learned.length?"happy":"wave","wh-m")}<div class="wh-t"><b class="wh-n">${learned.length}</b><span>${tt(learned.length===1?"word learned":"words learned",learned.length===1?"inlärt ord":"inlärda ord")}</span><div class="pbar"><i style="width:${(learned.length/total*100).toFixed(1)}%"></i><span>${tt(`${learned.length} of ${total}`,`${learned.length} av ${total}`)}</span></div><small>${!learned.length?tt("Finish a lesson to start your collection.","Klara en lektion för att börja din samling."):weak?tt(`${weak} could use some practice`,`${weak} behöver övas`):tt("All your words are fresh","Alla dina ord är fräscha")}</small></div></section>
   ${colEntry()}
-  ${topicsEntry()}
   ${guideCards()}
   <h2 class="sec">${tt("Practise","Öva")}</h2>
   <div class="pgrid">
@@ -4266,7 +4077,7 @@ function renderWords(el){
   <div id="wlist" aria-live="polite">${wordList("")}</div>`;
   el.innerHTML=h;
   const go=(id,f)=>{ const b=$(id); if(b) b.onclick=()=>{sTap();f();}; };
-  go("#p-mist",startReview); go("#p-fresh",startFreshen); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters); go("#open-grammar",()=>openGrammar()); go("#open-verbs",openVerbs); go("#p-dict",startDictation); go("#open-col",openCollection); go("#open-topics",openTopics);
+  go("#p-mist",startReview); go("#p-fresh",startFreshen); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters); go("#open-grammar",()=>openGrammar()); go("#open-verbs",openVerbs); go("#p-dict",startDictation); go("#open-col",openCollection);
   const wc=$("#wotd"); if(wc) wc.onclick=()=>{ wc.classList.toggle("flipped"); sTap(); };
   drawSgSection(); const had=SG.approved; loadApproved().then(()=>{ if(SG.approved!==had&&el.isConnected) drawSgSection(); });
   drawQaSection(); const hadQ=QA.answered; loadAnswered().then(()=>{ if(QA.answered!==hadQ&&el.isConnected) drawQaSection(); });
@@ -4375,25 +4186,19 @@ function renderSettings(){
   const th=S.theme||"system", g=S.goal||20;
   const seg=(id,items,cur,label)=>`<div class="seg" id="${id}" role="group" aria-label="${label}">${items.map(([v,l])=>`<button data-v="${v}" aria-pressed="${String(cur)===String(v)}">${l}</button>`).join("")}</div>`;
   const sw=(id,on,label)=>`<button class="switch" id="${id}" role="switch" aria-checked="${on}" aria-label="${label}"></button>`;
-  const nh=String(wotdHour()).padStart(2,"0");
-  const notifCard=()=>`<h2 class="set-h">${tt("Notifications","Notiser")}</h2><div class="set-card">
-        <div class="set-row"><span class="set-l"><b>${tt("Streak reminder","Påminnelse för sviten")}</b><small>${S.push?tt(`At ${pushHour()}:00 if you haven't practised that day`,`Kl. ${pushHour()} om du inte har övat den dagen`):tt("A notification in the evening if you haven't practised","En notis på kvällen om du inte har övat")}</small></span>${sw("psh",!!S.push,tt("Streak reminder","Påminnelse för sviten"))}</div>${S.push?`<div class="set-row"><span class="set-l"><b>${tt("Remind me at","Påminn mig kl.")}</b></span>${seg("pushseg",[[17,"17"],[18,"18"],[19,"19"],[20,"20"],[21,"21"]],pushHour(),tt("Reminder time","Tid för påminnelse"))}</div>`:""}
-        <div class="set-row"><span class="set-l"><b class="set-new">${tt("Word of the day","Dagens ord")}<span class="na-new">${tt("NEW","NY")}</span></b><small>${S.wotdPush?tt(`Every day at ${nh}:00, with audio`,`Varje dag kl. ${wotdHour()}, med ljud`):tt("A new word every day, with audio","Ett nytt ord varje dag, med ljud")}</small></span>${sw("wdp",!!S.wotdPush,tt("Word of the day as a notification","Dagens ord som notis"))}</div>${S.wotdPush?`<div class="set-row"><span class="set-l"><b>${tt("Send it at","Skicka kl.")}</b></span>${seg("wdseg",[[7,"07"],[8,"08"],[12,"12"],[18,"18"],[20,"20"]],wotdHour(),tt("Time for the word of the day","Tid för dagens ord"))}</div><div class="set-row pv-row"><span class="pv-l">${tt("This is what it looks like","Så ser notisen ut")}</span>${wotdPreview()}</div>`:""}
-        ${SES?`<div class="set-row"><span class="set-l"><b>${tt("Yalla from friends","Yalla från vänner")}</b><small>${tt("When someone in the league cheers you on","När någon i ligan peppar dig")}</small></span>${sw("yls",!!S.pushYalla,tt("Yalla from friends","Yalla från vänner"))}</div>`:""}
-      </div>`;
   el.innerHTML=`<div class="set-in">
     <div class="set-head"><button class="x" id="set-back" aria-label="${tt("Close settings","Stäng inställningar")}">${BACK}</button><h1>${tt("Settings","Inställningar")}</h1></div>
     <div class="set-body">
       <h2 class="set-h">${tt("Appearance","Utseende")}</h2>
       <div class="themes" role="radiogroup" aria-label="${tt("Theme","Tema")}">${[["light",tt("Light","Ljust")],["dark",tt("Dark","Mörkt")],["system",tt("Same as device","Som enheten")]].map(([v,l])=>`<button class="theme-opt tp-${v}" data-v="${v}" role="radio" aria-checked="${th===v}"><span class="tprev"><i></i><i></i><i></i></span><b>${l}</b></button>`).join("")}</div>
       <div class="set-card" style="margin-top:12px"><div class="set-row"><span class="set-l"><b>${tt("Language","Språk")}</b><small>${tt("Buttons, meanings and tips","Knappar, betydelser och tips")}</small></span>${seg("langseg",[["en","English"],["sv","Svenska"]],lang(),tt("Language","Språk"))}</div></div>
-      ${CLOUD?notifCard():""}
       <h2 class="set-h">${tt("Learning","Lärande")}</h2>
       <div class="set-card">
         <div class="set-row"><span class="set-l"><b>${tt("Daily goal","Dagligt mål")}</b><small>${goalName(g)}, ${tt(`${g} XP a day`,`${g} XP om dagen`)}</small></span>${seg("goalseg",[[10,"10"],[20,"20"],[30,"30"],[50,"50"]],g,tt("Daily goal in XP","Dagligt mål i XP"))}</div>
         <div class="set-row"><span class="set-l"><b>${tt("People talk to me as","Folk pratar med mig som")}</b><small>${tt("Changes words like shlonak / shlonik","Ändrar ord som shlonak / shlonik")}</small></span>${seg("gseg",[["m",tt("Man","Man")],["f",tt("Woman","Kvinna")]],isF()?"f":"m",tt("People talk to me as","Folk pratar med mig som"))}</div>
         <div class="set-row"><span class="set-l"><b>${tt("Sounds and voice","Ljud och röst")}</b><small>${tt("Effects, spoken phrases and vibration","Effekter, upplästa fraser och vibration")}</small></span>${sw("snd",S.sound,tt("Sounds and voice","Ljud och röst"))}</div>
         <div class="set-row"><span class="set-l"><b>${tt("Show Arabic letters","Visa arabiska bokstäver")}</b><small>${tt("For learners who can read Arabic","För dig som kan läsa arabiska")}</small></span>${sw("arb",S.arabic,tt("Show Arabic letters","Visa arabiska bokstäver"))}</div>
+        ${CLOUD?`<div class="set-row"><span class="set-l"><b>${tt("Streak reminder","Påminnelse för sviten")}</b><small>${S.push?tt(`At ${pushHour()}:00 if you haven't practised that day`,`Kl. ${pushHour()} om du inte har övat den dagen`):tt("A notification in the evening if you haven't practised","En notis på kvällen om du inte har övat")}</small></span>${sw("psh",!!S.push,tt("Streak reminder","Påminnelse för sviten"))}</div>${S.push?`<div class="set-row"><span class="set-l"><b>${tt("Remind me at","Påminn mig kl.")}</b></span>${seg("pushseg",[[17,"17"],[18,"18"],[19,"19"],[20,"20"],[21,"21"]],pushHour(),tt("Reminder time","Tid för påminnelse"))}</div>`:""}`:""}
       </div>
       ${CLOUD?`<h2 class="set-h">${tt("Account","Konto")}</h2>${accountCard()}${SES?`<div class="set-card"><div class="set-row"><span class="set-l"><b>${tt("Show me in the league","Visa mig i ligan")}</b><small>${tt("Others see your first name, XP and how far you've got","Andra ser ditt förnamn, din XP och hur långt du har kommit")}</small></span>${sw("lgs",!S.leagueHidden,tt("Show me in the league","Visa mig i ligan"))}</div></div>`:""}`:""}
       ${canReview()?`<h2 class="set-h">${tt("Reviewer tools","Granskarverktyg")}</h2>${reviewCard().replace(/<h2 class="sec">[^<]*<\/h2>/,'')}${suggestCard()}${questionsCard()}${CLOUD&&IS_REVIEWER?`<div class="set-card" style="margin-top:12px"><div class="set-row"><span class="set-l"><b>${tt("Notify me about new posts","Notis vid nya inlägg")}</b><small>${tt("When someone asks a question or suggests a phrase","När någon ställer en fråga eller föreslår en fras")}</small></span>${sw("ralert",!!S.pushAlerts,tt("Notify me about new posts","Notis vid nya inlägg"))}</div></div>`:""}`:""}
@@ -4411,16 +4216,13 @@ function renderSettings(){
   $("#arb").onclick=()=>{ S.arabic=!S.arabic; save(); sTap(); renderSettings(); };
   const psh=$("#psh"); if(psh) psh.onclick=async()=>{ sTap(); psh.disabled=true; if(S.push) await pushOff(); else await pushOn(); if(!$("#settings").hidden) renderSettings(); };
   el.querySelectorAll("#pushseg button").forEach(b=>b.onclick=()=>{ S.pushHour=+b.dataset.v; save(); sTap(); pushTouch(true); renderSettings(); });
-  const wdp=$("#wdp"); if(wdp) wdp.onclick=async()=>{ sTap(); wdp.disabled=true; await notifSet("wotdPush",!S.wotdPush); if(!$("#settings").hidden) renderSettings(); };
-  el.querySelectorAll("#wdseg button").forEach(b=>b.onclick=()=>{ S.wotdHour=+b.dataset.v; save(); sTap(); pushTouch(true); renderSettings(); });
-  const yls=$("#yls"); if(yls) yls.onclick=async()=>{ sTap(); yls.disabled=true; await notifSet("pushYalla",!S.pushYalla); if(!$("#settings").hidden) renderSettings(); };
   const lgs=$("#lgs"); if(lgs) lgs.onclick=()=>{ S.leagueHidden=!S.leagueHidden; save(); LG.at=0; pushLeague().catch(()=>{}); sTap(); renderSettings(); };
   const rv=$("#open-review"); if(rv) rv.onclick=openReview;
   const sgo=$("#open-sg"); if(sgo) sgo.onclick=()=>{ sTap(); openSuggestReview(); };
   const qao=$("#open-qa"); if(qao) qao.onclick=()=>{ sTap(); openQuestionReview(); };
   const ral=$("#ralert"); if(ral) ral.onclick=async()=>{ sTap(); ral.disabled=true; if(S.pushAlerts) await alertsOff(); else await alertsOn(); if(!$("#settings").hidden) renderSettings(); };
   wireAccount();
-  let armed=false; $("#reset").onclick=e=>{ if(!armed){ armed=true; e.target.textContent=tt("Tap again","Tryck igen"); e.target.classList.add("armed"); return; } const keep={checked:S.checked,push:S.push,pushHour:S.pushHour,pushAsked:S.pushAsked,pushAlerts:S.pushAlerts,wotdPush:S.wotdPush,wotdHour:S.wotdHour,pushYalla:S.pushYalla,nAsk:S.nAsk,boats:S.boats,sound:S.sound,arabic:S.arabic,theme:S.theme,lang:S.lang,gender:S.gender,goal:S.goal,why:S.why,joined:S.joined}; S=Object.assign(fresh(),keep,{onboarded:true}); S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}}; S.week=weekId(); save(); toast(tt("Progress reset. Back to Unit 1.","Framstegen är nollställda. Tillbaka till enhet 1.")); closeSettings(); setTab("learn"); };
+  let armed=false; $("#reset").onclick=e=>{ if(!armed){ armed=true; e.target.textContent=tt("Tap again","Tryck igen"); e.target.classList.add("armed"); return; } const keep={checked:S.checked,push:S.push,pushHour:S.pushHour,pushAsked:S.pushAsked,pushAlerts:S.pushAlerts,sound:S.sound,arabic:S.arabic,theme:S.theme,lang:S.lang,gender:S.gender,goal:S.goal,why:S.why,joined:S.joined}; S=Object.assign(fresh(),keep,{onboarded:true}); S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}}; S.week=weekId(); save(); toast(tt("Progress reset. Back to Unit 1.","Framstegen är nollställda. Tillbaka till enhet 1.")); closeSettings(); setTab("learn"); };
   document.addEventListener("keydown",setEsc);
 }
 function setEsc(e){ if(e.key==="Escape"&&!$("#settings").hidden&&$("#sheet").hidden&&$("#review").hidden){ document.removeEventListener("keydown",setEsc); closeSettings(); } }
@@ -4534,7 +4336,7 @@ const GUIDE=[
 const READ_EN=[["ee","a long ee, as in “see”","rkhis"],["oo","a long oo, as in “food”","issooq"],["aa","a long aa, as in “father”","baadein"],["il-","means “the”: is-sooq is “the market”","issooq"]];
 const READ_SV=[["j","som j i engelska ”jeans”","jiddi"],["y","som j i ”ja”","yalla"],["sh","som sh i engelska ”shop”, ungefär som sj","shukran"],["ch","som ch i engelska ”chips”","chay"],["w","som w i engelska ”water”","wen"],["z","ett surrande s, som z i engelska ”zoo”","zen"],["ee","ett långt i, som i ”vit”","rkhis"],["oo","ett långt o, som i ”bo”","issooq"],["aa","ett långt a, som i ”glas”","baadein"]];
 function panelOpen(id,draw){ const el=$(id); el._ret=document.activeElement; el.hidden=false; el.classList.remove("slide-out"); el.classList.add("slide-in"); document.body.style.overflow="hidden"; draw(); const b=el.querySelector(".set-head .x"); if(b) b.focus(); }
-function panelClose(id){ const el=$(id); if(el.hidden) return; el.classList.remove("slide-in"); el.classList.add("slide-out"); let done=false; const fin=()=>{ if(done) return; done=true; el.hidden=true; el.classList.remove("slide-out"); el.innerHTML=""; if(["#settings","#guide","#letters","#grammar","#verbs","#collection","#topics"].every(q=>$(q).hidden)){ document.body.style.overflow=""; const r=el._ret; if(r&&document.contains(r)) r.focus({preventScroll:true}); } }; el.addEventListener("animationend",fin,{once:true}); setTimeout(fin,320); }
+function panelClose(id){ const el=$(id); if(el.hidden) return; el.classList.remove("slide-in"); el.classList.add("slide-out"); let done=false; const fin=()=>{ if(done) return; done=true; el.hidden=true; el.classList.remove("slide-out"); el.innerHTML=""; if(["#settings","#guide","#letters","#grammar","#verbs","#collection"].every(q=>$(q).hidden)){ document.body.style.overflow=""; const r=el._ret; if(r&&document.contains(r)) r.focus({preventScroll:true}); } }; el.addEventListener("animationend",fin,{once:true}); setTimeout(fin,320); }
 function openGuide(){ if(!S.guideSeen){ S.guideSeen=true; save(); } document.querySelectorAll('.gb-new[data-new="guide"]').forEach(x=>x.remove()); panelOpen("#guide",drawGuide); }
 const closeGuide=()=>panelClose("#guide");
 function drawGuide(){
@@ -4659,7 +4461,7 @@ function exLWord(e){
   shell(`<h2 class="q">${tt("Read this word","Läs det här ordet")}</h2><div class="lt-q lt-word" lang="ar">${w.ar}</div><div class="opts">${opts(list,k=>`<span class="say">${esc(W[k].tr)}</span>`)}</div>`,footCheck());
   wireChoices((p,b)=>{ const ok=list[p]===e.w; b[p].classList.add(ok?"ok":"no"); b[list.indexOf(e.w)].classList.add("ok"); verdict(ok,esc(e.ans)); if(S.sound) speak(e.w,true); });
 }
-document.addEventListener("keydown",e=>{ if(e.key!=="Escape"||!$("#sheet").hidden||!$("#lesson").hidden) return; if(!$("#letters").hidden) closeLetters(); else if(!$("#guide").hidden) closeGuide(); else if(!$("#grammar").hidden) closeGrammar(); else if(!$("#verbs").hidden) closeVerbs(); else if(!$("#collection").hidden) closeCollection(); else if(!$("#topics").hidden) closeTopics(); });
+document.addEventListener("keydown",e=>{ if(e.key!=="Escape"||!$("#sheet").hidden||!$("#lesson").hidden) return; if(!$("#letters").hidden) closeLetters(); else if(!$("#guide").hidden) closeGuide(); else if(!$("#grammar").hidden) closeGrammar(); else if(!$("#verbs").hidden) closeVerbs(); else if(!$("#collection").hidden) closeCollection(); });
 
 /* the 8 verb tables (audio lives in extra-audio.json, keys V_<verb>_<past|now>_<person>) */
 const PRON=[["ana", "I", "jag"], ["inta", "you (man)", "du (man)"], ["inti", "you (woman)", "du (kvinna)"], ["huwwa", "he", "han"], ["hiyya", "she", "hon"], ["nihna", "we", "vi"], ["intum", "you (all)", "ni"], ["humma", "they", "de"]];
@@ -4951,357 +4753,6 @@ function unitFx(ui){
   }
 }
 
-/* ================= FRIENDS ON THE RIVER =================
-   Others in the league float on the map as small kalaks at the level they're on. Tap one to send
-   a "Yalla!" and cheer them on (once a day each). The notification is sent by reminders/send.mjs. */
-const BOAT_RAFT='<svg class="bt-raft" viewBox="0 0 64 26" aria-hidden="true"><g fill="#D2A56E" stroke="#9C6B37" stroke-width="1.2"><ellipse cx="11" cy="19" rx="7.5" ry="5"/><ellipse cx="25" cy="20" rx="7.5" ry="5"/><ellipse cx="39" cy="20" rx="7.5" ry="5"/><ellipse cx="53" cy="19" rx="7.5" ry="5"/></g><rect x="3" y="9" width="58" height="8" rx="3" fill="#B9844B"/><path d="M12 9v8M22 9v8M32 9v8M42 9v8M52 9v8" stroke="#8C5A2B" stroke-width="1.2"/><path d="M3 11.5H61" stroke="#9C6B37" stroke-width="1.6"/></svg>';
-const EYE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
-const EYE_OFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6C3.7 8.4 2 12 2 12s3.6 7 10 7c1.8 0 3.4-.6 4.7-1.4"/></svg>';
-const HAND='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12M11 11.5V4a1.5 1.5 0 0 1 3 0v7.5M14 11.5V6a1.5 1.5 0 0 1 3 0v8c0 4-2.5 7-6.5 7-2.5 0-4.2-1.3-5.5-3.3L3.4 14.8a1.5 1.5 0 0 1 2.4-1.8L8 15.5"/><path d="M19 3.5c1 .8 1.6 1.8 1.8 3M3.5 7.5c.3-1.2.9-2.1 1.8-2.8"/></svg>';
-const MAX_BOATS=8;
-const utcDay=()=>new Date().toISOString().slice(0,10);
-const initial=n=>esc((String(n||"").trim()||"?")[0].toUpperCase());
-const sentToday=uid=>!!(S.ysent&&S.ysent._d===utcDay()&&S.ysent[uid]);
-function markSent(uid){ const d=utcDay(); S.ysent=Object.assign({},S.ysent&&S.ysent._d===d?S.ysent:{_d:d},{[uid]:1}); }
-/* league members who have been active in the last 30 days, and the level they're on */
-async function loadBoats(force){
-  if(!CLOUD||!SES||BOATS.busy) return false;
-  if(!force&&BOATS.rows&&Date.now()-BOATS.at<60000) return false;
-  if(LG.missing.level){ BOATS.rows=[]; return false; }
-  BOATS.busy=true;
-  try{ if(!(await freshToken())) return false;
-    const since=new Date(Date.now()-30*864e5).toISOString();
-    const rows=await api("/rest/v1/league?select=user_id,name,week,week_xp,updated_at,level&updated_at=gte."+encodeURIComponent(since)+"&order=updated_at.desc&limit=60");
-    BOATS.rows=Array.isArray(rows)?rows:[]; BOATS.at=Date.now(); return true;
-  }catch(e){ if(lgMissing(e)) BOATS.rows=[]; BOATS.at=Date.now(); return false; }
-  finally{ BOATS.busy=false; }
-}
-function boatPeople(){
-  if(!CLOUD||!SES||!BOATS.rows||S.leagueHidden) return [];
-  const me=SES.user&&SES.user.id, had=new Set();
-  return BOATS.rows.filter(r=>{ if(!r||r.user_id===me||had.has(r.user_id)) return false; had.add(r.user_id); return true; })
-    .map(r=>({r,i:LESSONS.findIndex(l=>l.id===r.level)})).filter(p=>p.i>=0).slice(0,MAX_BOATS);
-}
-/* the middle of the river in the gap above level k of a unit */
-function gapXY(g,k){
-  const P=g.pts; let x,y;
-  if(k<=0){ x=P[0][0]/2; y=P[0][1]/2-5; }
-  else if(k>=P.length){ const [a,b]=P[P.length-1]; x=a/2; y=(b+g.H+40)/2; }
-  else { x=(P[k-1][0]+P[k][0])/2; y=(P[k-1][1]+P[k][1])/2; }
-  return [Math.round(x),Math.round(y)];
-}
-function drawBoats(){
-  const op=document.querySelector(".bpop"); if(op) op.remove();
-  document.querySelectorAll(".boat,.lg-pill").forEach(b=>b.remove());
-  if(tab!=="learn") return;
-  const ps=boatPeople(); if(!ps.length) return;
-  const cur=nextLesson(), mu=cur>=0?LESSONS[cur].unit:UNITS.length-1, show=S.boats!==false, sideOf=ui=>ui%2?"r":"l";
-  const mt=document.querySelector(`.usec[data-u="${mu}"] .trail`);
-  if(mt){ const pill=document.createElement("button"); pill.className="lg-pill "+(sideOf(mu)==="l"?"r":"l"); pill.setAttribute("aria-pressed",String(show));
-    pill.innerHTML=show?EYE+esc(tt(`${ps.length} from the league`,`${ps.length} från ligan`)):EYE_OFF+esc(tt("Show the league","Visa ligan"));
-    pill.setAttribute("aria-label",show?tt(`${ps.length} from the league are on the map. Tap to hide them`,`${ps.length} från ligan syns på kartan. Tryck för att dölja dem`):tt("Show the league on the map","Visa ligan på kartan"));
-    pill.onclick=ev=>{ ev.stopPropagation(); sTap(); S.boats=!show; save(); closePop(); drawBoats(); }; mt.appendChild(pill); }
-  if(!show) return;
-  const groups=new Map();
-  ps.forEach(p=>{ const ui=LESSONS[p.i].unit, g=GEO[ui]; if(!g) return; let k=g.les.indexOf(p.i); if(k<0) return; const below=p.i===cur; if(below) k++;
-    const id=ui+":"+k; if(!groups.has(id)) groups.set(id,{ui,k,below:false,ps:[]}); const gr=groups.get(id); gr.below=gr.below||below; gr.ps.push(p); });
-  groups.forEach(gr=>{
-    const g=GEO[gr.ui], trail=document.querySelector(`.usec[data-u="${gr.ui}"] .trail`); if(!trail) return;
-    let [x,y]=gapXY(g,gr.k); if(gr.below) y+=6; /* clear of the ring around your level */
-    const n=gr.ps.length, first=gr.ps[0].r, nm=first.name||tt("Learner","Elev"), side=sideOf(gr.ui);
-    /* the name goes on the bank without the landmark and Istikan, unless the river is right there */
-    let ts=side==="l"?"r":"l"; if(gr.k===0&&gr.ui===mu) ts=side;
-    if(ts==="r"&&x>34) ts="l"; else if(ts==="l"&&x<-34) ts="r";
-    const b=document.createElement("button"); b.className="boat"; b.style.left=`calc(50% + ${x}px)`; b.style.top=(y-24)+"px";
-    b.setAttribute("aria-label",n===1?tt(`${nm}, ${levelText(first.level)}. Tap to cheer them on`,`${nm}, ${levelText(first.level)}. Tryck för att peppa`):tt(`${n} friends at ${levelText(first.level)}. Tap to cheer them on`,`${n} vänner vid ${levelText(first.level)}. Tryck för att peppa`));
-    b.innerHTML=gr.ps.slice(0,3).map((p,j)=>`<span class="bt-av" style="background:${lgColor(p.r.user_id)};--j:${j};--n:${Math.min(n,3)}">${initial(p.r.name)}</span>`).join("")+BOAT_RAFT+`<span class="bt-tag ${ts}">${esc(n===1?nm:`${nm} +${n-1}`)}</span>`+(gr.ps.every(p=>sentToday(p.r.user_id))?`<span class="bt-ok" aria-hidden="true">${I.check}</span>`:"");
-    b.onclick=ev=>{ ev.stopPropagation(); sTap(); if(b.classList.contains("sel")){ closePop(); return; } boatPop(b,gr.ps); };
-    trail.insertBefore(b,trail.querySelector(".pn"));
-  });
-}
-function yallaErr(e){ const m=(e&&e.message)||"";
-  return /join/i.test(m)?tt("Join the league to send a Yalla.","Gå med i ligan för att skicka Yalla."):/league/i.test(m)?tt("They have left the league.","Personen har lämnat ligan."):/too many/i.test(m)?tt("That's a lot of Yalla for one day. Try again tomorrow.","Det blev många Yalla i dag. Försök igen i morgon."):tt("Couldn't send. Try again later.","Kunde inte skicka. Försök igen senare."); }
-async function sendYalla(uid){
-  if(!CLOUD||!SES||!(await freshToken())) throw new Error("offline");
-  try{ await api("/rest/v1/yalla",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({to_id:uid})}); }
-  catch(e){ if(!(e.status===409||/duplicate|unique/i.test(e.message||""))) throw e; }
-  markSent(uid); save();
-}
-function boatPop(btn,ps){
-  closePop();
-  const trail=btn.closest(".trail"); if(!trail) return;
-  btn.classList.add("sel");
-  const pop=document.createElement("div"); pop.className="npop bpop"; pop.setAttribute("role","dialog");
-  pop.setAttribute("aria-label",ps.length===1?(ps[0].r.name||tt("Learner","Elev")):tt(`${ps.length} friends`,`${ps.length} vänner`));
-  trail.appendChild(pop);
-  const nm=r=>esc(r.name||tt("Learner","Elev")), xp=r=>r.week===S.week?(r.week_xp||0):0;
-  const act=r=>{ const d=r.updated_at?Math.floor((Date.now()-new Date(r.updated_at).getTime())/864e5):9; return `<span class="bp-chip bp-act${d<=1?"":" old"}"><i></i>${esc(agoText(r.updated_at)||tt("Not active lately","Inte aktiv på länge"))}</span>`; };
-  const note=`<p class="bp-note">${tt("You can cheer each person on once a day.","Du kan peppa varje person en gång om dagen.")}</p>`;
-  const draw=()=>{
-    const r0=ps[0].r, hidden=S.leagueHidden?`<p class="bp-note">${tt("Join the league again in Settings to send a Yalla.","Gå med i ligan igen under Inställningar för att skicka Yalla.")}</p>`:"";
-    const done=r=>`<div class="bp-done" role="status"><span class="bp-ok">${I.check}</span><div><b>${tt(`Yalla sent to ${nm(r)}!`,`Yalla skickat till ${nm(r)}!`)}</b><small>${tt(`${nm(r)} gets a notification or sees it in the app.`,`${nm(r)} får en notis eller ser det i appen.`)}</small></div></div>`;
-    let h=`<i class="npop-arrow"></i>`;
-    if(ps.length===1){
-      h+=`<div class="bp-head"><span class="bp-av" style="background:${lgColor(r0.user_id)}">${initial(r0.name)}</span><div class="bp-t"><b>${nm(r0)}</b><small>${esc(levelText(r0.level))}</small></div><button class="bp-x" aria-label="${tt("Close","Stäng")}">${I.x}</button></div>
-      <div class="bp-chips">${act(r0)}<span class="bp-chip bp-xp">${I.bolt}${tt(`${xp(r0)} XP this week`,`${xp(r0)} XP den här veckan`)}</span></div>`
-      +(hidden||(sentToday(r0.user_id)?done(r0):`<button class="bp-send" data-u="${esc(r0.user_id)}">${HAND}${tt("Send Yalla!","Skicka Yalla!")}</button>${note}`));
-    } else {
-      h+=`<div class="bp-head"><span class="bp-stack">${ps.slice(0,3).map(p=>`<span class="bp-av sm" style="background:${lgColor(p.r.user_id)}">${initial(p.r.name)}</span>`).join("")}</span><div class="bp-t"><b>${tt(`${ps.length} friends`,`${ps.length} vänner`)}</b><small>${esc(levelText(r0.level))}</small></div><button class="bp-x" aria-label="${tt("Close","Stäng")}">${I.x}</button></div>
-      <div class="bp-list">${ps.map(p=>`<div class="bp-row"><span class="bp-av sm" style="background:${lgColor(p.r.user_id)}">${initial(p.r.name)}</span><span class="bp-rt"><b>${nm(p.r)}</b><small>${esc(agoText(p.r.updated_at))} · ${tt(`${xp(p.r)} XP this week`,`${xp(p.r)} XP den här veckan`)}</small></span>${S.leagueHidden?"":sentToday(p.r.user_id)?`<span class="bp-rok" role="img" aria-label="${tt("Yalla sent","Yalla skickat")}">${I.check}</span>`:`<button class="bp-mini" data-u="${esc(p.r.user_id)}" aria-label="${tt(`Send Yalla to ${nm(p.r)}`,`Skicka Yalla till ${nm(p.r)}`)}">Yalla!</button>`}</div>`).join("")}</div>`
-      +(hidden||note);
-    }
-    pop.innerHTML=h;
-    const cw=trail.clientWidth, w=Math.min(350,cw), cx=btn.offsetLeft+btn.offsetWidth/2, left=Math.max(0,Math.min(cw-w,cx-w/2));
-    pop.style.width=w+"px"; pop.style.left=left+"px"; pop.style.top=(btn.offsetTop+btn.offsetHeight+14)+"px";
-    pop.querySelector(".npop-arrow").style.left=Math.max(14,Math.min(w-30,cx-left-9))+"px";
-    pop.querySelector(".bp-x").onclick=()=>{ sTap(); closePop(); btn.focus({preventScroll:true}); };
-    pop.querySelectorAll("[data-u]").forEach(b=>b.onclick=async()=>{ b.disabled=true;
-      try{ await sendYalla(b.dataset.u); sGood(); draw(); cheer(btn,ps); const f=pop.querySelector(".bp-mini,.bp-x"); if(f) f.focus({preventScroll:true}); }
-      catch(e){ b.disabled=false; toast(yallaErr(e)); } });
-  };
-  draw();
-  pop.addEventListener("click",e=>e.stopPropagation());
-  const r=pop.getBoundingClientRect(), tabs=$(".tabs").getBoundingClientRect().top;
-  if(r.bottom>tabs-8) window.scrollBy({top:r.bottom-tabs+24,behavior:reduced?"auto":"smooth"});
-  const f=pop.querySelector(".bp-send,.bp-mini,.bp-x"); if(f) f.focus({preventScroll:true});
-}
-/* a "Yalla!" rises from the boat, and it gets a tick once everyone on it has had one today */
-function cheer(btn,ps){
-  if(!btn||!btn.isConnected) return;
-  if(ps.every(p=>sentToday(p.r.user_id))&&!btn.querySelector(".bt-ok")) btn.insertAdjacentHTML("beforeend",`<span class="bt-ok" aria-hidden="true">${I.check}</span>`);
-  if(reduced) return;
-  const y=document.createElement("span"); y.className="bt-yalla"; y.textContent="Yalla!"; btn.classList.add("cheer"); btn.appendChild(y);
-  setTimeout(()=>{ y.remove(); btn.classList.remove("cheer"); },1900);
-}
-/* Yallas you got (not seen yet, from the last 7 days) and the ones you sent today.
-   Returns 1 if the strip changed, 2 if who you've cheered on today changed (3: both). */
-async function loadYalla(force){
-  if(!CLOUD||!SES||YL.busy||YL.off) return 0;
-  if(!force&&Date.now()-YL.at<60000) return 0;
-  YL.busy=true;
-  try{ if(!(await freshToken())) return 0;
-    const me=SES.user.id, since=new Date(Date.now()-7*864e5).toISOString(), d=utcDay();
-    const or=`(and(to_id.eq.${me},seen.is.false,created_at.gte.%22${since}%22),and(from_id.eq.${me},day.eq.${d}))`;
-    const rows=await api("/rest/v1/yalla?select=id,from_id,to_id,from_name,created_at,day&or="+or+"&order=created_at.desc&limit=60");
-    const before=YL.in.map(y=>y.id).join(), sent=JSON.stringify(S.ysent||{}), list=Array.isArray(rows)?rows:[];
-    YL.in=list.filter(y=>y.to_id===me); list.filter(y=>y.from_id===me&&y.day===d).forEach(y=>markSent(y.to_id));
-    YL.at=Date.now(); return (YL.in.map(y=>y.id).join()!==before?1:0)|(JSON.stringify(S.ysent||{})!==sent?2:0);
-  }catch(e){ YL.at=Date.now(); if(e.status===404||/PGRST205|does not exist|yalla/i.test(e.message||"")) YL.off=true; return 0; }
-  finally{ YL.busy=false; }
-}
-function yallaStrip(){
-  if(!CLOUD||!SES||!YL.in.length) return "";
-  const by=new Map(); YL.in.forEach(y=>{ if(!by.has(y.from_id)) by.set(y.from_id,y); });
-  const ppl=[...by.values()], name=y=>(y.from_name||"").trim()||tt("A friend","En vän");
-  const who=ppl.length===1?name(ppl[0]):ppl.length===2?`${name(ppl[0])} ${tt("and","och")} ${name(ppl[1])}`:tt(`${name(ppl[0])} and ${ppl.length-1} more`,`${name(ppl[0])} och ${ppl.length-1} till`);
-  return `<div class="yl" role="status"><span class="yl-avs" aria-hidden="true">${ppl.slice(0,3).map(y=>`<span class="yl-av" style="background:${lgColor(y.from_id)}">${initial(y.from_name)}</span>`).join("")}</span><span class="yl-t">${esc(tt(`${who} sent you a Yalla!`,`${who} skickade Yalla!`))}</span>${S.leagueHidden?"":`<button class="yl-go" id="yl-go">${tt("Yalla back","Yalla tillbaka")}</button>`}<button class="yl-x" id="yl-x" aria-label="${tt("Close","Stäng")}">${I.x}</button></div>`;
-}
-async function yallaSeen(ids){ if(!ids.length||!CLOUD||!SES) return; try{ if(!(await freshToken())) return; await api("/rest/v1/yalla?id=in.("+ids.join(",")+")",{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({seen:true})}); }catch(e){} }
-function wireYalla(){
-  const box=$("#yl"), go=$("#yl-go"), x=$("#yl-x"); if(!box) return;
-  if(x) x.onclick=()=>{ sTap(); const ids=YL.in.map(y=>y.id); YL.in=[]; box.innerHTML=""; yallaSeen(ids); };
-  if(go) go.onclick=async()=>{ sTap(); go.disabled=true;
-    const ids=YL.in.map(y=>y.id), to=[...new Set(YL.in.map(y=>y.from_id))]; let ok=0, err=null;
-    for(const u of to){ try{ await sendYalla(u); ok++; }catch(e){ err=e; } }
-    if(!ok){ go.disabled=false; toast(yallaErr(err)); return; }
-    YL.in=[]; yallaSeen(ids); sGood();
-    box.innerHTML=`<div class="yl done" role="status"><span class="yl-ok">${I.check}</span><span class="yl-t">${tt("Yalla sent back!","Yalla skickat tillbaka!")}</span></div>`;
-    setTimeout(()=>{ if(box.isConnected&&box.querySelector(".yl.done")) box.innerHTML=""; },2600);
-    if(!document.querySelector(".bpop")) drawBoats(); };
-}
-/* the map shows what's cached right away, then fetches what's new (at most once a minute) */
-function loadSocial(){
-  if(!CLOUD||!SES) return;
-  loadBoats().then(ch=>{ if(ch&&tab==="learn"&&!document.querySelector(".bpop")) drawBoats(); });
-  loadYalla().then(ch=>{ if(tab!=="learn") return; if(ch&1){ const b=$("#yl"); if(b){ b.innerHTML=yallaStrip(); wireYalla(); } } if(ch&2&&!document.querySelector(".bpop")) drawBoats(); });
-}
-
-/* ================= YOUR TOPICS =================
-   How well you know the words of each topic. A word counts for more the more days you've got it right. */
-const TP_SVG=p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
-const TP_IC={
-  hand:TP_SVG('<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12M11 11.5V4a1.5 1.5 0 0 1 3 0v7.5M14 11.5V6a1.5 1.5 0 0 1 3 0v8c0 4-2.5 7-6.5 7-2.5 0-4.2-1.3-5.5-3.3L3.4 14.8a1.5 1.5 0 0 1 2.4-1.8L8 15.5"/>'),
-  chat:TP_SVG('<path d="M5 5h14a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-6.5L8 20v-3.5H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M8 10.5h8M8 13.5h5"/>'),
-  tea:'<svg viewBox="0 0 24 28" aria-hidden="true"><path d="M5.8 8.6h12.4l-1.4 6.2c-.3 1.6 1.4 2.6 1.4 4.6 0 3.6-2.9 7-6.2 7s-6.2-3.4-6.2-7c0-2 1.7-3 1.4-4.6z" fill="currentColor"/><path d="M9 5c-1.5-1.6.8-2.6 0-4.2M14 5c-1.3-1.4.7-2.3 0-3.7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
-  people:TP_SVG('<circle cx="8.5" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.4"/><path d="M3 19c.6-3.3 2.8-5.2 5.5-5.2s4.9 1.9 5.5 5.2M14.2 14.3c.7-.4 1.5-.6 2.3-.6 2.2 0 3.9 1.5 4.5 4.3"/>'),
-  smile:TP_SVG('<circle cx="12" cy="12" r="9"/><path d="M8 14.5c1 1.6 2.4 2.4 4 2.4s3-.8 4-2.4"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.8"/>'),
-  clock:TP_SVG('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>'),
-  bag:TP_SVG('<rect x="3" y="7.5" width="18" height="12.5" rx="2.2"/><path d="M8.5 7.5V5.5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v2M3 13h18"/>'),
-  city:TP_SVG('<path d="M3 21h18M5 21V10l5-3v14M10 21V4l9 4v13M13.5 10h2M13.5 13.5h2M13.5 17h2M6.8 13.5h1M6.8 17h1"/>'),
-  paw:TP_SVG('<circle cx="6.5" cy="10.5" r="1.7"/><circle cx="10" cy="6.5" r="1.7"/><circle cx="14.5" cy="6.5" r="1.7"/><circle cx="18" cy="10.5" r="1.7"/><path d="M8 17.2c0-2.7 1.9-5.2 4-5.2s4 2.5 4 5.2c0 1.6-1.2 2.4-2.5 2.2-.7-.1-1-.5-1.5-.5s-.8.4-1.5.5C9.2 19.6 8 18.8 8 17.2z"/>'),
-  heart:TP_SVG('<path d="M12 20.5s-8-4.9-8-11A4.4 4.4 0 0 1 12 6.8a4.4 4.4 0 0 1 8 2.7c0 6.1-8 11-8 11z"/><path d="M8 12.5h2.2l1.1-2 1.8 4 1.1-2H16"/>'),
-  shirt:TP_SVG('<path d="M9 3l3 2 3-2 5 3-2 5-2-1v11H8V10l-2 1-2-5z"/>'),
-  house:TP_SVG('<path d="M4 11.5L12 5l8 6.5V20a1 1 0 0 1-1 1h-4.5v-5.5h-5V21H5a1 1 0 0 1-1-1z"/>'),
-  case:TP_SVG('<rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M9 7V4.5h6V7M8 7v13M16 7v13"/>'),
-  gift:TP_SVG('<rect x="4" y="10" width="16" height="10.5" rx="1.5"/><path d="M3 7h18v3H3zM12 7v13.5M12 7C10.6 3.8 7 3.6 7 5.4S10 7 12 7zm0 0c1.4-3.2 5-3.4 5-1.6S14 7 12 7z"/>'),
-  quote:TP_SVG('<path d="M10 7H6a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3v1a3 3 0 0 1-3 3M20 7h-4a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3v1a3 3 0 0 1-3 3"/>'),
-};
-const TOPICS=[
-  {id:"greet",en:"Greetings",sv:"Hälsningar",u:[0,10,13],c:"#12A398",ic:"hand"},
-  {id:"talk",en:"Small talk",sv:"Småprat",u:[1,5,20,31],c:"#1E86D6",ic:"chat"},
-  {id:"food",en:"Food and drink",sv:"Mat och dryck",u:[2,9,14],c:"#E07A10",ic:"tea"},
-  {id:"family",en:"Family",sv:"Familj",u:[3,6,7,8],c:"#3D57F0",ic:"people"},
-  {id:"num",en:"Numbers and money",sv:"Siffror och pengar",u:[4],c:"#B87800",ic:"123"},
-  {id:"feel",en:"Feelings",sv:"Känslor",u:[11,23,24],c:"#D23668",ic:"smile"},
-  {id:"time",en:"Time and weather",sv:"Tid och väder",u:[12,16],c:"#0E7FA3",ic:"clock"},
-  {id:"day",en:"Daily life and work",sv:"Vardag och jobb",u:[19,22],c:"#6A55D8",ic:"bag"},
-  {id:"town",en:"In town",sv:"På stan",u:[15],c:"#8A4BE8",ic:"city"},
-  {id:"nature",en:"Colours and animals",sv:"Färger och djur",u:[17,18],c:"#1E9E55",ic:"paw"},
-  {id:"health",en:"Body and health",sv:"Kropp och hälsa",u:[21,28],c:"#D9465A",ic:"heart"},
-  {id:"clothes",en:"Clothes",sv:"Kläder",u:[29],c:"#C25519",ic:"shirt"},
-  {id:"home",en:"At home",sv:"Hemma",u:[30],c:"#0B8A7F",ic:"house"},
-  {id:"travel",en:"Travel",sv:"Resor",u:[32],c:"#2F6FE0",ic:"case"},
-  {id:"party",en:"Celebrations",sv:"Fest och högtider",u:[25,26],c:"#B4479F",ic:"gift"},
-  {id:"say",en:"Sayings",sv:"Ordspråk",u:[27],c:"#8A6A2E",ic:"quote"},
-].filter(t=>t.u.every(u=>u<UNITS.length));
-const topicWords=t=>t.w||(t.w=[...new Set(t.u.flatMap(unitWords))].filter(k=>W[k]));
-function wordScore(k,learned){ if(!learned.has(k)) return 0; if(S.mist&&S.mist[k]) return .3; const n=((S.okd||{})[k]||{}).n||0; return n>=3?1:n===2?0.8:n===1?0.6:0.4; }
-function topicStats(){
-  const learned=new Set(learnedWords());
-  return TOPICS.map(t=>{ const ws=topicWords(t), got=ws.filter(k=>learned.has(k)), sum=ws.reduce((a,k)=>a+wordScore(k,learned),0), pct=ws.length?Math.round(sum/ws.length*100):0;
-    return {t,ws,got,pct:got.length?Math.max(1,pct):0,first:Math.min(...t.u)}; });
-}
-const tpName=x=>tt(x.t.en,x.t.sv);
-const tpIc=t=>TP_IC[t.ic]||`<b class="tp-num">${t.ic}</b>`;
-/* the weakest topic you can practise (at least 4 words learned) */
-function tpWeak(st){ const p=st.filter(x=>x.got.length>=4); return p.length?p.reduce((a,b)=>b.pct<a.pct?b:a):null; }
-function topicsEntry(){
-  const st=topicStats(), weak=tpWeak(st), started=st.filter(x=>x.got.length).length;
-  const sub=weak&&started>1?tt(`Weakest: ${weak.t.en} · ${weak.pct} %`,`Svagast: ${weak.t.sv} · ${weak.pct} %`):tt("How well you know each topic","Så bra du kan varje ämne");
-  return `<button class="col-entry tp-entry" id="open-topics"><span class="tpe-ic" aria-hidden="true"><i style="height:100%;background:var(--good-btn)"></i><i style="height:66%;background:var(--primary)"></i><i style="height:38%;background:var(--tp-low)"></i></span><span class="ce-t"><b>${tt("Your topics","Dina ämnen")}</b><small>${esc(sub)}</small></span><span class="ce-go" aria-hidden="true">${CHEV}</span></button>`;
-}
-function openTopics(){ panelOpen("#topics",drawTopics); }
-function closeTopics(){ panelClose("#topics"); }
-function drawTopics(){
-  const el=$("#topics"); if(!el||el.hidden) return;
-  const st=topicStats(), on=st.filter(x=>x.got.length).sort((a,b)=>b.pct-a.pct||a.first-b.first), off=st.filter(x=>!x.got.length).sort((a,b)=>a.first-b.first);
-  const weak=tpWeak(st), strong=on[0]||null, low=p=>p<50, col=p=>p>=80?"var(--good-btn)":p>=50?"var(--primary)":"var(--tp-low)";
-  const row=x=>{ const can=x.got.length>=4, inner=`<span class="tp-ic" style="background:${x.t.c}">${tpIc(x.t)}</span><span class="tp-m"><span class="tp-top"><b>${esc(tpName(x))}</b>${low(x.pct)?`<small class="need">${tt("Needs practice","Behöver övas")}</small>`:`<small>${tt(`${x.got.length} of ${x.ws.length} words`,`${x.got.length} av ${x.ws.length} ord`)}</small>`}</span><span class="tp-bar" role="img" aria-label="${tt(`${x.pct} percent`,`${x.pct} procent`)}"><i style="width:${Math.max(x.pct,3)}%;background:${col(x.pct)}"></i></span></span><span class="tp-pct">${x.pct} %</span>`;
-    return can?`<button class="tp-row${low(x.pct)?" weak":""}" data-t="${x.t.id}" aria-label="${esc(tpName(x))}: ${x.pct} %, ${tt(`${x.got.length} of ${x.ws.length} words. Tap to practise`,`${x.got.length} av ${x.ws.length} ord. Tryck för att öva`)}">${inner}</button>`:`<div class="tp-row${low(x.pct)?" weak":""}">${inner}</div>`; };
-  const offRow=x=>`<div class="tp-row off"><span class="tp-ic">${tpIc(x.t)}</span><span class="tp-m"><b>${esc(tpName(x))}</b><small>${tt(`Starts in unit ${x.first+1}`,`Börjar i enhet ${x.first+1}`)}</small></span></div>`;
-  const n=weak?Math.min(10,weak.got.length):0, mins=Math.max(1,Math.round(n*.3));
-  el.innerHTML=`<div class="set-in tp-in">
-    <div class="set-head"><button class="x" id="tp-back" aria-label="${tt("Back to Words","Tillbaka till Ord")}">${BACK}</button><h1>${tt("Your topics","Dina ämnen")}</h1></div>
-    <p class="sub tp-lead">${tt("How well you know the words in each topic. The more days you know a word, the longer the bar.","Så bra du kan orden i varje ämne. Ju fler dagar du kan ett ord, desto längre blir stapeln.")}</p>
-    ${on.length?`<div class="tp-sum"><div class="tp-card strong"><small>${tt("Strongest","Starkast")}</small><b>${esc(tpName(strong))}</b><span>${strong.pct} %</span></div>${weak&&weak!==strong?`<div class="tp-card weak"><small>${tt("Needs the most practice","Behöver mest övning")}</small><b>${esc(tpName(weak))}</b><span>${weak.pct} %</span></div>`:""}</div>`:`<div class="tp-empty">${mascot("think","tp-m2")}<p>${tt("Finish a lesson and you'll see how well you know each topic.","Klara en lektion så ser du hur bra du kan varje ämne.")}</p></div>`}
-    <div class="tp-list">${on.map(row).join("")}${off.map(offRow).join("")}</div>
-    ${weak?`<div class="tp-foot"><small>${tt(`${n} words, about ${mins} minute${mins>1?"s":""}`,`${n} ord, ungefär ${mins} ${mins>1?"minuter":"minut"}`)}</small><button class="btn wide tp-go" id="tp-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>${esc(tt(`Practise the weakest: ${weak.t.en}`,`Öva svagaste: ${weak.t.sv}`))}</button></div>`:""}
-  </div>`;
-  $("#tp-back").onclick=()=>{ sTap(); closeTopics(); };
-  const go=$("#tp-go"); if(go) go.onclick=()=>{ sTap(); startTopicPractice(weak.t.id); };
-  el.querySelectorAll(".tp-row[data-t]").forEach(b=>b.onclick=()=>{ sTap(); startTopicPractice(b.dataset.t); });
-}
-function startTopicPractice(id){
-  const t=TOPICS.find(x=>x.id===id); if(!t) return;
-  const learned=new Set(learnedWords()), ws=topicWords(t).filter(k=>learned.has(k)); if(ws.length<4) return;
-  const pick=byWeakness(ws).slice(0,10);
-  const ex=practiceSet(pick,pick.length).map(({k,pool},j)=>({t:j%3===2?"listen":j%2?"mcqR":"mcq",w:k,pool}));
-  const mw=matchSet(shuffle(pick)); if(mw.length>=3) ex.push({t:"match",ws:mw});
-  const tp=$("#topics"); if(tp&&!tp.hidden){ tp.hidden=true; tp.classList.remove("slide-in","slide-out"); tp.innerHTML=""; }
-  const all=withPics(ex);
-  L={missed:0,i:-1,practice:true,mode:"topic",ex:all,total:all.length,k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()}; openOverlay(); step();
-}
-
-/* ================= THE WORD OF THE DAY =================
-   One word a day, from the words you've learned. Once a day has its word it keeps it, so the
-   notification, the card under Words and the sheet always show the same one. */
-const wotdHour=()=>S.wotdHour||8;
-const dayAt=i=>{ const d=new Date(); d.setHours(12,0,0,0); return dstr(d.getTime()+i*864e5); };
-function wotdKey(ds){ const e=(S.wplan||[]).find(x=>x.d===ds&&W[x.k]); if(e) return e.k; const l=learnedWords(), ids=l.length?l:Object.keys(W); return ids[((dayNum(ds)%ids.length)+ids.length)%ids.length]; }
-function wotdToday(){ const d=today(), e=(S.wplan||[]).find(x=>x.d===d&&W[x.k]); if(e) return e.k;
-  const k=wotdKey(d); S.wplan=[...(S.wplan||[]).filter(x=>x.d>d&&W[x.k]),{d,k}].sort((a,b)=>a.d<b.d?-1:1).slice(0,14); save(); return k; }
-function wotdText(k){ const m=String(W[k].en).trim(), sep=/[.!?…]$/.test(m)?" ":". "; return {t:tt(`Word of the day: ${W[k].tr}`,`Dagens ord: ${W[k].tr}`),b:m+sep+tt("Tap to hear it.","Tryck för att höra det.")}; }
-/* today and the next 13 days, sent to the notification service with the push subscription */
-function wotdPlan(){
-  const keep=(S.wplan||[]).filter(e=>e.d>=today()&&W[e.k]), out=[];
-  for(let i=0;i<14;i++){ const d=dayAt(i), e=keep.find(x=>x.d===d); out.push(e?{d,k:e.k}:{d,k:wotdKey(d)}); }
-  if(JSON.stringify(out)!==JSON.stringify(S.wplan||[])){ S.wplan=out; save(); }
-  return out.map(e=>{ const m=wotdText(e.k); return {d:e.d,k:e.k,t:m.t,b:m.b}; });
-}
-function wotdPreview(){ const m=wotdText(wotdToday()); return `<div class="pv">${logoMark("pv-logo")}<div class="pv-t"><span class="pv-app"><span>MASLAWI</span><span>${String(wotdHour()).padStart(2,"0")}:00</span></span><b>${esc(m.t)}</b><span class="pv-b">${esc(m.b)}</span></div></div>`; }
-const sheetClose=()=>{ const s=$("#sheet"); s.hidden=true; s.innerHTML=""; };
-/* "Hur mår du? (till en man)" -> ["Hur mår du?", "Till en man"] */
-function splitMeaning(s){ const m=String(s).match(/^(.*?)\s*\(([^)]*)\)\s*$/); return m&&m[1]?[m[1],m[2].charAt(0).toUpperCase()+m[2].slice(1)]:[String(s),""]; }
-function openWotd(k){
-  if(!W[k]) k=wotdToday();
-  const w=W[k], [mean,who]=splitMeaning(w.en), pk=PAIR[k]&&W[PAIR[k]]?PAIR[k]:null, pwho=pk?splitMeaning(W[pk].en)[1]:"";
-  const hh=String(wotdHour()).padStart(2,"0"), date=new Date().toLocaleDateString(isSv()?"sv-SE":"en-GB",{weekday:"long",day:"numeric",month:"long"});
-  const canPush=CLOUD&&(pushOk()||isIOS())&&!(window.Notification&&Notification.permission==="denied");
-  sheet(`<div class="wd-top"><span class="wd-tag">${tt("Word of the day","Dagens ord")}</span><span class="wd-date">${esc(date)}</span></div>
-  <div class="wd-word"><div class="wd-say"><b>${esc(w.tr)}</b>${arSm(k)}</div><div class="wd-btns"><button class="wd-play" id="wd-play" aria-label="${tt("Listen again","Lyssna igen")}">${SPK}</button><button class="wd-slow" id="wd-slow" aria-label="${tt("Listen slowly","Lyssna långsamt")}">${TURTLE}</button></div></div>
-  <div class="wd-card"><div><small>${tt("Means","Betyder")}</small><b>${esc(mean)}</b>${who?`<span class="wd-sub">${esc(who)}</span>`:""}</div>${pk?`<i class="wd-hr"></i><div class="wd-pair"><div><small>${esc(pwho||tt("The other form","Andra formen"))}</small><b>${esc(W[pk].tr)}</b></div><button class="wd-pplay" id="wd-pair" aria-label="${tt("Listen to","Lyssna på")} ${esc(W[pk].tr)}">${SPK}</button></div>`:""}</div>
-  <div class="wd-foot"><button class="btn wide" id="wd-go">${tt("Practise the word","Öva ordet")}</button><button class="linkbtn wd-done" data-close>${tt("Done","Klar")}</button>${S.wotdPush?`<span class="wd-note">${BELL}${tt(`The next word comes tomorrow at ${hh}:00`,`Nästa ord kommer i morgon klockan ${hh}:00`)}</span>`:canPush?`<button class="linkbtn wd-on" id="wd-on">${BELL}${tt("Get a new word every day","Få ett nytt ord varje dag")}</button>`:""}</div>`);
-  $("#wd-play").onclick=()=>speak(k); $("#wd-slow").onclick=()=>speak(k,false,.6);
-  const pp=$("#wd-pair"); if(pp) pp.onclick=()=>speak(pk);
-  $("#wd-go").onclick=()=>{ sTap(); sheetClose(); startWordPractice(k); };
-  const on=$("#wd-on"); if(on) on.onclick=async()=>{ on.disabled=true; if(await notifSet("wotdPush",true)) openWotd(k); else on.disabled=false; };
-  speak(k,true);
-}
-function startWordPractice(k){
-  if(!W[k]) return;
-  const learned=learnedWords(), base=(learned.length>=8?learned:Object.keys(W)).filter(x=>x!==k&&x!==PAIR[k]&&plainEn(x)!==plainEn(k));
-  const pool=()=>shuffle(base).slice(0,3);
-  const ex=[...(learned.includes(k)?[]:[{t:"intro",w:k}]),{t:"listen",w:k,pool:pool()},{t:"mcq",w:k,pool:pool()},{t:"mcqR",w:k,pool:pool()}];
-  const all=withPics(ex);
-  L={missed:0,i:-1,practice:true,mode:"word",ex:all,total:all.length,k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()}; openOverlay(); step();
-}
-
-/* ================= NOTIFICATIONS: what this phone wants =================
-   push: the streak reminder, wotdPush: the word of the day, pushYalla: Yalla from friends,
-   pushAlerts: reviewer alerts. The phone keeps one push subscription while any of them is on. */
-const anyPush=()=>!!(S.push||S.wotdPush||S.pushYalla||S.pushAlerts);
-async function notifSet(key,on){
-  if(!on){ S[key]=false; save(); await pushDropOrSave(); return true; }
-  try{
-    const sub=await pushEnsure(); if(!sub) return false;
-    S[key]=true; if(key!=="pushYalla"&&S.pushYalla==null&&SES) S.pushYalla=true; save(); await pushSave(sub); sWin();
-    toast(key==="wotdPush"?tt(`Done! You'll get the word of the day at ${wotdHour()}:00.`,`Klart! Du får dagens ord kl. ${wotdHour()} varje dag.`):key==="pushYalla"?tt("Done! You'll get a notification when someone cheers you on.","Klart! Du får en notis när någon peppar dig."):tt("Done! Notifications are on.","Klart! Notiserna är på."));
-    return true;
-  }catch(e){ S[key]=false; save(); toast(tt("Couldn't switch notifications on. Try again.","Kunde inte slå på notiser. Försök igen.")); return false; }
-}
-/* asked once: learners who had already started playing before the word of the day came */
-const NASK_BEFORE=Date.parse("2026-10-14T00:00:00+02:00");
-const FLAME_W='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5c1.2 3.6 6 5.8 6 11a6 6 0 0 1-12 0c0-2.6 1.2-4.4 2.8-5.8.3 1.9 1.3 3.2 2.7 3.5-.5-3.3.1-6.5.5-8.7z"/></svg>';
-const WORD_W='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-7l-5 4v-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M12 7.5l1 2.2 2.3.3-1.7 1.6.4 2.3-2-1.1-2 1.1.4-2.3-1.7-1.6 2.3-.3z"/></svg>';
-const TICK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-function notifSheet(){
-  const opts=[];
-  if(!S.wotdPush) opts.push(["wotdPush",tt("Word of the day","Dagens ord"),tt(`A new word every morning at ${wotdHour()}:00, with audio`,`Ett nytt ord varje morgon kl. ${wotdHour()}, med ljud`),"var(--purple-deep)",WORD_W,1]);
-  if(!S.push) opts.push(["push",tt("Streak reminder","Påminnelse för sviten"),tt(`At ${pushHour()}:00 on days you haven't practised`,`Kl. ${pushHour()} de dagar du inte har övat`),"var(--orange-deep)",FLAME_W,0]);
-  if(SES&&!S.pushYalla) opts.push(["pushYalla",tt("Yalla from friends","Yalla från vänner"),tt("When someone in the league cheers you on","När någon i ligan peppar dig"),"var(--pink-deep)",HAND,0]);
-  if(!opts.length) return false;
-  sheet(`<div class="na-head">${mascot("wave","na-m")}<h2 class="sec">${tt("Want notifications?","Vill du ha notiser?")}</h2><p class="sub">${tt("Pick what you'd like. You can change it any time in Settings.","Välj det du vill ha. Du kan ändra det när du vill under Inställningar.")}</p></div>
-  <div class="na-opts" role="group" aria-label="${tt("Notifications","Notiser")}">${opts.map(o=>`<button class="na-opt" role="checkbox" aria-checked="true" data-k="${o[0]}"><span class="na-ic" style="background:${o[3]}">${o[4]}</span><span class="na-t"><b>${o[1]}${o[5]?`<span class="na-new">${tt("NEW","NY")}</span>`:""}</b><small>${o[2]}</small></span><span class="na-box" aria-hidden="true">${TICK}</span></button>`).join("")}</div>
-  <div class="sh-btns na-btns"><button class="btn wide" id="na-on">${tt("Turn on","Slå på")}</button><button class="linkbtn" id="na-no">${tt("Not now","Inte nu")}</button></div>`);
-  const boxes=[...document.querySelectorAll("#sheet .na-opt")], on=$("#na-on"); on.focus();
-  boxes.forEach(b=>b.onclick=()=>{ sTap(); b.setAttribute("aria-checked",String(b.getAttribute("aria-checked")!=="true")); on.disabled=!boxes.some(x=>x.getAttribute("aria-checked")==="true"); });
-  $("#na-no").onclick=()=>{ sTap(); S.pushAsked=true; save(); sheetClose(); };
-  on.onclick=async()=>{
-    const want=boxes.filter(b=>b.getAttribute("aria-checked")==="true").map(b=>b.dataset.k);
-    S.pushAsked=true; save(); if(!want.length){ sheetClose(); return; }
-    on.disabled=true;
-    try{
-      const sub=await pushEnsure(); if(!sub) return;
-      want.forEach(k=>S[k]=true); save(); await pushSave(sub); if($("#na-on")) sheetClose(); sWin();
-      toast(tt("Done! Notifications are on. Change them any time in Settings.","Klart! Notiserna är på. Ändra dem när du vill under Inställningar."));
-    }catch(e){ want.forEach(k=>S[k]=false); save(); if($("#na-on")) sheetClose(); toast(tt("Couldn't switch notifications on. Try again in Settings.","Kunde inte slå på notiser. Försök igen under Inställningar.")); }
-  };
-  return true;
-}
-function maybeAskNotifs(){
-  if(S.nAsk||!S.onboarded||!(S.lessons>0)||!((S.joined||0)<NASK_BEFORE)) return;
-  if(!CLOUD||!(pushOk()||isIOS())||(window.Notification&&Notification.permission==="denied")) return;
-  if(tab!=="learn"||!$("#sheet").hidden||[...document.querySelectorAll(".overlay")].some(o=>!o.hidden)) return;
-  if(notifSheet()){ S.nAsk=true; save(); }
-}
-/* a notification was tapped while the app was already open */
-function openFromUrl(u){
-  try{ const q=new URL(u,location.href).searchParams;
-    if(q.has("ord")&&S.onboarded&&$("#lesson").hidden) openWotd(q.get("ord")||"");
-    else if(q.has("yalla")){ if(tab!=="learn") setTab("learn"); loadYalla(true).then(ch=>{ if(ch&1&&tab==="learn"){ const b=$("#yl"); if(b){ b.innerHTML=yallaStrip(); wireYalla(); } } }); }
-  }catch(e){}
-}
-
 /* ================= MOTION ================= */
 const TAB_ORDER=["learn","words","league","profile"];
 function moveTabInd(){ const ind=$("#tab-ind"); if(ind) ind.style.transform=`translateX(${Math.max(0,TAB_ORDER.indexOf(tab))*100}%)`; }
@@ -5317,11 +4768,10 @@ function refreshTop(){
   if(PREV_TOP) now.forEach((v,i)=>{ if(v!==PREV_TOP[i]){ st[i].classList.remove("bump"); void st[i].offsetWidth; st[i].classList.add("bump"); } });
   PREV_TOP=now;
   st[0].innerHTML=`<span class="${S.lastDay===today()?"":"dim"}" style="display:flex">${I.flame}</span>${S.streak}`;
-  const claim=QUESTS.map(questInfo).filter(q=>q.done&&!q.claimed).length;
-  st[1].innerHTML=teaGlass(x/g)+`<span class="tg-n">${x}<small>/${g}</small></span>`+(claim?'<i class="st-dot" aria-hidden="true"></i>':"");
+  st[1].innerHTML=teaGlass(x/g)+`<span class="tg-n">${x}<small>/${g}</small></span>`;
   st[2].innerHTML=I.gem+S.gems;
   st[3].innerHTML=I.heart+S.hearts;
-  st[0].setAttribute("aria-label",tt(`${S.streak} day streak`,`${S.streak} dagar i rad`)); st[1].setAttribute("aria-label",tt(`Today's goal: ${x} of ${g} XP. ${claim?`${claim} reward${claim>1?"s":""} to claim. `:""}Open the daily quests`,`Dagens mål: ${x} av ${g} XP. ${claim?`${claim} ${claim>1?"belöningar":"belöning"} att hämta. `:""}Öppna dagens uppdrag`)); st[2].setAttribute("aria-label",tt(`${S.gems} kleicha. Open the kleicha shop`,`${S.gems} kleicha. Öppna kleichabutiken`)); st[3].setAttribute("aria-label",tt(`${S.hearts} hearts`,`${S.hearts} hjärtan`));
+  st[0].setAttribute("aria-label",tt(`${S.streak} day streak`,`${S.streak} dagar i rad`)); st[1].setAttribute("aria-label",tt(`Today's goal: ${x} of ${g} XP. Open the daily quests`,`Dagens mål: ${x} av ${g} XP. Öppna dagens uppdrag`)); st[2].setAttribute("aria-label",tt(`${S.gems} kleicha. Open the kleicha shop`,`${S.gems} kleicha. Öppna kleichabutiken`)); st[3].setAttribute("aria-label",tt(`${S.hearts} hearts`,`${S.hearts} hjärtan`));
 }
 const TABS=[
   ["learn","Learn",'<svg viewBox="0 0 28 28"><path d="M4 13 14 4l10 9v10a2 2 0 0 1-2 2h-5v-7h-6v7H6a2 2 0 0 1-2-2z" fill="#F7901E"/><path d="M11 25v-7h6v7" fill="#B4560B"/></svg>',"Lär dig"],
@@ -5332,15 +4782,15 @@ const TABS=[
 function drawTabs(){
   $("#tabs").innerHTML='<span class="tab-ind" id="tab-ind" aria-hidden="true"></span>'+TABS.map(([k,n,svg,sv])=>`<button class="tab" data-tab="${k}" aria-current="${k===tab}">${svg}${tt(n,sv)}</button>`).join("");
   document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{sTap();setTab(b.dataset.tab);});
-  $("#tabs").parentElement.setAttribute("aria-label",tt("Sections","Avsnitt")); $("#gear").setAttribute("aria-label",tt("Settings","Inställningar")); $("#brand").setAttribute("aria-label",tt("Maslawi: go to Learn","Maslawi: till Lär dig")); [["#settings","Settings","Inställningar"],["#guide","Sound guide","Ljudguide"],["#letters","Arabic letters","Arabiska bokstäver"],["#grammar","Grammar in a minute","Grammatik på en minut"],["#verbs","Verb tables","Verbtabeller"],["#collection","Collection","Samling"],["#topics","Your topics","Dina ämnen"]].forEach(([q,e,v])=>{ const o=$(q); if(o) o.setAttribute("aria-label",tt(e,v)); });
+  $("#tabs").parentElement.setAttribute("aria-label",tt("Sections","Avsnitt")); $("#gear").setAttribute("aria-label",tt("Settings","Inställningar")); $("#brand").setAttribute("aria-label",tt("Maslawi: go to Learn","Maslawi: till Lär dig")); [["#settings","Settings","Inställningar"],["#guide","Sound guide","Ljudguide"],["#letters","Arabic letters","Arabiska bokstäver"],["#grammar","Grammar in a minute","Grammatik på en minut"],["#verbs","Verb tables","Verbtabeller"],["#collection","Collection","Samling"]].forEach(([q,e,v])=>{ const o=$(q); if(o) o.setAttribute("aria-label",tt(e,v)); });
   moveTabInd();
 }
 $("#gear").innerHTML=GEAR; $("#gear").onclick=()=>{ sTap(); openSettings(); };
 $("#brand").innerHTML=logoMark()+"<b>Maslawi</b>"; $("#brand").onclick=()=>{ sTap(); if(tab!=="learn") setTab("learn"); else window.scrollTo({top:0,behavior:reduced?"auto":"smooth"}); };
 $("#st-streak").onclick=()=>{ sTap(); streakSheet(); }; $("#st-goal").onclick=()=>{ sTap(); questsSheet(); }; $("#st-gems").onclick=()=>{ sTap(); shopSheet(); }; $("#st-hearts").onclick=()=>{ sTap(); heartsSheet(); };
 let tab="learn";
-function setTab(t){ const from=TAB_ORDER.indexOf(tab), to=TAB_ORDER.indexOf(t); tab=t; document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-current",String(b.dataset.tab===t))); moveTabInd(); render(); window.scrollTo(0,0); playIn($("#screen"),to>=from?"enter-r":"enter-l"); }
-/* Learn opens at the top (the arrow at the bottom right takes you to your level). After a lesson, the level you are on stays in view */
+function setTab(t){ const from=TAB_ORDER.indexOf(tab), to=TAB_ORDER.indexOf(t); tab=t; document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-current",String(b.dataset.tab===t))); moveTabInd(); render(); window.scrollTo(0,0); if(t==="learn"){ scrollToCur(); requestAnimationFrame(scrollToCur); } playIn($("#screen"),to>=from?"enter-r":"enter-l"); }
+/* like Duolingo: the Learn page opens at the level you are on, not at the top */
 function scrollToCur(){ const c=$("#cur-node"); if(!c||tab!=="learn"||!Object.keys(S.done||{}).length||!$("#lesson").hidden) return; const r=c.getBoundingClientRect(); if(r.top>innerHeight*.55||r.bottom<0) window.scrollTo(0,Math.max(0,window.scrollY+r.top+r.height/2-innerHeight*.55)); }
 applyLang(); drawTabs();
 
@@ -5474,10 +4924,7 @@ async function pushLeague(){
     catch(e){ if(!lgMissing(e)) throw e; }
   }
 }
-function render(){ stopFx(); document.body.classList.toggle("map",tab==="learn"); try{ refreshTop(); }catch(e){ console.error(e); } closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen");
-  try{ ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); }
-  catch(e){ console.error(e); el.innerHTML=`<div class="card stack" style="margin-top:16px;text-align:center"><b style="font-size:18px">${tt("Something went wrong on this page","Något gick fel på den här sidan")}</b><p class="sub" style="margin:0;word-break:break-word">${esc((e&&e.message)||e)}</p><button class="btn wide" id="crash-reload">${tt("Reload","Ladda om")}</button></div>`; const r=$("#crash-reload"); if(r) r.onclick=()=>location.reload(); }
-  try{ renderSettings(); }catch(e){ console.error(e); } }
+function render(){ stopFx(); document.body.classList.toggle("map",tab==="learn"); refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
 
 /* ================= LESSON PLAYER ================= */
 let L=null;
@@ -5792,7 +5239,7 @@ function finish(){
   const head=L.mode==="jump"?tt("You tested out!","Du klarade testet!"):L.mode==="dict"?tt("Great listening!","Bra lyssnat!"):L.mode==="letters"?tt("Letters learned!","Bokstäverna klara!"):L.review?(left?tt("Review complete!","Repetitionen klar!"):tt("All mistakes fixed!","Alla misstag rättade!")):L.mode==="listen"?tt("Listening done!","Hörövningen klar!"):L.mode==="fresh"?tt("All freshened up!","Allt uppfräschat!"):L.mode==="flash"?tt(`You knew ${L.right} of ${L.right+L.wrong}`,`Du kunde ${L.right} av ${L.right+L.wrong}`):L.practice?tt("Practice complete!","Övningen klar!"):isChat?tt("Conversation complete!","Samtalet klart!"):perfect?tt("Perfect lesson!","Perfekt lektion!"):tt("Lesson complete!","Lektionen klar!");
   const notes=[L.mode==="jump"?tt(`You can start unit ${L.target+1} now.`,`Nu kan du börja med enhet ${L.target+1}.`):L.practice&&L.mode!=="letters"?tt("You won back a heart.","Du vann tillbaka ett hjärta."):"", L.review&&left?tt(`${left} word${left>1?"s":""} still to review.`,`${left} ord kvar att repetera.`):"", !L.review&&L.missed&&L.mode!=="letters"?tt(`${L.missed} word${L.missed>1?"s":""} added to your review list.`,`${L.missed} ord har lagts till i din repetitionslista.`):""].filter(Boolean);
   $("#lesson").classList.add("party");
-  $("#lesson").innerHTML=`<div class="l-in"><div class="end">${PARTY_BG}${mascot(perfect||acc>=80?"cheer":"happy")}<div class="end-h"><h2>${head}</h2>${sub?`<p class="end-sub">${esc(sub)}</p>`:""}</div>${notes.map(t=>`<p class="sub" style="margin:0">${esc(t)}</p>`).join("")}${newQ.length?`<p class="goalhit qdone">${I.gem.replace("<svg",'<svg width="20" height="20"')}${tt("Quest complete! Tap the tea glass at the top to claim it.","Uppdrag klart! Tryck på teglaset högst upp för att hämta belöningen.")}</p>`:""}
+  $("#lesson").innerHTML=`<div class="l-in"><div class="end">${PARTY_BG}${mascot(perfect||acc>=80?"cheer":"happy")}<div class="end-h"><h2>${head}</h2>${sub?`<p class="end-sub">${esc(sub)}</p>`:""}</div>${notes.map(t=>`<p class="sub" style="margin:0">${esc(t)}</p>`).join("")}${newQ.length?`<p class="goalhit qdone">${I.gem.replace("<svg",'<svg width="20" height="20"')}${tt("Quest complete! Claim it on Learn.","Uppdrag klart! Hämta belöningen under Lär dig.")}</p>`:""}
   <div class="endstats"><div class="es y"><span>${tt("Total XP","Totalt XP")}</span><b>${I.bolt.replace("<svg",'<svg width="20" height="20"')}<span class="cnt" data-to="${gained}">0</span></b></div><div class="es g"><span>${acc>=90?tt("Amazing","Grymt"):acc>=70?tt("Good","Bra"):tt("Accuracy","Träffsäkerhet")}</span><b><span class="cnt" data-to="${acc}">0</span>%</b></div><div class="es b"><span>${tt("Quick","Tid")}</span><b>${time}</b></div></div>
   <div class="end-day"><div class="ed-row">${teaGlass(gx/goal,"ed-tg")}<span class="ed-t"><b>${S.q.xp>=goal?(goalNow?tt("Daily goal reached! +5 kleicha","Dagens mål klart! +5 kleicha"):tt("Daily goal reached!","Dagens mål klart!")):tt(`${goal-gx} XP to today's goal`,`${goal-gx} XP kvar till dagens mål`)}</b><small>${S.q.xp>=goal?tt(`Your tea glass is full: ${gx} of ${goal} XP`,`Teglaset är fullt: ${gx} av ${goal} XP`):tt(`${gx} of ${goal} XP today`,`${gx} av ${goal} XP i dag`)}</small></span></div><div class="ed-row"><span class="ed-fl">${I.flame}</span><span class="ed-t"><b>${tt(`${S.streak} day streak`,`${S.streak} dagar i rad`)}</b><span class="week ed-week">${weekDots()}</span></span></div></div>
   <button class="btn wide" id="cont" style="max-width:420px">${tt("Continue","Fortsätt")}</button>${again?`<button class="end-again" id="again">${tt("Practise again","Öva en gång till")}</button>`:""}</div></div>`;
@@ -5829,15 +5276,11 @@ async function pushGet(reg,create){
 }
 const swReady=()=>Promise.race([navigator.serviceWorker.ready,new Promise((_,no)=>setTimeout(()=>no(new Error("no service worker")),8000))]);
 async function pushSave(sub){
-  const j=sub.toJSON(), base={p_endpoint:j.endpoint,p_p256dh:j.keys.p256dh,p_auth:j.keys.auth,p_tz:tzName(),p_hour:pushHour(),p_lang:lang(),p_last_day:S.lastDay||null,p_streak:S.streak||0};
-  /* signed in, so the server can check that alerts are only for reviewers and knows whose phone it is (for Yalla) */
+  const j=sub.toJSON(), body={p_endpoint:j.endpoint,p_p256dh:j.keys.p256dh,p_auth:j.keys.auth,p_tz:tzName(),p_hour:pushHour(),p_lang:lang(),p_last_day:S.lastDay||null,p_streak:S.streak||0,p_remind:!!S.push,p_alerts:!!S.pushAlerts};
+  /* signed in, so the server can check that alerts are only for reviewers */
   const auth=!!(SES&&await freshToken());
-  const v2={p_remind:!!S.push,p_alerts:!!S.pushAlerts}, v3={p_word:!!S.wotdPush,p_word_hour:wotdHour(),p_words:S.wotdPush?wotdPlan():null,p_yalla:!!(S.pushYalla&&SES),p_out:!SES};
-  const call=b=>api("/rest/v1/rpc/save_push",{method:"POST",body:JSON.stringify(b)},auth);
-  /* an older save_push on the server (supabase-setup.sql not run again yet): send what it knows */
-  const old=e=>e.status===404||/p_word|p_yalla|p_out|p_remind|p_alerts|function/i.test(e.message||"");
-  try{ await call(Object.assign({},base,v2,v3)); }
-  catch(e){ if(!old(e)) throw e; try{ await call(Object.assign({},base,v2)); }catch(e2){ if(!old(e2)) throw e2; await call(base); } }
+  try{ await api("/rest/v1/rpc/save_push",{method:"POST",body:JSON.stringify(body)},auth); }
+  catch(e){ if(e.status===404||/p_remind|p_alerts|function/i.test(e.message||"")){ ["p_remind","p_alerts"].forEach(k=>delete body[k]); await api("/rest/v1/rpc/save_push",{method:"POST",body:JSON.stringify(body)},auth); } else throw e; }
 }
 /* permission and a push subscription for this phone; null if the learner can't or won't */
 async function pushEnsure(){
@@ -5851,10 +5294,10 @@ async function pushEnsure(){
   }
   return pushGet(await swReady(),true);
 }
-/* drop this phone's subscription when no notification needs it any more */
+/* drop this phone's subscription when neither the reminder nor reviewer alerts need it */
 async function pushDropOrSave(){
   try{ const reg=await swReady(), sub=await reg.pushManager.getSubscription(); if(!sub) return;
-    if(anyPush()){ await pushSave(sub); return; }
+    if(S.push||S.pushAlerts){ await pushSave(sub); return; }
     await api("/rest/v1/rpc/delete_push",{method:"POST",body:JSON.stringify({p_endpoint:sub.endpoint})},false).catch(()=>{}); await sub.unsubscribe(); }catch(e){}
 }
 async function alertsOn(){
@@ -5874,7 +5317,7 @@ function homeScreenSheet(){
 async function pushOn(){
   try{
     const sub=await pushEnsure(); S.pushAsked=true; save(); if(!sub) return false;
-    S.push=true; if(S.pushYalla==null&&SES) S.pushYalla=true; save(); await pushSave(sub); sWin();
+    S.push=true; save(); await pushSave(sub); sWin();
     toast(tt(`Done! If you haven't practised by ${pushHour()}:00, you'll get a reminder.`,`Klart! Har du inte övat till kl. ${pushHour()} får du en påminnelse.`));
     return true;
   }catch(e){ S.push=false; save(); toast(tt("Couldn't switch reminders on. Try again.","Kunde inte slå på påminnelser. Försök igen.")); return false; }
@@ -5883,12 +5326,12 @@ async function pushOff(){ S.push=false; save(); await pushDropOrSave(); }
 /* tell the reminder service that you practised (and keep the time zone, hour and language up to date) */
 let pushT=null;
 function pushTouch(now){
-  if(!anyPush()||!pushOk()) return;
+  if(!(S.push||S.pushAlerts)||!pushOk()) return;
   clearTimeout(pushT);
   pushT=setTimeout(async()=>{
     try{
       const reg=await swReady(), sub=await pushGet(reg,Notification.permission==="granted");
-      if(sub) await pushSave(sub); else { S.push=false; S.pushAlerts=false; S.wotdPush=false; S.pushYalla=false; save(); }
+      if(sub) await pushSave(sub); else { S.push=false; S.pushAlerts=false; save(); }
     }catch(e){}
   },now?0:1200);
 }
@@ -5926,7 +5369,7 @@ async function signIn(email,password){
 }
 async function signOut(){
   try{ await pushNow(); await api("/auth/v1/logout",{method:"POST"}); }catch(e){}
-  SES=null; storeSes(); syncState="idle"; IS_REVIEWER=false; CHECKS={}; LG.rows=null; LG.at=0; LG.all=null; LG.allAt=0; SG.mine=null; SG.all=null; SG.allAt=0; QA.mine=null; QA.all=null; BOATS.rows=null; BOATS.at=0; YL.in=[]; YL.at=0; YL.off=false; if(S.pushAlerts||S.pushYalla){ S.pushAlerts=false; S.pushYalla=false; save(); } if(pushOk()) pushDropOrSave(); render();
+  SES=null; storeSes(); syncState="idle"; IS_REVIEWER=false; CHECKS={}; LG.rows=null; LG.at=0; LG.all=null; LG.allAt=0; SG.mine=null; SG.all=null; SG.allAt=0; QA.mine=null; QA.all=null; if(S.pushAlerts){ S.pushAlerts=false; save(); pushDropOrSave(); } render();
 }
 
 /* combine device progress and cloud progress without losing either */
@@ -5941,7 +5384,6 @@ function mergeState(a,b){
   const wk=weekId(); r.week=wk; r.weekXp=Math.max(a.week===wk?(a.weekXp||0):0,b.week===wk?(b.weekXp||0):0);
   r.sound=a.sound; r.arabic=a.arabic; r.theme=a.theme; r.lang=a.lang;
   r.push=a.push; r.pushHour=a.pushHour; r.pushAsked=a.pushAsked; r.pushAlerts=a.pushAlerts; /* reminders belong to this phone */
-  r.wotdPush=a.wotdPush; r.wotdHour=a.wotdHour; r.pushYalla=a.pushYalla; r.nAsk=a.nAsk; r.boats=a.boats; r.wplan=a.wplan||b.wplan;
   r.freeze=Math.max(a.freeze||0,b.freeze||0); r.joined=Math.min(a.joined||Date.now(),b.joined||Date.now());
   r.hist=Object.assign({},b.hist||{}); Object.entries(a.hist||{}).forEach(([k,v])=>{ if(!r.hist[k]||v>r.hist[k]) r.hist[k]=v; }); r.leagueHidden=!!(a.leagueHidden||b.leagueHidden);
   r.mist=Object.assign({},b.mist||{},a.mist||{});
@@ -6476,19 +5918,15 @@ if("serviceWorker" in navigator && location.protocol==="https:" && /(^|\.)yasso\
   window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
 }
 
-/* opened from a notification: ?ord=KEY shows the word of the day, ?yalla=1 the Yallas */
-let OPEN_ORD=null;
-try{ const qp=new URLSearchParams(location.search); if(qp.has("ord")||qp.has("yalla")){ if(qp.has("ord")) OPEN_ORD=qp.get("ord")||""; qp.delete("ord"); qp.delete("yalla"); const rest=qp.toString(); history.replaceState(null,"",location.pathname+(rest?"?"+rest:"")+location.hash); } }catch(e){}
-try{ if("serviceWorker" in navigator){ navigator.serviceWorker.addEventListener("message",e=>{ const d=e.data||{}; if(d.type==="open"&&d.url) openFromUrl(d.url); }); if(navigator.serviceWorker.startMessages) navigator.serviceWorker.startMessages(); } }catch(e){}
 setTab("learn");
+/* the path settles once fonts and pictures are in; keep the current level in view */
+setTimeout(scrollToCur,300); try{ document.fonts.ready.then(()=>{ if(window.scrollY<5||!$("#cur-node")||$("#cur-node").getBoundingClientRect().top>innerHeight) scrollToCur(); }); }catch(e){}
 pushTouch();
 if(FROZE) setTimeout(()=>toast(tt(`A streak freeze kept your ${S.streak}-day streak alive!`,`Ett svitskydd räddade din svit på ${S.streak} dagar!`)),600);
 (async()=>{
   const viaLink=CLOUD?await handleAuthRedirect():false;
   if(CLOUD&&SES&&!viaLink) await pullAndMerge();
   if(!S.onboarded) openWelcome();
-  else if(OPEN_ORD!=null&&!viaLink) openWotd(OPEN_ORD);
-  else if(!viaLink) setTimeout(maybeAskNotifs,1500);
 })();
 </script>
 
