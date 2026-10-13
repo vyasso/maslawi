@@ -1,0 +1,29 @@
+{
+ "region": "swedencentral",
+ "rate": "-10%",
+ "batch": 12,
+ "gap": "2000ms",
+ "format": "ogg-24khz-16bit-mono-opus",
+ "files": [
+  {
+   "file": "batch-001.ogg",
+   "voice": "ar-IQ-BasselNeural",
+   "keys": [
+    "minwakit",
+    "faakiha",
+    "mudarrisa",
+    "anamuaatil",
+    "allahykhallik",
+    "allahykhalliki"
+   ]
+  },
+  {
+   "file": "anamuaatla.ogg",
+   "voice": "ar-IQ-RanaNeural",
+   "keys": [
+    "anamuaatla"
+   ]
+  }
+ ],
+ "failed": []
+}
