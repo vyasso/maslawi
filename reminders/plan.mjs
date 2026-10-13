@@ -1,4 +1,5 @@
-// Which learners get a streak reminder right now, and what it says.
+// Which learners get a notification right now, and what it says: the streak reminder, the word of
+// the day, reviewer alerts and Yalla from friends.
 // Kept separate from send.mjs so it can be tested without sending anything.
 
 export const PUSH_HOSTS = /^https:\/\/(fcm\.googleapis\.com|updates\.push\.services\.mozilla\.com|web\.push\.apple\.com|[a-z0-9.-]+\.notify\.windows\.com)\//;
@@ -72,4 +73,42 @@ export function alertDue(row, items, now = new Date()) {
     body = en ? "Open the app to review them." : "Öppna appen och granska.";
   }
   return { title, body, latest };
+}
+
+// The word of the day: once a day, from the chosen hour (08:00 unless they picked another) until 22:59.
+// The app sends the next 14 days of words with the subscription; if it hasn't been opened for that
+// long, the notification just says that today's word is waiting.
+export function wordDue(row, now = new Date()) {
+  if (!row.word || !PUSH_HOSTS.test(row.endpoint || "")) return null;
+  const t = localNow(row.tz, now);
+  const hour = Number.isInteger(row.word_hour) ? row.word_hour : 8;
+  if (t.hour < hour || t.hour > LAST_HOUR) return null;
+  if (row.word_sent === t.date) return null;
+  return t;
+}
+const KEY = /^[a-z0-9]{1,40}$/i;
+export function wordMessage(row, t) {
+  const list = Array.isArray(row.words) ? row.words : [];
+  const e = list.find(x => x && x.d === t.date && typeof x.k === "string" && KEY.test(x.k) && typeof x.t === "string" && typeof x.b === "string" && x.t.trim());
+  if (e) return { title: cut(e.t, 80), body: cut(e.b, 180), url: "./?ord=" + e.k };
+  return row.lang === "en"
+    ? { title: "Your word of the day", body: "Open Maslawi to hear today's word.", url: "./?ord=" }
+    : { title: "Dagens ord väntar", body: "Öppna Maslawi och hör dagens ord.", url: "./?ord=" };
+}
+
+// Yalla from friends: quiet between 22:00 and 07:59 in the learner's time zone (they come in the morning).
+export function yallaOk(row, now = new Date()) {
+  if (!row.yalla || !row.user_id || !PUSH_HOSTS.test(row.endpoint || "")) return false;
+  const t = localNow(row.tz, now);
+  return t.hour >= 8 && t.hour <= 21;
+}
+export function yallaMessage(lang, list) {
+  const en = lang === "en";
+  const names = [...new Set(list.map(y => cut(y.from_name, 30)).filter(Boolean))];
+  const one = names[0] || (en ? "A friend" : "En vän");
+  const who = names.length <= 1 ? one
+    : names.length === 2 ? `${names[0]} ${en ? "and" : "och"} ${names[1]}`
+    : `${names[0]} ${en ? `and ${names.length - 1} more` : `och ${names.length - 1} till`}`;
+  if (en) return { title: `${who} sent you a Yalla!`, body: `${names.length > 1 ? "They're" : who + " is"} cheering you on. Send a Yalla back!` };
+  return { title: `${who} skickade Yalla!`, body: `${names.length > 1 ? "De" : who} peppar dig att öva i dag. Skicka en Yalla tillbaka!` };
 }

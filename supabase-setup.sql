@@ -193,7 +193,7 @@ revoke all on public.word_questions from anon;
 grant select (id, name, word, question, answer, status, created_at, answered_at) on public.word_questions to anon;
 grant select, insert, update, delete on public.word_questions to authenticated;
 
--- ============ Streak reminders (push notifications) ============
+-- ============ Notifications (streak reminder, word of the day, Yalla) ============
 -- A learner who switches the reminder on gets one row per phone or browser. The app only
 -- reaches this table through the two functions below, keyed by the push address (which is
 -- long and secret). The GitHub Action (reminders/send.mjs, every 10 minutes) reads it with the secret key.
@@ -219,30 +219,52 @@ revoke all on public.push_subscriptions from anon, authenticated;
 alter table public.push_subscriptions add column if not exists remind boolean not null default true;
 alter table public.push_subscriptions add column if not exists alerts boolean not null default false;
 alter table public.push_subscriptions add column if not exists last_alert timestamptz;
+-- user_id: the account the phone was signed in to (for Yalla from friends). word: the word of the day
+-- is on, at word_hour; words: the next 14 days of words, made by the app; yalla: Yalla notifications are on.
+alter table public.push_subscriptions add column if not exists user_id uuid references auth.users (id) on delete set null;
+alter table public.push_subscriptions add column if not exists word boolean not null default false;
+alter table public.push_subscriptions add column if not exists word_hour int not null default 8 check (word_hour between 0 and 23);
+alter table public.push_subscriptions add column if not exists word_sent date;
+alter table public.push_subscriptions add column if not exists words jsonb check (words is null or (jsonb_typeof(words) = 'array' and pg_column_size(words) <= 8000));
+alter table public.push_subscriptions add column if not exists yalla boolean not null default false;
+create index if not exists push_subscriptions_user on public.push_subscriptions (user_id);
 -- the reminder job (reminders/send.mjs) uses the secret key, which is the service_role
 grant select, update, delete on public.push_subscriptions to service_role;
 grant select on public.word_questions, public.phrase_suggestions to service_role;
 
 drop function if exists public.save_push(text, text, text, text, int, text, date, int);
+drop function if exists public.save_push(text, text, text, text, int, text, date, int, boolean, boolean);
 create or replace function public.save_push(p_endpoint text, p_p256dh text, p_auth text, p_tz text, p_hour int,
                                             p_lang text, p_last_day date, p_streak int,
-                                            p_remind boolean default true, p_alerts boolean default false)
+                                            p_remind boolean default true, p_alerts boolean default false,
+                                            p_word boolean default null, p_word_hour int default null, p_words jsonb default null,
+                                            p_yalla boolean default null, p_out boolean default false)
   returns void language plpgsql security definer set search_path = public as $$
 declare
   want_alerts boolean := coalesce(p_alerts, false) and public.is_reviewer();
+  me uuid := auth.uid();
 begin
   -- only real push services (Chrome/Android, Firefox, Apple, Microsoft)
   if p_endpoint !~ '^https://(fcm\.googleapis\.com|updates\.push\.services\.mozilla\.com|web\.push\.apple\.com|[a-z0-9.-]+\.notify\.windows\.com)/' then
     raise exception 'Not a push address' using errcode = 'check_violation';
   end if;
-  insert into public.push_subscriptions as s (endpoint, p256dh, auth, tz, hour, lang, last_day, streak, remind, alerts, last_alert)
+  if p_words is not null and (jsonb_typeof(p_words) <> 'array' or pg_column_size(p_words) > 8000) then
+    raise exception 'Bad word list' using errcode = 'check_violation';
+  end if;
+  insert into public.push_subscriptions as s (endpoint, p256dh, auth, tz, hour, lang, last_day, streak, remind, alerts, last_alert,
+                                              user_id, word, word_hour, words, yalla)
   values (p_endpoint, p_p256dh, p_auth, coalesce(nullif(p_tz, ''), 'Europe/Stockholm'), coalesce(p_hour, 19),
           coalesce(p_lang, 'sv'), p_last_day, greatest(coalesce(p_streak, 0), 0), coalesce(p_remind, true),
-          want_alerts, case when want_alerts then now() end)
+          want_alerts, case when want_alerts then now() end,
+          me, coalesce(p_word, false), coalesce(p_word_hour, 8), p_words, coalesce(p_yalla, false) and me is not null)
   on conflict (endpoint) do update
     set p256dh = excluded.p256dh, auth = excluded.auth, tz = excluded.tz, hour = excluded.hour, lang = excluded.lang,
         last_day = excluded.last_day, streak = excluded.streak, remind = excluded.remind, alerts = excluded.alerts,
         last_alert = case when excluded.alerts and not s.alerts then now() else s.last_alert end,
+        -- signed in: the phone is yours; signed out: it belongs to nobody (no more Yallas)
+        user_id = case when me is not null then me when p_out then null else s.user_id end,
+        word = coalesce(p_word, s.word), word_hour = coalesce(p_word_hour, s.word_hour), words = coalesce(p_words, s.words),
+        yalla = case when p_yalla is null then s.yalla else p_yalla and (me is not null or (s.user_id is not null and not p_out)) end,
         updated_at = now();
 end $$;
 
@@ -251,15 +273,64 @@ create or replace function public.delete_push(p_endpoint text)
   delete from public.push_subscriptions where endpoint = p_endpoint
 $$;
 
-revoke execute on function public.save_push(text, text, text, text, int, text, date, int, boolean, boolean) from public;
+revoke execute on function public.save_push(text, text, text, text, int, text, date, int, boolean, boolean, boolean, int, jsonb, boolean, boolean) from public;
 revoke execute on function public.delete_push(text) from public;
-grant execute on function public.save_push(text, text, text, text, int, text, date, int, boolean, boolean) to anon, authenticated;
+grant execute on function public.save_push(text, text, text, text, int, text, date, int, boolean, boolean, boolean, int, jsonb, boolean, boolean) to anon, authenticated;
 grant execute on function public.delete_push(text) to anon, authenticated;
+
+-- ============ Yalla (cheer on a friend in the league) ============
+-- On the map, learners see others in the league as small boats and can send them a "Yalla!",
+-- once a day per person. Only people who are in the league can send or get one. The person who
+-- gets it sees it in the app and, if their phone has notifications on, gets a notification.
+create table if not exists public.yalla (
+  id         bigint generated always as identity primary key,
+  from_id    uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  to_id      uuid not null references auth.users (id) on delete cascade,
+  from_name  text check (char_length(from_name) <= 40),
+  day        date not null default current_date,
+  seen       boolean not null default false,
+  pushed     boolean not null default false,
+  created_at timestamptz not null default now(),
+  unique (from_id, to_id, day),
+  check (from_id <> to_id)
+);
+create index if not exists yalla_to on public.yalla (to_id, seen, created_at desc);
+create index if not exists yalla_not_pushed on public.yalla (created_at) where not pushed;
+alter table public.yalla enable row level security;
+drop policy if exists "see own yalla"   on public.yalla;
+drop policy if exists "send yalla"      on public.yalla;
+drop policy if exists "mark yalla seen" on public.yalla;
+create policy "see own yalla"   on public.yalla for select to authenticated using (auth.uid() = to_id or auth.uid() = from_id);
+create policy "send yalla"      on public.yalla for insert to authenticated with check (auth.uid() = from_id);
+create policy "mark yalla seen" on public.yalla for update to authenticated using (auth.uid() = to_id) with check (auth.uid() = to_id);
+revoke all on public.yalla from anon, authenticated;
+grant select, insert on public.yalla to authenticated;
+grant update (seen) on public.yalla to authenticated;
+grant select, update on public.yalla to service_role;
+-- The sender's name comes from their league row, and nobody can send more than 30 a day.
+create or replace function public.check_yalla() returns trigger
+  language plpgsql security definer set search_path = public as $$
+declare nm text;
+begin
+  select name into nm from public.league where user_id = new.from_id;
+  if nm is null then raise exception 'Join the league to send a Yalla' using errcode = 'check_violation'; end if;
+  if not exists (select 1 from public.league where user_id = new.to_id) then
+    raise exception 'They are not in the league' using errcode = 'check_violation';
+  end if;
+  if (select count(*) from public.yalla where from_id = new.from_id and day = current_date) >= 30 then
+    raise exception 'Too many Yallas today' using errcode = 'check_violation';
+  end if;
+  new.from_name := nm; new.day := current_date; new.seen := false; new.pushed := false; new.created_at := now();
+  return new;
+end $$;
+revoke execute on function public.check_yalla() from public, anon, authenticated;
+drop trigger if exists check_yalla on public.yalla;
+create trigger check_yalla before insert on public.yalla for each row execute function public.check_yalla();
 
 -- ============ Instant notifications ============
 -- GitHub's own schedule is often late, so Supabase starts the notification job instead:
--- right away when someone asks a question or suggests a phrase, and every 10 minutes for
--- the streak reminders. Needs a GitHub token that may only start the job (Actions: read and
+-- right away when someone asks a question, suggests a phrase or sends a Yalla, and every 10 minutes
+-- for the streak reminders and the word of the day. Needs a GitHub token that may only start the job (Actions: read and
 -- write on this repo), saved in Supabase Vault as github_dispatch_token:
 --   select vault.create_secret('github_pat_…', 'github_dispatch_token');
 -- Without the token, nothing happens and the GitHub schedule still runs the job.
@@ -295,5 +366,11 @@ create trigger kick_new_question after insert on public.word_questions
 drop trigger if exists kick_new_suggestion on public.phrase_suggestions;
 create trigger kick_new_suggestion after insert on public.phrase_suggestions
   for each statement execute function public.kick_on_new_post();
+drop trigger if exists kick_new_yalla on public.yalla;
+create trigger kick_new_yalla after insert on public.yalla
+  for each statement execute function public.kick_on_new_post();
 
 select cron.schedule('maslawi-notifications', '*/10 * * * *', 'select public.kick_notifications()');
+
+-- Let the API see new tables and functions right away.
+notify pgrst, 'reload schema';

@@ -1,6 +1,6 @@
 // Maslawi service worker: lets the app open offline and install to the home screen.
 // Network first, so every change you push shows up as soon as the user is online.
-const CACHE = "maslawi-v28";
+const CACHE = "maslawi-v29";
 const SHELL = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
 
 self.addEventListener("install", e => {
@@ -9,7 +9,7 @@ self.addEventListener("install", e => {
 self.addEventListener("activate", e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
-// Streak reminders: the evening notification, sent by reminders/send.mjs
+// Notifications sent by reminders/send.mjs: the streak reminder, the word of the day and Yalla from friends
 self.addEventListener("push", e => {
   let d = {};
   try { d = e.data ? e.data.json() : {}; } catch (_) { d = { body: e.data ? e.data.text() : "" }; }
@@ -21,7 +21,8 @@ self.addEventListener("notificationclick", e => {
   e.notification.close();
   const url = new URL((e.notification.data && e.notification.data.url) || "./", self.registration.scope).href;
   e.waitUntil(clients.matchAll({ type: "window", includeUncontrolled: true }).then(list => {
-    for (const c of list) if (c.url.startsWith(self.registration.scope) && "focus" in c) return c.focus();
+    // the app is already open: tell it what was tapped (the word of the day opens its sheet)
+    for (const c of list) if (c.url.startsWith(self.registration.scope) && "focus" in c) { c.postMessage({ type: "open", url }); return c.focus(); }
     return clients.openWindow(url);
   }));
 });
