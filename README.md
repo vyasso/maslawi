@@ -30,6 +30,7 @@ Made by A. Yasso.
 | `audio-kareem.json` | The old voice, Kareem, for every clip: a backup the app doesn't load |
 | `manifest.webmanifest`, `sw.js`, `icon-*.png` | Let people install it to their home screen and open it offline |
 | `og-image.png` | The picture shown when someone shares the link (1200×630) |
+| `beta/` | A test copy of the app at `/beta/`, for trying new things on a phone before they go live. It keeps its own progress on the phone (starting from a copy of the real app's), doesn't sign in or sync, and shows a small TEST tab at the top |
 | `supabase-setup.sql` | Creates the tables for accounts, the league, the content check, suggested phrases, the question box and notifications (run in Supabase; safe to run again) |
 | `reminders/`, `.github/workflows/streak-reminder.yml` | Sends the evening streak reminders and the reviewer alerts, every 10 minutes |
 
