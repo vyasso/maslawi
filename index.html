@@ -1117,6 +1117,40 @@ body{overflow-x:clip} /* the hills reach the screen edge; keep the slide-in from
 #lesson.party .end h2{color:#fff;font-size:36px;line-height:1.1}
 #lesson.party .end .mascot{width:168px;height:168px}
 #lesson.party .end .sub{color:#E7EBFF}
+/* smarter repetition: today's review, the week ahead, how strong each word is */
+.drv{margin-top:14px;padding:16px;border-radius:22px;background:var(--surface);border:2px solid var(--line);border-bottom-width:5px}
+.drv-top{display:flex;align-items:center;gap:12px}
+.drv-ic{width:50px;height:50px;border-radius:15px;background:var(--teal);color:#fff;display:grid;place-items:center;flex:none;box-shadow:0 4px 0 var(--teal-deep)}
+.drv-ic svg{width:28px;height:28px}
+.drv.done .drv-ic{background:var(--good-btn);box-shadow:0 4px 0 var(--good-deep)}
+.drv.off .drv-ic{background:var(--lock);color:var(--lock-ink);box-shadow:0 4px 0 var(--lock-deep)}
+.drv-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.drv-t b{font-family:var(--display);font-size:20px;line-height:1.15}
+.drv-t small{color:var(--muted);font-weight:700;line-height:1.3}
+.btn.drv-go{margin-top:14px;background:var(--teal);box-shadow:0 4px 0 var(--teal-deep)}
+.drv-wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:14px}
+.drv-d{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.drv-d b{font-size:12px;line-height:1;min-height:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.drv-bar{height:40px;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.drv-bar i{display:block;width:100%;max-width:28px;border-radius:6px 6px 3px 3px;background:var(--sel-line);opacity:.55}
+.drv-bar i.z{background:var(--line);opacity:1}
+.drv-d.now .drv-bar i{background:var(--teal);opacity:1}
+.drv-d.now b,.drv-d.now span{color:var(--ink)}
+.drv-d span{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.drv-why{margin:12px 0 0;color:var(--muted);font-size:13px;font-weight:700;line-height:1.35}
+.tbadge{position:absolute;top:0;left:50%;margin-left:4px;min-width:20px;height:20px;padding:0 5px;border-radius:99px;background:var(--bad-btn);color:#fff;border:2px solid var(--surface);font-size:11px;font-weight:900;line-height:16px;letter-spacing:0;text-align:center;font-variant-numeric:tabular-nums;pointer-events:none}
+.sm{display:flex;align-items:flex-end;gap:2px;height:16px;flex:none}
+.sm i{width:4px;border-radius:2px;background:var(--line)}
+.sm i:nth-child(1){height:6px}.sm i:nth-child(2){height:9px}.sm i:nth-child(3){height:12px}.sm i:nth-child(4){height:16px}
+.sm[data-l="1"] i:nth-child(-n+1),.sm[data-l="2"] i:nth-child(-n+2),.sm[data-l="3"] i:nth-child(-n+3),.sm[data-l="4"] i{background:var(--teal)}
+.ed-fl.ed-rv{color:var(--teal)}
+.ed-fl.ed-rv svg{width:36px;height:36px}
+/* the end of a lesson scrolls when it doesn't fit (small phones) instead of cutting off the buttons */
+#lesson .l-in:has(>.end){overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+#lesson .l-in>.end{flex:1 0 auto}
+.ss-row{display:flex;flex-wrap:wrap;gap:6px}
+.ss{border:2px solid var(--line);border-radius:99px;padding:3px 10px;font-size:13px;font-weight:800;color:var(--muted);white-space:nowrap}
+.ss b{font-family:var(--body);font-size:13px;color:var(--teal)}
 #lesson.party .goalhit{color:#FFD45A}
 #lesson.party .goalhit.qdone{color:#BFE4FF}
 .end-h{display:flex;flex-direction:column;gap:2px}
@@ -4687,8 +4721,70 @@ function searchWords(q){
 
 /* ================= WORDS: practice hub + your word collection ================= */
 const TURTLE='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 15.5c0-4.1 3.4-7.5 7.5-7.5S19 11.4 19 15.5z"/><path d="M19 13.5h1.8a1.7 1.7 0 0 0 0-3.4H19.5" stroke="currentColor" stroke-width="1.8" fill="none"/><rect x="5.5" y="15.5" width="3" height="3.5" rx="1.2"/><rect x="14" y="15.5" width="3" height="3.5" rx="1.2"/><path d="M8 11.5h7M9.5 9v6.5M13.5 9v6.5" stroke="#fff" stroke-opacity=".45" stroke-width="1.3"/></svg>';
-function seen(k){ if(!k||!W[k]) return; S.seen=S.seen||{}; S.seen[k]=Date.now(); }
-function wordStrength(k){ if(S.mist&&S.mist[k]) return 1; const t=S.seen&&S.seen[k]; if(!t) return 2; const d=(Date.now()-t)/864e5; return d<2?4:d<6?3:d<14?2:1; }
+/* ---- smarter repetition: every word you learn gets its own schedule and comes back just before you would forget it.
+   S.srs[k] = {i: days until the next review, e: how fast that grows, d: the day it is due, t: the day it was last reviewed,
+   r: reviews, l: times forgotten, m: the day it was last missed}. Days are counted with dayNum(). */
+const SRS_CAP=15, SRS_ROUND=10, TD=()=>dayNum(today());
+const srsRec=k=>S.srs&&S.srs[k];
+function srsNew(k){ S.srs=S.srs||{}; if(!S.srs[k]){ const T=TD(); S.srs[k]={i:1,e:2.5,d:T+1,t:T,r:0,l:0}; } return S.srs[k]; }
+/* right: the wait grows (1 day, then about 3, 8, 20, 50…). Only once a day, and only when the word is due or at least halfway there */
+function srsHit(k){ const r=srsRec(k), T=TD(); if(!r||r.t>=T) return false; const gap=T-r.t;
+  if(T<r.d&&(r.i<2||gap*2<r.i)) return false;
+  const base=T<r.d?gap:gap>r.i?r.i+(gap-r.i)/2:r.i, n=Math.min(365,Math.max(r.i+(T<r.d?0:1),Math.round(base*r.e)));
+  Object.assign(r,{i:n,t:T,d:T+n,r:(r.r||0)+1}); return true; }
+/* wrong: back tomorrow, and it grows a little slower from now on */
+function srsMiss(k){ if(!W[k]) return; const r=srsRec(k)||srsNew(k), T=TD(); if(r.m===T) return;
+  if(r.r>0||r.i>1){ r.l=(r.l||0)+1; r.e=Math.max(1.3,Math.round((r.e-.2)*100)/100); }
+  Object.assign(r,{i:Math.max(1,Math.round(r.i*.2)),t:T,d:T+1,m:T}); }
+const srsDue=k=>{ const r=srsRec(k); return !!r&&r.d<=TD(); };
+const needsReview=k=>!!(S.mist&&S.mist[k])||srsDue(k);
+function srsDueKeys(ls){ const T=TD(); return (ls||learnedWords()).filter(k=>{ const r=srsRec(k); return r&&r.d<=T; }).sort((a,b)=>(S.srs[a].d-S.srs[b].d)||(S.srs[a].i-S.srs[b].i)); }
+function srsForecast(ls){ const T=TD(), out=[0,0,0,0,0,0,0]; (ls||learnedWords()).forEach(k=>{ const r=srsRec(k); if(!r) return; const j=Math.max(0,r.d-T); if(j<7) out[j]++; }); return out; }
+function srsLevel(k){ const r=srsRec(k); if(!r) return 0; if(S.mist&&S.mist[k]) return 1; return r.i<3?1:r.i<8?2:r.i<21?3:4; }
+/* words learned before this existed (or by testing out) get a schedule from what you have done so far; old overdue words are spread out so no day gets more than SRS_CAP */
+function srsSync(){
+  S.srs=S.srs||{}; const T=TD(), fresh=[]; let made=0;
+  learnedWords().forEach(k=>{ if(S.srs[k]) return; made++;
+    const n=Math.max(0,((S.okd||{})[k]||{}).n||0), ts=(S.seen||{})[k], last=ts?Math.min(T,dayNum(dstr(ts))):T, i=[1,2,4,8,16,30][Math.min(n,5)];
+    const r={i,e:2.5,d:last+i,t:last,r:n,l:0}; if(S.mist&&S.mist[k]){ r.i=1; r.d=T; r.l=1; }
+    S.srs[k]=r; if(r.d<=T) fresh.push(k); });
+  if(fresh.length){ const load={}, fs=new Set(fresh);
+    Object.entries(S.srs).forEach(([k,r])=>{ if(fs.has(k)) return; const d=Math.max(r.d,T); load[d]=(load[d]||0)+1; });
+    fresh.sort((a,b)=>((S.mist&&S.mist[b]?1:0)-(S.mist&&S.mist[a]?1:0))||(S.srs[a].d-S.srs[b].d)||(S.srs[a].i-S.srs[b].i)).forEach(k=>{ let d=T; while((load[d]||0)>=SRS_CAP) d++; load[d]=(load[d]||0)+1; S.srs[k].d=d; }); }
+  return made;
+}
+function seen(k){ if(!k||!W[k]) return; S.seen=S.seen||{}; S.seen[k]=Date.now(); srsNew(k); }
+/* weakest first: mistakes and words due today, then by how long they can wait */
+function wordStrength(k){ if(S.mist&&S.mist[k]) return 1; const r=srsRec(k); if(!r) return 2; if(r.d<=TD()) return 1; return r.i<3?2:r.i<8?3:4; }
+function srsMeter(k){ const lv=srsLevel(k); return lv?`<span class="sm" data-l="${lv}" aria-hidden="true"><i></i><i></i><i></i><i></i></span>`:""; }
+function srsWhen(k){ const r=srsRec(k); if(!r) return ""; const n=r.d-TD(); return n<=0?tt("Review today","Repetera i dag"):n===1?tt("Next review tomorrow","Nästa repetition i morgon"):tt(`Next review in ${n} days`,`Nästa repetition om ${n} dagar`); }
+const WKD=[["Sun","sön"],["Mon","mån"],["Tue","tis"],["Wed","ons"],["Thu","tor"],["Fri","fre"],["Sat","lör"]];
+function dueCard(ls){
+  const due=srsDueKeys(ls).length, fc=srsForecast(ls), has=ls.length>=4;
+  if(!has) return `<section class="drv off" aria-label="${tt("Daily review","Dagens repetition")}"><div class="drv-top"><span class="drv-ic" aria-hidden="true">${PICONS.fresh}</span><span class="drv-t"><b>${tt("Daily review","Dagens repetition")}</b><small>${tt("Finish a lesson and your words start coming back here, right before you'd forget them.","Klara en lektion så börjar dina ord komma tillbaka här, precis innan du skulle glömma dem.")}</small></span></div></section>`;
+  const max=Math.max(...fc,1), d0=new Date(Date.now());
+  const week=fc.map((n,j)=>{ const dt=new Date(d0.getFullYear(),d0.getMonth(),d0.getDate()+j), lab=j?tt(WKD[dt.getDay()][0],WKD[dt.getDay()][1]):tt("Today","I dag");
+    return `<span class="drv-d${j?"":" now"}"><b>${n||""}</b><span class="drv-bar"><i class="${n?"":"z"}" style="height:${n?Math.max(6,Math.round(n/max*40)):3}px"></i></span><span>${lab}</span></span>`; }).join("");
+  const nx=fc.findIndex((n,j)=>j>0&&n>0), mins=Math.max(1,Math.round(Math.min(due,40)*12/60));
+  const sub=due?tt(`${due} word${due>1?"s":""} waiting · about ${mins} min`,`${due} ord väntar · ca ${mins} min`)
+    :nx<0?tt("Nothing more due this week","Inget mer att repetera den här veckan"):nx===1?tt(`Next: ${fc[1]} word${fc[1]>1?"s":""} tomorrow`,`Nästa: ${fc[1]} ord i morgon`):tt(`Next: ${fc[nx]} word${fc[nx]>1?"s":""} in ${nx} days`,`Nästa: ${fc[nx]} ord om ${nx} dagar`);
+  const wkLabel=fc.map((n,j)=>`${j?tt(`in ${j} day${j>1?"s":""}`,`om ${j} dag${j>1?"ar":""}`):tt("today","i dag")}: ${n}`).join(", ");
+  return `<section class="drv${due?"":" done"}" aria-label="${tt("Daily review","Dagens repetition")}"><div class="drv-top"><span class="drv-ic" aria-hidden="true">${due?PICONS.fresh:PICONS.ok}</span><span class="drv-t"><b>${due?tt("Daily review","Dagens repetition"):tt("All reviewed for today!","Allt repeterat för i dag!")}</b><small>${sub}</small></span></div>
+    <div class="drv-wk" role="img" aria-label="${tt("Words to review","Ord att repetera")}: ${wkLabel}">${week}</div>
+    <p class="drv-why">${tt("Every word comes back just before you'd forget it. Get it right and it waits longer next time.","Varje ord kommer tillbaka precis innan du skulle glömma det. Kan du det väntar det längre nästa gång.")}</p>${due?`<button class="btn wide drv-go" id="p-due">${tt(`Review ${Math.min(due,SRS_ROUND)} word${Math.min(due,SRS_ROUND)>1?"s":""}`,`Repetera ${Math.min(due,SRS_ROUND)} ord`)}</button>`:""}</section>`;
+}
+function srsBadge(){ const t=document.querySelector('.tab[data-tab="words"]'); if(!t) return; const n=srsDueKeys().length; let b=t.querySelector(".tbadge");
+  if(!n){ if(b) b.remove(); return; } if(!b){ b=document.createElement("span"); b.className="tbadge"; t.appendChild(b); } b.textContent=n>99?"99+":String(n); b.setAttribute("aria-label",tt(`${n} to review`,`${n} att repetera`)); }
+function startDue(){
+  const due=srsDueKeys(); if(!due.length) return;
+  const pick=due.slice(0,SRS_ROUND), learned=learnedWords(), base=learned.length>=8?learned:Object.keys(W); let ty=0;
+  /* harder questions as a word gets stronger: young words are recognised, older ones recalled */
+  const ex=shuffle(pick).map((k,j)=>{ const r=S.srs[k], pool=shuffle(base.filter(x=>x!==k&&x!==PAIR[k]&&plainEn(x)!==plainEn(k))).slice(0,3), short=plainEn(k).split(/\s+/).length<=3;
+    if(r.i>=8&&short&&ty<2&&!(S.mist&&S.mist[k])){ ty++; return {t:"type",w:k,acc:accFor(k)}; }
+    return {t:r.i<3?(j%2?"listen":"mcq"):(j%2?"listen":"mcqR"),w:k,pool}; });
+  const mw=matchSet(shuffle(pick)); if(pick.length>=4&&mw.length>=3) ex.push({t:"match",ws:mw});
+  L={missed:0,i:-1,practice:true,mode:"due",keys:pick,ex:withPics(ex),total:ex.length,k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()}; L.total=L.ex.length; openOverlay(); step();
+}
 function unitWords(ui){ return [...new Set(LESSONS.filter(l=>l.unit===ui).flatMap(l=>l.ex.filter(e=>e.t==="intro").map(e=>e.w)))]; }
 function byWeakness(keys){ return shuffle(keys).sort((a,b)=>wordStrength(a)-wordStrength(b)); }
 function practiceTile(id,title,sub,cls,icon,off){ return `<button class="ptile ${cls}" id="${id}" ${off?"disabled":""}><span class="pt-ic">${icon}</span><b>${title}</b><small>${sub}</small></button>`; }
@@ -4701,20 +4797,20 @@ const PICONS={
 PICONS.fresh='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4v5h-5"/></svg>';
 PICONS.ear='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 1 1 12 0c0 3.5-3 4.5-3.5 7.5A3.5 3.5 0 0 1 8 17"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 1.5-1.5 2-1.5 3.5"/></svg>';
 PICONS.ok='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-/* a word shows a tag only when it needs you: "Practise" (a mistake or long ago) or "Rusty" (a week or two ago) */
-function freshTag(k){ const s=wordStrength(k); return s===1?`<span class="fresh f1">${tt("Practise","Öva")}</span>`:s===2?`<span class="fresh f2">${tt("Rusty","Rostig")}</span>`:""; }
+/* a word shows a tag only when it needs you: "Practise" (a mistake) or "Review" (due today); the bars show how strong it is */
+function freshTag(k){ return S.mist&&S.mist[k]?`<span class="fresh f1">${tt("Practise","Öva")}</span>`:srsDue(k)?`<span class="fresh f2">${tt("Review","Repetera")}</span>`:""; }
 let WFILTER="all", UNIT_OF=null;
 function unitOf(k){ if(!UNIT_OF){ UNIT_OF={}; UNITS.forEach((u,ui)=>unitWords(ui).forEach(w=>{ if(!(w in UNIT_OF)) UNIT_OF[w]=ui; })); } return k in UNIT_OF?UNIT_OF[k]:-1; }
-function wordRow(k,later){ const u=later?unitOf(k):-1; return `<button class="wr${later?" wr-later":""}" data-k="${k}" aria-label="${esc(W[k].tr)}: ${esc(W[k].en)}. ${tt("Tap to listen","Tryck för att lyssna")}"><span class="wr-sp">${SPK}</span><span class="wr-t"><span class="say">${esc(W[k].tr)}</span>${arSm(k)}<small>${esc(W[k].en)}</small></span>${picSvg(k,"pic wr-pic")}${later?`<span class="fresh fu">${u>=0?tt("Unit ","Enhet ")+(u+1):tt("Soon","Snart")}</span>`:freshTag(k)}</button>`; }
+function wordRow(k,later){ const u=later?unitOf(k):-1; return `<button class="wr${later?" wr-later":""}" data-k="${k}" aria-label="${esc(W[k].tr)}: ${esc(W[k].en)}. ${later||!srsRec(k)?"":srsWhen(k)+". "}${tt("Tap to listen","Tryck för att lyssna")}"><span class="wr-sp">${SPK}</span><span class="wr-t"><span class="say">${esc(W[k].tr)}</span>${arSm(k)}<small>${esc(W[k].en)}</small></span>${picSvg(k,"pic wr-pic")}${later?`<span class="fresh fu">${u>=0?tt("Unit ","Enhet ")+(u+1):tt("Soon","Snart")}</span>`:freshTag(k)+srsMeter(k)}</button>`; }
 function renderWords(el){
   const learned=learnedWords(), total=Object.keys(W).length, nm=mistakeKeys().length, ok=learned.length>=4;
-  const weak=learned.filter(k=>wordStrength(k)<=2).length;
+  const weak=learned.filter(needsReview).length;
   if(!weak&&WFILTER==="weak") WFILTER="all";
   const ids=learned.length?learned:Object.keys(W), wotd=ids[Math.floor(Date.now()/864e5)%ids.length];
   const first=nm?practiceTile("p-mist",tt("Fix mistakes","Rätta misstag"),tt(`${nm} word${nm>1?"s":""} to fix`,`${nm} ord att rätta`),"t-red",PICONS.mist)
-    :weak&&ok?practiceTile("p-fresh",tt("Freshen up","Fräscha upp"),tt(`${weak} word${weak>1?"s":""} getting rusty`,`${weak} ord börjar rosta`),"t-teal",PICONS.fresh)
-    :practiceTile("p-none",ok?tt("All fresh","Allt fräscht"):tt("Fix mistakes","Rätta misstag"),ok?tt("No mistakes to fix","Inga misstag att rätta"):tt("Nothing to fix yet","Inget att rätta än"),"t-done",PICONS.ok,true);
-  let h=`<section class="whero">${mascot(learned.length?"happy":"wave","wh-m")}<div class="wh-t"><b class="wh-n">${learned.length}</b><span>${tt(learned.length===1?"word learned":"words learned",learned.length===1?"inlärt ord":"inlärda ord")}</span><div class="pbar"><i style="width:${(learned.length/total*100).toFixed(1)}%"></i><span>${tt(`${learned.length} of ${total}`,`${learned.length} av ${total}`)}</span></div><small>${!learned.length?tt("Finish a lesson to start your collection.","Klara en lektion för att börja din samling."):weak?tt(`${weak} could use some practice`,`${weak} behöver övas`):tt("All your words are fresh","Alla dina ord är fräscha")}</small></div></section>
+    :practiceTile("p-none",ok?tt("No mistakes","Inga misstag"):tt("Fix mistakes","Rätta misstag"),ok?tt("Nothing to fix right now","Inget att rätta just nu"):tt("Nothing to fix yet","Inget att rätta än"),"t-done",PICONS.ok,true);
+  let h=`<section class="whero">${mascot(learned.length?"happy":"wave","wh-m")}<div class="wh-t"><b class="wh-n">${learned.length}</b><span>${tt(learned.length===1?"word learned":"words learned",learned.length===1?"inlärt ord":"inlärda ord")}</span><div class="pbar"><i style="width:${(learned.length/total*100).toFixed(1)}%"></i><span>${tt(`${learned.length} of ${total}`,`${learned.length} av ${total}`)}</span></div><small>${!learned.length?tt("Finish a lesson to start your collection.","Klara en lektion för att börja din samling."):weak?tt(`${weak} to review today`,`${weak} att repetera i dag`):tt("All reviewed for today","Allt repeterat för i dag")}</small></div></section>
+  ${dueCard(learned)}
   ${colEntry()}
   ${guideCards()}
   <h2 class="sec">${tt("Practise","Öva")}</h2>
@@ -4732,11 +4828,11 @@ function renderWords(el){
   <div id="qa-sec"></div>
   <h2 class="sec">${learned.length?tt("Your words","Dina ord"):tt("Look up a word","Slå upp ett ord")}</h2>
   <label class="wsearch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="wq" type="search" placeholder="${tt("Search: hi, thanks, chai…","Sök: hej, tack, chai…")}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="${tt("Search words in English or Maslawi","Sök ord på svenska, engelska eller maslawi")}"></label>
-  ${learned.length&&weak?`<div class="wfilter" role="group" aria-label="${tt("Show","Visa")}"><button class="rchip" data-f="all" aria-pressed="${WFILTER!=="weak"}">${tt("All words","Alla ord")}</button><button class="rchip" data-f="weak" aria-pressed="${WFILTER==="weak"}">${tt("To practise","Att öva")} · ${weak}</button></div>`:""}
+  ${learned.length&&weak?`<div class="wfilter" role="group" aria-label="${tt("Show","Visa")}"><button class="rchip" data-f="all" aria-pressed="${WFILTER!=="weak"}">${tt("All words","Alla ord")}</button><button class="rchip" data-f="weak" aria-pressed="${WFILTER==="weak"}">${tt("To review","Att repetera")} · ${weak}</button></div>`:""}
   <div id="wlist" aria-live="polite">${wordList("")}</div>`;
   el.innerHTML=h;
   const go=(id,f)=>{ const b=$(id); if(b) b.onclick=()=>{sTap();f();}; };
-  go("#p-mist",startReview); go("#p-fresh",startFreshen); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters); go("#open-grammar",()=>openGrammar()); go("#open-verbs",openVerbs); go("#p-dict",startDictation); go("#open-col",openCollection);
+  go("#p-mist",startReview); go("#p-due",startDue); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters); go("#open-grammar",()=>openGrammar()); go("#open-verbs",openVerbs); go("#p-dict",startDictation); go("#open-col",openCollection);
   const wc=$("#wotd"); if(wc) wc.onclick=()=>{ wc.classList.toggle("flipped"); sTap(); };
   drawSgSection(); const had=SG.approved; loadApproved().then(()=>{ if(SG.approved!==had&&el.isConnected) drawSgSection(); });
   drawQaSection(); const hadQ=QA.answered; loadAnswered().then(()=>{ if(QA.answered!==hadQ&&el.isConnected) drawQaSection(); });
@@ -4756,11 +4852,11 @@ function wordList(q){
   }
   const weakOnly=WFILTER==="weak"; let out="", found=0;
   UNITS.forEach((u,ui)=>{
-    const all=unitWords(ui), mine=all.filter(k=>learned.has(k)&&(!weakOnly||wordStrength(k)<=2));
+    const all=unitWords(ui), mine=all.filter(k=>learned.has(k)&&(!weakOnly||needsReview(k)));
     if(!mine.length) return; found+=mine.length;
     out+=`<div class="wg"><div class="wg-h"><span class="wg-dot" style="background:${u.color}"></span><b>${esc(u.title)}</b><span>${tt(`${all.filter(k=>learned.has(k)).length} of ${all.length}`,`${all.filter(k=>learned.has(k)).length} av ${all.length}`)}</span></div>${mine.map(k=>wordRow(k)).join("")}</div>`;
   });
-  if(!found) return `<p class="sub wl-empty">${weakOnly?tt("Nothing to practise. All your words are fresh!","Inget att öva. Alla dina ord är fräscha!"):tt("Your words show up here as you learn them. You can still search for any word above.","Dina ord dyker upp här när du lär dig dem. Du kan ändå söka efter vilket ord som helst ovan.")}</p>`;
+  if(!found) return `<p class="sub wl-empty">${weakOnly?tt("Nothing to review. You're all done for today!","Inget att repetera. Du är klar för i dag!"):tt("Your words show up here as you learn them. You can still search for any word above.","Dina ord dyker upp här när du lär dig dem. Du kan ändå söka efter vilket ord som helst ovan.")}</p>`;
   const left=Object.keys(W).length-learned.size;
   return out+(weakOnly||!left?"":`<p class="sub wl-more">${tt(`${left} more words are waiting in the next lessons.`,`${left} ord till väntar i nästa lektioner.`)}</p>`);
 }
@@ -5432,6 +5528,7 @@ function refreshTop(){
   st[1].innerHTML=teaGlass(x/g)+`<span class="tg-n">${x}<small>/${g}</small></span>`;
   st[2].innerHTML=I.gem+S.gems;
   st[3].innerHTML=I.heart+S.hearts;
+  srsBadge();
   st[0].setAttribute("aria-label",tt(`${S.streak} day streak`,`${S.streak} dagar i rad`)); st[1].setAttribute("aria-label",tt(`Today's goal: ${x} of ${g} XP. Open the daily quests`,`Dagens mål: ${x} av ${g} XP. Öppna dagens uppdrag`)); st[2].setAttribute("aria-label",tt(`${S.gems} kleicha. Open the kleicha shop`,`${S.gems} kleicha. Öppna kleichabutiken`)); st[3].setAttribute("aria-label",tt(`${S.hearts} hearts`,`${S.hearts} hjärtan`));
 }
 const TABS=[
@@ -5585,7 +5682,7 @@ async function pushLeague(){
     catch(e){ if(!lgMissing(e)) throw e; }
   }
 }
-function render(){ stopFx(); document.body.classList.toggle("map",tab==="learn"); refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
+function render(){ if(srsSync()) save(); stopFx(); document.body.classList.toggle("map",tab==="learn"); refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
 
 /* ================= LESSON PLAYER ================= */
 let L=null;
@@ -5728,8 +5825,8 @@ function startPractice(){
 }
 /* ---- mistakes: words you got wrong come back until you get them right twice ---- */
 function mistakeKeys(){ return Object.keys(S.mist||{}).filter(k=>W[k]); }
-function miss(k){ if(!k||!W[k]) return; S.mist=S.mist||{}; if(!S.mist[k]&&L) L.missed=(L.missed||0)+1; S.mist[k]=2; S.okd=S.okd||{}; const o=S.okd[k]; if(o&&(o.d!==today()||!o.m)) S.okd[k]={n:Math.max(0,(o.n||0)-1),d:today(),m:1}; }
-function hit(k){ seen(k); if(S.mist&&S.mist[k]){ S.mist[k]--; if(S.mist[k]<=0) delete S.mist[k]; } if(!k||!W[k]) return; S.okd=S.okd||{}; const o=S.okd[k]||{n:0,d:""}; if(o.d!==today()) S.okd[k]={n:(o.n||0)+1,d:today()}; }
+function miss(k,soft){ if(!k||!W[k]) return; if(!soft) srsMiss(k); S.mist=S.mist||{}; if(!S.mist[k]&&L) L.missed=(L.missed||0)+1; S.mist[k]=2; S.okd=S.okd||{}; const o=S.okd[k]; if(o&&(o.d!==today()||!o.m)) S.okd[k]={n:Math.max(0,(o.n||0)-1),d:today(),m:1}; }
+function hit(k){ if(srsHit(k)&&L) L.up=(L.up||0)+1; seen(k); if(S.mist&&S.mist[k]){ S.mist[k]--; if(S.mist[k]<=0) delete S.mist[k]; } if(!k||!W[k]) return; S.okd=S.okd||{}; const o=S.okd[k]||{n:0,d:""}; if(o.d!==today()) S.okd[k]={n:(o.n||0)+1,d:today()}; }
 const plainEn=k=>W[k].en.replace(/\s*\(.*?\)/g,"").trim();
 function matchSet(keys){ const out=[], seenE=new Set(), seenT=new Set(); for(const k of keys){ const e=plainEn(k).toLowerCase(), t=W[k].tr; if(seenE.has(e)||seenT.has(t)||out.includes(PAIR[k])) continue; seenE.add(e); seenT.add(t); out.push(k); if(out.length===4) break; } return out; }
 function accFor(k){ const out=[]; [W[k].en0,SV_W[k]].filter(Boolean).forEach(m=>{ const e=m.replace(/\s*\(.*?\)/g,"").trim(); out.push(e,...e.split("/").map(x=>x.trim())); }); return out.concat(SV_ACC[k]||[]).filter(Boolean); }
@@ -5768,7 +5865,7 @@ function verdict(ok,detail,skipped){
   f.innerHTML=ok
     ? `${CONFETTI_ROW}<div class="fb fb-ok"><div class="fb-t"><h3><span>${pr[0]}</span><span class="ar" lang="ar">${pr[1]}</span></h3>${detail?`<p>${detail}</p>`:""}${combo>=3?`<span class="fb-combo">${I.flame}${tt(`${combo} right in a row`,`${combo} rätt i rad`)}</span>`:""}</div>${mascot("cheer","fb-m")}</div><button class="btn good wide" id="next">${tt("Continue","Fortsätt")}</button>`
     : `<div class="fb fb-no"><span class="ic">${I.x}</span><div class="fb-t"><h3>${skipped?tt("Here's the answer","Här är svaret"):tt("Almost!","Nästan!")}</h3>${detail?`<p>${skipped?"":tt("Correct answer:","Rätt svar:")+" "}${detail}</p>`:""}${L.mode!=="jump"?`<small class="fb-again">${tt("It'll come back soon.","Den kommer tillbaka strax.")}</small>`:""}</div></div><button class="btn bad wide" id="next">${tt("OK","Okej")}</button>`;
-  if(L.mode!=="jump") [].concat(L.key||[]).forEach(ok?hit:miss); L.key=null;
+  if(L.mode!=="jump"){ const ks=[].concat(L.key||[]); ks.forEach(k=>ok?hit(k):miss(k,ks.length>1)); } L.key=null;
   if(ok){ L.right++; L.combo++; L.xp+= L.combo>=5?2:1; S.bestCombo=Math.max(S.bestCombo,L.combo); S.q.combo=Math.max(S.q.combo,L.combo); sGood(); }
   else { L.wrong++; L.combo=0; if(!skipped&&!L.practice) S.hearts=Math.max(0,S.hearts-1); sBad(); if(L.mode==="jump"){ L.lives--; const hc=$("#lesson .l-head .c-heart"); if(hc) hc.innerHTML=I.heart+L.lives; } else L.ex.push(L.ex[L.k]); }
   const sm=$("#lesson .speaker .mascot"); if(sm) sm.outerHTML=mascot(ok?"cheer":"sad");
@@ -5838,7 +5935,7 @@ function exMatch(e){
     const a=sel; sel=null; a.setAttribute("aria-pressed","false");
     if(a.dataset.k===b.dataset.k){ hit(a.dataset.k); tone([[880,0,.08]]); [a,b].forEach(x=>{x.classList.add("flash");x.disabled=true;setTimeout(()=>{x.classList.remove("flash");x.classList.add("matched");},350);}); n++;
       if(n===e.ws.length){ L.right++; L.combo++; L.xp+=slip?1:2; S.bestCombo=Math.max(S.bestCombo,L.combo); S.q.combo=Math.max(S.q.combo,L.combo); save(); setTimeout(sGood,300); const c=$("#check"); c.disabled=false; c.focus(); c.onclick=()=>{L.k++;step();}; } }
-    else { slip=true; miss((a.dataset.s==="a"?a:b).dataset.k); sBad(); [a,b].forEach(x=>x.classList.add("wrong")); setTimeout(()=>[a,b].forEach(x=>x.classList.remove("wrong")),450); }
+    else { slip=true; miss((a.dataset.s==="a"?a:b).dataset.k,true); sBad(); [a,b].forEach(x=>x.classList.add("wrong")); setTimeout(()=>[a,b].forEach(x=>x.classList.remove("wrong")),450); }
   });
 }
 function buildKeys(ans){ const all=Object.keys(W), j=norm(ans.join(" ")); const whole=all.find(k=>norm(W[k].tr)===j); if(whole) return [whole]; return ans.map(t=>all.find(k=>norm(W[k].tr)===norm(t))).filter(Boolean); }
@@ -5905,6 +6002,7 @@ function finish(){
   S.hist=S.hist||{}; S.hist[today()]=(S.hist[today()]||0)+gained; Object.keys(S.hist).sort().slice(0,-60).forEach(k=>delete S.hist[k]);
   const goalNow=before<goal&&S.q.xp>=goal&&!S.q.goalHit; if(goalNow){ S.q.goalHit=true; S.gems+=5; }
   const again=!L.practice&&!L.mode&&L.i>=0, sub=again?endSub(L.i):"", li=L.i, gx=Math.min(S.q.xp,goal);
+  const firstTime=again&&!S.done[LESSONS[L.i].id]&&LESSONS[L.i].ex.some(e=>e.t==="intro");
   if(L.mode==="letters") S.ltr=Object.assign({},S.ltr,{["g"+L.group]:true});
   else if(L.mode==="jump"){ unlockTo(L.target); SCROLL_CUR=true; }
   else if(L.practice) S.hearts=Math.min(5,S.hearts+1);
@@ -5913,16 +6011,23 @@ function finish(){
   const newQ=QUESTS.map(questInfo).filter(x=>x.done&&!x.claimed&&!(S.q.told||{})[x.q.id]);
   if(newQ.length) S.q.told=Object.assign({},S.q.told,Object.fromEntries(newQ.map(x=>[x.q.id,1])));
   save(); if(firstToday) pushTouch(); sWin(); confetti();
-  const isChat=!L.practice&&LESSONS[L.i].chat, left=mistakeKeys().length;
-  const head=L.mode==="jump"?tt("You tested out!","Du klarade testet!"):L.mode==="dict"?tt("Great listening!","Bra lyssnat!"):L.mode==="letters"?tt("Letters learned!","Bokstäverna klara!"):L.review?(left?tt("Review complete!","Repetitionen klar!"):tt("All mistakes fixed!","Alla misstag rättade!")):L.mode==="listen"?tt("Listening done!","Hörövningen klar!"):L.mode==="fresh"?tt("All freshened up!","Allt uppfräschat!"):L.mode==="flash"?tt(`You knew ${L.right} of ${L.right+L.wrong}`,`Du kunde ${L.right} av ${L.right+L.wrong}`):L.practice?tt("Practice complete!","Övningen klar!"):isChat?tt("Conversation complete!","Samtalet klart!"):perfect?tt("Perfect lesson!","Perfekt lektion!"):tt("Lesson complete!","Lektionen klar!");
-  const notes=[L.mode==="jump"?tt(`You can start unit ${L.target+1} now.`,`Nu kan du börja med enhet ${L.target+1}.`):L.practice&&L.mode!=="letters"?tt("You won back a heart.","Du vann tillbaka ett hjärta."):"", L.review&&left?tt(`${left} word${left>1?"s":""} still to review.`,`${left} ord kvar att repetera.`):"", !L.review&&L.missed&&L.mode!=="letters"?tt(`${L.missed} word${L.missed>1?"s":""} added to your review list.`,`${L.missed} ord har lagts till i din repetitionslista.`):""].filter(Boolean);
+  const isChat=!L.practice&&LESSONS[L.i].chat, left=mistakeKeys().length, dueLeft=srsDueKeys().length;
+  const head=L.mode==="jump"?tt("You tested out!","Du klarade testet!"):L.mode==="dict"?tt("Great listening!","Bra lyssnat!"):L.mode==="letters"?tt("Letters learned!","Bokstäverna klara!"):L.review?(left?tt("Review complete!","Repetitionen klar!"):tt("All mistakes fixed!","Alla misstag rättade!")):L.mode==="due"?(dueLeft?tt("Round done!","Omgången klar!"):tt("All reviewed for today!","Allt repeterat för i dag!")):L.mode==="listen"?tt("Listening done!","Hörövningen klar!"):L.mode==="fresh"?tt("All freshened up!","Allt uppfräschat!"):L.mode==="flash"?tt(`You knew ${L.right} of ${L.right+L.wrong}`,`Du kunde ${L.right} av ${L.right+L.wrong}`):L.practice?tt("Practice complete!","Övningen klar!"):isChat?tt("Conversation complete!","Samtalet klart!"):perfect?tt("Perfect lesson!","Perfekt lektion!"):tt("Lesson complete!","Lektionen klar!");
+  const notes=[L.mode==="jump"?tt(`You can start unit ${L.target+1} now.`,`Nu kan du börja med enhet ${L.target+1}.`):L.practice&&L.mode!=="letters"?tt("You won back a heart.","Du vann tillbaka ett hjärta."):"", L.review&&left?tt(`${left} word${left>1?"s":""} still to review.`,`${left} ord kvar att repetera.`):"", !L.review&&L.missed&&L.mode!=="letters"&&L.mode!=="due"?tt(`${L.missed} word${L.missed>1?"s":""} added to your review list.`,`${L.missed} ord har lagts till i din repetitionslista.`):"",
+    L.mode==="due"&&dueLeft?tt(`${dueLeft} more word${dueLeft>1?"s":""} to review today.`,`${dueLeft} ord kvar att repetera i dag.`):"",
+    firstTime?tt("The new words come back tomorrow for a quick review.","De nya orden kommer tillbaka i morgon för en snabb repetition."):""].filter(Boolean);
+  /* when each word from the round comes back */
+  const back=L.mode==="due"?(()=>{ const T=TD(), g=[0,0,0,0], lab=[tt("tomorrow","i morgon"),tt("within a week","inom en vecka"),tt("in 1–4 weeks","om 1–4 veckor"),tt("in over a month","om mer än en månad")];
+    (L.keys||[]).forEach(k=>{ const r=srsRec(k); if(r){ const n=r.d-T; g[n<=1?0:n<=7?1:n<=30?2:3]++; } });
+    return g.map((c,j)=>c?`<span class="ss"><b>${c}</b> ${lab[j]}</span>`:"").join(""); })():"";
   $("#lesson").classList.add("party");
   $("#lesson").innerHTML=`<div class="l-in"><div class="end">${PARTY_BG}${mascot(perfect||acc>=80?"cheer":"happy")}<div class="end-h"><h2>${head}</h2>${sub?`<p class="end-sub">${esc(sub)}</p>`:""}</div>${notes.map(t=>`<p class="sub" style="margin:0">${esc(t)}</p>`).join("")}${newQ.length?`<p class="goalhit qdone">${I.gem.replace("<svg",'<svg width="20" height="20"')}${tt("Quest complete! Claim it on Learn.","Uppdrag klart! Hämta belöningen under Lär dig.")}</p>`:""}
   <div class="endstats"><div class="es y"><span>${tt("Total XP","Totalt XP")}</span><b>${I.bolt.replace("<svg",'<svg width="20" height="20"')}<span class="cnt" data-to="${gained}">0</span></b></div><div class="es g"><span>${acc>=90?tt("Amazing","Grymt"):acc>=70?tt("Good","Bra"):tt("Accuracy","Träffsäkerhet")}</span><b><span class="cnt" data-to="${acc}">0</span>%</b></div><div class="es b"><span>${tt("Quick","Tid")}</span><b>${time}</b></div></div>
-  <div class="end-day"><div class="ed-row">${teaGlass(gx/goal,"ed-tg")}<span class="ed-t"><b>${S.q.xp>=goal?(goalNow?tt("Daily goal reached! +5 kleicha","Dagens mål klart! +5 kleicha"):tt("Daily goal reached!","Dagens mål klart!")):tt(`${goal-gx} XP to today's goal`,`${goal-gx} XP kvar till dagens mål`)}</b><small>${S.q.xp>=goal?tt(`Your tea glass is full: ${gx} of ${goal} XP`,`Teglaset är fullt: ${gx} av ${goal} XP`):tt(`${gx} of ${goal} XP today`,`${gx} av ${goal} XP i dag`)}</small></span></div><div class="ed-row"><span class="ed-fl">${I.flame}</span><span class="ed-t"><b>${tt(`${S.streak} day streak`,`${S.streak} dagar i rad`)}</b><span class="week ed-week">${weekDots()}</span></span></div></div>
-  <button class="btn wide" id="cont" style="max-width:420px">${tt("Continue","Fortsätt")}</button>${again?`<button class="end-again" id="again">${tt("Practise again","Öva en gång till")}</button>`:""}</div></div>`;
+  <div class="end-day"><div class="ed-row">${teaGlass(gx/goal,"ed-tg")}<span class="ed-t"><b>${S.q.xp>=goal?(goalNow?tt("Daily goal reached! +5 kleicha","Dagens mål klart! +5 kleicha"):tt("Daily goal reached!","Dagens mål klart!")):tt(`${goal-gx} XP to today's goal`,`${goal-gx} XP kvar till dagens mål`)}</b><small>${S.q.xp>=goal?tt(`Your tea glass is full: ${gx} of ${goal} XP`,`Teglaset är fullt: ${gx} av ${goal} XP`):tt(`${gx} of ${goal} XP today`,`${gx} av ${goal} XP i dag`)}</small></span></div><div class="ed-row"><span class="ed-fl">${I.flame}</span><span class="ed-t"><b>${tt(`${S.streak} day streak`,`${S.streak} dagar i rad`)}</b><span class="week ed-week">${weekDots()}</span></span></div>${back?`<div class="ed-row"><span class="ed-fl ed-rv">${PICONS.fresh}</span><span class="ed-t"><b>${tt("When the words come back","När orden kommer tillbaka")}</b><span class="ss-row">${back}</span></span></div>`:""}</div>
+  <button class="btn wide" id="cont" style="max-width:420px">${tt("Continue","Fortsätt")}</button>${again?`<button class="end-again" id="again">${tt("Practise again","Öva en gång till")}</button>`:""}${L.mode==="due"&&dueLeft?`<button class="end-again" id="due-more">${tt(`Review ${Math.min(dueLeft,SRS_ROUND)} more`,`Repetera ${Math.min(dueLeft,SRS_ROUND)} till`)}</button>`:""}</div></div>`;
   countUp($("#lesson")); $("#cont").focus(); $("#cont").onclick=()=>firstToday?streakScreen():closeLesson();
   const ag=$("#again"); if(ag) ag.onclick=()=>{ sTap(); startLesson(li); };
+  const dm=$("#due-more"); if(dm) dm.onclick=()=>{ sTap(); startDue(); };
   if(L.mode==="jump"&&L.place&&nextSec(L.target)!=null){ const nx=nextSec(L.target); $("#cont").insertAdjacentHTML("afterend",`<button class="btn ghost wide blue" id="jp-more" style="max-width:420px">${tt(`Keep going: jump to unit ${nx+1}`,`Fortsätt: hoppa till enhet ${nx+1}`)}</button>`); $("#jp-more").onclick=()=>{ sTap(); startJump(nx,true); }; }
 }
 function streakScreen(){
@@ -6068,6 +6173,8 @@ function mergeState(a,b){
   r.okd=Object.assign({},b.okd||{}); Object.entries(a.okd||{}).forEach(([k,v])=>{ const o=r.okd[k]; if(!o||(v.d||"")>(o.d||"")||((v.d||"")===(o.d||"")&&(v.n||0)>(o.n||0))) r.okd[k]=v; });
   r.colSeen=Object.assign({},b.colSeen||{},a.colSeen||{});
   r.seen=Object.assign({},b.seen||{}); Object.entries(a.seen||{}).forEach(([k,t])=>{ if(!r.seen[k]||t>r.seen[k]) r.seen[k]=t; });
+  /* each word's schedule: the copy reviewed most recently wins (on the same day, the one that missed it) */
+  r.srs=Object.assign({},b.srs||{}); Object.entries(a.srs||{}).forEach(([k,v])=>{ const o=r.srs[k]; if(!o||(v.t||0)>(o.t||0)||((v.t||0)===(o.t||0)&&((v.m||0)>(o.m||0)||((v.m||0)===(o.m||0)&&(v.r||0)>(o.r||0))))) r.srs[k]=v; });
   r.onboarded=!!(a.onboarded||b.onboarded); r.ltr=Object.assign({},b.ltr||{},a.ltr||{}); r.guideSeen=!!(a.guideSeen||b.guideSeen); r.seenNew=Object.assign({},b.seenNew||{},a.seenNew||{});
   const tq=[a,b].filter(x=>x.q&&x.q.day===today());
   r.q=tq.length?Object.assign({},tq.map(x=>x.q).sort((x,y)=>(y.xp||0)-(x.xp||0))[0]):{day:today(),xp:0,lessons:0,combo:0,claimed:{}};
