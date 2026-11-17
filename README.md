@@ -34,6 +34,18 @@ Made by A. Yasso.
 | `supabase-setup.sql` | Creates the tables for accounts, the league, the content check, suggested phrases, the question box and notifications (run in Supabase; safe to run again) |
 | `reminders/`, `.github/workflows/streak-reminder.yml` | Sends the evening streak reminders and the reviewer alerts, every 10 minutes |
 
+## Being tested at /beta/
+
+The test copy (`beta/index.html`) has these on top of the live app. They move into `index.html` once they have been tried on a phone.
+
+- **Smarter repetition**: every learned word gets its own schedule and comes back just before it would be forgotten (*Daily review* on the Words page).
+- **Daqeeqa** (Maslawi for "minute"): a 60-second matching game on the Words page, open once a learner knows 8 words. Five pairs are on the table, right pairs in a row are worth more (×2, ×3, ×4) and a wrong pair costs two seconds. A round gives XP and counts for the streak, but leaves the review schedule and the mistake list alone. The scores the achievement asks for are in `const DAQ_GOALS=`.
+- **Daily quests that change**: *Reach your daily goal* is there every day, and the other two change from day to day (the same two for everyone). Tapping a quest starts what it asks for. They are in `const QUESTS=`.
+- **Achievements with levels**: each achievement has a row of goals instead of one, in `achList()`. A new level gives 5 kleicha per level.
+- **Right answers in a row carry on** from one lesson to the next on the same day (a lesson has only 4 to 6 questions), and replies in a conversation count too.
+- **Istikan's wardrobe** in the kleicha shop: nine things the mascot can wear, drawn in `const WEAR=`.
+- Fixes: a Check button that can't be pressed looks like it, "1 dag i rad", a new day starts without reloading the app, and one wrong letter in a typed answer still counts.
+
 ## Editing lessons
 
 Open `index.html` and search for:

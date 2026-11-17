@@ -1225,6 +1225,97 @@ body{overflow-x:clip} /* the hills reach the screen edge; keep the slide-in from
   :root:not([data-theme="light"]) .ccard.t1{--cp:#F6DCC4;--cs:#E09A5E;--cfd:#9C5420} :root:not([data-theme="light"]) .ccard.t2{--cp:#DCE2FF;--cs:#B8C0D9;--cfd:#5E6688} :root:not([data-theme="light"]) .ccard.t3{--cp:#FFF0C2;--cs:#FFC94A;--cfd:#A9740A} }
 @media (prefers-reduced-motion: reduce){ .fb-ok h3,.ccard.hop{animation:none} }
 .betatag{position:fixed;z-index:40;top:env(safe-area-inset-top,0px);left:50%;transform:translateX(-50%);background:#F2475B;color:#fff;font:900 10px/1.6 var(--body);letter-spacing:.12em;padding:0 10px;border-radius:0 0 8px 8px;pointer-events:none}
+/* ================= DAQEEQA, QUESTS THAT CHANGE, ACHIEVEMENTS WITH LEVELS ================= */
+/* a button that can't be pressed looks like it, whatever colour it has when it can (Check stayed green with grey text) */
+.btn.good:disabled,.btn.bad:disabled,.btn.gold:disabled{background:var(--lock);color:var(--lock-ink);box-shadow:0 4px 0 var(--lock-deep)}
+.btn.ghost:disabled{color:var(--lock-ink)}
+/* "TODAY" fits under its bar on a narrow phone */
+.drv-d span{font-size:10.5px;letter-spacing:0}
+/* a quest you can tap to start what it asks for */
+.quest.qgo{width:100%;text-align:start;color:var(--ink);border-bottom-width:4px}
+.quest.qgo:active{transform:translateY(2px);border-bottom-width:2px}
+.quest.qgo .qr-go{margin-left:-4px}
+.quest.qgo .q-body,.quest.qgo .pbar{display:block}
+.quest.qgo .qh{display:block;margin:0 0 6px;font-size:17px;font-weight:700;line-height:1.3}
+/* achievements: the level sits on the corner of the medal */
+.ach .medal{position:relative}
+.ach .medal .lvl{position:absolute;right:-7px;bottom:-7px;min-width:24px;height:24px;padding:0 4px;border-radius:99px;background:var(--surface);color:var(--ink);border:2px solid var(--line);font:900 13px/20px var(--body);text-align:center;font-variant-numeric:tabular-nums}
+.ach-lv{margin-left:6px;font-family:var(--body);font-size:12px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.goalhit.ach-new svg{width:20px;height:20px;flex:none}
+#lesson.party .goalhit.ach-new{color:#FFE58A}
+/* ---- Daqeeqa: the tile on Words ---- */
+.ptile.t-daq{background:linear-gradient(120deg,#2A40C4,#7638D4);--tdeep:#1E2E94}
+.ptile.t-daq .pt-ic{background:var(--gold);color:#5A3B00;box-shadow:0 3px 0 var(--gold-deep)}
+.ptile.t-daq b{font-size:22px}
+.ptile.t-daq:disabled{background:var(--lock)}
+.ptile.t-daq:disabled .pt-ic{background:var(--surface);color:var(--lock-ink);box-shadow:none}
+/* ---- Daqeeqa: before the round ---- */
+.dq-intro{gap:14px}
+.end.dq-intro .mascot{width:124px;height:124px}
+.dq-intro h2{color:var(--primary);font-size:46px;line-height:1}
+.dq-tag{margin:0;color:var(--muted);font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px}
+.dq-tag .listen{width:38px;height:38px;border-radius:11px}
+.dq-tag .listen svg{width:20px;height:20px}
+.dq-rules{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;width:100%;max-width:420px;text-align:start}
+.dq-rules li{display:flex;align-items:center;gap:12px;background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:9px 12px;font-weight:800;line-height:1.3}
+.dq-ri{width:38px;height:38px;border-radius:12px;flex:none;display:grid;place-items:center;color:var(--qc);background:color-mix(in srgb,var(--qc) 15%,transparent)}
+.dq-ri svg{width:22px;height:22px}
+.dq-rec{margin:0;color:var(--muted);font-weight:800}
+.dq-rec b{font-family:var(--display);font-size:22px;color:var(--gold-deep)}
+/* ---- Daqeeqa: the round ---- */
+.dq .dq-bar i{background:var(--gold);transition:none}
+.dq .dq-bar i.low{background:var(--bad-btn)}
+.dq-sec{font-family:var(--display);font-size:22px;line-height:1;min-width:30px;text-align:end;font-variant-numeric:tabular-nums}
+.dq-sec.low{color:var(--bad)}
+.dq-hud{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 2px 0;min-height:58px}
+.dq-n{display:flex;flex-direction:column;line-height:1.1;min-width:84px}
+.dq-n small{color:var(--muted);font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.dq-n b{font-family:var(--display);font-size:30px;font-variant-numeric:tabular-nums}
+.dq-n.dq-r{align-items:flex-end}
+.dq-n.dq-r b{font-size:20px;line-height:30px;color:var(--muted)}
+.dq-mult{font-family:var(--display);font-weight:800;font-size:22px;line-height:1;color:#fff;background:var(--flame);border-radius:99px;padding:7px 14px 6px;box-shadow:0 3px 0 var(--orange-deep)}
+.dq-mult[data-m="3"]{background:var(--pink);box-shadow:0 3px 0 var(--pink-deep)}
+.dq-mult[data-m="4"]{background:var(--purple);box-shadow:0 3px 0 var(--purple-deep)}
+.dq-mult.pop{animation:bump .4s cubic-bezier(.3,1.6,.5,1)}
+.dq-body{position:relative;padding-block:12px;justify-content:center}
+.dq-pairs{gap:10px}
+.dq-pairs .pair{min-height:58px;padding:6px;line-height:1.2;touch-action:manipulation;overflow-wrap:anywhere}
+.dq-pairs .pair.sayp{font-size:17px}
+.dq-c.in{animation:dqin .26s cubic-bezier(.3,1.4,.5,1) var(--d,0ms) both}
+.dq-c.gone{visibility:hidden}
+.dq-count{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:96px;line-height:1;color:var(--primary);pointer-events:none;text-align:center}
+.dq-count.small{font-size:44px;background:color-mix(in srgb,var(--bg) 88%,transparent)}
+.dq-count.pop{animation:dqcount .6s cubic-bezier(.3,1.5,.5,1)}
+.dq-float{position:fixed;z-index:30;white-space:nowrap;font-family:var(--display);font-weight:800;font-size:24px;line-height:1;color:var(--good);pointer-events:none;animation:dqfloat .8s ease-out forwards}
+.dq-float.bad{color:var(--bad);animation-name:dqsink}
+@keyframes dqin{from{transform:scale(.8);opacity:0}}
+@keyframes dqcount{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
+@keyframes dqsink{0%{transform:translate(-50%,40%) scale(.7);opacity:0}20%{transform:translate(-50%,110%) scale(1.1);opacity:1}100%{transform:translate(-50%,230%) scale(1);opacity:0}}
+@keyframes dqfloat{0%{transform:translate(-50%,-40%) scale(.7);opacity:0}20%{transform:translate(-50%,-90%) scale(1.1);opacity:1}100%{transform:translate(-50%,-220%) scale(1);opacity:0}}
+/* ---- Daqeeqa: when the time is up ---- */
+#lesson.party .end.dq-end .mascot{width:116px;height:116px}
+#lesson.party .end.dq-end{gap:12px}
+#lesson.party #dq-again{background:#fff;color:var(--primary-deep);box-shadow:0 5px 0 rgba(0,0,0,.25)}
+#lesson.party .goalhit.dq-xp{color:#FFD45A}
+.goalhit.dq-xp svg{width:20px;height:20px;flex:none}
+.dq-mh{color:var(--muted);font-size:13px;font-weight:900;letter-spacing:.05em;text-transform:uppercase}
+.dq-miss .listen{width:40px;height:40px;border-radius:11px;box-shadow:0 3px 0 var(--blue-deep)}
+.dq-miss .listen svg{width:21px;height:21px}
+.dq-miss .ed-t{gap:0}
+/* on a short screen the buttons matter more than the words to look at again */
+@media (max-height:700px){ .dq-mh,.dq-miss{display:none} }
+/* ---- Istikan's wardrobe, in the kleicha shop ---- */
+#wd{display:flex;flex-direction:column;gap:10px}
+.wd-top h3{margin:6px 0 0;font-family:var(--display);font-size:20px;line-height:1.2}
+.wd-top .sub{margin:2px 0 0}
+.wd-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.wd-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 6px 8px;border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;background:var(--surface);text-align:center;min-width:0}
+.wd-item.on{border-color:var(--primary);background:var(--primary-soft)}
+.wd-m{width:74px;height:74px;flex:none}
+.wd-item b{font-size:13px;line-height:1.2;min-height:2.4em;display:grid;place-items:center;overflow-wrap:anywhere}
+.btn.wd-btn{width:100%;padding:8px 4px;font-size:12px;letter-spacing:.03em;justify-content:center;border-radius:12px}
+.btn.buy.wd-btn{font-size:15px}
+.btn.buy.wd-btn svg{width:18px;height:18px}
 </style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0}</style>
 </head>
@@ -2833,22 +2924,52 @@ const today=()=>dstr(Date.now()), yesterday=()=>dstr(Date.now()-864e5);
 const weekId=()=>{const d=new Date();d.setDate(d.getDate()-((d.getDay()+6)%7));return dstr(d);};
 let FROZE=0;
 const dayNum=ds=>{ const [y,m,d]=String(ds).split("-").map(Number); return Math.round(new Date(y,m-1,d).getTime()/864e5); };
-(function rollover(){
+/* a new day: new quests, full hearts, and a streak that only survives a missed day with a freeze */
+const newDay=()=>({day:today(),xp:0,lessons:0,combo:0,claimed:{},rot:1});
+function rollover(){
   if(S.lastDay&&S.lastDay!==today()&&S.lastDay!==yesterday()){
     const missed=dayNum(today())-dayNum(S.lastDay)-1;
     if(S.streak>0&&missed>0&&(S.freeze||0)>=missed){ S.freeze-=missed; S.lastDay=yesterday(); FROZE=missed; }
     else S.streak=0;
   }
   if(!S.joined) S.joined=Date.now();
-  if(!S.q||S.q.day!==today()){ if(S.q) S.hearts=5; S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}}; }
+  if(!S.q||S.q.day!==today()){ if(S.q) S.hearts=5; S.q=newDay(); }
   if(S.week!==weekId()){S.week=weekId();S.weekXp=0;}
+  S.bestStreak=Math.max(S.bestStreak||0,S.streak||0);
   save();
-})();
+}
+rollover();
+/* A phone keeps the app in memory for days, so a new day usually starts without a reload. dayStale() says
+   the day (or week) has changed since the last rollover; render() and earn() then run it again. */
+const dayStale=()=>!S.q||S.q.day!==today()||S.week!==weekId();
+const frozeText=()=>tt(`A streak freeze kept your ${S.streak}-day streak alive!`,`Ett svitskydd räddade din svit på ${S.streak} dagar!`);
+/* Daily quests. "Reach your daily goal" is there every day; the other two change from day to day (the same
+   two for everyone that day), picked from the ones you can do right now. S.q.ids holds today's three.
+   ok() says whether a quest can be done yet, and go() starts what it asks for (the next lesson if there's none). */
 const QUESTS=[
   {id:"xp",title:()=>"Reach your daily goal",goal:()=>S.goal||20,get:()=>S.q.xp,gems:10},
   {id:"les",title:"Complete 2 lessons",goal:2,get:()=>S.q.lessons,gems:15},
   {id:"combo",title:"Get 5 in a row correct",goal:5,get:()=>S.q.combo,gems:10},
+  {id:"combo10",title:()=>tt("Get 10 in a row correct","Få 10 rätt i rad"),goal:10,get:()=>S.q.combo,gems:15},
+  {id:"perfect",title:()=>tt("Finish a lesson with no mistakes","Klara en lektion utan misstag"),goal:1,get:()=>S.q.perfect||0,gems:15},
+  {id:"words",title:()=>tt("Learn 5 new words","Lär dig 5 nya ord"),goal:5,get:()=>S.q.newW||0,gems:15,ok:()=>LESSONS.some(l=>!S.done[l.id]&&l.ex.some(e=>e.t==="intro"))},
+  {id:"rev",title:()=>tt("Review 10 words","Repetera 10 ord"),goal:10,get:()=>S.q.rev||0,gems:15,ok:()=>learnedWords().length>=4,go:()=>srsDueKeys().length?startDue():mistakeKeys().length?startReview():startPractice()},
+  {id:"listen",title:()=>tt("Do a listening practice","Gör en hörövning"),goal:1,get:()=>S.q.listen||0,gems:10,ok:()=>learnedWords().length>=4,go:()=>startListen()},
+  {id:"daq",title:()=>tt("Play a round of Daqeeqa","Spela en omgång Daqeeqa"),goal:1,get:()=>S.q.daq||0,gems:10,ok:()=>daqReady(),go:()=>daqIntro()},
 ];
+const questById=id=>QUESTS.find(q=>q.id===id);
+function pickQuests(){
+  if(!Object.keys(S.done||{}).length) return ["xp","les","combo"];
+  /* a small random-number maker started from today's date, so every phone picks the same two */
+  let s=(dayNum(today())*2654435761)>>>0; const rnd=()=>{ s=(s+0x6D2B79F5)>>>0; let t=s; t=Math.imul(t^t>>>15,t|1); t^=t+Math.imul(t^t>>>7,t|61); return ((t^t>>>14)>>>0)/4294967296; };
+  const pool=QUESTS.filter(q=>q.id!=="xp"&&(!q.ok||q.ok())).map(q=>[rnd(),q.id]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+  const a=pool[0], b=pool.find(id=>id!==a&&!(a.startsWith("combo")&&id.startsWith("combo")));
+  return ["xp",a,b].filter(Boolean);
+}
+/* a day that had already started when this arrived keeps the three quests it started with */
+function quests(){ if(!S.q.ids){ S.q.ids=S.q.rot?pickQuests():["xp","les","combo"]; save(); } return S.q.ids.map(questById).filter(Boolean); }
+/* quests finished by this round that you haven't been told about yet */
+function questNews(){ const n=quests().map(questInfo).filter(x=>x.done&&!x.claimed&&!(S.q.told||{})[x.q.id]); if(n.length) S.q.told=Object.assign({},S.q.told,Object.fromEntries(n.map(x=>[x.q.id,1]))); return n; }
 
 /* ================= HELPERS ================= */
 const $=s=>document.querySelector(s);
@@ -4039,8 +4160,23 @@ function mGlass(face){ /* the glass, tea, gold rim and highlights around a face 
 <path d="${M_GLASS}" fill="none" stroke="var(--m-edge,#C3CBEC)" stroke-width="2"/>
 <rect x="26.6" y="15" width="66.8" height="5.4" rx="2.7" fill="#FFBA19"/><rect x="29" y="15.6" width="62" height="1.6" rx=".8" fill="#FFE08A"/>`;
 }
-function mascot(mood="happy",cls="mascot",bare){
-  const ARM="#C24614";
+/* ================= ISTIKAN'S WARDROBE (something to spend kleicha on) =================
+   Small things Istikan can wear, bought in the kleicha shop. Each one is drawn over the glass in the same
+   120×120 box, so it shows everywhere the mascot does. S.own = what you've bought, S.wear = what's on (one
+   thing at a time). back = drawn behind the glass; hat = it sits on the rim, so the steam is left out. */
+const WEAR={
+  flower:{n:["Flower","Blomma"],cost:60,svg:`<g transform="translate(83.5 13.5)"><path d="M6.5 5.5q7-1.5 9.5 3q-6 3.5-10.5-.5z" fill="#22B862"/><g fill="#EC4C78"><circle cx="0" cy="-5.3" r="4.5"/><circle cx="5" cy="-1.6" r="4.5"/><circle cx="3.1" cy="4.3" r="4.5"/><circle cx="-3.1" cy="4.3" r="4.5"/><circle cx="-5" cy="-1.6" r="4.5"/></g><circle r="3.5" fill="#FFBA19"/><circle cx="-1" cy="-1" r="1.1" fill="#FFE08A"/></g>`},
+  bow:{n:["Bow tie","Fluga"],cost:100,svg:`<path d="M60 81.8L45.6 73.4Q43.4 81.8 45.6 90.2Z" fill="#3D57F0"/><path d="M60 81.8L74.4 73.4Q76.6 81.8 74.4 90.2Z" fill="#3D57F0"/><path d="M60 81.8L45.6 90.2Q44.4 86 44.4 81.8Z" fill="#2A40C4"/><path d="M60 81.8L74.4 90.2Q75.6 86 75.6 81.8Z" fill="#2A40C4"/><rect x="55.8" y="77" width="8.4" height="9.6" rx="3" fill="#2A40C4"/><rect x="57.2" y="78.4" width="2.4" height="3.2" rx="1.2" fill="#fff" opacity=".4"/><circle cx="50.4" cy="79.4" r="1.3" fill="#FFBA19"/><circle cx="69.6" cy="79.4" r="1.3" fill="#FFBA19"/>`},
+  scarf:{n:["Scarf","Halsduk"],cost:120,svg:`<path d="M65.5 85.6L76.6 83.6L80.4 100.4L69.6 102.6Z" fill="#17924C"/><path d="M67.4 91.6l10.6-2M68.6 96.6l10.6-2.1" stroke="#FFE08A" stroke-width="2" stroke-linecap="round"/><path d="M70.6 102.4l-.5 3.4M74.2 101.7l-.2 3.6M77.8 101l.2 3.6" stroke="#17924C" stroke-width="1.9" stroke-linecap="round"/><path d="M38.4 73Q60 79.6 81.6 73L83 83.6Q60 90.6 37 83.6Z" fill="#22B862"/><path d="M37.8 78.2Q60 85 82.2 78.2" stroke="#FFE08A" stroke-width="2" fill="none"/>`},
+  specs:{n:["Glasses","Glasögon"],cost:130,svg:`<path d="M30.4 46L36 47.4M89.6 46L84 47.4" stroke="#1E2250" stroke-width="2.4" stroke-linecap="round"/><circle cx="47" cy="50" r="11.4" fill="#fff" fill-opacity=".16" stroke="#1E2250" stroke-width="2.6"/><circle cx="73" cy="50" r="11.4" fill="#fff" fill-opacity=".16" stroke="#1E2250" stroke-width="2.6"/><path d="M58.4 47.4q1.6-1.6 3.2 0" stroke="#1E2250" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M40 44.6l4-2.4M66 44.6l4-2.4" stroke="#fff" stroke-opacity=".7" stroke-width="1.8" stroke-linecap="round"/>`},
+  shades:{n:["Sunglasses","Solglasögon"],cost:150,svg:`<path d="M30.4 45.6L36 47M89.6 45.6L84 47" stroke="#C98A06" stroke-width="2.6" stroke-linecap="round"/><rect x="35.2" y="38.6" width="23.4" height="22.6" rx="8.6" fill="#1E2250" stroke="#FFBA19" stroke-width="2.4"/><rect x="61.4" y="38.6" width="23.4" height="22.6" rx="8.6" fill="#1E2250" stroke="#FFBA19" stroke-width="2.4"/><path d="M58.4 46.6q1.6-1.8 3.2 0" stroke="#FFBA19" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M40.6 46.4l6.4-3.6M66.8 46.4l6.4-3.6" stroke="#fff" stroke-opacity=".5" stroke-width="2.2" stroke-linecap="round"/>`},
+  cap:{n:["Cap","Keps"],cost:180,hat:true,svg:`<path d="M80 11.8Q96.5 10.4 104 17Q93.5 20.2 81 18.2Z" fill="#C2335C"/><path d="M35.6 17.6C35.6 5.4 46 1.6 60 1.6S84.4 5.4 84.4 17.6Z" fill="#EC4C78"/><path d="M60 1.6C54.6 6 53 12 53 17.6M60 1.6C65.4 6 67 12 67 17.6" stroke="#C2335C" stroke-width="1.5" fill="none"/><path d="M41 9.4q5-4.4 11-5.6" stroke="#fff" stroke-opacity=".45" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="60" cy="2.8" r="2.1" fill="#C2335C"/>`},
+  phones:{n:["Headphones","Hörlurar"],cost:200,back:`<path d="M26 45C21 1 99 1 94 45" stroke="#7638D4" stroke-width="5.6" fill="none" stroke-linecap="round"/>`,svg:`<rect x="17.6" y="37.6" width="13" height="23" rx="5.6" fill="#9A5BF5"/><rect x="21.2" y="41" width="10" height="16.2" rx="4.4" fill="#D9C4FF"/><rect x="89.4" y="37.6" width="13" height="23" rx="5.6" fill="#9A5BF5"/><rect x="88.8" y="41" width="10" height="16.2" rx="4.4" fill="#D9C4FF"/>`},
+  grad:{n:["Graduation cap","Examenshatt"],cost:250,hat:true,svg:`<path d="M41 11.6h38v7.4q-19 3.6-38 0z" fill="#2A2F6B"/><path d="M60 2L93 9.4L60 16.8L27 9.4Z" fill="#1E2250"/><path d="M60 2L93 9.4L60 11L27 9.4Z" fill="#3A4086"/><path d="M60 9.4L85 12.2V22.4" stroke="#FFBA19" stroke-width="1.9" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="60" cy="9.4" r="2.1" fill="#FFBA19"/><path d="M83.2 21.8h3.6l1 7h-5.6z" fill="#FFBA19"/>`},
+  crown:{n:["Crown","Krona"],cost:400,hat:true,svg:`<path d="M37.4 18L34.6 5L47.6 11.2L60 2.6L72.4 11.2L85.4 5L82.6 18Z" fill="#FFBA19" stroke="#C98A06" stroke-width="1.6" stroke-linejoin="round"/><path d="M38.6 14.2h42.8" stroke="#C98A06" stroke-width="1.4" opacity=".55"/><circle cx="34.6" cy="5" r="2.3" fill="#EC4C78"/><circle cx="60" cy="3.2" r="2.5" fill="#1E9BFF"/><circle cx="85.4" cy="5" r="2.3" fill="#EC4C78"/><circle cx="60" cy="11.6" r="2.7" fill="#EC4C78"/><circle cx="47.6" cy="14" r="1.9" fill="#1E9BFF"/><circle cx="72.4" cy="14" r="1.9" fill="#1E9BFF"/>`},
+};
+function mascot(mood="happy",cls="mascot",bare,wear){
+  const ARM="#C24614", w=WEAR[wear===undefined?S.wear:wear];
   const arm=(d,hx,hy,c)=>`<g${c?` class="${c}"`:""}><path d="${d}" stroke="${ARM}" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="${hx}" cy="${hy}" r="5.6" fill="${ARM}"/><circle cx="${hx-1.6}" cy="${hy-1.8}" r="1.6" fill="#fff" opacity=".35"/></g>`;
   const down=arm("M37 67q-9 4-12 13",24.5,81), downR=arm("M83 67q9 4 12 13",95.5,81);
   const back={happy:down+downR, wave:down, think:down,
@@ -4054,7 +4190,7 @@ function mascot(mood="happy",cls="mascot",bare){
   const sparks=mood==="cheer"||mood==="wow"?`<g fill="#FFBA19"><path d="M12 22l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/><path d="M107 18l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/><circle cx="104" cy="70" r="2.4"/><circle cx="15" cy="74" r="2"/></g>`:"";
   return `<svg class="${cls}" viewBox="0 0 120 120" aria-hidden="true">${bare?"":`<ellipse cx="60" cy="114.5" rx="40" ry="3.6" fill="var(--line)"/>
 <ellipse cx="60" cy="108" rx="44" ry="8.6" fill="#2A40C4"/><ellipse cx="60" cy="105.6" rx="44" ry="8.6" fill="#3D57F0"/><ellipse cx="60" cy="105.6" rx="38.5" ry="6.4" fill="none" stroke="#FFBA19" stroke-width="1.6" stroke-dasharray="1.6 4.2" stroke-linecap="round"/><ellipse cx="60" cy="105" rx="19" ry="3.6" fill="#2A40C4" opacity=".55"/>`}
-${back}${mGlass(mFace(mood))}${front}${steam}${sparks}</svg>`;
+${back}${w&&w.back||""}${mGlass(mFace(mood))}${w?w.svg:""}${front}${w&&w.hat?"":steam}${sparks}</svg>`;
 }
 /* the brand mark: the glass on a lapis tile */
 function logoMark(cls="logo"){
@@ -4080,7 +4216,7 @@ const greet=()=>{ const h=new Date().getHours(); return h>=4&&h<12?"Sabah il-khe
 const CHEV='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>';
 /* daily quests live at the top of Learn (no separate tab) */
 function questInfo(q){ const goal=typeof q.goal==="function"?q.goal():q.goal, title=tx(typeof q.title==="function"?q.title():q.title), v=Math.min(q.get(),goal); return {q,goal,title,v,done:v>=goal,claimed:!!S.q.claimed[q.id]}; }
-const qLook=id=>({xp:["var(--gold)",I.bolt],les:["var(--blue)",BOOK_IC],combo:["var(--pink)",I.target]})[id]||["var(--primary)",I.star];
+const qLook=id=>({xp:["var(--gold)",I.bolt],les:["var(--blue)",BOOK_IC],combo:["var(--pink)",I.target],combo10:["var(--pink)",I.target],perfect:["var(--good-btn)",PICONS.ok],words:["var(--blue)",I.book],rev:["var(--teal)",PICONS.fresh],listen:["var(--purple)",PICONS.listen],daq:["var(--orange)",DAQ_IC]})[id]||["var(--primary)",I.star];
 function qRing(frac,col){ const R=15.5, C=+(2*Math.PI*R).toFixed(1); return `<svg class="qring" viewBox="0 0 38 38" aria-hidden="true"><circle cx="19" cy="19" r="${R}" fill="none" stroke="var(--line)" stroke-width="4"/><circle cx="19" cy="19" r="${R}" fill="none" stroke="${col}" stroke-width="4" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-Math.max(.04,frac))).toFixed(1)}" transform="rotate(-90 19 19)"/></svg>`; }
 function questIcon(x){
   if(x.claimed) return `<span class="qi qi-ok">${I.ok}</span>`;
@@ -4089,6 +4225,8 @@ function questIcon(x){
 }
 /* one tap to the next lesson, so nobody has to scroll down the path to find it */
 function nextLesson(){ const i=LESSONS.findIndex(l=>!S.done[l.id]); return i; }
+/* straight to the next thing on the path: the next lesson, or a mix of your words once every lesson is done */
+function goNext(){ const i=nextLesson(); if(i<0) return startPractice(); if(lessonOpen(i)) startLesson(i); }
 function contBtn(){
   const i=nextLesson();
   if(i<0) return learnedWords().length>=4?`<button class="btn wide cont-btn" id="cont-go" data-all="1"><span>${tt("Practise","Öva")}</span><small>${tt("You've finished every unit. Mix up your words","Du har klarat alla enheter. Blanda dina ord")}</small></button>`:"";
@@ -4099,7 +4237,7 @@ function contBtn(){
 }
 function todayCard(){
   const g=S.goal||20, x=S.q.xp||0, p=Math.min(x/g,1), nm=mistakeKeys().length, name=(CLOUD&&SES&&userName())||"";
-  const R=21, C=+(2*Math.PI*R).toFixed(1), qs=QUESTS.map(questInfo);
+  const R=21, C=+(2*Math.PI*R).toFixed(1), qs=quests().map(questInfo);
   const claim=qs.filter(q=>q.done&&!q.claimed).length, doneN=qs.filter(q=>q.done).length;
   const qtxt=claim?tt(`${claim} reward${claim>1?"s":""} to claim!`,`${claim} ${claim>1?"belöningar":"belöning"} att hämta!`):doneN===qs.length?tt("All done. New quests tomorrow","Allt klart. Nya uppdrag i morgon"):tt(`${doneN} of ${qs.length} done today`,`${doneN} av ${qs.length} klara i dag`);
   return `<div class="hello">
@@ -4113,11 +4251,14 @@ function todayCard(){
   </div>`;
 }
 function questsSheet(){
-  const left=24-new Date().getHours(), qs=QUESTS.map(questInfo), all=qs.every(q=>q.claimed);
+  const left=24-new Date().getHours(), qs=quests().map(questInfo), all=qs.every(q=>q.claimed);
   sheet(`<div class="sh-head"><div><h2 class="sec">${tt("Daily quests","Dagliga uppdrag")}</h2><p class="sub">${all?tt("All done. Mashallah!","Allt klart. Mashallah!"):tt("Finish a quest to win kleicha.","Klara ett uppdrag för att vinna kleicha.")} ${tt(`New quests in ${left} hour${left===1?"":"s"}.`,`Nya uppdrag om ${left} ${left===1?"timme":"timmar"}.`)}</p></div>${mascot(all?"cheer":"happy","sh-m")}</div>
-  <div class="stack">${qs.map(x=>{ const [col,ic]=qLook(x.q.id); return `<div class="card quest"><span class="qbadge" style="--qc:${col}">${ic}</span><div class="q-body"><h3>${esc(x.title)}</h3><div class="pbar"><i style="width:${x.v/x.goal*100}%"></i><span>${x.v} / ${x.goal}</span></div></div>${x.done&&!x.claimed?`<button class="btn gold qclaim" data-q="${x.q.id}">${tt("Claim","Hämta")}</button>`:`<span class="qrew${x.claimed?" got":""}" aria-label="${x.claimed?tt("Claimed","Hämtad"):x.q.gems+" kleicha"}">${x.claimed?I.ok:I.gem+`<b>${x.q.gems}</b>`}</span>`}</div>`; }).join("")}</div>
+  <div class="stack">${qs.map(x=>{ const [col,ic]=qLook(x.q.id); /* not done yet: the whole card is a button that starts what the quest asks for */
+    if(!x.done) return `<button class="card quest qgo" data-go="${x.q.id}" aria-label="${esc(x.title)}: ${x.v} / ${x.goal}. ${x.q.gems} kleicha. ${tt("Tap to start","Tryck för att börja")}"><span class="qbadge" style="--qc:${col}">${ic}</span><span class="q-body"><b class="qh">${esc(x.title)}</b><span class="pbar"><i style="width:${x.v/x.goal*100}%"></i><span>${x.v} / ${x.goal}</span></span></span><span class="qrew">${I.gem}<b>${x.q.gems}</b></span><span class="qr-go" aria-hidden="true">${CHEV}</span></button>`;
+    return `<div class="card quest"><span class="qbadge" style="--qc:${col}">${ic}</span><div class="q-body"><h3>${esc(x.title)}</h3><div class="pbar"><i style="width:${x.v/x.goal*100}%"></i><span>${x.v} / ${x.goal}</span></div></div>${!x.claimed?`<button class="btn gold qclaim" data-q="${x.q.id}">${tt("Claim","Hämta")}</button>`:`<span class="qrew got" aria-label="${tt("Claimed","Hämtad")}">${I.ok}</span>`}</div>`; }).join("")}</div>
   <div class="sh-btns"><button class="btn ghost wide blue" id="qs-shop">${tt("Kleicha shop","Kleichabutiken")}</button><button class="btn wide" data-close>${tt("Done","Klar")}</button></div>`);
   document.querySelectorAll("#sheet .qclaim").forEach(b=>b.onclick=()=>{ const q=QUESTS.find(x=>x.id===b.dataset.q); if(!q||S.q.claimed[q.id]) return; S.q.claimed[q.id]=true; S.gems+=q.gems; save(); sWin(); confetti(); refreshTop(); render(); questsSheet(); toast(`+${q.gems} kleicha`); });
+  document.querySelectorAll("#sheet .qgo").forEach(b=>b.onclick=()=>{ const q=questById(b.dataset.go); $("#sheet").hidden=true; $("#sheet").innerHTML=""; sTap(); ((q&&q.go)||goNext)(); });
   $("#qs-shop").onclick=()=>{ sTap(); shopSheet(); };
 }
 function ringSvg(frac){ const R=44, C=+(2*Math.PI*R).toFixed(1), f=Math.max(.06,Math.min(1,frac)); return `<svg class="pring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="${R}" class="pr-bg"/><circle cx="50" cy="50" r="${R}" class="pr-fg" stroke-dasharray="${C}" stroke-dashoffset="${(C*(1-f)).toFixed(1)}" transform="rotate(-90 50 50)"/></svg>`; }
@@ -4816,6 +4957,7 @@ function renderWords(el){
   ${guideCards()}
   <h2 class="sec">${tt("Practise","Öva")}</h2>
   <div class="pgrid">
+    ${daqTile()}
     ${first}
     ${practiceTile("p-listen",tt("Listening","Lyssna"),tt("Hear it, pick the meaning","Hör ordet, välj betydelsen"),"t-purple",PICONS.listen,!ok)}
     ${practiceTile("p-flash",tt("Flashcards","Ordkort"),tt("Flip and test yourself","Vänd och testa dig själv"),"t-orange",PICONS.flash,!ok)}
@@ -4833,7 +4975,7 @@ function renderWords(el){
   <div id="wlist" aria-live="polite">${wordList("")}</div>`;
   el.innerHTML=h;
   const go=(id,f)=>{ const b=$(id); if(b) b.onclick=()=>{sTap();f();}; };
-  go("#p-mist",startReview); go("#p-due",startDue); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters); go("#open-grammar",()=>openGrammar()); go("#open-verbs",openVerbs); go("#p-dict",startDictation); go("#open-col",openCollection);
+  go("#p-mist",startReview); go("#p-due",startDue); go("#p-daq",daqIntro); go("#p-listen",startListen); go("#p-flash",startFlash); go("#p-mix",startPractice); go("#open-guide",openGuide); go("#open-letters",openLetters); go("#open-grammar",()=>openGrammar()); go("#open-verbs",openVerbs); go("#p-dict",startDictation); go("#open-col",openCollection);
   const wc=$("#wotd"); if(wc) wc.onclick=()=>{ wc.classList.toggle("flipped"); sTap(); };
   drawSgSection(); const had=SG.approved; loadApproved().then(()=>{ if(SG.approved!==had&&el.isConnected) drawSgSection(); });
   drawQaSection(); const hadQ=QA.answered; loadAnswered().then(()=>{ if(QA.answered!==hadQ&&el.isConnected) drawQaSection(); });
@@ -4895,7 +5037,7 @@ function exFlash(e){
   autoSay(e.w);
   const fc=$("#fc"), flip=()=>{ fc.classList.toggle("flipped"); $("#fl-no").disabled=false; $("#fl-yes").disabled=false; sTap(); };
   fc.onclick=ev=>{ if(!ev.target.closest(".listen")) flip(); }; fc.onkeydown=ev=>{ if(ev.key===" "||ev.key==="Enter"){ ev.preventDefault(); flip(); } };
-  $("#fl-yes").onclick=()=>{ hit(e.w); seen(e.w); L.right++; L.xp+=1; sGood(); L.k++; step(); };
+  $("#fl-yes").onclick=()=>{ hit(e.w); seen(e.w); L.right++; L.xp+=1; S.q.rev=(S.q.rev||0)+1; sGood(); L.k++; step(); };
   $("#fl-no").onclick=()=>{ miss(e.w); L.wrong++; sBad(); if(!e.again) L.ex.push(Object.assign({},e,{again:true})); L.k++; step(); };
 }
 
@@ -4978,7 +5120,7 @@ function renderSettings(){
   const qao=$("#open-qa"); if(qao) qao.onclick=()=>{ sTap(); openQuestionReview(); };
   const ral=$("#ralert"); if(ral) ral.onclick=async()=>{ sTap(); ral.disabled=true; if(S.pushAlerts) await alertsOff(); else await alertsOn(); if(!$("#settings").hidden) renderSettings(); };
   wireAccount();
-  let armed=false; $("#reset").onclick=e=>{ if(!armed){ armed=true; e.target.textContent=tt("Tap again","Tryck igen"); e.target.classList.add("armed"); return; } const keep={checked:S.checked,push:S.push,pushHour:S.pushHour,pushAsked:S.pushAsked,pushAlerts:S.pushAlerts,sound:S.sound,arabic:S.arabic,theme:S.theme,lang:S.lang,gender:S.gender,goal:S.goal,why:S.why,joined:S.joined}; S=Object.assign(fresh(),keep,{onboarded:true}); S.q={day:today(),xp:0,lessons:0,combo:0,claimed:{}}; S.week=weekId(); save(); toast(tt("Progress reset. Back to Unit 1.","Framstegen är nollställda. Tillbaka till enhet 1.")); closeSettings(); setTab("learn"); };
+  let armed=false; $("#reset").onclick=e=>{ if(!armed){ armed=true; e.target.textContent=tt("Tap again","Tryck igen"); e.target.classList.add("armed"); return; } const keep={checked:S.checked,push:S.push,pushHour:S.pushHour,pushAsked:S.pushAsked,pushAlerts:S.pushAlerts,sound:S.sound,arabic:S.arabic,theme:S.theme,lang:S.lang,gender:S.gender,goal:S.goal,why:S.why,joined:S.joined}; S=Object.assign(fresh(),keep,{onboarded:true}); S.q=newDay(); S.week=weekId(); save(); toast(tt("Progress reset. Back to Unit 1.","Framstegen är nollställda. Tillbaka till enhet 1.")); closeSettings(); setTab("learn"); };
   document.addEventListener("keydown",setEsc);
 }
 function setEsc(e){ if(e.key==="Escape"&&!$("#settings").hidden&&$("#sheet").hidden&&$("#review").hidden){ document.removeEventListener("keydown",setEsc); closeSettings(); } }
@@ -5002,18 +5144,39 @@ function weekChart(){
     <table class="sr-only"><caption>${tt("XP earned each day this week","XP per dag den här veckan")}</caption><tr><th>${tt("Day","Dag")}</th><th>XP</th></tr>${days.map(d=>`<tr><td>${d.n}</td><td>${d.xp}</td></tr>`).join("")}</table>
   </div>`;
 }
+/* ---- achievements with levels: each has a row of goals, and the level is how many of them you've reached, so there
+   is always a next one. The first goal of each is what the achievement used to ask for. S.ach remembers the level
+   you've been told about; a new level gives 5 kleicha per level, once. */
+function achList(){
+  const words=learnedWords().length, allWords=new Set(LESSONS.flatMap(l=>l.ex.filter(e=>e.t==="intro").map(e=>e.w))).size, nDone=LESSONS.filter(l=>S.done[l.id]).length, chats=LESSONS.filter(l=>l.chat), convos=chats.filter(l=>S.done[l.id]).length;
+  const upTo=(t,max)=>[...t.filter(g=>g<max),max];
+  return [
+    {id:"streak",n:tt("Wildfire","Löpeld"),d:g=>tt(`Reach a ${g}-day streak`,`Öva ${g} dagar i rad`),v:Math.max(S.bestStreak||0,S.streak||0),t:[3,7,14,30,60,100,200,365],c:"var(--flame)"},
+    {id:"xp",n:tt("Sage","Vis"),d:g=>tt(`Earn ${fmtN(g)} XP`,`Tjäna ${fmtN(g)} XP`),v:S.xp||0,t:[100,500,1000,2500,5000,10000],c:"var(--good-btn)"},
+    {id:"words",n:tt("Wordsmith","Ordsmed"),d:g=>tt(`Learn ${g} words`,`Lär dig ${g} ord`),v:words,t:upTo([50,100,200,300,400],allWords),c:"var(--blue)"},
+    {id:"chat",n:tt("Chatterbox","Pratkvarn"),d:g=>tt(`Finish ${g} conversations`,`Klara ${g} samtal`),v:convos,t:upTo([5,10,20,30],chats.length),c:"var(--pink)"},
+    {id:"perfect",n:tt("Flawless","Felfri"),d:g=>g===1?tt("Finish a lesson with no mistakes","Klara en lektion utan misstag"):tt(`Finish ${g} lessons with no mistakes`,`Klara ${g} lektioner utan misstag`),v:S.perfect||0,t:[1,10,25,50,100],c:"var(--teal)"},
+    {id:"combo",n:tt("Sharpshooter","Prickskytt"),d:g=>tt(`Get ${g} in a row correct`,`Få ${g} rätt i rad`),v:S.bestCombo||0,t:[10,20,30,50],c:"var(--bad-btn)"},
+    {id:"daq",n:tt("Quick as a flash","Blixtsnabb"),d:g=>tt(`Score ${fmtN(g)} in Daqeeqa`,`Få ${fmtN(g)} poäng i Daqeeqa`),v:(S.daq||{}).best||0,t:DAQ_GOALS,c:"var(--orange)"},
+    {id:"done",n:tt("Scholar","Lärd"),d:g=>g>=LESSONS.length?tt(`Finish all ${g} lessons`,`Klara alla ${g} lektioner`):tt(`Finish ${g} lessons`,`Klara ${g} lektioner`),v:nDone,t:upTo([10,30,60,90],LESSONS.length),c:"var(--purple)"},
+  ];
+}
+const achLevel=a=>a.t.filter(g=>a.v>=g).length;
+function achRow(a){
+  const lv=achLevel(a), top=lv>=a.t.length, g=a.t[Math.min(lv,a.t.length-1)], v=Math.min(a.v,g);
+  return `<div class="ach"><span class="medal${lv?" won":""}" style="--mc:${a.c}">${lv?I.star.replace('fill="#fff"','fill="currentColor"')+`<span class="lvl" aria-hidden="true">${lv}</span>`:`<b>${Math.round(v/g*100)}%</b>`}</span><div class="q-body"><h3>${a.n}${lv?`<span class="ach-lv">${tt("Level","Nivå")} ${lv}</span>`:""}</h3><p>${top?tt("Top level reached. Mashallah!","Högsta nivån nådd. Mashallah!"):a.d(g)}</p><div class="pbar"><i style="width:${v/g*100}%"></i><span>${fmtN(v)} / ${fmtN(g)}</span></div></div></div>`;
+}
+/* levels reached since we last looked. quiet = only note them: the first time this runs, and after merging with
+   another device (which has already told you) */
+function achNews(quiet){
+  const got=[]; S.ach=S.ach||{};
+  achList().forEach(a=>{ const lv=achLevel(a); if(lv>(S.ach[a.id]||0)){ S.ach[a.id]=lv; if(!quiet){ const gems=5*lv; S.gems+=gems; got.push({a,lv,gems}); } } });
+  return got;
+}
+const achLines=news=>news.map(x=>`<p class="goalhit ach-new">${I.star.replace('fill="#fff"','fill="currentColor"')}<span>${tt(`${x.a.n}, level ${x.lv}! +${x.gems} kleicha`,`${x.a.n}, nivå ${x.lv}! +${x.gems} kleicha`)}</span></p>`).join("");
 function renderProfile(el){
   const name=(CLOUD&&SES&&userName())||"", words=learnedWords().length, nDone=LESSONS.filter(l=>S.done[l.id]).length, convos=LESSONS.filter(l=>l.chat&&S.done[l.id]).length;
   const joined=S.joined?fmtMonth(S.joined):"";
-  const ach=[
-    {n:tt("Wildfire","Löpeld"),d:tt("Reach a 3-day streak","Öva 3 dagar i rad"),v:S.streak,g:3,c:"var(--flame)"},
-    {n:tt("Sage","Vis"),d:tt("Earn 100 XP","Tjäna 100 XP"),v:S.xp,g:100,c:"var(--good-btn)"},
-    {n:tt("Wordsmith","Ordsmed"),d:tt("Learn 50 words","Lär dig 50 ord"),v:words,g:50,c:"var(--blue)"},
-    {n:tt("Chatterbox","Pratkvarn"),d:tt("Finish 5 conversations","Klara 5 samtal"),v:convos,g:5,c:"var(--pink)"},
-    {n:tt("Flawless","Felfri"),d:tt("Finish a lesson with no mistakes","Klara en lektion utan misstag"),v:S.perfect,g:1,c:"var(--teal)"},
-    {n:tt("Sharpshooter","Prickskytt"),d:tt("Get 10 in a row correct","Få 10 rätt i rad"),v:S.bestCombo,g:10,c:"var(--bad-btn)"},
-    {n:tt("Scholar","Lärd"),d:tt(`Finish all ${LESSONS.length} lessons`,`Klara alla ${LESSONS.length} lektioner`),v:nDone,g:LESSONS.length,c:"var(--purple)"},
-  ];
   const stat=(ic,cls,v,l)=>`<div class="sbox"><span class="sb-ic ${cls}">${ic}</span><div><b>${v}</b><span class="sb-l">${l}</span></div></div>`;
   el.innerHTML=`<section class="pf-head">
       <div class="pf-av${name?"":" guest"}">${name?esc(name[0].toUpperCase()):mascot("happy","pf-m")}</div>
@@ -5022,7 +5185,7 @@ function renderProfile(el){
     ${CLOUD&&!SES?`<div class="pf-save card"><p>${tt("Your progress is saved on this device only. Create a free account to keep it everywhere.","Dina framsteg sparas bara på den här enheten. Skapa ett gratis konto för att ha dem överallt.")}</p><button class="btn wide" id="pf-signup">${tt("Create account","Skapa konto")}</button></div>`:""}
     <h2 class="sec">${tt("Statistics","Statistik")}</h2>
     <div class="statgrid">
-      ${stat(I.flame,"c-flame",S.streak,tt("Day streak","Dagar i rad"))}
+      ${stat(I.flame,"c-flame",S.streak,tt("Day streak",S.streak===1?"Dag i rad":"Dagar i rad"))}
       ${stat(I.bolt,"c-xp",S.xp,tt("Total XP","Totalt XP"))}
       ${stat(BOOK_IC,"c-gem",words,tt("Words learned","Inlärda ord"))}
       ${stat(I.star.replace('fill="#fff"','fill="currentColor"'),"c-purple",`${nDone}/${LESSONS.length}`,tt("Levels done","Klara nivåer"))}
@@ -5032,7 +5195,7 @@ function renderProfile(el){
     <h2 class="sec">${tt("This week","Den här veckan")}</h2>
     ${weekChart()}
     <h2 class="sec">${tt("Achievements","Utmärkelser")}</h2>
-    <div class="card achs">${ach.map(a=>{const v=Math.min(a.v,a.g),ok=v>=a.g;return `<div class="ach"><span class="medal${ok?" won":""}" style="--mc:${a.c}">${ok?I.star.replace('fill="#fff"','fill="currentColor"'):`<b>${Math.round(v/a.g*100)}%</b>`}</span><div class="q-body"><h3>${a.n}</h3><p>${a.d}</p><div class="pbar"><i style="width:${v/a.g*100}%"></i><span>${v} / ${a.g}</span></div></div></div>`;}).join("")}</div>`;
+    <div class="card achs">${achList().map(achRow).join("")}</div>`;
   const su=$("#pf-signup"); if(su) su.onclick=()=>authSheet("up");
   const tip=$("#wk-tip");
   el.querySelectorAll(".wk-col").forEach(c=>{ const show=()=>{ tip.textContent=c.dataset.tip; tip.hidden=false; const pr=c.parentElement.getBoundingClientRect(), r=c.getBoundingClientRect(); tip.style.left=Math.max(0,Math.min(pr.width-tip.offsetWidth,r.left-pr.left+r.width/2-tip.offsetWidth/2))+"px"; }; c.onmouseenter=show; c.onfocus=show; c.onclick=show; c.onmouseleave=()=>{tip.hidden=true;}; c.onblur=()=>{tip.hidden=true;}; });
@@ -5053,16 +5216,28 @@ function wireShop(after){
 }
 function shopSheet(){
   sheet(`<div class="sh-head"><div><h2 class="sec">${tt("Kleicha shop","Kleichabutiken")}</h2><p class="sub">${tt("Win kleicha from daily quests, chests and perfect lessons.","Vinn kleicha med dagliga uppdrag, kistor och perfekta lektioner.")}</p></div><span class="gembal" aria-label="${tt(`You have ${S.gems} kleicha`,`Du har ${S.gems} kleicha`)}">${I.gem}${S.gems}</span></div>
-  ${shopItems()}<button class="btn wide" data-close>${tt("Done","Klar")}</button>`);
-  wireShop();
+  ${shopItems()}<div id="wd">${wardrobe()}</div><button class="btn wide" data-close>${tt("Done","Klar")}</button>`);
+  wireShop(); wireWardrobe();
 }
+function wardrobe(){
+  const own=S.own||{};
+  return `<div class="wd-top"><h3>${tt("Istikan's wardrobe","Istikans garderob")}</h3><p class="sub">${tt("Buy something for Istikan to wear. You'll see it everywhere in the app.","Köp något som Istikan kan ha på sig. Det syns överallt i appen.")}</p></div><div class="wd-grid">${Object.entries(WEAR).map(([id,w])=>{ const has=!!own[id], on=S.wear===id, name=tt(w.n[0],w.n[1]);
+    return `<div class="wd-item${on?" on":""}">${mascot("happy","wd-m",false,id)}<b>${name}</b>${has?`<button class="btn ${on?"ghost ":""}wd-btn" data-wear="${id}" aria-pressed="${on}" aria-label="${on?tt("Take off","Ta av"):tt("Wear","Ta på")}: ${name}">${on?tt("Take off","Ta av"):tt("Wear","Ta på")}</button>`:`<button class="btn buy wd-btn" data-buy="${id}" ${S.gems>=w.cost?"":"disabled"} aria-label="${tt(`Buy ${name} for ${w.cost} kleicha`,`Köp ${name} för ${w.cost} kleicha`)}">${I.gem}${w.cost}</button>`}</div>`; }).join("")}</div>`;
+}
+function wireWardrobe(){
+  /* draw the shop again where it was, without the slide-up, and put the focus back on the same thing */
+  const redraw=id=>{ const y=$("#sheet .sheet").scrollTop; refreshTop(); render(); shopSheet(); const sh=$("#sheet .sheet"); sh.style.animation="none"; sh.scrollTop=y; const b=sh.querySelector(`[data-wear="${id}"],[data-buy="${id}"]`); if(b) b.focus({preventScroll:true}); };
+  document.querySelectorAll("#wd [data-buy]").forEach(b=>b.onclick=()=>{ const id=b.dataset.buy, w=WEAR[id]; if(!w||S.gems<w.cost||(S.own||{})[id]) return; S.gems-=w.cost; S.own=Object.assign({},S.own,{[id]:1}); S.wear=id; save(); sWin(); toast(tt("Looking good, Istikan!","Snyggt, Istikan!")); redraw(id); });
+  document.querySelectorAll("#wd [data-wear]").forEach(b=>b.onclick=()=>{ const id=b.dataset.wear; S.wear=S.wear===id?"":id; save(); sTap(); redraw(id); });
+}
+const inRow=n=>tt("day streak",n===1?"dag i rad":"dagar i rad");
 function weekDots(){
   const d=new Date(), mon=new Date(d); mon.setDate(d.getDate()-((d.getDay()+6)%7));
   return tt(["Mo","Tu","We","Th","Fr","Sa","Su"],["Må","Ti","On","To","Fr","Lö","Sö"]).map((n,i)=>{ const x=new Date(mon); x.setDate(mon.getDate()+i); const ds=dstr(x); return `<div class="day ${(S.days||[]).includes(ds)?"on":""} ${ds===today()?"today":""}">${n}<i></i></div>`; }).join("");
 }
 function streakSheet(){
   const on=S.lastDay===today(), f=S.freeze||0;
-  sheet(`<div class="ss-top"><span class="ss-flame${on?"":" off"}">${I.flame}</span><div><b class="ss-n">${S.streak}</b><span>${tt("day streak","dagar i rad")}</span></div></div>
+  sheet(`<div class="ss-top"><span class="ss-flame${on?"":" off"}">${I.flame}</span><div><b class="ss-n">${S.streak}</b><span>${inRow(S.streak)}</span></div></div>
   <div class="week">${weekDots()}</div>
   <p class="sub" style="margin:0;text-align:center">${on?tt("You practised today. Come back tomorrow to keep it going!","Du har övat i dag. Kom tillbaka i morgon så håller du sviten i gång!"):S.streak?tt("Finish a lesson today to keep your streak.","Klara en lektion i dag för att behålla din svit."):tt("Finish a lesson today to start a streak.","Klara en lektion i dag för att starta en svit.")}</p>
   <div class="card shop-item"><span class="shop-ic ice">${SNOW}</span><div class="q-body"><h3>${tt(`Streak freezes: ${f} of 2`,`Svitskydd: ${f} av 2`)}</h3><p>${tt("A freeze saves your streak if you miss a day.","Ett svitskydd räddar din svit om du missar en dag.")}</p></div>${f<2?`<button class="btn buy" id="buy-freeze" ${S.gems>=50?"":"disabled"} aria-label="${tt("Buy a streak freeze for 50 kleicha","Köp ett svitskydd för 50 kleicha")}">${I.gem}50</button>`:""}</div>
@@ -5530,7 +5705,7 @@ function refreshTop(){
   st[2].innerHTML=I.gem+S.gems;
   st[3].innerHTML=I.heart+S.hearts;
   srsBadge();
-  st[0].setAttribute("aria-label",tt(`${S.streak} day streak`,`${S.streak} dagar i rad`)); st[1].setAttribute("aria-label",tt(`Today's goal: ${x} of ${g} XP. Open the daily quests`,`Dagens mål: ${x} av ${g} XP. Öppna dagens uppdrag`)); st[2].setAttribute("aria-label",tt(`${S.gems} kleicha. Open the kleicha shop`,`${S.gems} kleicha. Öppna kleichabutiken`)); st[3].setAttribute("aria-label",tt(`${S.hearts} hearts`,`${S.hearts} hjärtan`));
+  st[0].setAttribute("aria-label",`${S.streak} ${inRow(S.streak)}`); st[1].setAttribute("aria-label",tt(`Today's goal: ${x} of ${g} XP. Open the daily quests`,`Dagens mål: ${x} av ${g} XP. Öppna dagens uppdrag`)); st[2].setAttribute("aria-label",tt(`${S.gems} kleicha. Open the kleicha shop`,`${S.gems} kleicha. Öppna kleichabutiken`)); st[3].setAttribute("aria-label",tt(`${S.hearts} hearts`,`${S.hearts} hjärtan`));
 }
 const TABS=[
   ["learn","Learn",'<svg viewBox="0 0 28 28"><path d="M4 13 14 4l10 9v10a2 2 0 0 1-2 2h-5v-7h-6v7H6a2 2 0 0 1-2-2z" fill="#F7901E"/><path d="M11 25v-7h6v7" fill="#B4560B"/></svg>',"Lär dig"],
@@ -5592,7 +5767,7 @@ function agoText(ts){ if(!ts) return ""; const d=Math.floor((Date.now()-new Date
 function lgProfile(r){
   const st=r.stats||null, p=lgPct(r), done=lgDone(r);
   const tile=(ic,cls,v,l)=>`<div class="lp-t"><span class="lp-ic ${cls}">${ic}</span><b>${v}</b><small>${l}</small></div>`;
-  const tiles=st&&st.xp!=null?[tile(I.bolt,"c-xp",fmtN(st.xp),tt("XP in total","XP totalt")),tile(I.flame,"c-flame",streakOf(st),tt("day streak","dagar i rad")),tile(I.book,"c-gem",fmtN(st.words),tt("words learned","inlärda ord")),tile(I.star.replace('fill="#fff"','fill="currentColor"'),"c-star",fmtN(r.x),tt("XP this week","XP den här veckan"))].join(""):"";
+  const tiles=st&&st.xp!=null?[tile(I.bolt,"c-xp",fmtN(st.xp),tt("XP in total","XP totalt")),tile(I.flame,"c-flame",streakOf(st),inRow(streakOf(st))),tile(I.book,"c-gem",fmtN(st.words),tt("words learned","inlärda ord")),tile(I.star.replace('fill="#fff"','fill="currentColor"'),"c-star",fmtN(r.x),tt("XP this week","XP den här veckan"))].join(""):"";
   sheet(`<div class="lp-head"><span class="lp-av" style="background:${r.c}">${esc((r.n||"?")[0].toUpperCase())}</span><div class="lp-ht"><h2 class="sec">${esc(r.n)}${r.me?tt(" (you)"," (du)"):""}</h2><p class="sub">${esc(levelText(r.level)||tt("Level not shared yet","Nivån är inte delad än"))}</p></div></div>
     <div class="pbar lp-bar"><i style="width:${Math.max(p,2)}%"></i><span>${tt(`${done} of ${LESSONS.length} levels · ${p}%`,`${done} av ${LESSONS.length} nivåer · ${p} %`)}</span></div>
     ${tiles?`<div class="lp-grid">${tiles}</div>`:`<p class="sub" style="margin:0;text-align:center">${tt("More details show up once they've opened the latest version of the app.","Fler detaljer syns när de har öppnat den senaste versionen av appen.")}</p>`}
@@ -5683,7 +5858,7 @@ async function pushLeague(){
     catch(e){ if(!lgMissing(e)) throw e; }
   }
 }
-function render(){ if(srsSync()) save(); stopFx(); document.body.classList.toggle("map",tab==="learn"); refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
+function render(){ if(dayStale()){ FROZE=0; rollover(); if(FROZE) toast(frozeText()); } if(srsSync()) save(); stopFx(); document.body.classList.toggle("map",tab==="learn"); refreshTop(); closePop(); const jb=$("#jump"); if(jb&&tab!=="learn") jb.hidden=true; const el=$("#screen"); ({learn:renderLearn,words:renderWords,league:renderLeague,profile:renderProfile}[tab]||renderLearn)(el); renderSettings(); }
 
 /* ================= LESSON PLAYER ================= */
 let L=null;
@@ -5867,8 +6042,9 @@ function verdict(ok,detail,skipped){
     ? `${CONFETTI_ROW}<div class="fb fb-ok"><div class="fb-t"><h3><span>${pr[0]}</span><span class="ar" lang="ar">${pr[1]}</span></h3>${detail?`<p>${detail}</p>`:""}${combo>=3?`<span class="fb-combo">${I.flame}${tt(`${combo} right in a row`,`${combo} rätt i rad`)}</span>`:""}</div>${mascot("cheer","fb-m")}</div><button class="btn good wide" id="next">${tt("Continue","Fortsätt")}</button>`
     : `<div class="fb fb-no"><span class="ic">${I.x}</span><div class="fb-t"><h3>${skipped?tt("Here's the answer","Här är svaret"):tt("Almost!","Nästan!")}</h3>${detail?`<p>${skipped?"":tt("Correct answer:","Rätt svar:")+" "}${detail}</p>`:""}${L.mode!=="jump"?`<small class="fb-again">${tt("It'll come back soon.","Den kommer tillbaka strax.")}</small>`:""}</div></div><button class="btn bad wide" id="next">${tt("OK","Okej")}</button>`;
   if(L.mode!=="jump"){ const ks=[].concat(L.key||[]); ks.forEach(k=>ok?hit(k):miss(k,ks.length>1)); } L.key=null;
-  if(ok){ L.right++; L.combo++; L.xp+= L.combo>=5?2:1; S.bestCombo=Math.max(S.bestCombo,L.combo); S.q.combo=Math.max(S.q.combo,L.combo); sGood(); }
+  if(ok){ L.right++; L.combo++; L.xp+= L.combo>=5?2:1; S.bestCombo=Math.max(S.bestCombo,L.combo); S.q.combo=Math.max(S.q.combo,L.combo); if(L.practice&&L.mode!=="jump"&&L.mode!=="letters") S.q.rev=(S.q.rev||0)+1; sGood(); }
   else { L.wrong++; L.combo=0; if(!skipped&&!L.practice) S.hearts=Math.max(0,S.hearts-1); sBad(); if(L.mode==="jump"){ L.lives--; const hc=$("#lesson .l-head .c-heart"); if(hc) hc.innerHTML=I.heart+L.lives; } else L.ex.push(L.ex[L.k]); }
+  S.q.run=L.combo;
   const sm=$("#lesson .speaker .mascot"); if(sm) sm.outerHTML=mascot(ok?"cheer":"sad");
   hop("#lesson .speaker .mascot", ok?"hop":"nope");
   save();
@@ -5884,7 +6060,8 @@ function noHearts(){
   $("#prac").onclick=()=>{ if(learnedWords().length>=4){ startPractice(); } else { S.hearts=1; save(); closeLesson(); } };
   $("#back").onclick=closeLesson;
 }
-function step(){ if(L.k>=L.ex.length) return finish(); const e=L.ex[L.k]; ({intro:exIntro,pic:exPic,picR:exPicR,mcq:exMcq,mcqR:exMcq,reply:exReply,match:exMatch,build:exBuild,type:exType,chat:exChat,listen:exListen,flash:exFlash,dict:exDict,lintro:exLIntro,lpick:exLPick,lhear:exLHear,lword:exLWord})[e.t](e); }
+function step(){ if(!L.on){ L.on=true; if(L.mode!=="flash") L.combo=(S.q&&S.q.run)||0; } /* a lesson has only 4 to 6 questions, so the run of right answers carries on from the last round today */
+  if(L.k>=L.ex.length) return finish(); const e=L.ex[L.k]; ({intro:exIntro,pic:exPic,picR:exPicR,mcq:exMcq,mcqR:exMcq,reply:exReply,match:exMatch,build:exBuild,type:exType,chat:exChat,listen:exListen,flash:exFlash,dict:exDict,lintro:exLIntro,lpick:exLPick,lhear:exLHear,lword:exLWord})[e.t](e); }
 function wireSkip(){ const s=$("#skip"); if(s) s.onclick=()=>{ document.querySelectorAll(".l-body button,.l-body textarea").forEach(b=>b.disabled=true); verdict(false,skipAnswer(),true); }; }
 function skipAnswer(){ const e=L.ex[L.k]; if(e.ans) return esc(e.ans); if(e.t==="build") return esc(((isF()&&e.fem)?e.fem.answer:e.answer).join(" ")); if(e.t==="reply") return esc(W[L.okK||e.ok].tr); if(e.t==="type") return esc(W[e.w].en); if(e.t==="mcqR"||e.t==="picR") return esc(W[e.w].tr); return esc(W[e.w].en); }
 
@@ -5919,7 +6096,7 @@ function exType(e){
   const t=$("#ans"); t.focus(); t.oninput=()=>{$("#check").disabled=!t.value.trim();};
   t.onkeydown=ev=>{if(ev.key==="Enter"){ev.preventDefault();if(t.value.trim())$("#check").click();}};
   L.key=e.w;
-  $("#check").onclick=()=>{t.disabled=true;const ok=[...e.acc,...accFor(e.w)].map(norm).includes(norm(t.value));verdict(ok,ok?`${tt("Meaning","Betydelse")}: ${esc(w.en)}`:esc(w.en));};
+  $("#check").onclick=()=>{t.disabled=true;const acc=[...e.acc,...accFor(e.w)].map(norm), v=norm(t.value), exact=acc.includes(v), near=!exact&&typoOk(v,acc,e.w), ok=exact||near;verdict(ok,ok?`${near?tt("Watch the spelling. ","Kolla stavningen. "):""}${tt("Meaning","Betydelse")}: ${esc(w.en)}`:esc(w.en));};
   wireSkip();
 }
 function exMatch(e){
@@ -5935,7 +6112,7 @@ function exMatch(e){
     if(!sel||sel.dataset.s===b.dataset.s){ sTap(); if(sel) sel.setAttribute("aria-pressed","false"); sel=b; b.setAttribute("aria-pressed","true"); return; }
     const a=sel; sel=null; a.setAttribute("aria-pressed","false");
     if(a.dataset.k===b.dataset.k){ hit(a.dataset.k); tone([[880,0,.08]]); [a,b].forEach(x=>{x.classList.add("flash");x.disabled=true;setTimeout(()=>{x.classList.remove("flash");x.classList.add("matched");},350);}); n++;
-      if(n===e.ws.length){ L.right++; L.combo++; L.xp+=slip?1:2; S.bestCombo=Math.max(S.bestCombo,L.combo); S.q.combo=Math.max(S.q.combo,L.combo); save(); setTimeout(sGood,300); const c=$("#check"); c.disabled=false; c.focus(); c.onclick=()=>{L.k++;step();}; } }
+      if(n===e.ws.length){ L.right++; L.combo++; L.xp+=slip?1:2; S.bestCombo=Math.max(S.bestCombo,L.combo); S.q.combo=Math.max(S.q.combo,L.combo); S.q.run=L.combo; if(L.practice) S.q.rev=(S.q.rev||0)+1; save(); setTimeout(sGood,300); const c=$("#check"); c.disabled=false; c.focus(); c.onclick=()=>{L.k++;step();}; } }
     else { slip=true; miss((a.dataset.s==="a"?a:b).dataset.k,true); sBad(); [a,b].forEach(x=>x.classList.add("wrong")); setTimeout(()=>[a,b].forEach(x=>x.classList.remove("wrong")),450); }
   });
 }
@@ -5976,7 +6153,8 @@ function exChat(e){
       const k=list[+b.dataset.i], ok=k===okK;
       turn.querySelectorAll(".opt").forEach(x=>x.disabled=true);
       b.classList.add(ok?"ok":"no"); if(!ok) turn.querySelectorAll(".opt")[list.indexOf(okK)].classList.add("ok");
-      if(ok){ L.right++; L.xp+=1; hit(okK); sGood(); } else { L.wrong++; miss(okK); sBad(); }
+      if(ok){ L.right++; L.xp+=1; L.combo++; S.bestCombo=Math.max(S.bestCombo,L.combo); S.q.combo=Math.max(S.q.combo,L.combo); hit(okK); sGood(); } else { L.wrong++; L.combo=0; miss(okK); sBad(); }
+      S.q.run=L.combo; comboHead();
       save();
       setTimeout(()=>{ if(!alive()) return; turn.innerHTML=""; me(okK,!ok); if(S.sound) speak(okK,true); down(); res(); }, ok?450:1300);
     });
@@ -5993,24 +6171,48 @@ function exChat(e){
   })();
 }
 
+/* XP for a finished round: the total, the week, today's goal (5 kleicha the first time it's reached), the 60-day
+   history and the streak. Lessons, practice and Daqeeqa all come through here. */
+function earn(gained){
+  if(dayStale()){ FROZE=0; rollover(); }
+  const firstToday=S.lastDay!==today(), goal=S.goal||20, before=S.q.xp||0;
+  S.xp+=gained; S.weekXp+=gained; S.q.xp+=gained;
+  S.hist=S.hist||{}; S.hist[today()]=(S.hist[today()]||0)+gained; Object.keys(S.hist).sort().slice(0,-60).forEach(k=>delete S.hist[k]);
+  const goalNow=before<goal&&S.q.xp>=goal&&!S.q.goalHit; if(goalNow){ S.q.goalHit=true; S.gems+=5; }
+  if(firstToday){ S.streak=(S.lastDay===yesterday()?S.streak:0)+1; S.lastDay=today(); S.days=[...new Set([...(S.days||[]),today()])].slice(-14); S.bestStreak=Math.max(S.bestStreak||0,S.streak); }
+  return {firstToday,goalNow,goal};
+}
+/* the day so far, on the screen after a round: the tea glass towards today's goal, and the streak */
+function endDayRows(goalNow,goalOnly){
+  const goal=S.goal||20, gx=Math.min(S.q.xp,goal);
+  return `<div class="ed-row">${teaGlass(gx/goal,"ed-tg")}<span class="ed-t"><b>${S.q.xp>=goal?(goalNow?tt("Daily goal reached! +5 kleicha","Dagens mål klart! +5 kleicha"):tt("Daily goal reached!","Dagens mål klart!")):tt(`${goal-gx} XP to today's goal`,`${goal-gx} XP kvar till dagens mål`)}</b><small>${S.q.xp>=goal?tt(`Your tea glass is full: ${gx} of ${goal} XP`,`Teglaset är fullt: ${gx} av ${goal} XP`):tt(`${gx} of ${goal} XP today`,`${gx} av ${goal} XP i dag`)}</small></span></div>${goalOnly?"":`<div class="ed-row"><span class="ed-fl">${I.flame}</span><span class="ed-t"><b>${S.streak} ${inRow(S.streak)}</b><span class="week ed-week">${weekDots()}</span></span></div>`}`;
+}
+/* the "in a row" flame in the lesson header, for a conversation: it answers several times on one screen */
+function comboHead(){ const h=$("#lesson .l-head"); if(!h||!L) return; let c=h.querySelector(".combo"); if(L.combo<3){ if(c) c.remove(); return; }
+  if(!c){ c=document.createElement("span"); c.className="combo"; h.insertBefore(c,h.querySelector(".stat")); } c.innerHTML=I.flame+L.combo; c.setAttribute("aria-label",tt(`${L.combo} right in a row`,`${L.combo} rätt i rad`)); }
+/* one slip of the finger still counts as right, unless it turns the answer into another word in the course */
+let ALL_ACC=null;
+function typoOk(v,acc,k){
+  if(v.length<5||!acc.some(a=>a.length>=5&&lev(a,v)<=(a.length>=10?2:1))) return false;
+  if(!ALL_ACC){ ALL_ACC={}; Object.keys(W).forEach(x=>accFor(x).forEach(a=>{ const n=norm(a); (ALL_ACC[n]=ALL_ACC[n]||[]).push(x); })); }
+  return !(ALL_ACC[v]||[]).some(x=>x!==k);
+}
 function finish(){
   const acc=Math.round(L.right/Math.max(1,L.right+L.wrong)*100), perfect=L.wrong===0;
   const gained=L.practice?Math.max(5,L.xp):10+L.xp+(perfect?5:0);
   const secs=Math.round((Date.now()-L.t0)/1000), time=Math.floor(secs/60)+":"+String(secs%60).padStart(2,"0");
-  const firstToday=S.lastDay!==today();
-  const goal=S.goal||20, before=S.q.xp||0;
-  S.xp+=gained; S.weekXp+=gained; S.q.xp+=gained; S.lessons++; S.q.lessons++;
-  S.hist=S.hist||{}; S.hist[today()]=(S.hist[today()]||0)+gained; Object.keys(S.hist).sort().slice(0,-60).forEach(k=>delete S.hist[k]);
-  const goalNow=before<goal&&S.q.xp>=goal&&!S.q.goalHit; if(goalNow){ S.q.goalHit=true; S.gems+=5; }
+  const {firstToday,goalNow,goal}=earn(gained); S.lessons++; S.q.lessons++;
   const again=!L.practice&&!L.mode&&L.i>=0, sub=again?endSub(L.i):"", li=L.i, gx=Math.min(S.q.xp,goal);
   const firstTime=again&&!S.done[LESSONS[L.i].id]&&LESSONS[L.i].ex.some(e=>e.t==="intro");
+  /* for the daily quests: new words, listening rounds, and rounds without a mistake */
+  if(firstTime) S.q.newW=(S.q.newW||0)+LESSONS[L.i].ex.filter(e=>e.t==="intro").length;
+  if(L.mode==="listen") S.q.listen=(S.q.listen||0)+1;
+  if(perfect&&L.right>0&&!["flash","jump","letters"].includes(L.mode)) S.q.perfect=(S.q.perfect||0)+1;
   if(L.mode==="letters") S.ltr=Object.assign({},S.ltr,{["g"+L.group]:true});
   else if(L.mode==="jump"){ unlockTo(L.target); SCROLL_CUR=true; }
   else if(L.practice) S.hearts=Math.min(5,S.hearts+1);
   else { const uix=LESSONS[L.i].unit, inU=LESSONS.filter(l=>l.unit===uix), uWas=inU.every(l=>S.done[l.id]); S.done[LESSONS[L.i].id]=true; if(!uWas&&inU.every(l=>S.done[l.id])) UNIT_FX=uix; if(perfect) S.perfect++; S.gems+=perfect?5:2; }
-  if(firstToday){ S.streak=(S.lastDay===yesterday()?S.streak:0)+1; S.lastDay=today(); S.days=[...new Set([...(S.days||[]),today()])].slice(-14); }
-  const newQ=QUESTS.map(questInfo).filter(x=>x.done&&!x.claimed&&!(S.q.told||{})[x.q.id]);
-  if(newQ.length) S.q.told=Object.assign({},S.q.told,Object.fromEntries(newQ.map(x=>[x.q.id,1])));
+  const newQ=questNews(), newA=achNews();
   save(); if(firstToday) pushTouch(); sWin(); confetti();
   const isChat=!L.practice&&LESSONS[L.i].chat, left=mistakeKeys().length, dueLeft=srsDueKeys().length;
   const head=L.mode==="jump"?tt("You tested out!","Du klarade testet!"):L.mode==="dict"?tt("Great listening!","Bra lyssnat!"):L.mode==="letters"?tt("Letters learned!","Bokstäverna klara!"):L.review?(left?tt("Review complete!","Repetitionen klar!"):tt("All mistakes fixed!","Alla misstag rättade!")):L.mode==="due"?(dueLeft?tt("Round done!","Omgången klar!"):tt("All reviewed for today!","Allt repeterat för i dag!")):L.mode==="listen"?tt("Listening done!","Hörövningen klar!"):L.mode==="fresh"?tt("All freshened up!","Allt uppfräschat!"):L.mode==="flash"?tt(`You knew ${L.right} of ${L.right+L.wrong}`,`Du kunde ${L.right} av ${L.right+L.wrong}`):L.practice?tt("Practice complete!","Övningen klar!"):isChat?tt("Conversation complete!","Samtalet klart!"):perfect?tt("Perfect lesson!","Perfekt lektion!"):tt("Lesson complete!","Lektionen klar!");
@@ -6022,9 +6224,9 @@ function finish(){
     (L.keys||[]).forEach(k=>{ const r=srsRec(k); if(r){ const n=r.d-T; g[n<=1?0:n<=7?1:n<=30?2:3]++; } });
     return g.map((c,j)=>c?`<span class="ss"><b>${c}</b> ${lab[j]}</span>`:"").join(""); })():"";
   $("#lesson").classList.add("party");
-  $("#lesson").innerHTML=`<div class="l-in"><div class="end">${PARTY_BG}${mascot(perfect||acc>=80?"cheer":"happy")}<div class="end-h"><h2>${head}</h2>${sub?`<p class="end-sub">${esc(sub)}</p>`:""}</div>${notes.map(t=>`<p class="sub" style="margin:0">${esc(t)}</p>`).join("")}${newQ.length?`<p class="goalhit qdone">${I.gem.replace("<svg",'<svg width="20" height="20"')}${tt("Quest complete! Claim it on Learn.","Uppdrag klart! Hämta belöningen under Lär dig.")}</p>`:""}
+  $("#lesson").innerHTML=`<div class="l-in"><div class="end">${PARTY_BG}${mascot(perfect||acc>=80?"cheer":"happy")}<div class="end-h"><h2>${head}</h2>${sub?`<p class="end-sub">${esc(sub)}</p>`:""}</div>${notes.map(t=>`<p class="sub" style="margin:0">${esc(t)}</p>`).join("")}${newQ.length?`<p class="goalhit qdone">${I.gem.replace("<svg",'<svg width="20" height="20"')}${tt("Quest complete! Claim it on Learn.","Uppdrag klart! Hämta belöningen under Lär dig.")}</p>`:""}${achLines(newA)}
   <div class="endstats"><div class="es y"><span>${tt("Total XP","Totalt XP")}</span><b>${I.bolt.replace("<svg",'<svg width="20" height="20"')}<span class="cnt" data-to="${gained}">0</span></b></div><div class="es g"><span>${acc>=90?tt("Amazing","Grymt"):acc>=70?tt("Good","Bra"):tt("Accuracy","Träffsäkerhet")}</span><b><span class="cnt" data-to="${acc}">0</span>%</b></div><div class="es b"><span>${tt("Quick","Tid")}</span><b>${time}</b></div></div>
-  <div class="end-day"><div class="ed-row">${teaGlass(gx/goal,"ed-tg")}<span class="ed-t"><b>${S.q.xp>=goal?(goalNow?tt("Daily goal reached! +5 kleicha","Dagens mål klart! +5 kleicha"):tt("Daily goal reached!","Dagens mål klart!")):tt(`${goal-gx} XP to today's goal`,`${goal-gx} XP kvar till dagens mål`)}</b><small>${S.q.xp>=goal?tt(`Your tea glass is full: ${gx} of ${goal} XP`,`Teglaset är fullt: ${gx} av ${goal} XP`):tt(`${gx} of ${goal} XP today`,`${gx} av ${goal} XP i dag`)}</small></span></div><div class="ed-row"><span class="ed-fl">${I.flame}</span><span class="ed-t"><b>${tt(`${S.streak} day streak`,`${S.streak} dagar i rad`)}</b><span class="week ed-week">${weekDots()}</span></span></div>${back?`<div class="ed-row"><span class="ed-fl ed-rv">${PICONS.fresh}</span><span class="ed-t"><b>${tt("When the words come back","När orden kommer tillbaka")}</b><span class="ss-row">${back}</span></span></div>`:""}</div>
+  <div class="end-day">${endDayRows(goalNow)}${back?`<div class="ed-row"><span class="ed-fl ed-rv">${PICONS.fresh}</span><span class="ed-t"><b>${tt("When the words come back","När orden kommer tillbaka")}</b><span class="ss-row">${back}</span></span></div>`:""}</div>
   <button class="btn wide" id="cont" style="max-width:420px">${tt("Continue","Fortsätt")}</button>${again?`<button class="end-again" id="again">${tt("Practise again","Öva en gång till")}</button>`:""}${L.mode==="due"&&dueLeft?`<button class="end-again" id="due-more">${tt(`Review ${Math.min(dueLeft,SRS_ROUND)} more`,`Repetera ${Math.min(dueLeft,SRS_ROUND)} till`)}</button>`:""}</div></div>`;
   countUp($("#lesson")); $("#cont").focus(); $("#cont").onclick=()=>firstToday?streakScreen():closeLesson();
   const ag=$("#again"); if(ag) ag.onclick=()=>{ sTap(); startLesson(li); };
@@ -6034,9 +6236,118 @@ function finish(){
 function streakScreen(){
   sWin(); $("#lesson").classList.remove("party");
   const days=weekDots();
-  $("#lesson").innerHTML=`<div class="l-in"><div class="end"><span class="bigflame">${I.flame.replace("<svg",'<svg width="140" height="140"')}</span><div class="streaknum">${S.streak}</div><h2 style="color:var(--flame)">${tt("day streak!","dagar i rad!")}</h2><div class="week">${days}</div><p class="sub" style="margin:0;max-width:32ch">${tt("Practice every day to keep your streak growing.","Öva varje dag så att din svit växer.")}</p><button class="btn wide" id="cont" style="max-width:420px;background:var(--flame);box-shadow:0 4px 0 var(--orange-deep)">${tt("I'm committed","Jag kör på!")}</button>${pushCanAsk()?`<div class="remind-ask" id="rm-ask"><span class="ra-ic" aria-hidden="true">${BELL}</span><span class="ra-t"><b>${tt("Want a reminder?","Vill du ha en påminnelse?")}</b><small>${tt(`A notification at ${pushHour()}:00 on days you haven't practised.`,`En notis kl. ${pushHour()} de dagar du inte har övat.`)}</small></span><span class="ra-b"><button class="btn ghost blue" id="rm-yes">${tt("Remind me","Påminn mig")}</button><button class="linkbtn" id="rm-no">${tt("Not now","Inte nu")}</button></span></div>`:""}</div></div>`;
+  $("#lesson").innerHTML=`<div class="l-in"><div class="end"><span class="bigflame">${I.flame.replace("<svg",'<svg width="140" height="140"')}</span><div class="streaknum">${S.streak}</div><h2 style="color:var(--flame)">${inRow(S.streak)}!</h2><div class="week">${days}</div><p class="sub" style="margin:0;max-width:32ch">${tt("Practice every day to keep your streak growing.","Öva varje dag så att din svit växer.")}</p><button class="btn wide" id="cont" style="max-width:420px;background:var(--flame);box-shadow:0 4px 0 var(--orange-deep)">${tt("I'm committed","Jag kör på!")}</button>${pushCanAsk()?`<div class="remind-ask" id="rm-ask"><span class="ra-ic" aria-hidden="true">${BELL}</span><span class="ra-t"><b>${tt("Want a reminder?","Vill du ha en påminnelse?")}</b><small>${tt(`A notification at ${pushHour()}:00 on days you haven't practised.`,`En notis kl. ${pushHour()} de dagar du inte har övat.`)}</small></span><span class="ra-b"><button class="btn ghost blue" id="rm-yes">${tt("Remind me","Påminn mig")}</button><button class="linkbtn" id="rm-no">${tt("Not now","Inte nu")}</button></span></div>`:""}</div></div>`;
   $("#cont").focus(); $("#cont").onclick=closeLesson;
   const ry=$("#rm-yes"); if(ry){ ry.onclick=async()=>{ ry.disabled=true; S.pushAsked=true; save(); await pushOn(); const a=$("#rm-ask"); if(a) a.remove(); }; $("#rm-no").onclick=()=>{ S.pushAsked=true; save(); $("#rm-ask").remove(); $("#cont").focus(); }; }
+}
+
+/* ================= DAQEEQA (a minute of matching) =================
+   "Daqeeqa" is the Maslawi word for a minute, and that is how long a round lasts.
+   Five pairs are on the table. When four are matched, four new ones are dealt, so there is always
+   more than one pair to choose from. Each right pair in a row is worth more (x2 after 3, x3 after 6,
+   x4 after 10) and a wrong pair costs two seconds. A round gives XP and counts for the streak, but it
+   leaves the review schedule and the mistake list alone: a slip against the clock says little about
+   what you really know. S.daq = {best: highest score, n: rounds played, pairs: most pairs in a round}. */
+const DAQ_SECS=60, DAQ_MIN=8, DAQ_ROWS=5;
+const DAQ_GOALS=[100,250,500,750,1000]; /* the scores the "Quick as a flash" achievement asks for, level by level */
+const DAQ_IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 1.8M9.5 2.5h5M12 2.5V6"/></svg>';
+/* short words only: they have to be read at a glance and fit on a card */
+function daqPool(){ const l=learnedWords(), s=l.filter(k=>W[k].tr.length<=16&&plainEn(k).length<=22&&!W[k].tr.includes("/")); return s.length>=DAQ_MIN?s:l; }
+const daqReady=()=>daqPool().length>=DAQ_MIN;
+const daqMult=c=>c>=10?4:c>=6?3:c>=3?2:1;
+let DQ_STREAK=false;
+function daqTile(){ const can=daqReady(), best=(S.daq||{}).best||0;
+  return `<button class="ptile t-daq p-wide" id="p-daq" ${can?"":"disabled"}><span class="pt-ic">${DAQ_IC}</span><span class="pw-t"><b>Daqeeqa</b><small>${can?tt("One minute. Match as many pairs as you can.","En minut. Para ihop så många du hinner."):tt(`Opens when you know ${DAQ_MIN} words.`,`Öppnas när du kan ${DAQ_MIN} ord.`)}</small></span>${can?`<span class="pw-hard">${best?tt("Best","Rekord")+" "+fmtN(best):tt("New","Nytt")}</span>`:""}</button>`; }
+function daqIntro(){
+  if(!daqReady()) return;
+  const y=S.daq||{}; DQ_STREAK=false;
+  L={mode:"daq",practice:true,i:-1,ex:[],k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now()};
+  openOverlay();
+  const rule=(col,ic,t)=>`<li><span class="dq-ri" style="--qc:${col}">${ic}</span><span>${t}</span></li>`;
+  $("#lesson").innerHTML=`<div class="l-in"><div class="l-head"><button class="x" id="dq-x" aria-label="${tt("Close","Stäng")}">${I.x}</button></div><div class="end dq-intro">${mascot("wow")}<div class="end-h"><h2>Daqeeqa</h2><p class="dq-tag">${lbtn("daqeeqa")}<span>${tt("It means","Det betyder")} ”${esc(W.daqeeqa.en.toLowerCase())}”</span></p></div>
+    <ul class="dq-rules">${rule("var(--orange)",DAQ_IC,tt("You have 60 seconds. Match as many pairs as you can.","Du har 60 sekunder. Para ihop så många du hinner."))}${rule("var(--pink)",I.flame,tt("Right pairs in a row are worth more: ×2, ×3, ×4.","Rätt par i rad ger mer: ×2, ×3, ×4."))}${rule("var(--bad-btn)",I.x,tt("A wrong pair costs 2 seconds.","Fel par kostar 2 sekunder."))}</ul>
+    ${y.best?`<p class="dq-rec">${tt("Your best","Ditt rekord")}: <b>${fmtN(y.best)}</b></p>`:""}
+    <button class="btn wide" id="dq-go" style="max-width:420px">${tt("Start","Starta")}</button></div></div>`;
+  $("#dq-x").onclick=closeLesson; $("#dq-go").onclick=()=>{ sTap(); daqPlay(); }; $("#dq-go").focus();
+}
+function daqPlay(){
+  const pool=daqPool(), token={}, best=(S.daq||{}).best||0; let deck=[];
+  const G={left:DAQ_SECS,sec:DAQ_SECS,score:0,combo:0,maxCombo:0,pairs:0,missed:[],A:Array(DAQ_ROWS).fill(null),B:Array(DAQ_ROWS).fill(null),sel:null,busy:0,over:false,paused:true,t:0};
+  L={mode:"daq",practice:true,i:-1,ex:[],k:0,right:0,wrong:0,combo:0,xp:0,t0:Date.now(),run:token};
+  const alive=()=>L&&L.run===token;
+  openOverlay();
+  $("#lesson").innerHTML=`<div class="l-in dq"><div class="l-head"><button class="x" id="dq-x" aria-label="${tt("Stop the game","Avsluta spelet")}">${I.x}</button><div class="bar dq-bar" role="timer" aria-label="${tt("Time left","Tid kvar")}"><i id="dq-fill" style="width:100%"></i></div><b class="dq-sec" id="dq-sec" aria-hidden="true">${DAQ_SECS}</b></div>
+    <div class="dq-hud"><span class="dq-n"><small>${tt("Score","Poäng")}</small><b id="dq-score">0</b></span><span class="dq-mult" id="dq-mult" hidden></span><span class="dq-n dq-r"><small>${tt("Best","Rekord")}</small><b>${best?fmtN(best):"–"}</b></span></div>
+    <div class="l-body dq-body"><div class="pairs dq-pairs" id="dq-board">${Array.from({length:DAQ_ROWS},(_,r)=>`<button class="pair sayp dq-c gone" data-s="a" data-r="${r}" disabled></button><button class="pair dq-c gone" data-s="e" data-r="${r}" disabled></button>`).join("")}</div><div class="dq-count" id="dq-count" aria-live="assertive"></div></div></div>`;
+  const board=$("#dq-board"), cnt=$("#dq-count"), cell=(s,r)=>board.querySelector(`.dq-c[data-s="${s}"][data-r="${r}"]`);
+  /* the next words: the ones you know least come first, and never two on the table that could be mixed up */
+  const same=(a,b)=>a===b||a===PAIR[b]||W[a].tr===W[b].tr||plainEn(a).toLowerCase()===plainEn(b).toLowerCase();
+  function draw(n){ const on=G.A.filter(Boolean), out=[]; let guard=0;
+    while(out.length<n&&guard++<600){ if(!deck.length) deck=G.pairs?shuffle(pool):byWeakness(pool); const k=deck.shift(); if(![...on,...out].some(x=>same(x,k))) out.push(k); }
+    return out; }
+  function put(s,r,k,i){ const b=cell(s,r); b.dataset.k=k; b.textContent=s==="a"?W[k].tr:plainEn(k); b.className="pair "+(s==="a"?"sayp ":"")+"dq-c in"; b.style.setProperty("--d",(i*45)+"ms"); b.disabled=false; b.setAttribute("aria-pressed","false"); }
+  function deal(){ const ea=[], eb=[]; for(let r=0;r<DAQ_ROWS;r++){ if(!G.A[r]) ea.push(r); if(!G.B[r]) eb.push(r); }
+    const ks=draw(Math.min(ea.length,eb.length)), sa=shuffle(ea), sb=shuffle(eb);
+    ks.forEach((k,i)=>{ G.A[sa[i]]=k; G.B[sb[i]]=k; put("a",sa[i],k,i); put("e",sb[i],k,i); }); }
+  function float(el,txt,bad){ if(reduced||!el) return; const r=el.getBoundingClientRect(), f=document.createElement("span"); f.className="dq-float"+(bad?" bad":""); f.textContent=txt; f.style.left=(r.left+r.width/2)+"px"; f.style.top=r.top+"px"; $("#lesson").appendChild(f); setTimeout(()=>f.remove(),800); }
+  function hud(up){ $("#dq-score").textContent=fmtN(G.score); const m=daqMult(G.combo), e=$("#dq-mult"); e.hidden=m<2; e.textContent="×"+m; e.dataset.m=m; e.setAttribute("aria-label",tt(`Points times ${m}`,`Poängen gånger ${m}`));
+    if(up){ e.classList.remove("pop"); void e.offsetWidth; e.classList.add("pop"); tone([[1046.5,.08,.1],[1318.5,.16,.16]],"sine",.1); } }
+  function right(a,b){ const A=a.dataset.s==="a"?a:b, B=A===a?b:a, was=daqMult(G.combo);
+    G.A[+A.dataset.r]=null; G.B[+B.dataset.r]=null; G.pairs++; G.combo++; G.maxCombo=Math.max(G.maxCombo,G.combo);
+    const m=daqMult(G.combo), pts=10*m; G.score+=pts; G.busy++;
+    [a,b].forEach(x=>{ x.disabled=true; x.classList.remove("in"); x.classList.add("flash"); });
+    setTimeout(()=>{ if(!alive()) return; [a,b].forEach(x=>{ x.classList.remove("flash"); x.classList.add("gone"); }); G.busy--; if(!G.busy&&!G.over&&G.A.filter(Boolean).length<=1) deal(); },240);
+    float(B,"+"+pts); hud(m>was);
+    /* the note climbs with every pair in a row */
+    const f=523.25*Math.pow(2,Math.min(G.combo-1,14)/12); tone([[f,0,.09],[f*1.5,.06,.12]],"sine",.13);
+    try{ if(S.sound&&navigator.vibrate) navigator.vibrate(8); }catch(e){} }
+  function wrong(a,b){ const A=a.dataset.s==="a"?a:b; G.combo=0; if(!G.missed.includes(A.dataset.k)) G.missed.push(A.dataset.k); G.left=Math.max(0,G.left-2);
+    [a,b].forEach(x=>{ x.classList.remove("in"); x.classList.add("wrong"); setTimeout(()=>x.classList.remove("wrong"),420); });
+    float($("#dq-sec"),"−2 s",true); hud(); sBad(); }
+  board.onclick=ev=>{ const b=ev.target.closest(".dq-c"); if(!b||b.disabled||G.over||G.paused) return;
+    if(!G.sel||G.sel===b||G.sel.dataset.s===b.dataset.s||G.sel.disabled){ sTap(); if(G.sel) G.sel.setAttribute("aria-pressed","false"); G.sel=b; b.setAttribute("aria-pressed","true"); return; }
+    const a=G.sel; G.sel=null; a.setAttribute("aria-pressed","false");
+    if(a.dataset.k===b.dataset.k) right(a,b); else wrong(a,b); };
+  function paint(){ const s=Math.ceil(G.left), f=$("#dq-fill"); f.style.width=(Math.max(0,G.left/DAQ_SECS)*100).toFixed(1)+"%";
+    if(s!==G.sec){ G.sec=s; const e=$("#dq-sec"); e.textContent=s; e.classList.toggle("low",s<=10); f.classList.toggle("low",s<=10); if(s<=5&&s>0) tone([[880,0,.05]],"square",.04); } }
+  /* a hidden tab stops the frames, and a frame never counts for more than a quarter of a second: the clock waits while you're away */
+  function tick(now){ if(!alive()||G.over) return; if(!G.paused){ G.left-=Math.min(.25,Math.max(0,(now-G.t)/1000)); if(G.left<=0){ G.left=0; paint(); return end(); } } G.t=now; paint(); requestAnimationFrame(tick); }
+  function end(){ G.over=true; board.querySelectorAll(".dq-c").forEach(b=>b.disabled=true); sWin();
+    cnt.hidden=false; cnt.textContent=tt("Time's up!","Tiden är ute!"); cnt.classList.remove("pop"); void cnt.offsetWidth; cnt.classList.add("pop","small");
+    setTimeout(()=>{ if(alive()) daqEnd(G); },1000); }
+  $("#dq-x").onclick=()=>{ if(G.over) return; const was=G.paused; G.paused=true;
+    sheet(`<div style="text-align:center">${mascot("sad")}<h2 class="sec" style="margin:4px 0">${tt("Stop the game?","Avsluta spelet?")}</h2><p class="sub" style="margin:0">${tt("The clock is paused. The round won't count if you stop now.","Klockan är pausad. Omgången räknas inte om du slutar nu.")}</p></div><button class="btn wide" data-close>${tt("Keep playing","Fortsätt spela")}</button><button class="btn ghost wide" id="dq-end" style="color:var(--bad)">${tt("Stop","Avsluta")}</button>`);
+    const s=$("#sheet"), shut=s.onclick; s.onclick=e=>{ shut(e); if(s.hidden&&alive()) G.paused=was; };
+    $("#dq-end").onclick=()=>{ s.hidden=true; s.innerHTML=""; closeLesson(); }; };
+  /* 3, 2, 1, Yalla! */
+  const steps=["3","2","1","Yalla!"]; let ci=0;
+  (function next(){ if(!alive()) return; if(!$("#sheet").hidden){ setTimeout(next,200); return; }
+    if(ci>=steps.length){ cnt.hidden=true; cnt.textContent=""; G.paused=false; G.t=performance.now(); deal(); requestAnimationFrame(tick); return; }
+    cnt.textContent=steps[ci]; cnt.classList.toggle("small",ci===3); cnt.classList.remove("pop"); void cnt.offsetWidth; cnt.classList.add("pop");
+    if(ci<3) tone([[440,0,.1]],"sine",.12); else { tone([[880,0,.25]],"sine",.12); autoSay("yalla"); }
+    ci++; setTimeout(next,650); })();
+}
+function daqEnd(G){
+  const y=S.daq||{}, counts=G.pairs>=3, record=counts&&G.score>(y.best||0), gained=counts?Math.min(15,Math.max(3,Math.round(G.pairs/2))):0;
+  let e={firstToday:false,goalNow:false}, newQ=[], newA=[];
+  if(counts){
+    e=earn(gained); if(e.firstToday) DQ_STREAK=true;
+    S.daq={best:Math.max(y.best||0,G.score),n:(y.n||0)+1,pairs:Math.max(y.pairs||0,G.pairs)}; S.q.daq=(S.q.daq||0)+1; if(record) S.gems+=5;
+    newQ=questNews(); newA=achNews();
+  }
+  save(); if(e.firstToday) pushTouch(); if(record) confetti();
+  const sub=!counts?tt("Match at least 3 pairs for the round to count.","Para ihop minst 3 par för att omgången ska räknas.")
+    :record?(y.best?tt(`You beat your old best of ${fmtN(y.best)}. Mashallah!`,`Du slog ditt gamla rekord på ${fmtN(y.best)}. Mashallah!`):tt("Your first round. That's the score to beat!","Din första omgång. Det är poängen att slå!"))
+    :tt(`Your best is still ${fmtN(y.best)}.`,`Ditt rekord är fortfarande ${fmtN(y.best)}.`);
+  const miss=G.missed.filter(k=>W[k]).slice(0,2);
+  const o=$("#lesson"); o.classList.add("party");
+  o.innerHTML=`<div class="l-in"><div class="end dq-end">${PARTY_BG}${mascot(record?"cheer":counts?"happy":"think")}<div class="end-h"><h2>${record?tt("New record!","Nytt rekord!"):tt("Time's up!","Tiden är ute!")}</h2></div><p class="sub" style="margin:0;max-width:34ch">${sub}</p>
+  ${counts?`<p class="goalhit dq-xp">${I.bolt}${tt(`+${gained} XP`,`+${gained} XP`)}${record?tt(" · +5 kleicha for the record"," · +5 kleicha för rekordet"):""}</p>`:""}${newQ.length?`<p class="goalhit qdone">${I.gem.replace("<svg",'<svg width="20" height="20"')}${tt("Quest complete! Claim it on Learn.","Uppdrag klart! Hämta belöningen under Lär dig.")}</p>`:""}${achLines(newA)}
+  <div class="endstats"><div class="es y"><span>${tt("Score","Poäng")}</span><b><span class="cnt" data-to="${G.score}">0</span></b></div><div class="es g"><span>${tt("Pairs","Par")}</span><b><span class="cnt" data-to="${G.pairs}">0</span></b></div><div class="es b"><span>${tt("In a row","I rad")}</span><b>${G.maxCombo}</b></div></div>
+  ${counts?`<div class="end-day">${endDayRows(e.goalNow,true)}${miss.length?`<div class="ed-row dq-mh">${tt("Worth another look","Värda en titt till")}</div>${miss.map(k=>`<div class="ed-row dq-miss">${lbtn(k)}<span class="ed-t"><b>${esc(W[k].tr)}</b><small>${esc(W[k].en)}</small></span></div>`).join("")}`:""}</div>`:""}
+  <button class="btn wide" id="dq-again" style="max-width:420px">${tt("Play again","Spela igen")}</button><button class="end-again" id="dq-done">${tt("Done","Klar")}</button></div></div>`;
+  countUp(o); $("#dq-again").focus(); $("#dq-again").onclick=()=>{ sTap(); daqPlay(); };
+  $("#dq-done").onclick=()=>{ if(DQ_STREAK){ DQ_STREAK=false; streakScreen(); } else closeLesson(); };
 }
 
 /* ================= STREAK REMINDER (push notifications) =================
@@ -6177,8 +6488,14 @@ function mergeState(a,b){
   /* each word's schedule: the copy reviewed most recently wins (on the same day, the one that missed it) */
   r.srs=Object.assign({},b.srs||{}); Object.entries(a.srs||{}).forEach(([k,v])=>{ const o=r.srs[k]; if(!o||(v.t||0)>(o.t||0)||((v.t||0)===(o.t||0)&&((v.m||0)>(o.m||0)||((v.m||0)===(o.m||0)&&(v.r||0)>(o.r||0))))) r.srs[k]=v; });
   r.onboarded=!!(a.onboarded||b.onboarded); r.ltr=Object.assign({},b.ltr||{},a.ltr||{}); r.guideSeen=!!(a.guideSeen||b.guideSeen); r.seenNew=Object.assign({},b.seenNew||{},a.seenNew||{});
+  /* Daqeeqa: the best of both copies. The longest streak ever. Achievement levels: the highest either copy has been told about */
+  if(a.daq||b.daq){ const da=a.daq||{}, db=b.daq||{}; r.daq={best:Math.max(da.best||0,db.best||0),n:Math.max(da.n||0,db.n||0),pairs:Math.max(da.pairs||0,db.pairs||0)}; }
+  r.bestStreak=Math.max(a.bestStreak||0,b.bestStreak||0,r.streak||0);
+  r.ach=Object.assign({},b.ach||{}); Object.entries(a.ach||{}).forEach(([k,v])=>{ if(!(r.ach[k]>=v)) r.ach[k]=v; });
+  /* the wardrobe: everything bought on either device; what's on is this device's choice if it has made one */
+  r.own=Object.assign({},b.own||{},a.own||{}); r.wear=a.wear!==undefined?a.wear:(b.wear||"");
   const tq=[a,b].filter(x=>x.q&&x.q.day===today());
-  r.q=tq.length?Object.assign({},tq.map(x=>x.q).sort((x,y)=>(y.xp||0)-(x.xp||0))[0]):{day:today(),xp:0,lessons:0,combo:0,claimed:{}};
+  r.q=tq.length?Object.assign({},tq.map(x=>x.q).sort((x,y)=>(y.xp||0)-(x.xp||0))[0]):newDay();
   r.q.claimed=Object.assign({},...tq.map(x=>x.q.claimed||{}));
   r.hearts=tq.length?Math.min(...tq.map(x=>x.hearts==null?5:x.hearts)):5;
   ["gender","goal","why"].forEach(k=>r[k]=a.onboarded?(a[k]||b[k]):(b[k]||a[k]));
@@ -6189,7 +6506,7 @@ async function pullAndMerge(){
   syncState="syncing"; refreshSync();
   try{
     const rows=await api("/rest/v1/progress?select=data&user_id=eq."+SES.user.id);
-    if(rows&&rows[0]&&rows[0].data){ S=mergeState(S,rows[0].data); try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){} }
+    if(rows&&rows[0]&&rows[0].data){ S=mergeState(S,rows[0].data); achNews(true); try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){} }
     await pushNow();
   }catch(e){ syncState="error"; syncErr=e.message||""; refreshSync(); }
   await loadReviewer();
@@ -6206,7 +6523,7 @@ async function pushNow(){
   refreshSync();
 }
 function queueSync(){ if(!CLOUD||!SES) return; clearTimeout(syncTimer); syncTimer=setTimeout(pushNow,1500); }
-document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden"&&syncTimer){ clearTimeout(syncTimer); pushNow(); } else if(document.visibilityState==="visible"&&SES) pullAndMerge(); });
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden"&&syncTimer){ clearTimeout(syncTimer); pushNow(); } else if(document.visibilityState==="visible"){ if(dayStale()&&$("#lesson").hidden) render(); if(SES) pullAndMerge(); } });
 function syncText(){ return syncState==="syncing"?tt("Saving…","Sparar…"):syncState==="error"?(tt("Couldn't save","Kunde inte spara")+(syncErr&&!/fetch|network/i.test(syncErr)?": "+syncErr:tt(". Check your internet.",". Kolla din internetuppkoppling."))):lastSync?tt("Saved to your account ","Sparat på ditt konto ")+lastSync.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"}):tt("Progress saves to your account","Framstegen sparas på ditt konto"); }
 function refreshSync(){ const e=document.getElementById("synctxt"); if(e) e.textContent=syncText(); }
 
@@ -6699,11 +7016,19 @@ function drawWelcome(){
   const ac=$("#w-acc"); if(ac) ac.onclick=()=>authSheet("up");
 }
 
+/* on a computer: 1 to 4 picks an answer, Enter checks it */
+document.addEventListener("keydown",e=>{
+  if($("#lesson").hidden||!$("#sheet").hidden||e.metaKey||e.ctrlKey||e.altKey||/^(TEXTAREA|INPUT)$/.test((e.target&&e.target.tagName)||"")) return;
+  if(/^[1-9]$/.test(e.key)){ const o=[...document.querySelectorAll("#lesson .l-body .opt:not(:disabled)")][+e.key-1]; if(o){ e.preventDefault(); o.click(); } }
+  else if(e.key==="Enter"){ const c=$("#check"); if(c&&!c.disabled&&document.activeElement!==c){ e.preventDefault(); c.click(); } }
+});
+
 /* offline + install support when served from a website */
 if("serviceWorker" in navigator && location.protocol==="https:" && /(^|\.)yasso\.se$|github\.io$/.test(location.hostname)){
   /* test version: no service worker */
 }
 
+if(!S.ach) achNews(true);
 setTab("learn");
 /* the path settles once fonts and pictures are in; keep the current level in view */
 setTimeout(scrollToCur,300); try{ document.fonts.ready.then(()=>{ if(window.scrollY<5||!$("#cur-node")||$("#cur-node").getBoundingClientRect().top>innerHeight) scrollToCur(); }); }catch(e){}
