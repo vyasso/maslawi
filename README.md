@@ -2,7 +2,7 @@
 
 A Duolingo-style app for learning the Mosul (Maslawi) dialect of Iraqi Arabic, in English or Swedish. Phrases are written in simple English letters, every phrase has audio, and learners can make an account so their progress follows them between devices.
 
-40 units, 121 levels (including 40 conversations) and 507 phrases: greetings first, then a *Build sentences* section (I, you, he, she · we, you, they · mine and yours · I eat, you drink), and later *At the doctor*, *At work*, *Moods*, *Compliments*, *Wedding*, *Christmas & Easter* and *Sayings*, then *Home and away* (the body, clothes, at home, on the phone, travelling), and a last section, *Day by day*: numbers to 100, telling the time, fruit and veg, the kitchen, school, free time and asking for help. The mascot is Istikan, a Maslawi tea glass. Learners do daily quests on the Learn page, look up any word in English, Swedish or Maslawi ("hi" and "hej" both find *merhaba*), practise with listening, flashcards, mistake review and "freshen up", earn **kleicha** (the app's coins, named after the Iraqi date cookie) and spend them by tapping the kleicha counter, pick a light or dark theme in Settings, and see their weekly XP on their profile.
+40 units, 121 levels (including 40 conversations) and 507 phrases: greetings first, then a *Build sentences* section (I, you, he, she · we, you, they · mine and yours · I eat, you drink), and later *At the doctor*, *At work*, *Moods*, *Compliments*, *Wedding*, *Christmas & Easter* and *Sayings*, then *Home and away* (the body, clothes, at home, on the phone, travelling), and a last section, *Day by day*: numbers to 100, telling the time, fruit and veg, the kitchen, school, free time and asking for help. The mascot is Istikan, a Maslawi tea glass. Learners do daily quests on the Learn page (two of the three change every day), look up any word in English, Swedish or Maslawi ("hi" and "hej" both find *merhaba*), practise with a daily review, listening, flashcards and mistake review, play **Daqeeqa** (a 60-second matching game), earn **kleicha** (the app's coins, named after the Iraqi date cookie) and spend them by tapping the kleicha counter (on streak freezes, hearts and things for Istikan to wear), pick a light or dark theme in Settings, and see their weekly XP on their profile.
 
 The Learn page is a map: the levels follow the Tigris, every unit has a sign and a landmark, and Istikan waits by the next level. Mosul's old city, with the leaning al-Hadba minaret and the clock tower, stands on the horizon, and its windows light up in dark mode. When the last level of a unit is done, its sign gets a *KLAR!* stamp and Istikan rides a kalak, the old raft of the Tigris, down to the next unit. The tea glass at the top fills up towards the daily goal. A right answer gets *Afya!* (or *Mashallah!* or *Zein!*) with confetti and a count of right answers in a row, and a finished lesson ends with a celebration screen showing the day's goal and the streak.
 
@@ -33,6 +33,16 @@ Made by A. Yasso.
 | `beta/` | A test copy of the app at `/beta/`, for trying new things on a phone before they go live. It keeps its own progress on the phone (starting from a copy of the real app's), doesn't sign in or sync, and shows a small TEST tab at the top |
 | `supabase-setup.sql` | Creates the tables for accounts, the league, the content check, suggested phrases, the question box and notifications (run in Supabase; safe to run again) |
 | `reminders/`, `.github/workflows/streak-reminder.yml` | Sends the evening streak reminders and the reviewer alerts, every 10 minutes |
+
+## Review, Daqeeqa, quests, achievements and the wardrobe
+
+- **Smarter repetition**: every learned word gets its own schedule and comes back just before it would be forgotten (*Daily review* on the Words page).
+- **Daqeeqa** (Maslawi for "minute"): a 60-second matching game on the Words page, open once a learner knows 8 words. Five pairs are on the table, right pairs in a row are worth more (×2, ×3, ×4) and a wrong pair costs two seconds. A round gives XP and counts for the streak, but leaves the review schedule and the mistake list alone. The scores the achievement asks for are in `const DAQ_GOALS=`.
+- **Daily quests that change**: *Reach your daily goal* is there every day, and the other two change from day to day (the same two for everyone). Tapping a quest starts what it asks for. They are in `const QUESTS=`.
+- **Achievements with levels**: each achievement has a row of goals instead of one, in `achList()`. A new level gives 5 kleicha per level.
+- **Right answers in a row carry on** from one lesson to the next on the same day (a lesson has only 4 to 6 questions), and replies in a conversation count too.
+- **Istikan's wardrobe** in the kleicha shop: nine things the mascot can wear, drawn in `const WEAR=`.
+- A new day starts without reloading the app, and one wrong letter in a typed answer still counts.
 
 ## Editing lessons
 
